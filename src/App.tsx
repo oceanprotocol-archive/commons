@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { userDefults, User } from './context/User';
-import Routes from './Routes';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import { User, userDefults } from './context/User'
+import Routes from './Routes'
 
 class App extends Component {
-  render() {
-    return (
-      <User.Provider value={userDefults}>
-        <Routes />
-      </User.Provider>
-    );
-  }
+    public render() {
+        return (
+            <User.Provider value={userDefults}>
+                <Routes />
+            </User.Provider>
+        )
+    }
 }
 
-export default App;
+export default App
