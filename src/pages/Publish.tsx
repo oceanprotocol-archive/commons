@@ -1,16 +1,13 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
-
-interface IProps {
-
-}
+import Button from '../components/atoms/Button'
 
 interface IState {
     value?: string
 }
 
-class Publish extends Component<IProps, IState> {
+class Publish extends Component<{}, IState> {
 
-    state = { value: '' }
+    public state = { value: '' }
 
     public render() {
         return (
@@ -21,7 +18,7 @@ class Publish extends Component<IProps, IState> {
                         Name:
                         <input type="text" name="value" value={this.state.value} onChange={this.inputChange} />
                     </label>
-                    <input type="submit" value="Submit" />
+                    <Button>I am a button</Button>
                 </form>
             </div>
         )
