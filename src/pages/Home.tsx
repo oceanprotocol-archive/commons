@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+// retrieve by tag? category?
+// search input -> redirect to list
+
 class Home extends Component {
   render() {
     return (
