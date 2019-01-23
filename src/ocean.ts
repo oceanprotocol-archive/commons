@@ -22,7 +22,7 @@ import {
     secretStoreScheme,
     threshold,
     verbose
-} from '../config/ocean'
+} from './config'
 
 export async function provideOcean() {
     const nodeUri = `${nodeScheme}://${nodeHost}:${nodePort}`
