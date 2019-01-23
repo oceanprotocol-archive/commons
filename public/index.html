@@ -1,33 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="theme-color" content="#000000" />
-    <!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <head>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="theme-color" content="#141414" />
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
+        <title>Commons Marketplace</title>
+
+        <link
+            rel="preload"
+            href="%PUBLIC_URL%/fonts/SharpSansDispNo1-Bold.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link
+            rel="preload"
+            href="%PUBLIC_URL%/fonts/SharpSans-Medium.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link
+            rel="preload"
+            href="%PUBLIC_URL%/fonts/SharpSans-Bold.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+
+        <style>
+            @font-face {
+                font-family: 'Sharp Sans Display';
+                src: url('%PUBLIC_URL%/fonts/SharpSansDispNo1-Bold.woff2')
+                        format('woff2'),
+                    url('%PUBLIC_URL%/fonts/SharpSansDispNo1-Bold.woff')
+                        format('woff');
+                font-weight: 600;
+                font-style: normal;
+                font-stretch: normal;
+                font-display: swap;
+            }
+
+            @font-face {
+                font-family: 'Sharp Sans Medium';
+                src: url('%PUBLIC_URL%/fonts/SharpSans-Medium.woff2')
+                        format('woff2'),
+                    url('%PUBLIC_URL%/fonts/SharpSans-Medium.woff')
+                        format('woff');
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                font-display: swap;
+            }
+
+            @font-face {
+                font-family: 'Sharp Sans Bold';
+                src: url('%PUBLIC_URL%/fonts/SharpSans-Bold.woff2')
+                        format('woff2'),
+                    url('%PUBLIC_URL%/fonts/SharpSans-Bold.woff') format('woff');
+                font-weight: 600;
+                font-style: normal;
+                font-stretch: normal;
+                font-display: swap;
+            }
+
+            .loader {
+                display: block;
+                position: relative;
+                margin-top: calc(50vh - 15px);
+            }
+
+            .loader:before {
+                content: '';
+                box-sizing: border-box;
+                position: absolute;
+                top: -80%;
+                left: 50%;
+                width: 20px;
+                height: 20px;
+                margin-top: -10px;
+                margin-left: -10px;
+                border-radius: 50%;
+                border: 2px solid #7b1173;
+                border-top-color: #e000cf;
+                animation: spinner 0.6s linear infinite;
+            }
+
+            @keyframes spinner {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"><span class="loader"></span></div>
+        <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -36,6 +111,5 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    --></body>
 </html>
