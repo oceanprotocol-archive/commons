@@ -8,14 +8,14 @@
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 - [Development](#development)
 - [Testing](#testing)
 - [Code Style](#code-style)
 - [License](#license)
 
 ## Development
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ```bash
 npm start
