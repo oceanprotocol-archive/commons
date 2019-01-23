@@ -3,24 +3,24 @@ import {
 } from '@oceanprotocol/squid/dist/node/squid'
 
 import {
-    nodeScheme,
-    nodeHost,
-    nodePort,
-    aquariusScheme,
+    address,
     aquariusHost,
     aquariusPort,
-    brizoScheme,
+    aquariusScheme,
     brizoHost,
     brizoPort,
-    parityScheme,
+    brizoScheme,
+    nodeHost,
+    nodePort,
+    nodeScheme,
     parityHost,
     parityPort,
-    secretStoreScheme,
+    parityScheme,
+    password,
     secretStoreHost,
     secretStorePort,
+    secretStoreScheme,
     threshold,
-    password,
-    address,
     verbose
 } from '../config/ocean'
 

@@ -1,48 +1,47 @@
-import React, { Component, FormEvent, ChangeEvent } from 'react';
+import React, { ChangeEvent, Component, FormEvent } from 'react'
 
-interface Props {
+interface IProps {
 
 }
 
-interface State {
-  value?: string
+interface IState {
+    value?: string
 }
 
-class Publish extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {value: ''};
+class Publish extends Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props)
+        this.state = { value: '' }
 
-    this.inputChange = this.inputChange.bind(this);
-    this.registerAsset = this.registerAsset.bind(this);
-  }
+        this.inputChange = this.inputChange.bind(this)
+        this.registerAsset = this.registerAsset.bind(this)
+    }
 
-  inputChange(event: ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
+    public render() {
+        return (
+            <div>
+                <h1>Publish</h1>
+                <form onSubmit={this.registerAsset}>
+                    <label>
+                        Name:
+                        <input type="text" name="value" value={this.state.value} onChange={this.inputChange} />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        )
+    }
 
-  registerAsset(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    console.log("submit", this.state.value)
+    private inputChange(event: ChangeEvent<HTMLInputElement>) {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
 
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Publish</h1>
-        <form onSubmit={this.registerAsset}>
-          <label>
-            Name:
-            <input type="text" name="value" value={this.state.value} onChange={this.inputChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-    );
-  }
+    private registerAsset(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        // console.log("submit", this.state.value)
+    }
 }
 
-export default Publish;
+export default Publish

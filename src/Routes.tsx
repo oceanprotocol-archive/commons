@@ -1,11 +1,12 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Home from './pages/Home'
+
 import About from './pages/About'
-import Publish from './pages/Publish'
 import Details from './pages/Details'
+import Home from './pages/Home'
 import List from './pages/List'
 import NotFound from './pages/NotFound'
+import Publish from './pages/Publish'
 
 const Routes = () => (
     <Router>
