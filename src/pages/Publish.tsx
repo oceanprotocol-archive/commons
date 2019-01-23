@@ -9,13 +9,8 @@ interface IState {
 }
 
 class Publish extends Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props)
-        this.state = { value: '' }
 
-        this.inputChange = this.inputChange.bind(this)
-        this.registerAsset = this.registerAsset.bind(this)
-    }
+    state = { value: '' }
 
     public render() {
         return (
@@ -32,13 +27,13 @@ class Publish extends Component<IProps, IState> {
         )
     }
 
-    private inputChange(event: ChangeEvent<HTMLInputElement>) {
+    private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             [event.target.name]: event.target.value
         })
     }
 
-    private registerAsset(event: FormEvent<HTMLFormElement>) {
+    private registerAsset = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         // console.log("submit", this.state.value)
     }
