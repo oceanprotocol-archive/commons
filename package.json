@@ -27,6 +27,7 @@
     "@types/react": "16.7.20",
     "@types/react-dom": "16.0.11",
     "@types/react-router-dom": "^4.3.1",
+    "node-sass": "^4.11.0",
     "prettier": "^1.16.1",
     "prettier-stylelint": "^0.4.2",
     "react-scripts": "2.1.3",
