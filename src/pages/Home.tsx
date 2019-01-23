@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 // retrieve by tag? category?
 // search input -> redirect to list
 
 class Home extends Component {
-  render() {
-    return (
-      <div>
-        Home
-      </div>
-    );
-  }
+    public render() {
+        return <div>Home</div>
+    }
 }
 
-export default Home;
+export default Home

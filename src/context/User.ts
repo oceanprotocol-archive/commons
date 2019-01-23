@@ -1,9 +1,7 @@
-import React from 'react';
+import React from 'react'
 
 export const userDefaults = {
   logged: false
-};
+}
 
-export const User = React.createContext(
-  userDefaults
-);
+export const User = React.createContext(userDefaults)
