@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "npm run lint && react-scripts test",
     "eject": "react-scripts eject",
     "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
     "format:css": "prettier-stylelint --write --quiet 'src/**/*.{css,scss}'",
