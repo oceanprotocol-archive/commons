@@ -12,8 +12,8 @@ const Label = ({
 }) => (
     <label
         className={required ? styles.required : styles.label}
-        {...props}
         title={required ? 'Required' : ''}
+        {...props}
     >
         {children}
     </label>
