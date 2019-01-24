@@ -1,7 +1,30 @@
 import React, { Component } from 'react'
 import Button from '../components/atoms/Button'
 import Input from '../components/atoms/Form/Input'
+import InputRadioCheckbox from '../components/atoms/Form/InputRadioCheckbox'
 import styles from './Styleguide.module.scss'
+
+const radioOptions = [
+    {
+        value: 'provider',
+        label: 'I can provide data'
+    },
+    {
+        value: 'consumer',
+        label: 'I want to use data'
+    }
+]
+
+const checkboxOptions = [
+    {
+        value: 'provider2',
+        label: 'I can provide data'
+    },
+    {
+        value: 'consumer2',
+        label: 'I want to use data'
+    }
+]
 
 class Styleguide extends Component {
     public render() {
@@ -52,6 +75,18 @@ class Styleguide extends Component {
                             label="Hello Textarea"
                             placeholder="Hello placeholder"
                             tag="textarea"
+                        />
+                        <InputRadioCheckbox
+                            name="helloradio"
+                            label="Hello Radios"
+                            type="radio"
+                            options={radioOptions}
+                        />
+                        <InputRadioCheckbox
+                            name="hellocheckbox"
+                            label="Hello Checkboxes"
+                            type="checkbox"
+                            options={checkboxOptions}
                         />
                     </fieldset>
                 </form>
