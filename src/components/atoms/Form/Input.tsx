@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react'
 // import { ReactComponent as SearchIcon } from '../../../svg/search.svg'
 import Help from './Help'
 import styles from './Input.module.scss'
+import Label from './Label'
+import Row from './Row'
 
 interface IInputProps {
     name: string
@@ -63,14 +65,10 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
         } = this.props
 
         return (
-            <div className={styles.formGroup}>
-                <label
-                    htmlFor={name}
-                    className={required ? styles.required : styles.label}
-                    title={required ? 'Required' : ''}
-                >
+            <Row>
+                <Label htmlFor={name} required={required}>
                     {label}
-                </label>
+                </Label>
                 <div className={this.inputWrapClasses()}>
                     <Tag
                         id={name}
@@ -89,7 +87,7 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
                 {help && <Help>{help}</Help>}
 
                 {additionalComponent && additionalComponent}
-            </div>
+            </Row>
         )
     }
 }

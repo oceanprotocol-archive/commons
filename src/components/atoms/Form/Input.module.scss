@@ -1,9 +1,5 @@
 @import '../../../styles/variables';
 
-.formGroup {
-    margin-bottom: $spacer;
-}
-
 .inputWrap {
     background: $brand-gradient;
     border-radius: $border-radius;
@@ -93,27 +89,6 @@
     //     box-shadow: 0 0 0 1000px $brand-black inset;
     //     transition: background-color 5000s ease-in-out 0s;
     // }
-}
-
-.label {
-    color: $brand-grey;
-    font-size: $font-size-base;
-    font-family: $font-family-title;
-    line-height: 1.2;
-    display: block;
-    margin-bottom: $spacer / 6;
-}
-
-.required {
-    composes: label;
-
-    &:after {
-        content: '*';
-        font-size: $font-size-base;
-        color: $brand-grey-light;
-        display: inline-block;
-        margin-left: .1rem;
-    }
 }
 
 .select {
