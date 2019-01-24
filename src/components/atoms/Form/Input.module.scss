@@ -1,20 +1,16 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .formGroup {
     margin-bottom: $spacer;
 }
 
-.input-wrap {
+.inputWrap {
     background: $brand-gradient;
     border-radius: $border-radius;
     width: 100%;
     padding: 2px;
     display: flex;
     position: relative;
-
-    &.is-focused {
-        background: $brand-black;
-    }
 
     .is-dimmed & {
         background: $brand-grey-lighter;
@@ -25,7 +21,14 @@
     }
 }
 
-.input-wrap-search {
+.isFocused {
+    composes: inputWrap;
+    background: $brand-black;
+}
+
+.inputWrapSearch {
+    composes: inputWrap;
+
     .input {
         padding-left: $spacer * 1.25;
     }
@@ -92,8 +95,29 @@
     // }
 }
 
-// stylelint-disable-next-line
-select.input {
+.label {
+    color: $brand-grey;
+    font-size: $font-size-base;
+    font-family: $font-family-title;
+    line-height: 1.2;
+    display: block;
+    margin-bottom: $spacer / 6;
+}
+
+.required {
+    composes: label;
+
+    &:after {
+        content: '*';
+        font-size: $font-size-base;
+        color: $brand-grey-light;
+        display: inline-block;
+        margin-left: .1rem;
+    }
+}
+
+.select {
+    composes: input;
     height: 43px;
     padding-right: 3rem;
     border: 0;
@@ -118,45 +142,12 @@ select.input {
         outline: 0;
         font-family: $font-family-base;
     }
-    // stylelint-disable
-    .is-dimmed & {
-        background-image: linear-gradient(
-            45deg,
-            transparent 50%,
-            $brand-grey-light 50%
-        ),
-            linear-gradient(135deg, $brand-grey-light 50%, transparent 50%),
-            linear-gradient(
-            to right,
-            $brand-grey-lighter 1px,
-            lighten($brand-grey-lighter, 5%) 2px,
-            lighten($brand-grey-lighter, 5%)
-        );
-    }
-    // stylelint-enable
-}
-
-.label {
-    color: $brand-grey;
-    font-size: $font-size-base;
-    font-family: $font-family-title;
-    line-height: 1.2;
-    display: block;
-    margin-bottom: $spacer / 6;
-
-    &.is-required {
-        &:after {
-            content: '*';
-            font-size: $font-size-base;
-            color: $brand-grey-light;
-            display: inline-block;
-            margin-left: .1rem;
-        }
-    }
 }
 
 // Size modifiers
-.input-sm {
+
+.inputSmall {
+    composes: input;
     font-size: $font-size-small;
     min-height: 32px;
     padding: $spacer / 4;
@@ -166,8 +157,8 @@ select.input {
     }
 }
 
-// stylelint-disable-next-line
-select.input-sm {
+.selectSmall {
+    composes: select;
     height: 32px;
     padding-right: 2rem;
 

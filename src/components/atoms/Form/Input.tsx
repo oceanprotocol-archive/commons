@@ -1,48 +1,51 @@
 import React, { PureComponent } from 'react'
-import { ReactComponent as SearchIcon } from '../../../svg/search.svg'
-import FormHelp from './FormHelp'
-import styles from './FormInput.module.scss'
+// import { ReactComponent as SearchIcon } from '../../../svg/search.svg'
+import Help from './Help'
+import styles from './Input.module.scss'
 
-interface IFormInputProps {
+interface IInputProps {
     name: string
     label: string
-    placeholder: string
+    placeholder?: string
     required?: boolean
     help?: string
     tag?: string
-    type: string
+    type?: string
     small?: boolean
     additionalComponent?: void
 }
 
-interface IFormInputState {
+interface IInputState {
     isFocused: boolean
 }
 
-export default class FormInput extends PureComponent<
-    IFormInputProps,
-    IFormInputState
-> {
-    public state: IFormInputState = { isFocused: false }
+const Tag = ({ ...props }) => {
+    if (props.tag && props.tag === 'select') {
+        return <select className={styles.select} {...props} />
+    } else if (props.tag && props.tag === 'textarea') {
+        return <textarea className={styles.input} {...props} />
+    } else {
+        return <input className={styles.input} {...props} />
+    }
+}
+
+export default class Input extends PureComponent<IInputProps, IInputState> {
+    public state: IInputState = { isFocused: false }
 
     public inputWrapClasses() {
         if (this.props.type === 'search') {
-            return 'input-wrap input-wrap-search'
+            return styles.inputWrapSearch
         } else if (this.props.type === 'search' && this.state.isFocused) {
             return 'input-wrap input-wrap-search is-focused'
         } else if (this.state.isFocused && this.props.type !== 'search') {
-            return 'input-wrap is-focused'
+            return styles.isFocused
         } else {
-            return 'input-wrap'
+            return styles.inputWrap
         }
     }
 
-    public handleBlur() {
-        this.setState({ isFocused: true })
-    }
-
-    public handleFocus() {
-        this.setState({ isFocused: false })
+    public toggleFocus = () => {
+        this.setState({ isFocused: !this.state.isFocused })
     }
 
     public render() {
@@ -53,7 +56,9 @@ export default class FormInput extends PureComponent<
             type,
             help,
             small,
+            tag,
             additionalComponent,
+            children,
             ...props
         } = this.props
 
@@ -61,25 +66,27 @@ export default class FormInput extends PureComponent<
             <div className={styles.formGroup}>
                 <label
                     htmlFor={name}
-                    className={styles.label}
+                    className={required ? styles.required : styles.label}
                     title={required ? 'Required' : ''}
                 >
                     {label}
                 </label>
                 <div className={this.inputWrapClasses()}>
-                    <input
-                        className={small ? 'input input-sm' : 'input'}
+                    <Tag
                         id={name}
                         name={name}
                         required={required}
                         type={type}
+                        tag={tag}
                         {...props}
-                        onFocus={this.handleFocus}
-                        onBlur={this.handleBlur}
-                    />
-                    {type === 'search' && <SearchIcon />}
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
+                    >
+                        {children}
+                    </Tag>
+                    {/* {type === 'search' && <SearchIcon />} */}
                 </div>
-                {help && <FormHelp>{help}</FormHelp>}
+                {help && <Help>{help}</Help>}
 
                 {additionalComponent && additionalComponent}
             </div>
