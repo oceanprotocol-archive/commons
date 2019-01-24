@@ -1,9 +1,9 @@
+import queryString from 'query-string'
 import React, { Component } from 'react'
 import { provideOcean } from '../ocean'
-import queryString from 'query-string'
 
 interface IState {
-    results?: Array<any>
+    results?: any[]
 }
 
 interface IProps {
@@ -15,7 +15,7 @@ class Search extends Component<IProps, IState>  {
 
     public state = { results: [] }
 
-    async componentDidMount() {
+    public async componentDidMount() {
       // temporary ocean init and asset retrieval
       const { ocean } = await provideOcean()
       const searchParams = queryString.parse(this.props.location.search)
