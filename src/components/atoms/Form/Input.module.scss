@@ -8,25 +8,16 @@
     display: flex;
     position: relative;
 
-    .is-dimmed & {
-        background: $brand-grey-lighter;
-
-        &.is-focused {
-            background: $brand-grey-light;
-        }
+    &.isFocused {
+        background: $brand-black;
     }
-}
-
-.isFocused {
-    composes: inputWrap;
-    background: $brand-black;
 }
 
 .inputWrapSearch {
     composes: inputWrap;
 
     .input {
-        padding-left: $spacer * 1.25;
+        padding-left: $spacer / 1.25;
     }
 
     svg {

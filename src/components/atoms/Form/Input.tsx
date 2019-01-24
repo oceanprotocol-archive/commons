@@ -1,5 +1,6 @@
+import cx from 'classnames'
 import React, { PureComponent } from 'react'
-// import { ReactComponent as SearchIcon } from '../../../svg/search.svg'
+import { ReactComponent as SearchIcon } from '../../../img/search.svg'
 import Help from './Help'
 import styles from './Input.module.scss'
 import Label from './Label'
@@ -38,9 +39,9 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
         if (this.props.type === 'search') {
             return styles.inputWrapSearch
         } else if (this.props.type === 'search' && this.state.isFocused) {
-            return 'input-wrap input-wrap-search is-focused'
+            return cx(styles.inputWrapSearch, styles.isFocused)
         } else if (this.state.isFocused && this.props.type !== 'search') {
-            return styles.isFocused
+            return cx(styles.inputWrap, styles.isFocused)
         } else {
             return styles.inputWrap
         }
@@ -82,7 +83,7 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
                     >
                         {children}
                     </Tag>
-                    {/* {type === 'search' && <SearchIcon />} */}
+                    {type === 'search' && <SearchIcon />}
                 </div>
                 {help && <Help>{help}</Help>}
 

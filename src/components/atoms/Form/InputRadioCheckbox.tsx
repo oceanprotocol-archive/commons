@@ -32,7 +32,7 @@ export default class InputRadioCheckbox extends PureComponent<IRadioProps> {
                 <div className={styles.radioGroup}>
                     {/* tslint:disable-next-line:jsx-no-multiline-js */}
                     {this.props.options.map((option, index) => (
-                        <div className={styles.radioWrap}>
+                        <div className={styles.radioWrap} key={index}>
                             <input
                                 className={styles.radio}
                                 type={this.props.type}
