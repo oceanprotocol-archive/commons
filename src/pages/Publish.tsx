@@ -126,15 +126,9 @@ class Publish extends Component<{}, IState> {
         event.preventDefault()
 
         const web3 = new Web3((window as any).web3.currentProvider)
-
         await (window as any).ethereum.enable()
-
-        const accounts = await web3.eth.getAccounts()
-
         const { ocean } = await provideOcean()
         const account = await ocean.getAccounts()
-
-        console.log(account)
 
         const newAsset = {
             // OEP-08 Attributes
