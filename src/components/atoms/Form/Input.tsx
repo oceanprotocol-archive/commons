@@ -107,12 +107,19 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
                             name={name}
                             required={required}
                             type={type}
-                            tag={tag}
                             {...props}
                             onFocus={this.toggleFocus}
                             onBlur={this.toggleFocus}
                         >
-                            {children}
+                            {/* tslint:disable-next-line:jsx-no-multiline-js */}
+                            {tag === 'select'
+                                ? options &&
+                                  options.map((option, index) => (
+                                      <option key={index} value={option.value}>
+                                          {option.label}
+                                      </option>
+                                  ))
+                                : children}
                         </Tag>
                         {type === 'search' && <SearchIcon />}
                     </div>
