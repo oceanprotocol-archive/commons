@@ -6,6 +6,11 @@ import styles from './Input.module.scss'
 import Label from './Label'
 import Row from './Row'
 
+interface IOptionProps {
+    value: string
+    label: string
+}
+
 interface IInputProps {
     name: string
     label: string
@@ -15,6 +20,7 @@ interface IInputProps {
     tag?: string
     type?: string
     small?: boolean
+    options?: IOptionProps[]
     additionalComponent?: void
 }
 
@@ -62,6 +68,7 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
             tag,
             additionalComponent,
             children,
+            options,
             ...props
         } = this.props
 
@@ -70,21 +77,47 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
                 <Label htmlFor={name} required={required}>
                     {label}
                 </Label>
-                <div className={this.inputWrapClasses()}>
-                    <Tag
-                        id={name}
-                        name={name}
-                        required={required}
-                        type={type}
-                        tag={tag}
-                        {...props}
-                        onFocus={this.toggleFocus}
-                        onBlur={this.toggleFocus}
-                    >
-                        {children}
-                    </Tag>
-                    {type === 'search' && <SearchIcon />}
-                </div>
+
+                {type === 'radio' || type === 'checkbox' ? (
+                    <div className={styles.radioGroup}>
+                        {/* tslint:disable-next-line:jsx-no-multiline-js */}
+                        {options &&
+                            options.map((option, index) => (
+                                <div className={styles.radioWrap} key={index}>
+                                    <input
+                                        className={styles.radio}
+                                        type={this.props.type}
+                                        id={option.value}
+                                        name={this.props.name}
+                                        value={option.value}
+                                    />
+                                    <label
+                                        className={styles.radioLabel}
+                                        htmlFor={option.value}
+                                    >
+                                        {option.label}
+                                    </label>
+                                </div>
+                            ))}
+                    </div>
+                ) : (
+                    <div className={this.inputWrapClasses()}>
+                        <Tag
+                            id={name}
+                            name={name}
+                            required={required}
+                            type={type}
+                            tag={tag}
+                            {...props}
+                            onFocus={this.toggleFocus}
+                            onBlur={this.toggleFocus}
+                        >
+                            {children}
+                        </Tag>
+                        {type === 'search' && <SearchIcon />}
+                    </div>
+                )}
+
                 {help && <Help>{help}</Help>}
 
                 {additionalComponent && additionalComponent}
