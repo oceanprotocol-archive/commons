@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import Web3 from 'web3'
 import Button from '../components/atoms/Button'
+import { User } from '../context/User'
 import AssetModel from '../models/AssetModel'
 import { provideOcean } from '../ocean'
 
@@ -104,7 +105,13 @@ class Publish extends Component<{}, IState> {
                       </select>
                   </div>
                   <div>CopyrightHolder:<input type="text" name="copyrightHolder" value={this.state.copyrightHolder} onChange={this.inputChange} /></div>
-                  <div><Button>Register asset</Button></div>
+                  <User.Consumer>
+                      {states => ( /* tslint:disable-next-line */
+                          <div>
+                              {states.isLogged ? (<div><Button>Register asset (we are logged)</Button></div>) : (<div><button onClick={states.startLogin}>Register asset (login first)</button></div>)}
+                          </div>
+                      )}
+                  </User.Consumer>
                 </form>
             </div>
         )

@@ -3,7 +3,7 @@ import Button from '../components/atoms/Button'
 import styles from './Home.module.scss'
 
 interface IState {
-    search?: string
+    search: string
 }
 
 interface IProps {
@@ -31,9 +31,9 @@ class Home extends Component<IProps, IState> {
     }
 
     private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
+        this.setState(state => ({
+            search: event.target.value
+        }))
     }
 
     private searchAssets = (event: FormEvent<HTMLFormElement>) => {

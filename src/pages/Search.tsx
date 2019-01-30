@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { provideOcean } from '../ocean'
 
 interface IState {
-    results?: any[]
+    results: any[]
 }
 
 interface IProps {
@@ -30,7 +30,7 @@ class Search extends Component<IProps, IState>  {
             }
         }
         const assets = await ocean.searchAssets(queryRequest)
-        this.setState({results:assets})
+        this.setState(state => ({results:assets}))
     }
 
     public render() {

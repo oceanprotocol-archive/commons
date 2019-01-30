@@ -5,8 +5,8 @@ import Web3 from 'web3'
 import { provideOcean } from '../ocean'
 
 interface IState {
-    ddo?: any,
-    metadata?: any
+    ddo: any,
+    metadata: any
 }
 
 interface IProps {
