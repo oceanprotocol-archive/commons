@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import styles from './App.module.scss'
 import { User } from './context/User'
+import { provideOcean } from './ocean'
 import Routes from './Routes'
 import './styles/global.scss'
 
@@ -14,7 +15,8 @@ import {
 interface IState {
     isLogged: boolean,
     web3: any,
-    startLogin: () => void
+    ocean: {},
+    startLogin: () => void,
 }
 
 class App extends Component<{},IState> {
@@ -30,7 +32,8 @@ class App extends Component<{},IState> {
         this.state = {
             isLogged: false,
             web3: {},
-            startLogin: this.startLogin
+            ocean: {},
+            startLogin: this.startLogin,
         }
     }
 
@@ -55,9 +58,11 @@ class App extends Component<{},IState> {
                 const accounts = await web3.eth.getAccounts()
                 if (accounts.length === 0 && (window as any).ethereum) {
                     await (window as any).ethereum.enable()
+                    const { ocean } = await provideOcean()
                     this.setState(state => ({
                         isLogged: true,
-                        web3
+                        web3,
+                        ocean
                     }))
                 } else {
                     this.setState(state => ({
@@ -79,9 +84,11 @@ class App extends Component<{},IState> {
             try {
                 const accounts = await web3.eth.getAccounts()
                 if (accounts.length > 0) {
+                    const { ocean } = await provideOcean()
                     this.setState(state => ({
                         isLogged: true,
-                        web3
+                        web3,
+                        ocean
                     }))
                 }
             } catch (e) {

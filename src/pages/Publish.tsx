@@ -1,9 +1,7 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
-import Web3 from 'web3'
 import Button from '../components/atoms/Button'
 import { User } from '../context/User'
 import AssetModel from '../models/AssetModel'
-import { provideOcean } from '../ocean'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -131,12 +129,7 @@ class Publish extends Component<{}, IState> {
 
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-
-        const web3 = new Web3((window as any).web3.currentProvider)
-        await (window as any).ethereum.enable()
-        const { ocean } = await provideOcean()
-        const account = await ocean.getAccounts()
-
+        const account = await this.context.ocean.getAccounts()
         const newAsset = {
             // OEP-08 Attributes
             // https://github.com/oceanprotocol/OEPs/tree/master/8
@@ -161,8 +154,9 @@ class Publish extends Component<{}, IState> {
             curation: Object.assign(AssetModel.curation),
             additionalInformation: Object.assign(AssetModel.additionalInformation)
         }
-        const ddo = await ocean.registerAsset(newAsset, account[0])
+        const ddo = await this.context.ocean.registerAsset(newAsset, account[0])
     }
 }
 
+Publish.contextType = User
 export default Publish
