@@ -1,7 +1,8 @@
 import React from 'react'
 
-export const userDefaults = {
-    logged: false
-}
-
-export const User = React.createContext(userDefaults)
+export const User = React.createContext({
+    isLogged: false,
+    web3: {},
+    ocean: {},
+    startLogin: () => {/* empty */}
+})

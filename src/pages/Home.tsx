@@ -1,20 +1,44 @@
-import React, { Component } from 'react'
+import React, { ChangeEvent, Component, FormEvent } from 'react'
 import Button from '../components/atoms/Button'
 import styles from './Home.module.scss'
 
-class Home extends Component {
+interface IState {
+    search?: string
+}
+
+interface IProps {
+    history: any
+}
+
+class Home extends Component<IProps, IState> {
+
+    public state = { search: '' }
+
     public render() {
         return (
             <div className={styles.home}>
                 <div>Home</div>
 
-                <Button>I am a button</Button>
-                <Button primary={true}>I am a primary button</Button>
-                <Button href="https://hello.com">
-                    I am a link disguised as a button
-                </Button>
+                <div>
+                    <form onSubmit={this.searchAssets}>
+                        <input type="text" name="search" value={this.state.search} onChange={this.inputChange} />
+                        <Button>Search</Button>
+                    </form>
+                </div>
+
             </div>
         )
+    }
+
+    private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    private searchAssets = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        this.props.history.push(`/search?q=${this.state.search}`)
     }
 }
 
