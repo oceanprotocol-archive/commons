@@ -47,16 +47,12 @@ class Search extends Component<IProps, IState> {
     private renderAssetBox = (asset: any) => {
         const { metadata } = asset.findServiceByType('Metadata')
         return (
-            <div key={asset.id} onClick={this.openDetails.bind(this, asset.id)}>
+            <Link key={asset.id} to={`/asset/${asset.id}`}>
                 <div>{asset.id}</div>
                 <div>{metadata.base.name}</div>
                 <div>{metadata.base.description}</div>
-            </div>
+            </Link>
         )
-    }
-
-    private openDetails = (assetId: string) => {
-        this.props.history.push(`/asset/${assetId}`)
     }
 }
 

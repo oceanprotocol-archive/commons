@@ -7,7 +7,7 @@ class About extends Component {
         return (
             <div className={styles.about}>
                 <Button>I am a button</Button>
-                <Button primary={true}>I am a primary button</Button>
+                <Button primary>I am a primary button</Button>
                 <Button href="https://hello.com">
                     I am a link disguised as a button
                 </Button>

@@ -1,5 +1,4 @@
 import { Logger } from '@oceanprotocol/squid'
-import queryString from 'query-string'
 import React, { Component } from 'react'
 import { User } from '../context/User'
 
@@ -66,7 +65,7 @@ class Details extends Component<IProps, IState> {
         return (
             <>
                 <div>{JSON.stringify(this.state.metadata)}</div>
-                <button onClick={this.purchaseAsset.bind(this, ddo)}>
+                <button onClick={this.purchaseAsset(ddo)}>
                     Purchase asset
                 </button>
             </>

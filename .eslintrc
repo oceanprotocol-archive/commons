@@ -1,22 +1,22 @@
 {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "tsconfig.json"
+        "project": "./tsconfig.json"
     },
     "extends": [
         "oceanprotocol",
         "oceanprotocol/react",
         "plugin:prettier/recommended",
         "prettier/react",
-        "prettier/standard"
+        "prettier/standard",
+        "plugin:@typescript-eslint/recommended"
     ],
-    "plugins": ["@typescript-eslint/tslint", "prettier"],
+    "plugins": ["@typescript-eslint", "prettier"],
     "rules": {
-        "@typescript-eslint/tslint/config": [
-            "warn",
-            {
-                "lintFile": "./tslint.json"
-            }
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/member-delimiter-style": [
+            "error",
+            { "multiline": { "delimiter": "none" } }
         ]
     }
 }
