@@ -2,17 +2,17 @@ import { Logger } from '@oceanprotocol/squid'
 import React, { Component } from 'react'
 import { User } from '../context/User'
 
-interface IState {
+interface DetailsState {
     ddo: any
     metadata: any
 }
 
-interface IProps {
+interface DetailsProps {
     location: any
     match: any
 }
 
-class Details extends Component<IProps, IState> {
+class Details extends Component<DetailsProps, DetailsState> {
     public state = { ddo: null, metadata: null }
 
     public async componentDidMount() {

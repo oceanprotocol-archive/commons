@@ -3,16 +3,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { provideOcean } from '../ocean'
 
-interface IState {
+interface SearchState {
     results: any[]
 }
 
-interface IProps {
+interface SearchProps {
     location: any
     history: any
 }
 
-class Search extends Component<IProps, IState> {
+class Search extends Component<SearchProps, SearchState> {
     public state = { results: [] }
 
     public async componentDidMount() {

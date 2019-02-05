@@ -18,5 +18,8 @@
             "error",
             { "multiline": { "delimiter": "none" } }
         ]
+    },
+    "env": {
+        "jest": true
     }
 }

@@ -5,7 +5,7 @@ import AssetModel from '../models/AssetModel'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
-interface IState {
+interface PublishState {
     name?: string
     dateCreated?: Date
     description?: string
@@ -19,7 +19,7 @@ interface IState {
     tags?: string[]
 }
 
-class Publish extends Component<{}, IState> {
+class Publish extends Component<{}, PublishState> {
     public state = {
         name: '',
         dateCreated: new Date(),
@@ -281,6 +281,7 @@ class Publish extends Component<{}, IState> {
                 AssetModel.additionalInformation
             )
         }
+
         const ddo = await this.context.ocean.registerAsset(newAsset, account[0])
     }
 }
