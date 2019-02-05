@@ -11,7 +11,7 @@ import Search from './pages/Search'
 const Routes = () => (
     <Router>
         <Switch>
-            <Route exact={true} component={Home} path="/" />
+            <Route exact component={Home} path="/" />
             <Route component={About} path="/about" />
             <Route component={Publish} path="/publish" />
             <Route component={Search} path="/search" />

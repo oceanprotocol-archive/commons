@@ -2,16 +2,15 @@ import React, { ChangeEvent, Component, FormEvent } from 'react'
 import Button from '../components/atoms/Button'
 import styles from './Home.module.scss'
 
-interface IState {
+interface HomeState {
     search?: string
 }
 
-interface IProps {
+interface HomeProps {
     history: any
 }
 
-class Home extends Component<IProps, IState> {
-
+class Home extends Component<HomeProps, HomeState> {
     public state = { search: '' }
 
     public render() {
@@ -21,11 +20,15 @@ class Home extends Component<IProps, IState> {
 
                 <div>
                     <form onSubmit={this.searchAssets}>
-                        <input type="text" name="search" value={this.state.search} onChange={this.inputChange} />
+                        <input
+                            type="text"
+                            name="search"
+                            value={this.state.search}
+                            onChange={this.inputChange}
+                        />
                         <Button>Search</Button>
                     </form>
                 </div>
-
             </div>
         )
     }
