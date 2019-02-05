@@ -11,7 +11,6 @@ interface IProps {
 }
 
 class Home extends Component<IProps, IState> {
-
     public state = { search: '' }
 
     public render() {
@@ -21,11 +20,15 @@ class Home extends Component<IProps, IState> {
 
                 <div>
                     <form onSubmit={this.searchAssets}>
-                        <input type="text" name="search" value={this.state.search} onChange={this.inputChange} />
+                        <input
+                            type="text"
+                            name="search"
+                            value={this.state.search}
+                            onChange={this.inputChange}
+                        />
                         <Button>Search</Button>
                     </form>
                 </div>
-
             </div>
         )
     }
