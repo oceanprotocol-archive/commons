@@ -1,5 +1,6 @@
 import { Logger } from '@oceanprotocol/squid'
 import React, { Component } from 'react'
+import Button from '../components/atoms/Button'
 import { User } from '../context/User'
 
 interface DetailsState {
@@ -12,7 +13,7 @@ interface DetailsProps {
     match: any
 }
 
-class Details extends Component<DetailsProps, DetailsState> {
+export default class Details extends Component<DetailsProps, DetailsState> {
     public state = { ddo: null, metadata: null }
 
     public async componentDidMount() {
@@ -21,18 +22,6 @@ class Details extends Component<DetailsProps, DetailsState> {
         )
         const { metadata } = ddo.findServiceByType('Metadata')
         this.setState({ ddo, metadata })
-    }
-
-    public render() {
-        return (
-            <>
-                {this.state.metadata ? (
-                    this.showDetails(this.state.ddo)
-                ) : (
-                    <div>Loading</div>
-                )}
-            </>
-        )
     }
 
     private purchaseAsset = async (ddo: any) => {
@@ -65,13 +54,25 @@ class Details extends Component<DetailsProps, DetailsState> {
         return (
             <>
                 <div>{JSON.stringify(this.state.metadata)}</div>
-                <button onClick={this.purchaseAsset(ddo)}>
+
+                <Button onClick={this.purchaseAsset(ddo)}>
                     Purchase asset
-                </button>
+                </Button>
+            </>
+        )
+    }
+
+    public render() {
+        return (
+            <>
+                {this.state.metadata ? (
+                    this.showDetails(this.state.ddo)
+                ) : (
+                    <div>Loading</div>
+                )}
             </>
         )
     }
 }
 
 Details.contextType = User
-export default Details

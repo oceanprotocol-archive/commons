@@ -6,6 +6,7 @@ interface ButtonProps {
     primary?: boolean
     link?: boolean
     href?: string
+    onClick?: any
 }
 
 export default class Button extends PureComponent<ButtonProps, any> {
