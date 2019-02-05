@@ -1,0 +1,22 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "tsconfig.json"
+    },
+    "extends": [
+        "oceanprotocol",
+        "oceanprotocol/react",
+        "plugin:prettier/recommended",
+        "prettier/react",
+        "prettier/standard"
+    ],
+    "plugins": ["@typescript-eslint/tslint", "prettier"],
+    "rules": {
+        "@typescript-eslint/tslint/config": [
+            "warn",
+            {
+                "lintFile": "./tslint.json"
+            }
+        ]
+    }
+}
