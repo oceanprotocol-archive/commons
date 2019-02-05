@@ -5,9 +5,9 @@ import About from './pages/About'
 import Details from './pages/Details'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
-import Styleguide from './pages/Styleguide'
 import Publish from './pages/Publish'
 import Search from './pages/Search'
+import Styleguide from './pages/Styleguide'
 
 const Routes = () => (
     <Router>
