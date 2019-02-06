@@ -1,6 +1,4 @@
-import {
-    Ocean
-} from '@oceanprotocol/squid/dist/node/squid'
+import { Ocean } from '@oceanprotocol/squid/dist/node/squid'
 
 import {
     address,

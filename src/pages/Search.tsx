@@ -3,17 +3,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { provideOcean } from '../ocean'
 
-interface IState {
+interface SearchState {
     results: any[]
 }
 
-interface IProps {
-    location: any,
+interface SearchProps {
+    location: any
     history: any
 }
 
-class Search extends Component<IProps, IState>  {
-
+class Search extends Component<SearchProps, SearchState> {
     public state = { results: [] }
 
     public async componentDidMount() {
@@ -30,30 +29,30 @@ class Search extends Component<IProps, IState>  {
             }
         }
         const assets = await ocean.searchAssets(queryRequest)
-        this.setState(state => ({results:assets}))
+        this.setState(state => ({ results: assets }))
     }
 
     public render() {
         return (
             <>
-                {this.state.results.length ? (this.state.results.map(asset => this.renderAssetBox(asset))): (<div>No data sets yet</div>)}
+                {this.state.results.length ? (
+                    this.state.results.map(asset => this.renderAssetBox(asset))
+                ) : (
+                    <div>No data sets yet</div>
+                )}
             </>
         )
     }
 
-    private renderAssetBox = (asset:any) => {
+    private renderAssetBox = (asset: any) => {
         const { metadata } = asset.findServiceByType('Metadata')
         return (
-            <div key={asset.id} onClick={this.openDetails.bind(this, asset.id)}>
+            <Link key={asset.id} to={`/asset/${asset.id}`}>
                 <div>{asset.id}</div>
                 <div>{metadata.base.name}</div>
                 <div>{metadata.base.description}</div>
-            </div>
+            </Link>
         )
-    }
-
-    private openDetails = (assetId:string) => {
-        this.props.history.push(`/asset/${assetId}`)
     }
 }
 
