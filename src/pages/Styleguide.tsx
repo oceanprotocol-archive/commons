@@ -7,8 +7,8 @@ import styles from './Styleguide.module.scss'
 import form from '../data/form-styleguide.json'
 
 class Styleguide extends Component {
-    public formFields = () =>
-        Object.entries(form.fields).map(([key, value]) => (
+    public formFields = (entries: any[]) =>
+        entries.map(([key, value]) => (
             <Input
                 key={key}
                 name={key}
@@ -22,6 +22,7 @@ class Styleguide extends Component {
         ))
 
     public render() {
+        const entries = Object.entries(form.fields)
         return (
             <div className={styles.page}>
                 <h1>Styleguide</h1>
@@ -33,7 +34,7 @@ class Styleguide extends Component {
                 </Button>
 
                 <Form title={form.title} description={form.description}>
-                    {this.formFields}
+                    {this.formFields(entries)}
                 </Form>
             </div>
         )

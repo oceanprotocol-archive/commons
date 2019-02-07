@@ -52,16 +52,16 @@ class App extends Component<{}, AppState> {
                 if (accounts.length === 0 && (window as any).ethereum) {
                     await (window as any).ethereum.enable()
                     const { ocean } = await provideOcean()
-                    this.setState(state => ({
+                    this.setState({
                         isLogged: true,
                         web3,
                         ocean
-                    }))
+                    })
                 } else {
-                    this.setState(state => ({
+                    this.setState({
                         isLogged: true,
                         web3
-                    }))
+                    })
                 }
             } catch (e) {
                 this.setDefaultProvider()
@@ -78,11 +78,11 @@ class App extends Component<{}, AppState> {
                 const accounts = await web3.eth.getAccounts()
                 if (accounts.length > 0) {
                     const { ocean } = await provideOcean()
-                    this.setState(state => ({
+                    this.setState({
                         isLogged: true,
                         web3,
                         ocean
-                    }))
+                    })
                 }
             } catch (e) {
                 this.setDefaultProvider()
@@ -93,14 +93,14 @@ class App extends Component<{}, AppState> {
     }
 
     private setDefaultProvider = () => {
-        this.setState(state => ({
+        this.setState({
             isLogged: false,
             web3: new Web3(
                 new Web3.providers.HttpProvider(
                     `${nodeScheme}://${nodeHost}:${nodePort}`
                 )
             )
-        }))
+        })
     }
 }
 

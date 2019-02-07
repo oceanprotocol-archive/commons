@@ -282,7 +282,7 @@ class Publish extends Component<{}, PublishState> {
             )
         }
 
-        const ddo = await this.context.ocean.registerAsset(newAsset, account[0])
+        await this.context.ocean.registerAsset(newAsset, account[0])
     }
 }
 
