@@ -6,12 +6,12 @@ import styles from './Input.module.scss'
 import Label from './Label'
 import Row from './Row'
 
-interface IOptionProps {
+interface OptionProps {
     value: string
     label: string
 }
 
-interface IInputProps {
+interface InputProps {
     name: string
     label: string
     placeholder?: string
@@ -20,11 +20,11 @@ interface IInputProps {
     tag?: string
     type?: string
     small?: boolean
-    options?: IOptionProps[]
+    options?: OptionProps[]
     additionalComponent?: void
 }
 
-interface IInputState {
+interface InputState {
     isFocused: boolean
 }
 
@@ -38,8 +38,8 @@ const Tag = ({ ...props }) => {
     }
 }
 
-export default class Input extends PureComponent<IInputProps, IInputState> {
-    public state: IInputState = { isFocused: false }
+export default class Input extends PureComponent<InputProps, InputState> {
+    public state: InputState = { isFocused: false }
 
     public inputWrapClasses() {
         if (this.props.type === 'search') {
@@ -64,7 +64,6 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
             required,
             type,
             help,
-            small,
             tag,
             additionalComponent,
             children,
@@ -80,7 +79,6 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
 
                 {type === 'radio' || type === 'checkbox' ? (
                     <div className={styles.radioGroup}>
-                        {/* tslint:disable-next-line:jsx-no-multiline-js */}
                         {options &&
                             options.map((option, index) => (
                                 <div className={styles.radioWrap} key={index}>
@@ -111,7 +109,6 @@ export default class Input extends PureComponent<IInputProps, IInputState> {
                             onFocus={this.toggleFocus}
                             onBlur={this.toggleFocus}
                         >
-                            {/* tslint:disable-next-line:jsx-no-multiline-js */}
                             {tag === 'select'
                                 ? options &&
                                   options.map((option, index) => (

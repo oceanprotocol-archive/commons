@@ -27,7 +27,7 @@ class Styleguide extends Component {
                 <h1>Styleguide</h1>
 
                 <Button>I am a button</Button>
-                <Button primary={true}>I am a primary button</Button>
+                <Button primary>I am a primary button</Button>
                 <Button href="https://hello.com">
                     I am a link disguised as a button
                 </Button>

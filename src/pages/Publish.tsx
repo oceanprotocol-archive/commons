@@ -213,7 +213,7 @@ class Publish extends Component<{}, PublishState> {
                         />
                     </div>
                     <User.Consumer>
-                        {(states /* tslint:disable-next-line */) => (
+                        {states => (
                             <div>
                                 {states.isLogged ? (
                                     <div>

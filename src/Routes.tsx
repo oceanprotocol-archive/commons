@@ -12,7 +12,7 @@ import Styleguide from './pages/Styleguide'
 const Routes = () => (
     <Router>
         <Switch>
-            <Route exact={true} component={Home} path="/" />
+            <Route exact component={Home} path="/" />
             <Route component={Styleguide} path="/styleguide" />
             <Route component={About} path="/about" />
             <Route component={Publish} path="/publish" />
