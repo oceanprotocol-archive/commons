@@ -6,7 +6,8 @@
       "label": "Your name",
       "placeholder": "i.e. Jelly McJellyfish",
       "type": "text",
-      "required": true
+      "required": true,
+      "help": "Help me"
     },
     "email": {
       "label": "Your email",
@@ -17,7 +18,7 @@
     "message": {
       "label": "Your message",
       "placeholder": "i.e. jelly@mcjellyfish.com",
-      "tag": "textarea",
+      "type": "textarea",
       "required": true
     },
     "about": {
@@ -52,7 +53,7 @@
     },
     "industry": {
       "label": "Industry",
-      "tag": "select",
+      "type": "select",
       "required": true,
       "options": [
         {

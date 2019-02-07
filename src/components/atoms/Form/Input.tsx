@@ -29,16 +29,6 @@ interface InputState {
     isFocused: boolean
 }
 
-const Tag = ({ ...props }) => {
-    if (props.tag && props.tag === 'select') {
-        return <select className={styles.select} {...props} />
-    } else if (props.tag && props.tag === 'textarea') {
-        return <textarea className={styles.input} {...props} />
-    } else {
-        return <input className={styles.input} {...props} />
-    }
-}
-
 export default class Input extends PureComponent<InputProps, InputState> {
     public state: InputState = { isFocused: false }
 
@@ -58,6 +48,58 @@ export default class Input extends PureComponent<InputProps, InputState> {
         this.setState({ isFocused: !this.state.isFocused })
     }
 
+    public InputComponent = ({ ...props }) => {
+        if (props.type === 'select') {
+            return (
+                <div className={this.inputWrapClasses()}>
+                    <select className={styles.select} {...props}>
+                        {props.options &&
+                            props.options.map((option: any, index: number) => (
+                                <option key={index} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                    </select>
+                </div>
+            )
+        } else if (props.type === 'textarea') {
+            return (
+                <div className={this.inputWrapClasses()}>
+                    <textarea className={styles.input} {...props} />
+                </div>
+            )
+        } else if (props.type === 'radio' || props.type === 'checkbox') {
+            return (
+                <div className={styles.radioGroup}>
+                    {props.options &&
+                        props.options.map((option: any, index: number) => (
+                            <div className={styles.radioWrap} key={index}>
+                                <input
+                                    className={styles.radio}
+                                    type={this.props.type}
+                                    id={option.value}
+                                    name={this.props.name}
+                                    value={option.value}
+                                />
+                                <label
+                                    className={styles.radioLabel}
+                                    htmlFor={option.value}
+                                >
+                                    {option.label}
+                                </label>
+                            </div>
+                        ))}
+                </div>
+            )
+        }
+
+        return (
+            <div className={this.inputWrapClasses()}>
+                <input className={styles.input} {...props} />
+            </div>
+        )
+    }
+
     public render() {
         const {
             name,
@@ -65,9 +107,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
             required,
             type,
             help,
-            tag,
             additionalComponent,
-            children,
             options,
             ...props
         } = this.props
@@ -78,50 +118,18 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     {label}
                 </Label>
 
-                {type === 'radio' || type === 'checkbox' ? (
-                    <div className={styles.radioGroup}>
-                        {options &&
-                            options.map((option, index) => (
-                                <div className={styles.radioWrap} key={index}>
-                                    <input
-                                        className={styles.radio}
-                                        type={this.props.type}
-                                        id={option.value}
-                                        name={this.props.name}
-                                        value={option.value}
-                                    />
-                                    <label
-                                        className={styles.radioLabel}
-                                        htmlFor={option.value}
-                                    >
-                                        {option.label}
-                                    </label>
-                                </div>
-                            ))}
-                    </div>
-                ) : (
-                    <div className={this.inputWrapClasses()}>
-                        <Tag
-                            id={name}
-                            name={name}
-                            required={required}
-                            type={type}
-                            {...props}
-                            onFocus={this.toggleFocus}
-                            onBlur={this.toggleFocus}
-                        >
-                            {tag === 'select'
-                                ? options &&
-                                  options.map((option, index) => (
-                                      <option key={index} value={option.value}>
-                                          {option.label}
-                                      </option>
-                                  ))
-                                : children}
-                        </Tag>
-                        {type === 'search' && <SearchIcon />}
-                    </div>
-                )}
+                <this.InputComponent
+                    id={name}
+                    label={label}
+                    name={name}
+                    required={required}
+                    type={type}
+                    options={options}
+                    {...props}
+                    onFocus={this.toggleFocus}
+                    onBlur={this.toggleFocus}
+                />
+                {type === 'search' && <SearchIcon />}
 
                 {help && <Help>{help}</Help>}
 

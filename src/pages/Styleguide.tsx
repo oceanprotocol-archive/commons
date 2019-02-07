@@ -15,9 +15,9 @@ class Styleguide extends Component {
                 label={value.label}
                 placeholder={value.placeholder}
                 required={value.required}
-                tag={value.tag}
                 type={value.type}
                 help={value.help}
+                options={value.options}
             />
         ))
 
