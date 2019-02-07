@@ -19,9 +19,10 @@ interface InputProps {
     help?: string
     tag?: string
     type?: string
-    small?: boolean
     options?: OptionProps[]
     additionalComponent?: void
+    value?: string
+    onChange?: any
 }
 
 interface InputState {
