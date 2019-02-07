@@ -1,0 +1,114 @@
+{
+  "title": "Publish a new data asset",
+  "description": "A cool form description",
+  "fields": {
+    "name": {
+      "label": "Title",
+      "placeholder": "i.e. My cool data set",
+      "type": "text",
+      "required": true,
+      "help": "Help me"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "i.e. My cool data set",
+      "type": "textarea",
+      "required": true,
+      "rows": 5
+    },
+    "price": {
+      "label": "Price",
+      "placeholder": "i.e. 1000",
+      "type": "number",
+      "required": true
+    },
+    "author": {
+      "label": "Author",
+      "placeholder": "i.e. Jelly McJellyfish",
+      "type": "text",
+      "required": true
+    },
+    "files": {
+      "label": "Files",
+      "placeholder": "i.e. https://file.com/file.json",
+      "type": "text",
+      "required": true
+    },
+    "type": {
+      "label": "Type",
+      "type": "select",
+      "required": true,
+      "options": [
+        {
+          "value": "",
+          "label": "---"
+        },
+        {
+          "value": "dataset",
+          "label": "Data set"
+        },
+        {
+          "value": "algorithm",
+          "label": "Algorithm"
+        },
+        {
+          "value": "container",
+          "label": "Container"
+        },
+        {
+          "value": "workflow",
+          "label": "Workflow"
+        },
+        {
+          "value": "other",
+          "label": "Other"
+        }
+      ]
+    },
+    "license": {
+      "label": "License",
+      "type": "select",
+      "required": true,
+      "options": [
+        {
+          "value": "none",
+          "label": "No License Specified"
+        },
+        {
+          "value": "public-domain",
+          "label": "Public Domain"
+        },
+        {
+          "value": "cc-by",
+          "label": "CC BY: Attribution"
+        },
+        {
+          "value": "cc-by-sa",
+          "label": "CC BY-SA: Attribution ShareAlike"
+        },
+        {
+          "value": "cc-by-nd",
+          "label": "CC BY-ND: Attribution-NoDerivs"
+        },
+        {
+          "value": "cc-by-nc",
+          "label": "CC BY-NC: Attribution-NonCommercial"
+        },
+        {
+          "value": "cc-by-nc-sa",
+          "label": "CC BY-NC-SA: Attribution-NonCommercial-ShareAlike"
+        },
+        {
+          "value": "cc-by-nc-nd",
+          "label": "CC BY-NC-ND: Attribution-NonCommercial-NoDerivs"
+        }
+      ]
+    },
+    "copyrightHolder": {
+      "label": "Copyright Holder",
+      "placeholder": "i.e. fwhfiw",
+      "type": "text",
+      "required": true
+    }
+  }
+}

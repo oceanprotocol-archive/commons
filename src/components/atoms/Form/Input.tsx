@@ -23,6 +23,7 @@ interface InputProps {
     additionalComponent?: void
     value?: string
     onChange?: any
+    rows?: number
 }
 
 interface InputState {

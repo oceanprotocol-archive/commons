@@ -1,7 +1,11 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import Button from '../components/atoms/Button'
+import Form from '../components/atoms/Form/Form'
+import Input from '../components/atoms/Form/Input'
 import { User } from '../context/User'
 import AssetModel from '../models/AssetModel'
+
+import form from '../data/form-publish.json'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -33,98 +37,94 @@ class Publish extends Component<{}, PublishState> {
         categories: ['']
     }
 
+    public formFields = (entries: any[]) =>
+        entries.map(([key, value]) => {
+            let onChange = this.inputChange
+
+            if (key === 'files' || key === 'categories') {
+                onChange = this.inputToArrayChange
+            }
+
+            return (
+                <Input
+                    key={key}
+                    name={key}
+                    label={value.label}
+                    placeholder={value.placeholder}
+                    required={value.required}
+                    type={value.type}
+                    help={value.help}
+                    options={value.options}
+                    onChange={onChange}
+                    rows={value.rows}
+                    // value={this.state[key]}
+                    // value={this.state.files[0]}
+                />
+            )
+        })
+
+    private inputChange = (
+        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    ) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    private inputToArrayChange = (
+        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    ) => {
+        this.setState({
+            [event.target.name]: [event.target.value]
+        })
+    }
+
+    private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const account = await this.context.ocean.getAccounts()
+        const newAsset = {
+            // OEP-08 Attributes
+            // https://github.com/oceanprotocol/OEPs/tree/master/8
+            base: Object.assign(AssetModel.base, {
+                name: this.state.name,
+                description: this.state.description,
+                dateCreated: new Date().toString(),
+                author: this.state.author,
+                license: this.state.license,
+                copyrightHolder: this.state.copyrightHolder,
+                contentUrls: [this.state.files],
+                price: this.state.price,
+                type: this.state.type,
+                size: '',
+                encoding: '',
+                compression: undefined,
+                contentType: '',
+                workExample: undefined,
+                inLanguage: undefined,
+                tags: ''
+            }),
+            curation: Object.assign(AssetModel.curation),
+            additionalInformation: Object.assign(
+                AssetModel.additionalInformation
+            )
+        }
+
+        await this.context.ocean.registerAsset(newAsset, account[0])
+    }
+
     public render() {
+        const entries = Object.entries(form.fields)
+
         return (
             <div>
                 <h1>Publish</h1>
-                <form onSubmit={this.registerAsset}>
-                    <div>
-                        Name:
-                        <input
-                            type="text"
-                            name="name"
-                            value={this.state.name}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <div>
-                        Description:
-                        <input
-                            type="text"
-                            name="description"
-                            value={this.state.description}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <div>
-                        Price:
-                        <input
-                            type="number"
-                            name="price"
-                            value={this.state.price}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <div>
-                        Author:
-                        <input
-                            type="text"
-                            name="author"
-                            value={this.state.author}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <div>
-                        Files:
-                        <input
-                            type="text"
-                            name="files"
-                            value={this.state.files[0]}
-                            onChange={this.inputToArrayChange}
-                        />
-                    </div>
-                    <div>
-                        Type:
-                        <select
-                            name="type"
-                            value={this.state.type}
-                            onChange={this.inputChange}
-                        >
-                            <option value="dataset">Data set</option>
-                            <option value="algorithm">Algorithm</option>
-                            <option value="container">Container</option>
-                            <option value="workflow">Workflow</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div>
-                        License:
-                        <select
-                            name="license"
-                            value={this.state.license}
-                            onChange={this.inputChange}
-                        >
-                            <option value="none">No License Specified</option>
-                            <option value="Public Domain">Public Domain</option>
-                            <option value="CC BY">CC BY: Attribution</option>
-                            <option value="CC BY-SA">
-                                CC BY-SA: Attribution ShareAlike
-                            </option>
-                            <option value="CC BY-ND">
-                                CC BY-ND: Attribution-NoDerivs
-                            </option>
-                            <option value="CC BY-NC">
-                                CC BY-NC: Attribution-NonCommercial
-                            </option>
-                            <option value="CC BY-NC-SA">
-                                CC BY-NC-SA:
-                                Attribution-NonCommercial-ShareAlike
-                            </option>
-                            <option value="CC BY-NC-ND">
-                                CC BY-NC-ND: Attribution-NonCommercial-NoDerivs
-                            </option>
-                        </select>
-                    </div>
+                <Form
+                    title={form.title}
+                    description={form.description}
+                    onSubmit={this.registerAsset}
+                >
+                    {this.formFields(entries)}
+
                     <div>
                         Category:
                         <select
@@ -203,86 +203,25 @@ class Publish extends Component<{}, PublishState> {
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div>
-                        CopyrightHolder:
-                        <input
-                            type="text"
-                            name="copyrightHolder"
-                            value={this.state.copyrightHolder}
-                            onChange={this.inputChange}
-                        />
-                    </div>
+
                     <User.Consumer>
                         {states => (
                             <div>
                                 {states.isLogged ? (
-                                    <div>
-                                        <Button>
-                                            Register asset (we are logged)
-                                        </Button>
-                                    </div>
+                                    <Button primary>
+                                        Register asset (we are logged)
+                                    </Button>
                                 ) : (
-                                    <div>
-                                        <button onClick={states.startLogin}>
-                                            Register asset (login first)
-                                        </button>
-                                    </div>
+                                    <Button primary onClick={states.startLogin}>
+                                        Register asset (login first)
+                                    </Button>
                                 )}
                             </div>
                         )}
                     </User.Consumer>
-                </form>
+                </Form>
             </div>
         )
-    }
-
-    private inputChange = (
-        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-    ) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-    }
-
-    private inputToArrayChange = (
-        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-    ) => {
-        this.setState({
-            [event.target.name]: [event.target.value]
-        })
-    }
-
-    private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        const account = await this.context.ocean.getAccounts()
-        const newAsset = {
-            // OEP-08 Attributes
-            // https://github.com/oceanprotocol/OEPs/tree/master/8
-            base: Object.assign(AssetModel.base, {
-                name: this.state.name,
-                description: this.state.description,
-                dateCreated: new Date().toString(),
-                author: this.state.author,
-                license: this.state.license,
-                copyrightHolder: this.state.copyrightHolder,
-                contentUrls: [this.state.files],
-                price: this.state.price,
-                type: this.state.type,
-                size: '',
-                encoding: '',
-                compression: undefined,
-                contentType: '',
-                workExample: undefined,
-                inLanguage: undefined,
-                tags: ''
-            }),
-            curation: Object.assign(AssetModel.curation),
-            additionalInformation: Object.assign(
-                AssetModel.additionalInformation
-            )
-        }
-
-        await this.context.ocean.registerAsset(newAsset, account[0])
     }
 }
 
