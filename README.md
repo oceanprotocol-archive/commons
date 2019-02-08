@@ -14,6 +14,8 @@
 - [Code Style](#code-style)
 - [License](#license)
 
+<img alt="screen shot 2019-02-08 at 16 53 57" src="https://user-images.githubusercontent.com/90316/52489283-27080e80-2bc2-11e9-8ec0-508c21eb86f7.png">
+
 ## Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
