@@ -52,6 +52,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
             return (
                 <div className={this.inputWrapClasses()}>
                     <select className={styles.select} {...props}>
+                        <option value="none">---</option>
                         {props.options &&
                             props.options.map(
                                 (option: string, index: number) => (

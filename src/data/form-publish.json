@@ -38,14 +38,13 @@
       "label": "Type",
       "type": "select",
       "required": true,
-      "options": ["", "Data set", "Algorithm", "Container", "Workflow", "Other"]
+      "options": ["Data set", "Algorithm", "Container", "Workflow", "Other"]
     },
     "license": {
       "label": "License",
       "type": "select",
       "required": true,
       "options": [
-        "No License Specified",
         "Public Domain",
         "CC BY: Attribution",
         "CC BY-SA: Attribution ShareAlike",
@@ -66,7 +65,6 @@
       "type": "select",
       "required": true,
       "options": [
-        "",
         "Image Recognition",
         "Dataset Of Datasets",
         "Language",
