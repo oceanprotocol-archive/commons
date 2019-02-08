@@ -29,7 +29,7 @@ class Search extends Component<SearchProps, SearchState> {
             }
         }
         const assets = await ocean.searchAssets(queryRequest)
-        this.setState(state => ({ results: assets }))
+        this.setState({ results: assets })
     }
 
     public render() {

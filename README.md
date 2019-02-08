@@ -49,7 +49,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 For linting and auto-formatting you can use:
 
 ```bash
-# auto format all ts & css with tslint & stylelint
+# auto format all ts & css with eslint & stylelint
 npm run lint
 
 # auto format all ts & css with prettier, taking all configs into account

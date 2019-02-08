@@ -1,0 +1,104 @@
+{
+  "title": "Publish a new data asset",
+  "description": "A cool form description",
+  "fields": {
+    "name": {
+      "label": "Title",
+      "placeholder": "i.e. My cool data set",
+      "type": "text",
+      "required": true,
+      "help": "Help me"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "i.e. My cool data set",
+      "type": "textarea",
+      "required": true,
+      "rows": 5
+    },
+    "price": {
+      "label": "Price",
+      "placeholder": "i.e. 1000",
+      "type": "number",
+      "required": true
+    },
+    "author": {
+      "label": "Author",
+      "placeholder": "i.e. Jelly McJellyfish",
+      "type": "text",
+      "required": true
+    },
+    "files": {
+      "label": "Files",
+      "placeholder": "i.e. https://file.com/file.json",
+      "type": "text",
+      "required": true
+    },
+    "type": {
+      "label": "Type",
+      "type": "select",
+      "required": true,
+      "options": ["", "Data set", "Algorithm", "Container", "Workflow", "Other"]
+    },
+    "license": {
+      "label": "License",
+      "type": "select",
+      "required": true,
+      "options": [
+        "No License Specified",
+        "Public Domain",
+        "CC BY: Attribution",
+        "CC BY-SA: Attribution ShareAlike",
+        "CC BY-ND: Attribution-NoDerivs",
+        "CC BY-NC: Attribution-NonCommercial",
+        "CC BY-NC-SA: Attribution-NonCommercial-ShareAlike",
+        "CC BY-NC-ND: Attribution-NonCommercial-NoDerivs"
+      ]
+    },
+    "copyrightHolder": {
+      "label": "Copyright Holder",
+      "placeholder": "i.e. fwhfiw",
+      "type": "text",
+      "required": true
+    },
+    "categories": {
+      "label": "Categories",
+      "type": "select",
+      "required": true,
+      "options": [
+        "",
+        "Image Recognition",
+        "Dataset Of Datasets",
+        "Language",
+        "Performing Arts",
+        "Visual Arts & Design",
+        "Philosophy",
+        "History",
+        "Theology",
+        "Anthropology & Archeology",
+        "Sociology",
+        "Psychology",
+        "Politics",
+        "Interdisciplinary",
+        "Economics & Finance",
+        "Demography",
+        "Biology",
+        "Chemistry",
+        "Physics & Energy",
+        "Earth & Climate",
+        "Space & Astronomy",
+        "Mathematics",
+        "Computer Technology",
+        "Engineering",
+        "Agriculture & Bio Engineering",
+        "Transportation",
+        "Urban Planning",
+        "Medicine",
+        "Business & Management",
+        "Sports & Recreation",
+        "Communication & Journalism",
+        "Other"
+      ]
+    }
+  }
+}

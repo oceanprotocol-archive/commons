@@ -6,10 +6,11 @@
     "extends": [
         "oceanprotocol",
         "oceanprotocol/react",
-        "plugin:prettier/recommended",
         "prettier/react",
         "prettier/standard",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:prettier/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint"
     ],
     "plugins": ["@typescript-eslint", "prettier"],
     "rules": {
@@ -20,6 +21,8 @@
         ]
     },
     "env": {
+        "es6": true,
+        "browser": true,
         "jest": true
     }
 }

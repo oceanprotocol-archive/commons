@@ -12,7 +12,7 @@ interface ButtonProps {
 export default class Button extends PureComponent<ButtonProps, any> {
     public render() {
         let classes
-        const { primary, link, href, children } = this.props
+        const { primary, link, href, children, ...props } = this.props
 
         if (primary) {
             classes = styles.buttonPrimary
@@ -23,11 +23,11 @@ export default class Button extends PureComponent<ButtonProps, any> {
         }
 
         return href ? (
-            <a href={href} className={classes} {...this.props}>
+            <a href={href} className={classes} {...props}>
                 {children}
             </a>
         ) : (
-            <button className={classes} {...this.props}>
+            <button className={classes} {...props}>
                 {children}
             </button>
         )

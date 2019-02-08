@@ -1,0 +1,43 @@
+{
+  "title": "A cool form title",
+  "description": "A cool form description",
+  "fields": {
+    "name": {
+      "label": "Your name",
+      "placeholder": "i.e. Jelly McJellyfish",
+      "type": "text",
+      "required": true,
+      "help": "Help me"
+    },
+    "email": {
+      "label": "Your email",
+      "placeholder": "i.e. jelly@mcjellyfish.com",
+      "type": "email",
+      "required": true
+    },
+    "message": {
+      "label": "Your message",
+      "placeholder": "i.e. jelly@mcjellyfish.com",
+      "type": "textarea",
+      "required": true
+    },
+    "about": {
+      "label": "About you",
+      "type": "radio",
+      "required": true,
+      "options": ["I can provide more data", "I want to use more data"]
+    },
+    "about2": {
+      "label": "About you",
+      "type": "checkbox",
+      "required": true,
+      "options": ["I can provide data", "I want to use data"]
+    },
+    "industry": {
+      "label": "Industry",
+      "type": "select",
+      "required": true,
+      "options": ["Automotive", "Technology"]
+    }
+  }
+}

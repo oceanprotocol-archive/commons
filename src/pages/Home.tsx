@@ -1,5 +1,8 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import Button from '../components/atoms/Button'
+import Form from '../components/atoms/Form/Form'
+import Input from '../components/atoms/Form/Input'
 import styles from './Home.module.scss'
 
 interface HomeState {
@@ -18,16 +21,19 @@ class Home extends Component<HomeProps, HomeState> {
             <div className={styles.home}>
                 <div>Home</div>
 
+                <Link to={'/styleguide'}>Styleguide</Link>
+
                 <div>
-                    <form onSubmit={this.searchAssets}>
-                        <input
-                            type="text"
+                    <Form onSubmit={this.searchAssets}>
+                        <Input
+                            type="search"
                             name="search"
+                            label="Search"
                             value={this.state.search}
                             onChange={this.inputChange}
                         />
                         <Button>Search</Button>
-                    </form>
+                    </Form>
                 </div>
             </div>
         )
