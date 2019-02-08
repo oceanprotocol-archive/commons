@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Page from '../templates/Page'
+import Route from '../components/templates/Route'
 
 class About extends Component {
     public render() {
-        return <Page title="About">Hello About</Page>
+        return <Route title="About">Hello About</Route>
     }
 }
 

@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Page from '../templates/Page'
+import Route from '../components/templates/Route'
 import { provideOcean } from '../ocean'
 
 interface SearchState {
@@ -46,13 +46,13 @@ export default class Search extends Component<SearchProps, SearchState> {
 
     public render() {
         return (
-            <Page title="Search Results" wide>
+            <Route title="Search Results" wide>
                 {this.state.results.length ? (
                     this.state.results.map(asset => this.renderAssetBox(asset))
                 ) : (
                     <div>No data sets yet</div>
                 )}
-            </Page>
+            </Route>
         )
     }
 }

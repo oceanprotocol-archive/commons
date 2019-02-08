@@ -1,13 +1,13 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import About from './pages/About'
-import Details from './pages/Details'
-import Home from './pages/Home'
-import NotFound from './pages/NotFound'
-import Publish from './pages/Publish'
-import Search from './pages/Search'
-import Styleguide from './pages/Styleguide'
+import About from './routes/About'
+import Details from './routes/Details'
+import Home from './routes/Home'
+import NotFound from './routes/NotFound'
+import Publish from './routes/Publish'
+import Search from './routes/Search'
+import Styleguide from './routes/Styleguide'
 
 const Routes = () => (
     <Switch>

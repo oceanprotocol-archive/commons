@@ -1,19 +1,21 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import Content from '../components/Content'
-import styles from './Page.module.scss'
-import meta from '../data/meta.json'
+import Content from '../Content'
+import styles from './Route.module.scss'
+import meta from '../../data/meta.json'
 
-const Page = ({
+const Route = ({
     title,
     wide,
-    children
+    children,
+    className
 }: {
     title: string
     children: any
     wide?: boolean
+    className?: string
 }) => (
-    <>
+    <div className={className}>
         <Helmet defaultTitle={meta.title} titleTemplate={`%s - ${meta.title}`}>
             <title>{title}</title>
         </Helmet>
@@ -25,7 +27,7 @@ const Page = ({
 
             {children}
         </Content>
-    </>
+    </div>
 )
 
-export default Page
+export default Route

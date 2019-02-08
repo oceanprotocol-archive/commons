@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Page from '../templates/Page'
+import Route from '../components/templates/Route'
 
 class NotFound extends Component {
     public render() {
-        return <Page title="404 - Not Found">Not Found</Page>
+        return <Route title="404 - Not Found">Not Found</Route>
     }
 }
 
