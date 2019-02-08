@@ -9,7 +9,7 @@
     padding-bottom: $spacer;
     align-self: flex-end;
 
-    > section {
+    > div {
         align-self: flex-end;
 
         @media screen and (min-width: $break-point--small) {

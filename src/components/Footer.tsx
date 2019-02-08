@@ -6,7 +6,7 @@ import meta from '../data/meta.json'
 
 const Footer = () => (
     <footer className={styles.footer}>
-        <Content>
+        <Content wide>
             <small>
                 &copy; {new Date().getFullYear()}{' '}
                 <a href={meta.social[0].url}>{meta.company}</a> &mdash; All

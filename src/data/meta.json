@@ -6,6 +6,26 @@
     {
       "title": "Site",
       "url": "https://oceanprotocol.com"
+    },
+    {
+      "title": "Blog",
+      "url": "https://blog.oceanprotocol.com"
+    },
+    {
+      "title": "Twitter",
+      "url": "https://twitter.com/oceanprotocol"
+    },
+    {
+      "title": "GitHub",
+      "url": "https://github.com/oceanprotocol"
+    },
+    {
+      "title": "Gitter",
+      "url": "https://gitter.im/oceanprotocol/Lobby"
+    },
+    {
+      "title": "Telegram",
+      "url": "https://t.me/joinchat/GUyxrE0Hi154D0NrlOqLFg"
     }
   ]
 }
