@@ -38,14 +38,7 @@
       "label": "Type",
       "type": "select",
       "required": true,
-      "options": [
-        "---",
-        "Data set",
-        "Algorithm",
-        "Container",
-        "Workflow",
-        "Other"
-      ]
+      "options": ["", "Data set", "Algorithm", "Container", "Workflow", "Other"]
     },
     "license": {
       "label": "License",
@@ -72,7 +65,40 @@
       "label": "Categories",
       "type": "select",
       "required": true,
-      "options": ["No Category Specified"]
+      "options": [
+        "",
+        "Image Recognition",
+        "Dataset Of Datasets",
+        "Language",
+        "Performing Arts",
+        "Visual Arts & Design",
+        "Philosophy",
+        "History",
+        "Theology",
+        "Anthropology & Archeology",
+        "Sociology",
+        "Psychology",
+        "Politics",
+        "Interdisciplinary",
+        "Economics & Finance",
+        "Demography",
+        "Biology",
+        "Chemistry",
+        "Physics & Energy",
+        "Earth & Climate",
+        "Space & Astronomy",
+        "Mathematics",
+        "Computer Technology",
+        "Engineering",
+        "Agriculture & Bio Engineering",
+        "Transportation",
+        "Urban Planning",
+        "Medicine",
+        "Business & Management",
+        "Sports & Recreation",
+        "Communication & Journalism",
+        "Other"
+      ]
     }
   }
 }

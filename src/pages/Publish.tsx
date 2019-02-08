@@ -124,99 +124,18 @@ class Publish extends Component<{}, PublishState> {
                 >
                     {this.formFields(entries)}
 
-                    <div>
-                        Category:
-                        <select
-                            name="categories"
-                            value={this.state.categories[0]}
-                            onChange={this.inputToArrayChange}
-                        >
-                            <option value="No Category Specified">
-                                No Category Specified
-                            </option>
-                            <option value="Image Recognition">
-                                Image Recognition
-                            </option>
-                            <option value="Dataset Of Datasets">
-                                Dataset Of Datasets
-                            </option>
-                            <option value="Language">Language</option>
-                            <option value="Performing Arts">
-                                Performing Arts
-                            </option>
-                            <option value="Visual Arts & Design">
-                                Visual Arts & Design
-                            </option>
-                            <option value="Philosophy">Philosophy</option>
-                            <option value="History">History</option>
-                            <option value="Theology">Theology</option>
-                            <option value="Anthropology & Archeology">
-                                Anthropology & Archeology
-                            </option>
-                            <option value="Sociology">Sociology</option>
-                            <option value="Psychology">Psychology</option>
-                            <option value="Politics">Politics</option>
-                            <option value="Interdisciplinary">
-                                Interdisciplinary
-                            </option>
-                            <option value="Economics & Finance">
-                                Economics & Finance
-                            </option>
-                            <option value="Demography">Demography</option>
-                            <option value="Biology">Biology</option>
-                            <option value="Chemistry">Chemistry</option>
-                            <option value="Physics & Energy">
-                                Physics & Energy
-                            </option>
-                            <option value="Earth & Climate">
-                                Earth & Climate
-                            </option>
-                            <option value="Space & Astronomy">
-                                Space & Astronomy
-                            </option>
-                            <option value="Mathematics">Mathematics</option>
-                            <option value="Computer Technology">
-                                Computer Technology
-                            </option>
-                            <option value="Engineering">Engineering</option>
-                            <option value="Agriculture & Bio Engineering">
-                                Agriculture & Bio Engineering
-                            </option>
-                            <option value="Transportation">
-                                Transportation
-                            </option>
-                            <option value="Urban Planning">
-                                Urban Planning
-                            </option>
-                            <option value="Medicine">Medicine</option>
-                            <option value="Language">Language</option>
-                            <option value="Business & Management">
-                                Business & Management
-                            </option>
-                            <option value="Sports & Recreation">
-                                Sports & Recreation
-                            </option>
-                            <option value="Communication & Journalism">
-                                Communication & Journalism
-                            </option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
                     <User.Consumer>
-                        {states => (
-                            <div>
-                                {states.isLogged ? (
-                                    <Button primary>
-                                        Register asset (we are logged)
-                                    </Button>
-                                ) : (
-                                    <Button primary onClick={states.startLogin}>
-                                        Register asset (login first)
-                                    </Button>
-                                )}
-                            </div>
-                        )}
+                        {states =>
+                            states.isLogged ? (
+                                <Button primary>
+                                    Register asset (we are logged)
+                                </Button>
+                            ) : (
+                                <Button primary onClick={states.startLogin}>
+                                    Register asset (login first)
+                                </Button>
+                            )
+                        }
                     </User.Consumer>
                 </Form>
             </div>
