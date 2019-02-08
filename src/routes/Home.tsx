@@ -20,7 +20,7 @@ class Home extends Component<HomeProps, HomeState> {
         return (
             <Route
                 title="Commons"
-                description="A marketplace to find and publish open data sets."
+                description="A marketplace to find and publish open data sets in the Ocean Network."
                 className={styles.home}
             >
                 <Form onSubmit={this.searchAssets}>
@@ -28,10 +28,11 @@ class Home extends Component<HomeProps, HomeState> {
                         type="search"
                         name="search"
                         label="Search"
+                        placeholder=""
                         value={this.state.search}
                         onChange={this.inputChange}
+                        group={<Button>Search</Button>}
                     />
-                    <Button>Search</Button>
                 </Form>
             </Route>
         )

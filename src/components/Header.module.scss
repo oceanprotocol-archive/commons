@@ -92,4 +92,5 @@
 .linkActive {
     composes: link;
     color: $brand-pink;
+    pointer-events: none;
 }
