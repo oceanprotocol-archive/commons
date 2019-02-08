@@ -25,46 +25,19 @@
       "label": "About you",
       "type": "radio",
       "required": true,
-      "options": [
-        {
-          "value": "provider",
-          "label": "I can provide data"
-        },
-        {
-          "value": "consumer",
-          "label": "I want to use data"
-        }
-      ]
+      "options": ["I can provide more data", "I want to use more data"]
     },
     "about2": {
       "label": "About you",
       "type": "checkbox",
       "required": true,
-      "options": [
-        {
-          "value": "provider2",
-          "label": "I can provide data"
-        },
-        {
-          "value": "consumer2",
-          "label": "I want to use data"
-        }
-      ]
+      "options": ["I can provide data", "I want to use data"]
     },
     "industry": {
       "label": "Industry",
       "type": "select",
       "required": true,
-      "options": [
-        {
-          "value": "automotive",
-          "label": "Automotive"
-        },
-        {
-          "value": "technology",
-          "label": "Technology"
-        }
-      ]
+      "options": ["Automotive", "Technology"]
     }
   }
 }

@@ -39,30 +39,12 @@
       "type": "select",
       "required": true,
       "options": [
-        {
-          "value": "",
-          "label": "---"
-        },
-        {
-          "value": "dataset",
-          "label": "Data set"
-        },
-        {
-          "value": "algorithm",
-          "label": "Algorithm"
-        },
-        {
-          "value": "container",
-          "label": "Container"
-        },
-        {
-          "value": "workflow",
-          "label": "Workflow"
-        },
-        {
-          "value": "other",
-          "label": "Other"
-        }
+        "---",
+        "Data set",
+        "Algorithm",
+        "Container",
+        "Workflow",
+        "Other"
       ]
     },
     "license": {
@@ -70,38 +52,14 @@
       "type": "select",
       "required": true,
       "options": [
-        {
-          "value": "none",
-          "label": "No License Specified"
-        },
-        {
-          "value": "public-domain",
-          "label": "Public Domain"
-        },
-        {
-          "value": "cc-by",
-          "label": "CC BY: Attribution"
-        },
-        {
-          "value": "cc-by-sa",
-          "label": "CC BY-SA: Attribution ShareAlike"
-        },
-        {
-          "value": "cc-by-nd",
-          "label": "CC BY-ND: Attribution-NoDerivs"
-        },
-        {
-          "value": "cc-by-nc",
-          "label": "CC BY-NC: Attribution-NonCommercial"
-        },
-        {
-          "value": "cc-by-nc-sa",
-          "label": "CC BY-NC-SA: Attribution-NonCommercial-ShareAlike"
-        },
-        {
-          "value": "cc-by-nc-nd",
-          "label": "CC BY-NC-ND: Attribution-NonCommercial-NoDerivs"
-        }
+        "No License Specified",
+        "Public Domain",
+        "CC BY: Attribution",
+        "CC BY-SA: Attribution ShareAlike",
+        "CC BY-ND: Attribution-NoDerivs",
+        "CC BY-NC: Attribution-NonCommercial",
+        "CC BY-NC-SA: Attribution-NonCommercial-ShareAlike",
+        "CC BY-NC-ND: Attribution-NonCommercial-NoDerivs"
       ]
     },
     "copyrightHolder": {
@@ -109,6 +67,12 @@
       "placeholder": "i.e. fwhfiw",
       "type": "text",
       "required": true
+    },
+    "categories": {
+      "label": "Categories",
+      "type": "select",
+      "required": true,
+      "options": ["No Category Specified"]
     }
   }
 }

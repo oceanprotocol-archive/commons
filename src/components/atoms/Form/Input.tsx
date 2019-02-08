@@ -1,15 +1,11 @@
 import cx from 'classnames'
 import React, { PureComponent } from 'react'
+import slugify from 'slugify'
 import { ReactComponent as SearchIcon } from '../../../img/search.svg'
 import Help from './Help'
 import styles from './Input.module.scss'
 import Label from './Label'
 import Row from './Row'
-
-interface OptionProps {
-    value: string
-    label: string
-}
 
 interface InputProps {
     name: string
@@ -19,7 +15,7 @@ interface InputProps {
     help?: string
     tag?: string
     type?: string
-    options?: OptionProps[]
+    options?: string[]
     additionalComponent?: void
     value?: string
     onChange?: any
@@ -55,11 +51,18 @@ export default class Input extends PureComponent<InputProps, InputState> {
                 <div className={this.inputWrapClasses()}>
                     <select className={styles.select} {...props}>
                         {props.options &&
-                            props.options.map((option: any, index: number) => (
-                                <option key={index} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
+                            props.options.map(
+                                (option: string, index: number) => (
+                                    <option
+                                        key={index}
+                                        value={slugify(option, {
+                                            lower: true
+                                        })}
+                                    >
+                                        {option}
+                                    </option>
+                                )
+                            )}
                     </select>
                 </div>
             )
@@ -73,20 +76,26 @@ export default class Input extends PureComponent<InputProps, InputState> {
             return (
                 <div className={styles.radioGroup}>
                     {props.options &&
-                        props.options.map((option: any, index: number) => (
+                        props.options.map((option: string, index: number) => (
                             <div className={styles.radioWrap} key={index}>
                                 <input
                                     className={styles.radio}
                                     type={this.props.type}
-                                    id={option.value}
+                                    id={slugify(option, {
+                                        lower: true
+                                    })}
                                     name={this.props.name}
-                                    value={option.value}
+                                    value={slugify(option, {
+                                        lower: true
+                                    })}
                                 />
                                 <label
                                     className={styles.radioLabel}
-                                    htmlFor={option.value}
+                                    htmlFor={slugify(option, {
+                                        lower: true
+                                    })}
                                 >
-                                    {option.label}
+                                    {option}
                                 </label>
                             </div>
                         ))}
