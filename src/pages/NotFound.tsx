@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import Page from '../templates/Page'
 
 class NotFound extends Component {
     public render() {
-        return <div>Not found</div>
+        return <Page title="404 - Not Found">Not Found</Page>
     }
 }
 

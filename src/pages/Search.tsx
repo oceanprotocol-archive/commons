@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Page from '../templates/Page'
 import { provideOcean } from '../ocean'
 
 interface SearchState {
@@ -12,7 +13,7 @@ interface SearchProps {
     history: any
 }
 
-class Search extends Component<SearchProps, SearchState> {
+export default class Search extends Component<SearchProps, SearchState> {
     public state = { results: [] }
 
     public async componentDidMount() {
@@ -32,18 +33,6 @@ class Search extends Component<SearchProps, SearchState> {
         this.setState({ results: assets })
     }
 
-    public render() {
-        return (
-            <>
-                {this.state.results.length ? (
-                    this.state.results.map(asset => this.renderAssetBox(asset))
-                ) : (
-                    <div>No data sets yet</div>
-                )}
-            </>
-        )
-    }
-
     private renderAssetBox = (asset: any) => {
         const { metadata } = asset.findServiceByType('Metadata')
         return (
@@ -54,6 +43,16 @@ class Search extends Component<SearchProps, SearchState> {
             </Link>
         )
     }
-}
 
-export default Search
+    public render() {
+        return (
+            <Page title="Search Results" wide>
+                {this.state.results.length ? (
+                    this.state.results.map(asset => this.renderAssetBox(asset))
+                ) : (
+                    <div>No data sets yet</div>
+                )}
+            </Page>
+        )
+    }
+}

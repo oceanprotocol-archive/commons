@@ -1,4 +1,5 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
+import Page from '../templates/Page'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
@@ -115,8 +116,7 @@ class Publish extends Component<{}, PublishState> {
         const entries = Object.entries(form.fields)
 
         return (
-            <div>
-                <h1>Publish</h1>
+            <Page title="Publish">
                 <Form
                     title={form.title}
                     description={form.description}
@@ -138,7 +138,7 @@ class Publish extends Component<{}, PublishState> {
                         }
                     </User.Consumer>
                 </Form>
-            </div>
+            </Page>
         )
     }
 }

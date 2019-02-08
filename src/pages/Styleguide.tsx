@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
-import styles from './Styleguide.module.scss'
+import Page from '../templates/Page'
 
 import form from '../data/form-styleguide.json'
 
@@ -24,9 +24,7 @@ class Styleguide extends Component {
     public render() {
         const entries = Object.entries(form.fields)
         return (
-            <div className={styles.page}>
-                <h1>Styleguide</h1>
-
+            <Page title="Styleguide">
                 <Button>I am a button</Button>
                 <Button primary>I am a primary button</Button>
                 <Button href="https://hello.com">
@@ -36,7 +34,7 @@ class Styleguide extends Component {
                 <Form title={form.title} description={form.description}>
                     {this.formFields(entries)}
                 </Form>
-            </div>
+            </Page>
         )
     }
 }

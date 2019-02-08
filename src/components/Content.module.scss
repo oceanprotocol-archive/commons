@@ -1,0 +1,16 @@
+@import '../styles/variables';
+
+.content {
+    padding: 0 $spacer / 2;
+    max-width: $break-point--small;
+    margin: 0 auto;
+
+    @media (min-width: $break-point--small) {
+        padding: 0 $spacer;
+    }
+}
+
+.wide {
+    composes: content;
+    max-width: $break-point--large;
+}

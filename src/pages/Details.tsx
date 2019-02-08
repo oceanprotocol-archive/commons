@@ -1,5 +1,6 @@
 import { Logger } from '@oceanprotocol/squid'
 import React, { Component } from 'react'
+import Page from '../templates/Page'
 import Button from '../components/atoms/Button'
 import { User } from '../context/User'
 
@@ -64,13 +65,13 @@ export default class Details extends Component<DetailsProps, DetailsState> {
 
     public render() {
         return (
-            <>
+            <Page title={'Details'}>
                 {this.state.metadata ? (
                     this.showDetails(this.state.ddo)
                 ) : (
                     <div>Loading</div>
                 )}
-            </>
+            </Page>
         )
     }
 }

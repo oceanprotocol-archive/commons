@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
+import Content from '../components/Content'
 import styles from './Home.module.scss'
 
 interface HomeState {
@@ -19,22 +20,22 @@ class Home extends Component<HomeProps, HomeState> {
     public render() {
         return (
             <div className={styles.home}>
-                <div>Home</div>
+                <Content>
+                    <Link to={'/styleguide'}>Styleguide</Link>
 
-                <Link to={'/styleguide'}>Styleguide</Link>
-
-                <div>
-                    <Form onSubmit={this.searchAssets}>
-                        <Input
-                            type="search"
-                            name="search"
-                            label="Search"
-                            value={this.state.search}
-                            onChange={this.inputChange}
-                        />
-                        <Button>Search</Button>
-                    </Form>
-                </div>
+                    <div>
+                        <Form onSubmit={this.searchAssets}>
+                            <Input
+                                type="search"
+                                name="search"
+                                label="Search"
+                                value={this.state.search}
+                                onChange={this.inputChange}
+                            />
+                            <Button>Search</Button>
+                        </Form>
+                    </div>
+                </Content>
             </div>
         )
     }
