@@ -108,7 +108,11 @@ class App extends Component<{}, AppState> {
                     <Router>
                         <>
                             <Header />
-                            <Routes />
+
+                            <main className={styles.main}>
+                                <Routes />
+                            </main>
+
                             <Footer />
                         </>
                     </Router>

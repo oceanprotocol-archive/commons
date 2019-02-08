@@ -1,9 +1,14 @@
+@import './styles/variables';
+
 .app {
     height: 100%;
-    display: flex;
-    flex-direction: column;
 
-    > * {
-        width: 100%;
-    }
+    // for sticky footer
+    display: flex;
+    min-height: calc(100vh - #{$page-frame * 2});
+    flex-direction: column;
+}
+
+.main {
+    flex: 1;
 }
