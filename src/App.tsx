@@ -10,7 +10,7 @@ import { nodeHost, nodePort, nodeScheme } from './config'
 
 declare global {
     interface Window {
-        web3: Web3,
+        web3: Web3
         ethereum: any
     }
 }
@@ -58,7 +58,7 @@ class App extends Component<{}, AppState> {
     }
 
     private startLoginProcess = async () => {
-        this.setState({isLoading: true})
+        this.setState({ isLoading: true })
         if (window.web3) {
             const web3 = new Web3(window.web3.currentProvider)
             try {
@@ -83,7 +83,7 @@ class App extends Component<{}, AppState> {
         } else {
             // no metamask/mist, show installation guide!
         }
-        this.setState({isLoading: false})
+        this.setState({ isLoading: false })
     }
 
     private bootstrap = async () => {
@@ -92,10 +92,10 @@ class App extends Component<{}, AppState> {
             try {
                 const accounts = await web3.eth.getAccounts()
                 if (accounts.length > 0) {
-                    this.setState(state => ({
+                    this.setState({
                         isLogged: true,
                         web3
-                    }))
+                    })
                 }
             } catch (e) {
                 // continue with default
@@ -103,8 +103,8 @@ class App extends Component<{}, AppState> {
         }
         const { ocean } = await provideOcean()
         this.setState({
-          isLoading: false,
-          ocean
+            isLoading: false,
+            ocean
         })
     }
 }
