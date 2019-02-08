@@ -7,11 +7,13 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Publish from './pages/Publish'
 import Search from './pages/Search'
+import Styleguide from './pages/Styleguide'
 
 const Routes = () => (
     <Router>
         <Switch>
             <Route exact component={Home} path="/" />
+            <Route component={Styleguide} path="/styleguide" />
             <Route component={About} path="/about" />
             <Route component={Publish} path="/publish" />
             <Route component={Search} path="/search" />

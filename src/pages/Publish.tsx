@@ -1,7 +1,11 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import Button from '../components/atoms/Button'
+import Form from '../components/atoms/Form/Form'
+import Input from '../components/atoms/Form/Input'
 import { User } from '../context/User'
 import AssetModel from '../models/AssetModel'
+
+import form from '../data/form-publish.json'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -33,208 +37,30 @@ class Publish extends Component<{}, PublishState> {
         categories: ['']
     }
 
-    public render() {
-        return (
-            <div>
-                <h1>Publish</h1>
-                <form onSubmit={this.registerAsset}>
-                    <div>
-                        Name:
-                        <input
-                            type="text"
-                            name="name"
-                            value={this.state.name}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <div>
-                        Description:
-                        <input
-                            type="text"
-                            name="description"
-                            value={this.state.description}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <div>
-                        Price:
-                        <input
-                            type="number"
-                            name="price"
-                            value={this.state.price}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <div>
-                        Author:
-                        <input
-                            type="text"
-                            name="author"
-                            value={this.state.author}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <div>
-                        Files:
-                        <input
-                            type="text"
-                            name="files"
-                            value={this.state.files[0]}
-                            onChange={this.inputToArrayChange}
-                        />
-                    </div>
-                    <div>
-                        Type:
-                        <select
-                            name="type"
-                            value={this.state.type}
-                            onChange={this.inputChange}
-                        >
-                            <option value="dataset">Data set</option>
-                            <option value="algorithm">Algorithm</option>
-                            <option value="container">Container</option>
-                            <option value="workflow">Workflow</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div>
-                        License:
-                        <select
-                            name="license"
-                            value={this.state.license}
-                            onChange={this.inputChange}
-                        >
-                            <option value="none">No License Specified</option>
-                            <option value="Public Domain">Public Domain</option>
-                            <option value="CC BY">CC BY: Attribution</option>
-                            <option value="CC BY-SA">
-                                CC BY-SA: Attribution ShareAlike
-                            </option>
-                            <option value="CC BY-ND">
-                                CC BY-ND: Attribution-NoDerivs
-                            </option>
-                            <option value="CC BY-NC">
-                                CC BY-NC: Attribution-NonCommercial
-                            </option>
-                            <option value="CC BY-NC-SA">
-                                CC BY-NC-SA:
-                                Attribution-NonCommercial-ShareAlike
-                            </option>
-                            <option value="CC BY-NC-ND">
-                                CC BY-NC-ND: Attribution-NonCommercial-NoDerivs
-                            </option>
-                        </select>
-                    </div>
-                    <div>
-                        Category:
-                        <select
-                            name="categories"
-                            value={this.state.categories[0]}
-                            onChange={this.inputToArrayChange}
-                        >
-                            <option value="No Category Specified">
-                                No Category Specified
-                            </option>
-                            <option value="Image Recognition">
-                                Image Recognition
-                            </option>
-                            <option value="Dataset Of Datasets">
-                                Dataset Of Datasets
-                            </option>
-                            <option value="Language">Language</option>
-                            <option value="Performing Arts">
-                                Performing Arts
-                            </option>
-                            <option value="Visual Arts & Design">
-                                Visual Arts & Design
-                            </option>
-                            <option value="Philosophy">Philosophy</option>
-                            <option value="History">History</option>
-                            <option value="Theology">Theology</option>
-                            <option value="Anthropology & Archeology">
-                                Anthropology & Archeology
-                            </option>
-                            <option value="Sociology">Sociology</option>
-                            <option value="Psychology">Psychology</option>
-                            <option value="Politics">Politics</option>
-                            <option value="Interdisciplinary">
-                                Interdisciplinary
-                            </option>
-                            <option value="Economics & Finance">
-                                Economics & Finance
-                            </option>
-                            <option value="Demography">Demography</option>
-                            <option value="Biology">Biology</option>
-                            <option value="Chemistry">Chemistry</option>
-                            <option value="Physics & Energy">
-                                Physics & Energy
-                            </option>
-                            <option value="Earth & Climate">
-                                Earth & Climate
-                            </option>
-                            <option value="Space & Astronomy">
-                                Space & Astronomy
-                            </option>
-                            <option value="Mathematics">Mathematics</option>
-                            <option value="Computer Technology">
-                                Computer Technology
-                            </option>
-                            <option value="Engineering">Engineering</option>
-                            <option value="Agriculture & Bio Engineering">
-                                Agriculture & Bio Engineering
-                            </option>
-                            <option value="Transportation">
-                                Transportation
-                            </option>
-                            <option value="Urban Planning">
-                                Urban Planning
-                            </option>
-                            <option value="Medicine">Medicine</option>
-                            <option value="Language">Language</option>
-                            <option value="Business & Management">
-                                Business & Management
-                            </option>
-                            <option value="Sports & Recreation">
-                                Sports & Recreation
-                            </option>
-                            <option value="Communication & Journalism">
-                                Communication & Journalism
-                            </option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div>
-                        CopyrightHolder:
-                        <input
-                            type="text"
-                            name="copyrightHolder"
-                            value={this.state.copyrightHolder}
-                            onChange={this.inputChange}
-                        />
-                    </div>
-                    <User.Consumer>
-                        {(states /* tslint:disable-next-line */) => (
-                            <div>
-                                {states.isLogged ? (
-                                    <div>
-                                        <Button>
-                                            Register asset (we are logged)
-                                        </Button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <button onClick={states.startLogin}>
-                                            Register asset (login first)
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </User.Consumer>
-                </form>
-            </div>
-        )
-    }
+    public formFields = (entries: any[]) =>
+        entries.map(([key, value]) => {
+            let onChange = this.inputChange
+
+            if (key === 'files' || key === 'categories') {
+                onChange = this.inputToArrayChange
+            }
+
+            return (
+                <Input
+                    key={key}
+                    name={key}
+                    label={value.label}
+                    placeholder={value.placeholder}
+                    required={value.required}
+                    type={value.type}
+                    help={value.help}
+                    options={value.options}
+                    onChange={onChange}
+                    rows={value.rows}
+                    value={(this.state as any)[key]}
+                />
+            )
+        })
 
     private inputChange = (
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -282,7 +108,38 @@ class Publish extends Component<{}, PublishState> {
             )
         }
 
-        const ddo = await this.context.ocean.registerAsset(newAsset, account[0])
+        await this.context.ocean.registerAsset(newAsset, account[0])
+    }
+
+    public render() {
+        const entries = Object.entries(form.fields)
+
+        return (
+            <div>
+                <h1>Publish</h1>
+                <Form
+                    title={form.title}
+                    description={form.description}
+                    onSubmit={this.registerAsset}
+                >
+                    {this.formFields(entries)}
+
+                    <User.Consumer>
+                        {states =>
+                            states.isLogged ? (
+                                <Button primary>
+                                    Register asset (we are logged)
+                                </Button>
+                            ) : (
+                                <Button primary onClick={states.startLogin}>
+                                    Register asset (login first)
+                                </Button>
+                            )
+                        }
+                    </User.Consumer>
+                </Form>
+            </div>
+        )
     }
 }
 
