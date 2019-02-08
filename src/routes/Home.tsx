@@ -5,6 +5,8 @@ import Input from '../components/atoms/Form/Input'
 import Route from '../components/templates/Route'
 import styles from './Home.module.scss'
 
+import meta from '../data/meta.json'
+
 interface HomeState {
     search?: string
 }
@@ -19,8 +21,8 @@ class Home extends Component<HomeProps, HomeState> {
     public render() {
         return (
             <Route
-                title="Commons"
-                description="A marketplace to find and publish open data sets in the Ocean Network."
+                title={meta.title}
+                description={meta.description}
                 className={styles.home}
             >
                 <Form onSubmit={this.searchAssets}>
@@ -28,7 +30,7 @@ class Home extends Component<HomeProps, HomeState> {
                         type="search"
                         name="search"
                         label="Search"
-                        placeholder=""
+                        placeholder="i.e. almond sales data"
                         value={this.state.search}
                         onChange={this.inputChange}
                         group={<Button>Search</Button>}
