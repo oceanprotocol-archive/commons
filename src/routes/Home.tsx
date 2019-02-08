@@ -1,4 +1,5 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
@@ -36,6 +37,15 @@ class Home extends Component<HomeProps, HomeState> {
                         group={<Button>Search</Button>}
                     />
                 </Form>
+
+                <div className={styles.published}>
+                    <h2 className={styles.subTitle}>Your Data Sets</h2>
+
+                    <div>
+                        <p>None yet.</p>
+                        <Link to="/publish">+ Publish A Data Set</Link>
+                    </div>
+                </div>
             </Route>
         )
     }
