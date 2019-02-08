@@ -18,7 +18,11 @@ class Home extends Component<HomeProps, HomeState> {
 
     public render() {
         return (
-            <Route title="Home" className={styles.home}>
+            <Route
+                title="Commons"
+                description="A marketplace to find and publish open data sets."
+                className={styles.home}
+            >
                 <Form onSubmit={this.searchAssets}>
                     <Input
                         type="search"

@@ -7,4 +7,9 @@
     h1 {
         margin: 0;
     }
+
+    p {
+        margin-top: $spacer / 2;
+        font-size: $font-size-large;
+    }
 }
