@@ -1,6 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import Content from '../Content'
+import Content from '../atoms/Content'
 import styles from './Route.module.scss'
 import meta from '../../data/meta.json'
 

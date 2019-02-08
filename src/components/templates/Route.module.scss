@@ -1,7 +1,8 @@
 @import '../../styles/variables';
 
 .header {
-    margin-bottom: $spacer;
+    margin-top: $spacer;
+    margin-bottom: $spacer * 2;
 
     h1 {
         margin: 0;

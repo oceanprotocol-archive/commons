@@ -1,5 +1,5 @@
 import React from 'react'
-import Content from '../components/Content'
+import Content from '../components/atoms/Content'
 import styles from './Footer.module.scss'
 
 import meta from '../data/meta.json'
