@@ -57,8 +57,7 @@ class Publish extends Component<{}, PublishState> {
                     options={value.options}
                     onChange={onChange}
                     rows={value.rows}
-                    // value={this.state[key]}
-                    // value={this.state.files[0]}
+                    value={(this.state as any)[key]}
                 />
             )
         })
