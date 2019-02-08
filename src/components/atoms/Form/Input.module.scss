@@ -17,16 +17,16 @@
     composes: inputWrap;
 
     .input {
-        padding-left: $spacer / 1.25;
+        padding-left: $spacer * 1.5;
     }
 
     svg {
         position: absolute;
-        left: $spacer / 3;
+        left: $spacer / 2;
         width: 1.25rem;
         height: 1.25rem;
         top: 50%;
-        margin-top: -.75rem;
+        margin-top: -.6rem;
         fill: rgba($brand-grey-light, .7);
     }
 }

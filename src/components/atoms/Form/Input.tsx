@@ -106,6 +106,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
         return (
             <div className={this.inputWrapClasses()}>
                 <input className={styles.input} {...props} />
+                {props.type === 'search' && <SearchIcon />}
             </div>
         )
     }
@@ -139,7 +140,6 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     onFocus={this.toggleFocus}
                     onBlur={this.toggleFocus}
                 />
-                {type === 'search' && <SearchIcon />}
 
                 {help && <Help>{help}</Help>}
 
