@@ -8,9 +8,17 @@ import './styles/global.scss'
 
 import { nodeHost, nodePort, nodeScheme } from './config'
 
+declare global {
+    interface Window {
+        web3: Web3
+        ethereum: any
+    }
+}
+
 interface AppState {
     isLogged: boolean
-    web3: any
+    isLoading: boolean
+    web3: Web3
     ocean: {}
     startLogin: () => void
 }
@@ -25,7 +33,12 @@ class App extends Component<{}, AppState> {
 
     public state = {
         isLogged: false,
-        web3: {},
+        isLoading: true,
+        web3: new Web3(
+            new Web3.providers.HttpProvider(
+                `${nodeScheme}://${nodeHost}:${nodePort}`
+            )
+        ),
         ocean: {},
         startLogin: this.startLogin
     }
@@ -45,61 +58,53 @@ class App extends Component<{}, AppState> {
     }
 
     private startLoginProcess = async () => {
-        if ((window as any).web3) {
-            const web3 = new Web3((window as any).web3.currentProvider)
+        this.setState({ isLoading: true })
+        if (window.web3) {
+            const web3 = new Web3(window.web3.currentProvider)
             try {
                 const accounts = await web3.eth.getAccounts()
-                if (accounts.length === 0 && (window as any).ethereum) {
-                    await (window as any).ethereum.enable()
-                    const { ocean } = await provideOcean()
+                if (accounts.length > 0) {
                     this.setState({
                         isLogged: true,
-                        web3,
-                        ocean
+                        web3
                     })
                 } else {
+                    if (accounts.length === 0 && window.ethereum) {
+                        await window.ethereum.enable()
+                        this.setState({
+                            isLogged: true,
+                            web3
+                        })
+                    }
+                }
+            } catch (e) {
+                // something went wrong, show error?
+            }
+        } else {
+            // no metamask/mist, show installation guide!
+        }
+        this.setState({ isLoading: false })
+    }
+
+    private bootstrap = async () => {
+        if (window.web3) {
+            const web3 = new Web3(window.web3.currentProvider)
+            try {
+                const accounts = await web3.eth.getAccounts()
+                if (accounts.length > 0) {
                     this.setState({
                         isLogged: true,
                         web3
                     })
                 }
             } catch (e) {
-                this.setDefaultProvider()
+                // continue with default
             }
-        } else {
-            this.setDefaultProvider()
         }
-    }
-
-    private bootstrap = async () => {
-        if ((window as any).web3) {
-            const web3 = new Web3((window as any).web3.currentProvider)
-            try {
-                const accounts = await web3.eth.getAccounts()
-                if (accounts.length > 0) {
-                    const { ocean } = await provideOcean()
-                    this.setState({
-                        isLogged: true,
-                        web3,
-                        ocean
-                    })
-                }
-            } catch (e) {
-                this.setDefaultProvider()
-            }
-        } else {
-            this.setDefaultProvider()
-        }
-    }
-
-    private setDefaultProvider = () => {
+        const { ocean } = await provideOcean()
         this.setState({
-            isLogged: false,
-            web3: new Web3(
-                new Web3.providers.HttpProvider(
-                    `${nodeScheme}://${nodeHost}:${nodePort}`
-                )
-            )
+            isLoading: false,
+            ocean
         })
     }
 }
