@@ -1,0 +1,44 @@
+@import '../styles/variables';
+
+.message {
+    margin-bottom: $spacer;
+    color: $brand-grey-light;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+// default: red square
+.indicator {
+    display: inline-block;
+    width: $font-size-small;
+    height: $font-size-small;
+    background: $red;
+    margin-right: $spacer / 8;
+    position: absolute;
+    left: 0;
+    top: .3rem;
+}
+
+// yellow triangle
+.indicatorCloseEnough {
+    composes: indicator;
+    background: none;
+    width: 0;
+    height: 0;
+    border-left: $font-size-small / 1.75 solid transparent;
+    border-right: $font-size-small / 1.75 solid transparent;
+    border-bottom: $font-size-small solid $yellow;
+}
+
+// green circle
+.indicatorActive {
+    composes: indicator;
+    border-radius: 50%;
+    background: $green;
+}
+
+.account {
+    font-family: $font-family-monospace;
+    display: inline-block;
+    margin-left: $spacer / 8;
+}

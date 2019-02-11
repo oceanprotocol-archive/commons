@@ -5,6 +5,7 @@ import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
 import { User } from '../context/User'
 import AssetModel from '../models/AssetModel'
+import Web3message from '../components/Web3message'
 
 import form from '../data/form-publish.json'
 
@@ -117,6 +118,8 @@ class Publish extends Component<{}, PublishState> {
 
         return (
             <Route title="Publish">
+                <Web3message />
+
                 <Form
                     title={form.title}
                     description={form.description}
