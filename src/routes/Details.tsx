@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Route from '../components/templates/Route'
 import Button from '../components/atoms/Button'
 import { User } from '../context/User'
+import quertString from 'query-string'
 
 interface DetailsState {
     ddo: any
@@ -26,29 +27,33 @@ export default class Details extends Component<DetailsProps, DetailsState> {
     }
 
     private purchaseAsset = async (ddo: any) => {
-        const account = await this.context.ocean.getAccounts()
-        const service = ddo.findServiceByType('Access')
-        const serviceAgreementSignatureResult: any = await this.context.ocean.signServiceAgreement(
-            ddo.id,
-            service.serviceDefinitionId,
-            account[0]
-        )
-        Logger.log(
-            'serviceAgreementSignatureResult',
-            serviceAgreementSignatureResult
-        )
-
-        await this.context.ocean.initializeServiceAgreement(
-            ddo.id,
-            service.serviceDefinitionId,
-            serviceAgreementSignatureResult.serviceAgreementId,
-            serviceAgreementSignatureResult.serviceAgreementSignature,
-            (files: any) =>
-                Logger.log(
-                    `Got files, first files length in bytes: ${files[0].length}`
-                ),
-            account[0]
-        )
+        try {
+            const account = await this.context.ocean.getAccounts()
+            const service = ddo.findServiceByType('Access')
+            const serviceAgreementSignatureResult: any = await this.context.ocean.signServiceAgreement(
+                ddo.id,
+                service.serviceDefinitionId,
+                account[0]
+            )
+            await this.context.ocean.initializeServiceAgreement(
+                ddo.id,
+                service.serviceDefinitionId,
+                serviceAgreementSignatureResult.serviceAgreementId,
+                serviceAgreementSignatureResult.serviceAgreementSignature,
+                (files: any) => {
+                    files.forEach((file: any) => {
+                        const parsedUrl: any = quertString.parseUrl(file)
+                        setTimeout(() => {
+                            // eslint-disable-next-line
+                            window.open(parsedUrl.query.url)
+                        }, 100)
+                    })
+                },
+                account[0]
+            )
+        } catch (e) {
+            Logger.log('error', e)
+        }
     }
 
     private showDetails = (ddo: any) => {
@@ -56,7 +61,7 @@ export default class Details extends Component<DetailsProps, DetailsState> {
             <>
                 <div>{JSON.stringify(this.state.metadata)}</div>
 
-                <Button onClick={this.purchaseAsset(ddo)}>
+                <Button onClick={() => this.purchaseAsset(ddo)}>
                     Purchase asset
                 </Button>
             </>

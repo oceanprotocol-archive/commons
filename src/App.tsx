@@ -21,6 +21,7 @@ declare global {
 interface AppState {
     isLogged: boolean
     isLoading: boolean
+    isWeb3: boolean
     web3: Web3
     ocean: {}
     startLogin: () => void
@@ -37,6 +38,7 @@ class App extends Component<{}, AppState> {
     public state = {
         isLogged: false,
         isLoading: true,
+        isWeb3: false,
         web3: new Web3(
             new Web3.providers.HttpProvider(
                 `${nodeScheme}://${nodeHost}:${nodePort}`
@@ -51,7 +53,6 @@ class App extends Component<{}, AppState> {
     }
 
     private startLoginProcess = async () => {
-        this.setState({ isLoading: true })
         if (window.web3) {
             const web3 = new Web3(window.web3.currentProvider)
             try {
@@ -59,6 +60,7 @@ class App extends Component<{}, AppState> {
                 if (accounts.length > 0) {
                     this.setState({
                         isLogged: true,
+                        isWeb3: true,
                         web3
                     })
                 } else {
@@ -66,6 +68,7 @@ class App extends Component<{}, AppState> {
                         await window.ethereum.enable()
                         this.setState({
                             isLogged: true,
+                            isWeb3: true,
                             web3
                         })
                     }
@@ -76,11 +79,11 @@ class App extends Component<{}, AppState> {
         } else {
             // no metamask/mist, show installation guide!
         }
-        this.setState({ isLoading: false })
     }
 
     private bootstrap = async () => {
         if (window.web3) {
+            this.setState({ isWeb3: true })
             const web3 = new Web3(window.web3.currentProvider)
             try {
                 const accounts = await web3.eth.getAccounts()
@@ -94,11 +97,18 @@ class App extends Component<{}, AppState> {
                 // continue with default
             }
         }
-        const { ocean } = await provideOcean()
-        this.setState({
-            isLoading: false,
-            ocean
-        })
+        try {
+            const { ocean } = await provideOcean()
+            this.setState({
+                isLoading: false,
+                ocean
+            })
+        } catch (e) {
+            // show loading error / unable to initialize ocean
+            this.setState({
+                isLoading: false
+            })
+        }
     }
 
     public render() {
@@ -109,9 +119,11 @@ class App extends Component<{}, AppState> {
                         <>
                             <Header />
 
-                            <main className={styles.main}>
-                                <Routes />
-                            </main>
+                            {!this.state.isLoading ? (
+                                <main className={styles.main}>
+                                    <Routes />
+                                </main>
+                            ) : null}
 
                             <Footer />
                         </>

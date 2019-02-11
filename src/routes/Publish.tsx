@@ -1,4 +1,5 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
+import { Logger } from '@oceanprotocol/squid'
 import Route from '../components/templates/Route'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
@@ -22,7 +23,9 @@ interface PublishState {
     license?: string
     copyrightHolder?: string
     categories?: string[]
-    tags?: string[]
+    tags?: string[],
+    isPublishing?: boolean,
+    publishingError?: string
 }
 
 class Publish extends Component<{}, PublishState> {
@@ -36,7 +39,9 @@ class Publish extends Component<{}, PublishState> {
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: ['']
+        categories: [''],
+        isPublishing: false,
+        publishingError: ''
     }
 
     public formFields = (entries: any[]) =>
@@ -80,8 +85,16 @@ class Publish extends Component<{}, PublishState> {
         })
     }
 
+    private tryAgain = () => {
+        this.setState({ publishingError: '' })
+    }
+
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        this.setState({
+            publishingError: '',
+            isPublishing: true
+        })
         const account = await this.context.ocean.getAccounts()
         const newAsset = {
             // OEP-08 Attributes
@@ -109,8 +122,18 @@ class Publish extends Component<{}, PublishState> {
                 AssetModel.additionalInformation
             )
         }
-
-        await this.context.ocean.registerAsset(newAsset, account[0])
+        try {
+            await this.context.ocean.registerAsset(newAsset, account[0])
+        } catch (e) {
+            // make readable errors
+            Logger.log('error:', e)
+            this.setState({
+                publishingError: e
+            })
+        }
+        this.setState({
+            isPublishing: false
+        })
     }
 
     public render() {
@@ -120,27 +143,34 @@ class Publish extends Component<{}, PublishState> {
             <Route title="Publish">
                 <Web3message />
 
-                <Form
-                    title={form.title}
-                    description={form.description}
-                    onSubmit={this.registerAsset}
-                >
-                    {this.formFields(entries)}
+                {this.state.isPublishing ? (
+                    <div>Please sign with ctypto wallet</div>
+                ) : this.state.publishingError ? (
+                    <div>Something went wrong, <a onClick={() => this.tryAgain()}>try again</a></div>
+                ) : (
+                    <Form
+                        title={form.title}
+                        description={form.description}
+                        onSubmit={this.registerAsset}
+                    >
+                        {this.formFields(entries)}
 
-                    <User.Consumer>
-                        {states =>
-                            states.isLogged ? (
-                                <Button primary>
-                                    Register asset (we are logged)
-                                </Button>
-                            ) : (
-                                <Button primary onClick={states.startLogin}>
-                                    Register asset (login first)
-                                </Button>
-                            )
-                        }
-                    </User.Consumer>
-                </Form>
+                        <User.Consumer>
+                            {states =>
+                                states.isLogged ? (
+                                    <Button primary>
+                                        Register asset
+                                    </Button>
+                                ) : (
+                                    <Button onClick={states.startLogin}>
+                                        Register asset (login first)
+                                    </Button>
+                                )
+                            }
+                        </User.Consumer>
+                    </Form>
+                )}
+
             </Route>
         )
     }
