@@ -47,47 +47,62 @@ export default class Input extends PureComponent<InputProps, InputState> {
         this.setState({ isFocused: !this.state.isFocused })
     }
 
-    public InputComponent = ({ ...props }) => {
-        if (props.type === 'select') {
+    public InputComponent = () => {
+        const { type, options, group, name, required } = this.props
+
+        const wrapClass = this.inputWrapClasses()
+
+        if (type === 'select') {
             return (
-                <div className={this.inputWrapClasses()}>
-                    <select className={styles.select} {...props}>
+                <div className={wrapClass}>
+                    <select
+                        id={name}
+                        className={styles.select}
+                        name={name}
+                        required={required}
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
+                    >
                         <option value="none">---</option>
-                        {props.options &&
-                            props.options.map(
-                                (option: string, index: number) => (
-                                    <option
-                                        key={index}
-                                        value={slugify(option, {
-                                            lower: true
-                                        })}
-                                    >
-                                        {option}
-                                    </option>
-                                )
-                            )}
+                        {options &&
+                            options.map((option: string, index: number) => (
+                                <option
+                                    key={index}
+                                    value={slugify(option, {
+                                        lower: true
+                                    })}
+                                >
+                                    {option}
+                                </option>
+                            ))}
                     </select>
                 </div>
             )
-        } else if (props.type === 'textarea') {
+        } else if (type === 'textarea') {
             return (
-                <div className={this.inputWrapClasses()}>
-                    <textarea className={styles.input} {...props} />
+                <div className={wrapClass}>
+                    <textarea
+                        id={name}
+                        className={styles.input}
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
+                        {...this.props}
+                    />
                 </div>
             )
-        } else if (props.type === 'radio' || props.type === 'checkbox') {
+        } else if (type === 'radio' || type === 'checkbox') {
             return (
                 <div className={styles.radioGroup}>
-                    {props.options &&
-                        props.options.map((option: string, index: number) => (
+                    {options &&
+                        options.map((option: string, index: number) => (
                             <div className={styles.radioWrap} key={index}>
                                 <input
                                     className={styles.radio}
-                                    type={this.props.type}
                                     id={slugify(option, {
                                         lower: true
                                     })}
-                                    name={this.props.name}
+                                    type={type}
+                                    name={name}
                                     value={slugify(option, {
                                         lower: true
                                     })}
@@ -107,32 +122,35 @@ export default class Input extends PureComponent<InputProps, InputState> {
         }
 
         return (
-            <div className={this.inputWrapClasses()}>
-                {props.group ? (
+            <div className={wrapClass}>
+                {group ? (
                     <InputGroup>
-                        <input className={styles.input} {...props} />
-                        {props.group}
+                        <input
+                            id={name}
+                            className={styles.input}
+                            onFocus={this.toggleFocus}
+                            onBlur={this.toggleFocus}
+                            {...this.props}
+                        />
+                        {group}
                     </InputGroup>
                 ) : (
-                    <input className={styles.input} {...props} />
+                    <input
+                        id={name}
+                        className={styles.input}
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
+                        {...this.props}
+                    />
                 )}
 
-                {props.type === 'search' && <SearchIcon />}
+                {type === 'search' && <SearchIcon />}
             </div>
         )
     }
 
     public render() {
-        const {
-            name,
-            label,
-            required,
-            type,
-            help,
-            additionalComponent,
-            options,
-            ...props
-        } = this.props
+        const { name, label, required, help, additionalComponent } = this.props
 
         return (
             <Row>
@@ -140,17 +158,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     {label}
                 </Label>
 
-                <this.InputComponent
-                    id={name}
-                    label={label}
-                    name={name}
-                    required={required}
-                    type={type}
-                    options={options}
-                    {...props}
-                    onFocus={this.toggleFocus}
-                    onBlur={this.toggleFocus}
-                />
+                <this.InputComponent />
 
                 {help && <Help>{help}</Help>}
 
