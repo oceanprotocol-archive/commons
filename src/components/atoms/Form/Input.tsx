@@ -48,12 +48,21 @@ export default class Input extends PureComponent<InputProps, InputState> {
     }
 
     public InputComponent = () => {
-        const { type, options, group, name } = this.props
+        const { type, options, group, name, required } = this.props
+
+        const wrapClass = this.inputWrapClasses()
 
         if (type === 'select') {
             return (
-                <div className={this.inputWrapClasses()}>
-                    <select className={styles.select} {...this.props}>
+                <div className={wrapClass}>
+                    <select
+                        id={name}
+                        className={styles.select}
+                        name={name}
+                        required={required}
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
+                    >
                         <option value="none">---</option>
                         {options &&
                             options.map((option: string, index: number) => (
@@ -71,8 +80,14 @@ export default class Input extends PureComponent<InputProps, InputState> {
             )
         } else if (type === 'textarea') {
             return (
-                <div className={this.inputWrapClasses()}>
-                    <textarea className={styles.input} {...this.props} />
+                <div className={wrapClass}>
+                    <textarea
+                        id={name}
+                        className={styles.input}
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
+                        {...this.props}
+                    />
                 </div>
             )
         } else if (type === 'radio' || type === 'checkbox') {
@@ -86,6 +101,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                                     id={slugify(option, {
                                         lower: true
                                     })}
+                                    type={type}
                                     name={name}
                                     value={slugify(option, {
                                         lower: true
@@ -106,14 +122,26 @@ export default class Input extends PureComponent<InputProps, InputState> {
         }
 
         return (
-            <div className={this.inputWrapClasses()}>
+            <div className={wrapClass}>
                 {group ? (
                     <InputGroup>
-                        <input className={styles.input} {...this.props} />
+                        <input
+                            id={name}
+                            className={styles.input}
+                            onFocus={this.toggleFocus}
+                            onBlur={this.toggleFocus}
+                            {...this.props}
+                        />
                         {group}
                     </InputGroup>
                 ) : (
-                    <input className={styles.input} {...this.props} />
+                    <input
+                        id={name}
+                        className={styles.input}
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
+                        {...this.props}
+                    />
                 )}
 
                 {type === 'search' && <SearchIcon />}
