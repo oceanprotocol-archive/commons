@@ -47,47 +47,46 @@ export default class Input extends PureComponent<InputProps, InputState> {
         this.setState({ isFocused: !this.state.isFocused })
     }
 
-    public InputComponent = ({ ...props }) => {
-        if (props.type === 'select') {
+    public InputComponent = () => {
+        const { type, options, group, name } = this.props
+
+        if (type === 'select') {
             return (
                 <div className={this.inputWrapClasses()}>
-                    <select className={styles.select} {...props}>
+                    <select className={styles.select} {...this.props}>
                         <option value="none">---</option>
-                        {props.options &&
-                            props.options.map(
-                                (option: string, index: number) => (
-                                    <option
-                                        key={index}
-                                        value={slugify(option, {
-                                            lower: true
-                                        })}
-                                    >
-                                        {option}
-                                    </option>
-                                )
-                            )}
+                        {options &&
+                            options.map((option: string, index: number) => (
+                                <option
+                                    key={index}
+                                    value={slugify(option, {
+                                        lower: true
+                                    })}
+                                >
+                                    {option}
+                                </option>
+                            ))}
                     </select>
                 </div>
             )
-        } else if (props.type === 'textarea') {
+        } else if (type === 'textarea') {
             return (
                 <div className={this.inputWrapClasses()}>
-                    <textarea className={styles.input} {...props} />
+                    <textarea className={styles.input} {...this.props} />
                 </div>
             )
-        } else if (props.type === 'radio' || props.type === 'checkbox') {
+        } else if (type === 'radio' || type === 'checkbox') {
             return (
                 <div className={styles.radioGroup}>
-                    {props.options &&
-                        props.options.map((option: string, index: number) => (
+                    {options &&
+                        options.map((option: string, index: number) => (
                             <div className={styles.radioWrap} key={index}>
                                 <input
                                     className={styles.radio}
-                                    type={this.props.type}
                                     id={slugify(option, {
                                         lower: true
                                     })}
-                                    name={this.props.name}
+                                    name={name}
                                     value={slugify(option, {
                                         lower: true
                                     })}
@@ -108,31 +107,22 @@ export default class Input extends PureComponent<InputProps, InputState> {
 
         return (
             <div className={this.inputWrapClasses()}>
-                {props.group ? (
+                {group ? (
                     <InputGroup>
-                        <input className={styles.input} {...props} />
-                        {props.group}
+                        <input className={styles.input} {...this.props} />
+                        {group}
                     </InputGroup>
                 ) : (
-                    <input className={styles.input} {...props} />
+                    <input className={styles.input} {...this.props} />
                 )}
 
-                {props.type === 'search' && <SearchIcon />}
+                {type === 'search' && <SearchIcon />}
             </div>
         )
     }
 
     public render() {
-        const {
-            name,
-            label,
-            required,
-            type,
-            help,
-            additionalComponent,
-            options,
-            ...props
-        } = this.props
+        const { name, label, required, help, additionalComponent } = this.props
 
         return (
             <Row>
@@ -140,17 +130,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     {label}
                 </Label>
 
-                <this.InputComponent
-                    id={name}
-                    label={label}
-                    name={name}
-                    required={required}
-                    type={type}
-                    options={options}
-                    {...props}
-                    onFocus={this.toggleFocus}
-                    onBlur={this.toggleFocus}
-                />
+                <this.InputComponent />
 
                 {help && <Help>{help}</Help>}
 
