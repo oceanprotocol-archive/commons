@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
-import styles from './App.module.scss'
+import { BrowserRouter as Router } from 'react-router-dom'
+import Header from './components/Header'
+import Footer from './components/Footer'
 import { User } from './context/User'
 import { provideOcean } from './ocean'
 import Routes from './Routes'
 import './styles/global.scss'
+import styles from './App.module.scss'
 
 import { nodeHost, nodePort, nodeScheme } from './config'
 
@@ -45,16 +48,6 @@ class App extends Component<{}, AppState> {
 
     public async componentDidMount() {
         this.bootstrap()
-    }
-
-    public render() {
-        return (
-            <div className={styles.app}>
-                <User.Provider value={this.state}>
-                    <Routes />
-                </User.Provider>
-            </div>
-        )
     }
 
     private startLoginProcess = async () => {
@@ -106,6 +99,26 @@ class App extends Component<{}, AppState> {
             isLoading: false,
             ocean
         })
+    }
+
+    public render() {
+        return (
+            <div className={styles.app}>
+                <User.Provider value={this.state}>
+                    <Router>
+                        <>
+                            <Header />
+
+                            <main className={styles.main}>
+                                <Routes />
+                            </main>
+
+                            <Footer />
+                        </>
+                    </Router>
+                </User.Provider>
+            </div>
+        )
     }
 }
 

@@ -6,6 +6,7 @@ import Help from './Help'
 import styles from './Input.module.scss'
 import Label from './Label'
 import Row from './Row'
+import InputGroup from './InputGroup'
 
 interface InputProps {
     name: string
@@ -16,10 +17,11 @@ interface InputProps {
     tag?: string
     type?: string
     options?: string[]
-    additionalComponent?: void
+    additionalComponent?: any
     value?: string
     onChange?: any
     rows?: number
+    group?: any
 }
 
 interface InputState {
@@ -50,6 +52,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
             return (
                 <div className={this.inputWrapClasses()}>
                     <select className={styles.select} {...props}>
+                        <option value="none">---</option>
                         {props.options &&
                             props.options.map(
                                 (option: string, index: number) => (
@@ -105,7 +108,16 @@ export default class Input extends PureComponent<InputProps, InputState> {
 
         return (
             <div className={this.inputWrapClasses()}>
-                <input className={styles.input} {...props} />
+                {props.group ? (
+                    <InputGroup>
+                        <input className={styles.input} {...props} />
+                        {props.group}
+                    </InputGroup>
+                ) : (
+                    <input className={styles.input} {...props} />
+                )}
+
+                {props.type === 'search' && <SearchIcon />}
             </div>
         )
     }
@@ -139,7 +151,6 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     onFocus={this.toggleFocus}
                     onBlur={this.toggleFocus}
                 />
-                {type === 'search' && <SearchIcon />}
 
                 {help && <Help>{help}</Help>}
 

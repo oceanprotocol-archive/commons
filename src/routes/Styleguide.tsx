@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
+import Route from '../components/templates/Route'
 import styles from './Styleguide.module.scss'
-
 import form from '../data/form-styleguide.json'
 
 class Styleguide extends Component {
@@ -24,19 +24,20 @@ class Styleguide extends Component {
     public render() {
         const entries = Object.entries(form.fields)
         return (
-            <div className={styles.page}>
-                <h1>Styleguide</h1>
-
-                <Button>I am a button</Button>
-                <Button primary>I am a primary button</Button>
-                <Button href="https://hello.com">
-                    I am a link disguised as a button
-                </Button>
+            <Route title="Styleguide" className={styles.styleguide}>
+                <div className={styles.buttons}>
+                    <Button>I am a button</Button>
+                    <Button primary>I am a primary button</Button>
+                    <Button href="https://hello.com">
+                        I am a link disguised as a button
+                    </Button>
+                    <Button link>I am a button disguised as a text link</Button>
+                </div>
 
                 <Form title={form.title} description={form.description}>
                     {this.formFields(entries)}
                 </Form>
-            </div>
+            </Route>
         )
     }
 }

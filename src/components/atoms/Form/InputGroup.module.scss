@@ -1,0 +1,39 @@
+@import '../../../styles/variables';
+
+.inputGroup {
+    width: 100%;
+
+    @media screen and (min-width: $break-point--small) {
+        display: flex;
+    }
+
+    > input {
+        @media screen and (min-width: $break-point--small) {
+            width: 75%;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    > button {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        bottom: -120%;
+
+        @media screen and (min-width: $break-point--small) {
+            position: relative;
+            bottom: auto;
+            width: 25%;
+            height: 100%;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            box-shadow: none;
+        }
+
+        &:hover,
+        &:focus {
+            transform: none;
+        }
+    }
+}
