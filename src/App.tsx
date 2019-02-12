@@ -22,6 +22,7 @@ interface AppState {
     isLogged: boolean
     isLoading: boolean
     isWeb3: boolean
+    account: string
     web3: Web3
     ocean: {}
     startLogin: () => void
@@ -44,6 +45,7 @@ class App extends Component<{}, AppState> {
                 `${nodeScheme}://${nodeHost}:${nodePort}`
             )
         ),
+        account: '',
         ocean: {},
         startLogin: this.startLogin
     }
@@ -61,6 +63,7 @@ class App extends Component<{}, AppState> {
                     this.setState({
                         isLogged: true,
                         isWeb3: true,
+                        account: accounts[0],
                         web3
                     })
                 } else {
@@ -69,6 +72,7 @@ class App extends Component<{}, AppState> {
                         this.setState({
                             isLogged: true,
                             isWeb3: true,
+                            account: accounts[0],
                             web3
                         })
                     }
@@ -90,6 +94,7 @@ class App extends Component<{}, AppState> {
                 if (accounts.length > 0) {
                     this.setState({
                         isLogged: true,
+                        account: accounts[0],
                         web3
                     })
                 }

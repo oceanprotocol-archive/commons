@@ -14,7 +14,7 @@ export default class Web3message extends PureComponent {
                             : !states.isLogged
                             ? this.unlockAccount(states)
                             : states.isLogged
-                            ? this.haveAccount()
+                            ? this.haveAccount(states.account)
                             : null
                     }
                 </User.Consumer>
@@ -48,17 +48,14 @@ export default class Web3message extends PureComponent {
         )
     }
 
-    public haveAccount() {
+    public haveAccount(account: string) {
         return (
             <div className={styles.message}>
                 <span className={styles.indicatorActive} /> Connected with
                 account
-                <span
-                    className={styles.account}
-                    title="0xfehz2u89nfewhji432ntio43huof42huifewhnuefwo"
-                >
-                    0xfehz2u89n...
-                </span>
+                <code className={styles.account} title={account}>
+                    {`${account.substring(0, 20)}...`}
+                </code>
             </div>
         )
     }
