@@ -144,7 +144,10 @@ class Publish extends Component<{}, PublishState> {
             )
         }
         try {
-            const asset = await this.context.ocean.registerAsset(newAsset, account[0])
+            const asset = await this.context.ocean.registerAsset(
+                newAsset,
+                account[0]
+            )
             Logger.log('asset:', asset)
             this.setState({
                 publishedDid: asset.id,
@@ -186,9 +189,7 @@ class Publish extends Component<{}, PublishState> {
                         <User.Consumer>
                             {states =>
                                 states.isLogged ? (
-                                    <Button primary>
-                                        Register asset
-                                    </Button>
+                                    <Button primary>Register asset</Button>
                                 ) : (
                                     <Button onClick={states.startLogin}>
                                         Register asset (login first)
@@ -198,29 +199,33 @@ class Publish extends Component<{}, PublishState> {
                         </User.Consumer>
                     </Form>
                 )}
-
             </Route>
         )
     }
 
     public publishingState = () => {
-        return (
-            <div>Please sign with your crypto wallet</div>
-        )
+        return <div>Please sign with your crypto wallet</div>
     }
 
     public errorState = () => {
         return (
-            <div>Something went wrong, <a onClick={() => this.tryAgain()}>try again</a></div>
+            <div>
+                Something went wrong,{' '}
+                <a onClick={() => this.tryAgain()}>try again</a>
+            </div>
         )
     }
 
     public publishedState = () => {
         return (
-            <div>Your asset is published! See it <a href={'/asset/' + this.state.publishedDid}>here</a>, submit another asset by clicking <a onClick={() => this.toStart()}>here</a></div>
+            <div>
+                Your asset is published! See it{' '}
+                <a href={'/asset/' + this.state.publishedDid}>here</a>, submit
+                another asset by clicking{' '}
+                <a onClick={() => this.toStart()}>here</a>
+            </div>
         )
     }
-
 }
 
 Publish.contextType = User

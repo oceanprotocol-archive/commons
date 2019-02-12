@@ -5,23 +5,17 @@ import { User } from '../context/User'
 
 export default class Web3message extends PureComponent {
     public render() {
-        // let indicatorClasses = styles.indicatorCloseEnough
-
-        // if (this.props.activeAccount) {
-        //     indicatorClasses = styles.indicatorActive
-        // }
-
         return (
             <>
                 <User.Consumer>
                     {states =>
-                        !states.isWeb3 ? (
-                            this.noWeb3()
-                        ) : !states.isLogged ? (
-                            this.unlockAccount(states)
-                        ) : states.isLogged ? (
-                            this.haveAccount()
-                        ) : null
+                        !states.isWeb3
+                            ? this.noWeb3()
+                            : !states.isLogged
+                            ? this.unlockAccount(states)
+                            : states.isLogged
+                            ? this.haveAccount()
+                            : null
                     }
                 </User.Consumer>
             </>
@@ -45,10 +39,11 @@ export default class Web3message extends PureComponent {
     public unlockAccount(states: any) {
         return (
             <div className={styles.message}>
-                <span className={styles.indicatorCloseEnough} /> Account
-                locked. For publishing an asset you need to unlock your Web3
-                account.
-                <Button link onClick={states.startLogin}>Unlock account</Button>
+                <span className={styles.indicatorCloseEnough} /> Account locked.
+                For publishing an asset you need to unlock your Web3 account.
+                <Button link onClick={states.startLogin}>
+                    Unlock account
+                </Button>
             </div>
         )
     }
@@ -56,7 +51,8 @@ export default class Web3message extends PureComponent {
     public haveAccount() {
         return (
             <div className={styles.message}>
-                <span className={styles.indicatorActive} /> Connected with account
+                <span className={styles.indicatorActive} /> Connected with
+                account
                 <span
                     className={styles.account}
                     title="0xfehz2u89nfewhji432ntio43huof42huifewhnuefwo"
@@ -66,5 +62,4 @@ export default class Web3message extends PureComponent {
             </div>
         )
     }
-
 }
