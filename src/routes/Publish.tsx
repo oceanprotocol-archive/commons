@@ -23,8 +23,10 @@ interface PublishState {
     license?: string
     copyrightHolder?: string
     categories?: string[]
-    tags?: string[],
-    isPublishing?: boolean,
+    tags?: string[]
+    isPublishing?: boolean
+    isPublished?: boolean
+    publishedDid?: string
     publishingError?: string
 }
 
@@ -41,6 +43,8 @@ class Publish extends Component<{}, PublishState> {
         copyrightHolder: '',
         categories: [''],
         isPublishing: false,
+        isPublished: false,
+        publishedDid: '',
         publishingError: ''
     }
 
@@ -89,6 +93,23 @@ class Publish extends Component<{}, PublishState> {
         this.setState({ publishingError: '' })
     }
 
+    private toStart = () => {
+        this.setState({
+            name: '',
+            dateCreated: new Date(),
+            description: '',
+            files: [''],
+            price: 0,
+            author: '',
+            type: 'dataset' as AssetType,
+            license: '',
+            copyrightHolder: '',
+            categories: [''],
+            isPublishing: false,
+            isPublished: false
+        })
+    }
+
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         this.setState({
@@ -123,7 +144,12 @@ class Publish extends Component<{}, PublishState> {
             )
         }
         try {
-            await this.context.ocean.registerAsset(newAsset, account[0])
+            const asset = await this.context.ocean.registerAsset(newAsset, account[0])
+            Logger.log('asset:', asset)
+            this.setState({
+                publishedDid: asset.id,
+                isPublished: true
+            })
         } catch (e) {
             // make readable errors
             Logger.log('error:', e)
@@ -144,9 +170,11 @@ class Publish extends Component<{}, PublishState> {
                 <Web3message />
 
                 {this.state.isPublishing ? (
-                    <div>Please sign with ctypto wallet</div>
+                    this.publishingState()
                 ) : this.state.publishingError ? (
-                    <div>Something went wrong, <a onClick={() => this.tryAgain()}>try again</a></div>
+                    this.errorState()
+                ) : this.state.isPublished ? (
+                    this.publishedState()
                 ) : (
                     <Form
                         title={form.title}
@@ -174,6 +202,25 @@ class Publish extends Component<{}, PublishState> {
             </Route>
         )
     }
+
+    public publishingState = () => {
+        return (
+            <div>Please sign with your crypto wallet</div>
+        )
+    }
+
+    public errorState = () => {
+        return (
+            <div>Something went wrong, <a onClick={() => this.tryAgain()}>try again</a></div>
+        )
+    }
+
+    public publishedState = () => {
+        return (
+            <div>Your asset is published! See it <a href={'/asset/' + this.state.publishedDid}>here</a>, submit another asset by clicking <a onClick={() => this.toStart()}>here</a></div>
+        )
+    }
+
 }
 
 Publish.contextType = User
