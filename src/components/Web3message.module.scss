@@ -2,9 +2,13 @@
 
 .message {
     margin-bottom: $spacer;
-    color: $brand-grey-light;
+    color: $brand-grey;
     padding-left: 1.5rem;
     position: relative;
+    border-bottom: .1rem solid $brand-grey-lighter;
+    border-top: .1rem solid $brand-grey-lighter;
+    padding-top: $spacer / 2;
+    padding-bottom: $spacer / 2;
 }
 
 // default: red square
@@ -16,7 +20,7 @@
     margin-right: $spacer / 8;
     position: absolute;
     left: 0;
-    top: .3rem;
+    top: ($spacer / 2) + .3rem;
 }
 
 // yellow triangle
