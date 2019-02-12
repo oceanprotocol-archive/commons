@@ -1,0 +1,57 @@
+@import '../../../styles/variables';
+
+.itemForm {
+    margin-top: $spacer / 2;
+    margin-bottom: $spacer / 1.5;
+    padding-left: $spacer / 2;
+
+    > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    :global(.input-wrap) {
+        flex: 1 1 100%;
+    }
+
+    :global(.form__group) {
+        margin-bottom: $spacer / 2;
+        flex: 1 1 100%;
+
+        @media (min-width: $break-point--small) {
+            flex: 0 0 48%;
+        }
+    }
+
+    label,
+    input,
+    select,
+    textarea,
+    input::placeholder,
+    button {
+        font-size: $font-size-small;
+    }
+
+    label {
+        margin-bottom: $spacer / 8;
+    }
+
+    input,
+    select,
+    button {
+        height: 37px;
+        min-height: 37px;
+    }
+
+    button {
+        padding: 0 $spacer / 2;
+        margin-top: $spacer / 8;
+    }
+}
+
+.error {
+    font-size: $font-size-small;
+    color: $red;
+    margin-left: $spacer / 4;
+}

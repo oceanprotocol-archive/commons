@@ -22,6 +22,7 @@ interface InputProps {
     onChange?: any
     rows?: number
     group?: any
+    multiple?: boolean
 }
 
 interface InputState {
@@ -150,7 +151,14 @@ export default class Input extends PureComponent<InputProps, InputState> {
     }
 
     public render() {
-        const { name, label, required, help, additionalComponent } = this.props
+        const {
+            name,
+            label,
+            required,
+            help,
+            additionalComponent,
+            multiple
+        } = this.props
 
         return (
             <Row>
@@ -161,6 +169,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
                 <this.InputComponent />
 
                 {help && <Help>{help}</Help>}
+
+                {multiple && 'hello'}
 
                 {additionalComponent && additionalComponent}
             </Row>

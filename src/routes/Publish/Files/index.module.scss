@@ -1,0 +1,26 @@
+@import '../../../styles/variables';
+
+.newItems {
+    margin-top: $spacer / 2;
+    border-top: 1px solid $brand-grey-lighter;
+}
+
+.itemsList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-bottom: $spacer / 2;
+    font-family: $font-family-button;
+    color: $brand-grey-light;
+
+    li {
+        border-bottom: 1px solid $brand-grey-lighter;
+        padding: $spacer / 3 $spacer / 2 $spacer / 3 $spacer / 2;
+        position: relative;
+        display: block;
+    }
+
+    a {
+        color: $brand-grey;
+    }
+}

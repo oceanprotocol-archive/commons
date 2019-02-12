@@ -32,7 +32,8 @@
       "label": "Files",
       "placeholder": "i.e. https://file.com/file.json",
       "type": "text",
-      "required": true
+      "required": true,
+      "help": "Provide one or multiple links to your data asset(s)."
     },
     "type": {
       "label": "Type",

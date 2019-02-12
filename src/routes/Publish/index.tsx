@@ -1,14 +1,15 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
-import Route from '../components/templates/Route'
-import Button from '../components/atoms/Button'
-import Form from '../components/atoms/Form/Form'
-import Input from '../components/atoms/Form/Input'
-import { User } from '../context/User'
-import AssetModel from '../models/AssetModel'
-import Web3message from '../components/Web3message'
+import Route from '../../components/templates/Route'
+import Button from '../../components/atoms/Button'
+import Form from '../../components/atoms/Form/Form'
+import Input from '../../components/atoms/Form/Input'
+import { User } from '../../context/User'
+import AssetModel from '../../models/AssetModel'
+import Web3message from '../../components/Web3message'
+import Files from './Files/'
 
-import form from '../data/form-publish.json'
+import form from '../../data/form-publish.json'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -69,6 +70,9 @@ class Publish extends Component<{}, PublishState> {
                     onChange={onChange}
                     rows={value.rows}
                     value={(this.state as any)[key]}
+                    additionalComponent={
+                        key === 'files' && <Files files={this.state.files} />
+                    }
                 />
             )
         })
@@ -143,6 +147,7 @@ class Publish extends Component<{}, PublishState> {
                 AssetModel.additionalInformation
             )
         }
+
         try {
             const asset = await this.context.ocean.registerAsset(
                 newAsset,
