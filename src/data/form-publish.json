@@ -16,18 +16,6 @@
       "required": true,
       "rows": 5
     },
-    "price": {
-      "label": "Price",
-      "placeholder": "i.e. 1000",
-      "type": "number",
-      "required": true
-    },
-    "author": {
-      "label": "Author",
-      "placeholder": "i.e. Jelly McJellyfish",
-      "type": "text",
-      "required": true
-    },
     "files": {
       "label": "Files",
       "placeholder": "i.e. https://file.com/file.json",
@@ -40,6 +28,12 @@
       "type": "select",
       "required": true,
       "options": ["Data set", "Algorithm", "Container", "Workflow", "Other"]
+    },
+    "author": {
+      "label": "Author",
+      "placeholder": "i.e. Jelly McJellyfish",
+      "type": "text",
+      "required": true
     },
     "license": {
       "label": "License",

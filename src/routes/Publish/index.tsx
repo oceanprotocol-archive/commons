@@ -4,6 +4,8 @@ import Route from '../../components/templates/Route'
 import Button from '../../components/atoms/Button'
 import Form from '../../components/atoms/Form/Form'
 import Input from '../../components/atoms/Form/Input'
+import Label from '../../components/atoms/Form/Label'
+import Row from '../../components/atoms/Form/Row'
 import { User } from '../../context/User'
 import AssetModel from '../../models/AssetModel'
 import Web3message from '../../components/Web3message'
@@ -57,6 +59,21 @@ class Publish extends Component<{}, PublishState> {
                 onChange = this.inputToArrayChange
             }
 
+            if (key === 'files') {
+                return (
+                    <Row key={key}>
+                        <Label htmlFor={key} required>
+                            {value.label}
+                        </Label>
+                        <Files
+                            placeholder={value.placeholder}
+                            help={value.help}
+                            files={this.state.files}
+                        />
+                    </Row>
+                )
+            }
+
             return (
                 <Input
                     key={key}
@@ -70,9 +87,6 @@ class Publish extends Component<{}, PublishState> {
                     onChange={onChange}
                     rows={value.rows}
                     value={(this.state as any)[key]}
-                    additionalComponent={
-                        key === 'files' && <Files files={this.state.files} />
-                    }
                 />
             )
         })

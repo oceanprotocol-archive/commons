@@ -6,6 +6,7 @@ import styles from './ItemForm.module.scss'
 
 interface ItemFormProps {
     addItem: any
+    placeholder: string
 }
 
 interface ItemFormStates {
@@ -44,8 +45,8 @@ export default class ItemForm extends PureComponent<
         this.props.addItem(url)
     }
 
-    public onChangeUrl = (e: Event) => {
-        // this.setState({ url: e.target.value })
+    public onChangeUrl = (e: React.FormEvent<HTMLInputElement>) => {
+        this.setState({ url: e.currentTarget.value })
         this.clearErrors()
     }
 
@@ -64,13 +65,13 @@ export default class ItemForm extends PureComponent<
                     name="url"
                     required
                     type="url"
-                    placeholder="e.g. https://url.com/info"
+                    placeholder={this.props.placeholder}
                     value={url}
                     onChange={this.onChangeUrl}
                 />
 
                 <Button onClick={(e: Event) => this.handleSubmit(e)}>
-                    Add Link
+                    Add File
                 </Button>
 
                 {hasError && (
