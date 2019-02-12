@@ -53,8 +53,8 @@ export default class Web3message extends PureComponent {
             <div className={styles.message}>
                 <span className={styles.indicatorActive} /> Connected with
                 account
-                <code className={styles.account} title={account}>
-                    {`${account.substring(0, 20)}...`}
+                <code className={styles.account} title={account && account}>
+                    {`${account && account.substring(0, 20)}...`}
                 </code>
             </div>
         )
