@@ -127,7 +127,12 @@ class App extends Component<{}, AppState> {
 
                             <main className={styles.main}>
                                 {this.state.isLoading ? (
-                                    <Spinner />
+                                    <div className={styles.loader}>
+                                        <Spinner />
+                                        <div className={styles.loaderMessage}>
+                                            Connecting to Ocean...
+                                        </div>
+                                    </div>
                                 ) : (
                                     <Routes />
                                 )}
