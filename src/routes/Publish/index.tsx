@@ -1,14 +1,17 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
-import Route from '../components/templates/Route'
-import Button from '../components/atoms/Button'
-import Form from '../components/atoms/Form/Form'
-import Input from '../components/atoms/Form/Input'
-import { User } from '../context/User'
-import AssetModel from '../models/AssetModel'
-import Web3message from '../components/Web3message'
+import Route from '../../components/templates/Route'
+import Button from '../../components/atoms/Button'
+import Form from '../../components/atoms/Form/Form'
+import Input from '../../components/atoms/Form/Input'
+import Label from '../../components/atoms/Form/Label'
+import Row from '../../components/atoms/Form/Row'
+import { User } from '../../context/User'
+import AssetModel from '../../models/AssetModel'
+import Web3message from '../../components/Web3message'
+import Files from './Files/'
 
-import form from '../data/form-publish.json'
+import form from '../../data/form-publish.json'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -35,13 +38,13 @@ class Publish extends Component<{}, PublishState> {
         name: '',
         dateCreated: new Date(),
         description: '',
-        files: [''],
+        files: [],
         price: 0,
         author: '',
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: [''],
+        categories: [],
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
@@ -54,6 +57,23 @@ class Publish extends Component<{}, PublishState> {
 
             if (key === 'files' || key === 'categories') {
                 onChange = this.inputToArrayChange
+            }
+
+            if (key === 'files') {
+                return (
+                    <Row key={key}>
+                        <Label htmlFor={key} required>
+                            {value.label}
+                        </Label>
+                        <Files
+                            placeholder={value.placeholder}
+                            name={value.name}
+                            help={value.help}
+                            files={this.state.files}
+                            onChange={onChange}
+                        />
+                    </Row>
+                )
             }
 
             return (
@@ -77,7 +97,7 @@ class Publish extends Component<{}, PublishState> {
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
     ) => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.currentTarget.name]: event.currentTarget.value
         })
     }
 
@@ -85,7 +105,7 @@ class Publish extends Component<{}, PublishState> {
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
     ) => {
         this.setState({
-            [event.target.name]: [event.target.value]
+            [event.currentTarget.name]: [event.currentTarget.value]
         })
     }
 
@@ -143,6 +163,7 @@ class Publish extends Component<{}, PublishState> {
                 AssetModel.additionalInformation
             )
         }
+
         try {
             const asset = await this.context.ocean.registerAsset(
                 newAsset,

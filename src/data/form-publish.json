@@ -7,7 +7,14 @@
       "placeholder": "i.e. My cool data set",
       "type": "text",
       "required": true,
-      "help": "Help me"
+      "help": "Help me Obiwan"
+    },
+    "files": {
+      "label": "Files",
+      "placeholder": "i.e. https://file.com/file.json",
+      "type": "text",
+      "required": true,
+      "help": "Provide one or multiple links to your data files."
     },
     "description": {
       "label": "Description",
@@ -16,29 +23,17 @@
       "required": true,
       "rows": 5
     },
-    "price": {
-      "label": "Price",
-      "placeholder": "i.e. 1000",
-      "type": "number",
-      "required": true
+    "type": {
+      "label": "Type",
+      "type": "select",
+      "required": true,
+      "options": ["Data set", "Algorithm", "Container", "Workflow", "Other"]
     },
     "author": {
       "label": "Author",
       "placeholder": "i.e. Jelly McJellyfish",
       "type": "text",
       "required": true
-    },
-    "files": {
-      "label": "Files",
-      "placeholder": "i.e. https://file.com/file.json",
-      "type": "text",
-      "required": true
-    },
-    "type": {
-      "label": "Type",
-      "type": "select",
-      "required": true,
-      "options": ["Data set", "Algorithm", "Container", "Workflow", "Other"]
     },
     "license": {
       "label": "License",

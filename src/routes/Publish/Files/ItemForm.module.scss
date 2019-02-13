@@ -1,0 +1,16 @@
+@import '../../../styles/variables';
+
+.itemForm {
+    margin-top: $spacer / 2;
+    padding-left: $spacer / 2;
+
+    button {
+        margin-top: -($spacer * 2);
+    }
+}
+
+.error {
+    font-size: $font-size-small;
+    color: $red;
+    margin-left: $spacer / 4;
+}
