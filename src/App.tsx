@@ -70,12 +70,19 @@ class App extends Component<{}, AppState> {
                 } else {
                     if (accounts.length === 0 && window.ethereum) {
                         await window.ethereum.enable()
-                        this.setState({
-                            isLogged: true,
-                            isWeb3: true,
-                            account: accounts[0],
-                            web3
-                        })
+                        const newAccounts = await web3.eth.getAccounts()
+                        if (accounts.length > 0) {
+                            this.setState({
+                                isLogged: true,
+                                isWeb3: true,
+                                account: newAccounts[0],
+                                web3
+                            })
+                        } else {
+                            // failed to unlock
+                        }
+                    } else {
+                        // no unlock procedure
                     }
                 }
             } catch (e) {
