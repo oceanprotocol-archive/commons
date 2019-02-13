@@ -22,6 +22,11 @@
     }
 }
 
+.spinnerMessage {
+    color: $brand-grey-light;
+    margin-top: $spacer / 2;
+}
+
 @keyframes spinner {
     to {
         transform: rotate(360deg);
