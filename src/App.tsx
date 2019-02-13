@@ -71,7 +71,7 @@ class App extends Component<{}, AppState> {
                     if (accounts.length === 0 && window.ethereum) {
                         await window.ethereum.enable()
                         const newAccounts = await web3.eth.getAccounts()
-                        if (accounts.length > 0) {
+                        if (newAccounts.length > 0) {
                             this.setState({
                                 isLogged: true,
                                 isWeb3: true,
