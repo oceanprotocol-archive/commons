@@ -38,13 +38,13 @@ class Publish extends Component<{}, PublishState> {
         name: '',
         dateCreated: new Date(),
         description: '',
-        files: [''],
+        files: [],
         price: 0,
         author: '',
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: [''],
+        categories: []
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
@@ -60,11 +60,6 @@ class Publish extends Component<{}, PublishState> {
             }
 
             if (key === 'files') {
-                const filesArray =
-                    this.state.files[0] === ''
-                        ? this.state.files.splice(1, 1)
-                        : this.state.files
-
                 return (
                     <Row key={key}>
                         <Label htmlFor={key} required>
@@ -73,7 +68,7 @@ class Publish extends Component<{}, PublishState> {
                         <Files
                             placeholder={value.placeholder}
                             help={value.help}
-                            files={filesArray}
+                            files={this.state.files}
                         />
                     </Row>
                 )
