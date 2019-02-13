@@ -59,7 +59,7 @@ export default class ItemForm extends PureComponent<
         const { url, hasError, noUrl } = this.state
 
         return (
-            <fieldset className={styles.itemForm}>
+            <div className={styles.itemForm}>
                 <Input
                     label="Url"
                     name="url"
@@ -84,7 +84,7 @@ export default class ItemForm extends PureComponent<
                         Please enter a valid URL.
                     </span>
                 )}
-            </fieldset>
+            </div>
         )
     }
 }

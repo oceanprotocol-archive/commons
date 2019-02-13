@@ -7,7 +7,14 @@
       "placeholder": "i.e. My cool data set",
       "type": "text",
       "required": true,
-      "help": "Help me"
+      "help": "Help me Obiwan"
+    },
+    "files": {
+      "label": "Files",
+      "placeholder": "i.e. https://file.com/file.json",
+      "type": "text",
+      "required": true,
+      "help": "Provide one or multiple links to your data files."
     },
     "description": {
       "label": "Description",
@@ -15,13 +22,6 @@
       "type": "textarea",
       "required": true,
       "rows": 5
-    },
-    "files": {
-      "label": "Files",
-      "placeholder": "i.e. https://file.com/file.json",
-      "type": "text",
-      "required": true,
-      "help": "Provide one or multiple links to your data asset(s)."
     },
     "type": {
       "label": "Type",

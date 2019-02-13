@@ -60,6 +60,11 @@ class Publish extends Component<{}, PublishState> {
             }
 
             if (key === 'files') {
+                const filesArray =
+                    this.state.files[0] === ''
+                        ? this.state.files.splice(1, 1)
+                        : this.state.files
+
                 return (
                     <Row key={key}>
                         <Label htmlFor={key} required>
@@ -68,7 +73,7 @@ class Publish extends Component<{}, PublishState> {
                         <Files
                             placeholder={value.placeholder}
                             help={value.help}
-                            files={this.state.files}
+                            files={filesArray}
                         />
                     </Row>
                 )

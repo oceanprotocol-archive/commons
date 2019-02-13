@@ -7,7 +7,7 @@ import Item from './Item'
 import styles from './index.module.scss'
 
 interface FilesProps {
-    files: any
+    files: string[]
     placeholder: string
     help: string
     // resetForm: any
@@ -18,7 +18,9 @@ interface FilesStates {
 }
 
 export default class Files extends PureComponent<FilesProps, FilesStates> {
-    public state: FilesStates = { isFormShown: false }
+    public state: FilesStates = {
+        isFormShown: false
+    }
 
     public toggleForm = (e: Event) => {
         e.preventDefault()
@@ -33,37 +35,36 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     public removeItem = (index: number) => {
-        this.props.files.remove(index)
+        this.props.files.splice(index, 1)
     }
 
     public render() {
         const { isFormShown } = this.state
+        const { files, help, placeholder } = this.props
 
         return (
             <>
-                <Help>{this.props.help}</Help>
+                <Help>{help}</Help>
                 <div className={styles.newItems}>
-                    {this.props.files.length > 1 && (
+                    {files.length > 0 && (
                         <TransitionGroup
                             component="ul"
                             className={styles.itemsList}
                         >
-                            {this.props.files.map(
-                                (item: string, index: number) => (
-                                    <CSSTransition
-                                        key={index}
-                                        timeout={400}
-                                        classNames="fade"
-                                    >
-                                        <Item
-                                            item={item}
-                                            removeItem={() =>
-                                                this.removeItem(index)
-                                            }
-                                        />
-                                    </CSSTransition>
-                                )
-                            )}
+                            {files.map((item: string, index: number) => (
+                                <CSSTransition
+                                    key={index}
+                                    timeout={400}
+                                    classNames="fade"
+                                >
+                                    <Item
+                                        item={item}
+                                        removeItem={() =>
+                                            this.removeItem(index)
+                                        }
+                                    />
+                                </CSSTransition>
+                            ))}
                         </TransitionGroup>
                     )}
 
@@ -79,7 +80,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                         onExit={() => this.setState({ isFormShown: false })}
                     >
                         <ItemForm
-                            placeholder={this.props.placeholder}
+                            placeholder={placeholder}
                             addItem={this.addItem}
                         />
                     </CSSTransition>

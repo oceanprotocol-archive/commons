@@ -2,32 +2,10 @@
 
 .itemForm {
     margin-top: $spacer / 2;
-    margin-bottom: $spacer / 1.5;
     padding-left: $spacer / 2;
 
-    label,
-    input,
-    select,
-    textarea,
-    input::placeholder,
     button {
-        font-size: $font-size-small;
-    }
-
-    label {
-        margin-bottom: $spacer / 8;
-    }
-
-    input,
-    select,
-    button {
-        height: 37px;
-        min-height: 37px;
-    }
-
-    button {
-        padding: 0 $spacer / 2;
-        margin-top: $spacer / 8;
+        margin-top: -($spacer * 2);
     }
 }
 
