@@ -3,6 +3,7 @@ import Web3 from 'web3'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Spinner from './components/atoms/Spinner'
 import { User } from './context/User'
 import { provideOcean } from './ocean'
 import Routes from './Routes'
@@ -124,11 +125,13 @@ class App extends Component<{}, AppState> {
                         <>
                             <Header />
 
-                            {!this.state.isLoading ? (
-                                <main className={styles.main}>
+                            <main className={styles.main}>
+                                {this.state.isLoading ? (
+                                    <Spinner />
+                                ) : (
                                     <Routes />
-                                </main>
-                            ) : null}
+                                )}
+                            </main>
 
                             <Footer />
                         </>
