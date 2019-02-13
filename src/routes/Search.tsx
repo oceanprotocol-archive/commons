@@ -2,7 +2,7 @@ import queryString from 'query-string'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Route from '../components/templates/Route'
-import { provideOcean } from '../ocean'
+import { User } from '../context/User'
 
 interface SearchState {
     results: any[]
@@ -17,8 +17,6 @@ export default class Search extends Component<SearchProps, SearchState> {
     public state = { results: [] }
 
     public async componentDidMount() {
-        // temporary ocean init and asset retrieval
-        const { ocean } = await provideOcean()
         const searchParams = queryString.parse(this.props.location.search)
         const queryRequest: any = {
             offset: 100,
@@ -29,7 +27,7 @@ export default class Search extends Component<SearchProps, SearchState> {
                 }
             }
         }
-        const assets = await ocean.searchAssets(queryRequest)
+        const assets = await this.context.ocean.searchAssets(queryRequest)
         this.setState({ results: assets })
     }
 
@@ -56,3 +54,5 @@ export default class Search extends Component<SearchProps, SearchState> {
         )
     }
 }
+
+Search.contextType = User
