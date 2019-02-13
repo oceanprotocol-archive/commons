@@ -44,7 +44,7 @@ class Publish extends Component<{}, PublishState> {
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: []
+        categories: [],
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
