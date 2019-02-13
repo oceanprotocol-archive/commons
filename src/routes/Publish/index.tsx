@@ -67,8 +67,10 @@ class Publish extends Component<{}, PublishState> {
                         </Label>
                         <Files
                             placeholder={value.placeholder}
+                            name={value.name}
                             help={value.help}
                             files={this.state.files}
+                            onChange={onChange}
                         />
                     </Row>
                 )
@@ -95,7 +97,7 @@ class Publish extends Component<{}, PublishState> {
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
     ) => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.currentTarget.name]: event.currentTarget.value
         })
     }
 
@@ -103,7 +105,7 @@ class Publish extends Component<{}, PublishState> {
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
     ) => {
         this.setState({
-            [event.target.name]: [event.target.value]
+            [event.currentTarget.name]: [event.currentTarget.value]
         })
     }
 

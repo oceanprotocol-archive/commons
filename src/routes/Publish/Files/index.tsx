@@ -9,7 +9,9 @@ import styles from './index.module.scss'
 interface FilesProps {
     files: string[]
     placeholder: string
-    help: string
+    help?: string
+    name: string
+    onChange: any
     // resetForm: any
 }
 
@@ -40,11 +42,20 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     public render() {
         const { isFormShown } = this.state
-        const { files, help, placeholder } = this.props
+        const { files, help, placeholder, name, onChange } = this.props
 
         return (
             <>
-                <Help>{help}</Help>
+                {help && <Help>{help}</Help>}
+
+                {/* Use hidden input to collect files */}
+                <input
+                    type="hidden"
+                    name={name}
+                    value={files}
+                    onChange={onChange}
+                />
+
                 <div className={styles.newItems}>
                     {files.length > 0 && (
                         <TransitionGroup
