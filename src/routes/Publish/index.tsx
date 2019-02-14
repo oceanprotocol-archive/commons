@@ -19,7 +19,7 @@ interface PublishState {
     name?: string
     dateCreated?: Date
     description?: string
-    files?: string[]
+    files?: any[]
     price?: number
     author?: string
     type?: AssetType
@@ -147,7 +147,7 @@ class Publish extends Component<{}, PublishState> {
                 author: this.state.author,
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
-                files: [this.state.files],
+                files: this.state.files,
                 price: this.state.price,
                 type: this.state.type,
                 categories: [this.state.categories],
@@ -170,7 +170,6 @@ class Publish extends Component<{}, PublishState> {
                 newAsset,
                 account[0]
             )
-            Logger.log('asset:', asset)
             this.setState({
                 publishedDid: asset.id,
                 isPublished: true

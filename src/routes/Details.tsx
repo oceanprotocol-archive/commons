@@ -35,12 +35,14 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                 service.serviceDefinitionId,
                 account[0]
             )
+            Logger.log(service)
             await this.context.ocean.initializeServiceAgreement(
                 ddo.id,
                 service.serviceDefinitionId,
                 serviceAgreementSignatureResult.serviceAgreementId,
                 serviceAgreementSignatureResult.serviceAgreementSignature,
                 (files: any) => {
+                    Logger.log('downloading files', files)
                     files.forEach((file: any) => {
                         const parsedUrl: any = quertString.parseUrl(file)
                         setTimeout(() => {

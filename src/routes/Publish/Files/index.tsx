@@ -7,7 +7,7 @@ import Item from './Item'
 import styles from './index.module.scss'
 
 interface FilesProps {
-    files: string[]
+    files: any[]
     placeholder: string
     help?: string
     name: string
@@ -31,7 +31,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     public addItem = (value: string) => {
-        this.props.files.push(value)
+        this.props.files.push({url: value})
         // this.props.resetForm()
         this.setState({ isFormShown: !this.state.isFormShown })
     }
@@ -62,7 +62,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                             component="ul"
                             className={styles.itemsList}
                         >
-                            {files.map((item: string, index: number) => (
+                            {files.map((item: any, index: number) => (
                                 <CSSTransition
                                     key={index}
                                     timeout={400}
