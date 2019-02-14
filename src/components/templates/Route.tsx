@@ -24,12 +24,14 @@ const Route = ({
         </Helmet>
 
         <Content wide={wide}>
-            <header className={styles.header}>
-                <h1>{title}</h1>
-                {description && <p>{description}</p>}
-            </header>
+            <article>
+                <header className={styles.header}>
+                    <h1>{title}</h1>
+                    {description && <p>{description}</p>}
+                </header>
 
-            {children}
+                {children}
+            </article>
         </Content>
     </div>
 )

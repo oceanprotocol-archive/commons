@@ -1,9 +1,9 @@
 import { Logger } from '@oceanprotocol/squid'
 import React, { Component } from 'react'
-import Route from '../components/templates/Route'
-import Button from '../components/atoms/Button'
-import { User } from '../context/User'
+import Route from '../../components/templates/Route'
+import { User } from '../../context/User'
 import quertString from 'query-string'
+import AssetDetails from './AssetDetails'
 
 interface DetailsState {
     ddo: any
@@ -16,7 +16,7 @@ interface DetailsProps {
 }
 
 export default class Details extends Component<DetailsProps, DetailsState> {
-    public state = { ddo: null, metadata: null }
+    public state = { ddo: {}, metadata: {} }
 
     public async componentDidMount() {
         const ddo = await this.context.ocean.resolveDID(
@@ -56,23 +56,18 @@ export default class Details extends Component<DetailsProps, DetailsState> {
         }
     }
 
-    private showDetails = (ddo: any) => {
-        return (
-            <>
-                <div>{JSON.stringify(this.state.metadata)}</div>
-
-                <Button onClick={() => this.purchaseAsset(ddo)}>
-                    Purchase asset
-                </Button>
-            </>
-        )
-    }
-
     public render() {
+        const { metadata, ddo } = this.state
+        const { base } = metadata
+
         return (
-            <Route title={'Details'}>
-                {this.state.metadata ? (
-                    this.showDetails(this.state.ddo)
+            <Route title={metadata && base ? base.name : 'Loading Details'}>
+                {metadata ? (
+                    <AssetDetails
+                        metadata={metadata}
+                        ddo={ddo}
+                        purchaseAsset={this.purchaseAsset}
+                    />
                 ) : (
                     <div>Loading</div>
                 )}
