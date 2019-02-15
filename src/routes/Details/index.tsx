@@ -5,6 +5,7 @@ import Route from '../../components/templates/Route'
 import Spinner from '../../components/atoms/Spinner'
 import { User } from '../../context/User'
 import AssetDetails from './AssetDetails'
+import stylesApp from '../../App.module.scss'
 
 interface DetailsState {
     ddo: any
@@ -71,7 +72,9 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                         purchaseAsset={this.purchaseAsset}
                     />
                 ) : (
-                    <Spinner message={'Loading asset...'} />
+                    <div className={stylesApp.loader}>
+                        <Spinner message={'Loading asset...'} />
+                    </div>
                 )}
             </Route>
         )

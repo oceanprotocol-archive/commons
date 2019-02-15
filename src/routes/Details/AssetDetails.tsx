@@ -65,7 +65,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                 </ul>
 
                 <Button onClick={() => purchaseAsset(ddo)}>
-                    Purchase asset
+                    Download asset
                 </Button>
 
                 <pre>
