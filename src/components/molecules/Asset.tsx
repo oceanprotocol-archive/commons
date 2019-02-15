@@ -4,15 +4,20 @@ import styles from './Asset.module.scss'
 
 const AssetLink = ({ asset }: { asset: any }) => {
     const { metadata } = asset.findServiceByType('Metadata')
+    const { base } = metadata
 
     return (
         <article className={styles.asset}>
             <Link to={`/asset/${asset.id}`}>
-                <h1>{metadata.base.name}</h1>
-                <p>{metadata.base.description.substring(0, 90)}</p>
+                <h1>{base.name}</h1>
+                <p>{base.description.substring(0, 90)}</p>
 
                 <footer className={styles.assetFooter}>
-                    <div>{metadata.base.category}</div>
+                    {base.categories ? (
+                        <div>{base.category}</div>
+                    ) : (
+                        <div>Fake Category</div>
+                    )}
                 </footer>
             </Link>
         </article>
