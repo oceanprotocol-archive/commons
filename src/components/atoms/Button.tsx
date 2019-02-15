@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react'
+import cx from 'classnames'
 import styles from './Button.module.scss'
 
 interface ButtonProps {
     children: string
+    className?: string
     primary?: boolean
     link?: boolean
     href?: string
@@ -12,7 +14,14 @@ interface ButtonProps {
 export default class Button extends PureComponent<ButtonProps, any> {
     public render() {
         let classes
-        const { primary, link, href, children, ...props } = this.props
+        const {
+            primary,
+            link,
+            href,
+            children,
+            className,
+            ...props
+        } = this.props
 
         if (primary) {
             classes = styles.buttonPrimary
@@ -23,11 +32,11 @@ export default class Button extends PureComponent<ButtonProps, any> {
         }
 
         return href ? (
-            <a href={href} className={classes} {...props}>
+            <a href={href} className={cx(classes, className)} {...props}>
                 {children}
             </a>
         ) : (
-            <button className={classes} {...props}>
+            <button className={cx(classes, className)} {...props}>
                 {children}
             </button>
         )
