@@ -30,17 +30,16 @@ export default class Details extends Component<DetailsProps, DetailsState> {
         try {
             const account = await this.context.ocean.getAccounts()
             const service = ddo.findServiceByType('Access')
-            const serviceAgreementSignatureResult: any = await this.context.ocean.signServiceAgreement(
+            const serviceAgreementSignatureResult = await this.context.ocean.signServiceAgreement(
                 ddo.id,
                 service.serviceDefinitionId,
                 account[0]
             )
-            Logger.log(service)
             await this.context.ocean.initializeServiceAgreement(
                 ddo.id,
                 service.serviceDefinitionId,
-                serviceAgreementSignatureResult.serviceAgreementId,
-                serviceAgreementSignatureResult.serviceAgreementSignature,
+                serviceAgreementSignatureResult.agreementId,
+                serviceAgreementSignatureResult.signature,
                 (files: any) => {
                     Logger.log('downloading files', files)
                     files.forEach((file: any) => {
