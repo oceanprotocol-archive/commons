@@ -1,13 +1,14 @@
-import { Logger } from '@oceanprotocol/squid'
 import React, { Component } from 'react'
+import { Logger } from '@oceanprotocol/squid'
+import queryString from 'query-string'
 import Route from '../../components/templates/Route'
+import Spinner from '../../components/atoms/Spinner'
 import { User } from '../../context/User'
-import quertString from 'query-string'
 import AssetDetails from './AssetDetails'
 
 interface DetailsState {
     ddo: any
-    metadata: any
+    metadata: { base: { name: string } }
 }
 
 interface DetailsProps {
@@ -16,14 +17,14 @@ interface DetailsProps {
 }
 
 export default class Details extends Component<DetailsProps, DetailsState> {
-    public state = { ddo: {}, metadata: {} }
+    public state = { ddo: {}, metadata: { base: { name: '' } } }
 
     public async componentDidMount() {
         const ddo = await this.context.ocean.resolveDID(
             this.props.match.params.did
         )
         const { metadata } = ddo.findServiceByType('Metadata')
-        this.setState({ ddo, metadata })
+        this.setState({ ddo, metadata: { base: metadata.base } })
     }
 
     private purchaseAsset = async (ddo: any) => {
@@ -42,7 +43,7 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                 serviceAgreementSignatureResult.serviceAgreementSignature,
                 (files: any) => {
                     files.forEach((file: any) => {
-                        const parsedUrl: any = quertString.parseUrl(file)
+                        const parsedUrl: any = queryString.parseUrl(file)
                         setTimeout(() => {
                             // eslint-disable-next-line
                             window.open(parsedUrl.query.url)
@@ -58,18 +59,19 @@ export default class Details extends Component<DetailsProps, DetailsState> {
 
     public render() {
         const { metadata, ddo } = this.state
-        const { base } = metadata
 
         return (
-            <Route title={metadata && base ? base.name : 'Loading Details'}>
-                {metadata ? (
+            <Route
+                title={metadata.base ? metadata.base.name : 'Loading Details'}
+            >
+                {metadata && metadata.base.name ? (
                     <AssetDetails
                         metadata={metadata}
                         ddo={ddo}
                         purchaseAsset={this.purchaseAsset}
                     />
                 ) : (
-                    <div>Loading</div>
+                    <Spinner message={'Loading asset...'} />
                 )}
             </Route>
         )

@@ -11,41 +11,36 @@ interface AssetDetailsProps {
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
     public render() {
         const { metadata, ddo, purchaseAsset } = this.props
+        const { base } = metadata
 
         return (
             <>
                 <aside className={styles.metaPrimary}>
                     <h2 className={styles.copyrightHolder}>
-                        {metadata.base.copyrightHolder}
+                        {base.copyrightHolder}
                     </h2>
                     <div className={styles.metaPrimaryData}>
-                        <span>{metadata.base.dateCreated}</span>
+                        <span>{base.dateCreated}</span>
                         <span>json</span>
                         <span>18.5 MB</span>
-                        {metadata.base.categories && (
-                            <span>{metadata.base.categories[0]}</span>
-                        )}
+                        {base.categories && <span>{base.categories[0]}</span>}
                     </div>
                 </aside>
 
-                <div>{metadata.base.description}</div>
+                <div>{base.description}</div>
 
                 <ul className={styles.meta}>
                     <li>
                         <span className={styles.metaLabel}>
                             <strong>Author</strong>
                         </span>
-                        <span className={styles.metaValue}>
-                            {metadata.base.author}
-                        </span>
+                        <span className={styles.metaValue}>{base.author}</span>
                     </li>
                     <li>
                         <span className={styles.metaLabel}>
                             <strong>License</strong>
                         </span>
-                        <span className={styles.metaValue}>
-                            {metadata.base.license}
-                        </span>
+                        <span className={styles.metaValue}>{base.license}</span>
                     </li>
                     <li>
                         <span className={styles.metaLabel}>
