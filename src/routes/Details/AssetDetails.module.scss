@@ -8,14 +8,14 @@
     color: $brand-grey-light;
     font-size: $font-size-large;
     border-bottom: 1px solid $brand-grey-lighter;
-    margin-bottom: $spacer / 2;
-    padding-bottom: $spacer / 2;
+    margin-bottom: $spacer / $line-height;
+    padding-bottom: $spacer / $line-height;
 }
 
 .metaPrimaryData {
     font-size: $font-size-small;
 
-    span {
+    > * {
         display: block;
         white-space: nowrap;
     }
@@ -25,13 +25,13 @@
         justify-content: space-between;
         flex-wrap: wrap;
 
-        span {
+        > * {
             flex: 0 0 48%;
         }
     }
 
     @media (min-width: $break-point--medium) {
-        span {
+        > * {
             flex: 0;
         }
     }
@@ -46,6 +46,7 @@
     margin-bottom: $spacer;
     list-style: none;
     padding-left: 0;
+    font-size: $font-size-small;
 
     li {
         width: 100%;

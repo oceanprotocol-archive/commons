@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
+import { Link } from 'react-router-dom'
 import Button from '../../components/atoms/Button'
+import Moment from 'react-moment'
 import styles from './AssetDetails.module.scss'
 
 interface AssetDetailsProps {
@@ -16,14 +18,28 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
         return (
             <>
                 <aside className={styles.metaPrimary}>
-                    <h2 className={styles.copyrightHolder}>
+                    <h2
+                        className={styles.copyrightHolder}
+                        title="Copyright Holder"
+                    >
                         {base.copyrightHolder}
                     </h2>
                     <div className={styles.metaPrimaryData}>
-                        <span>{base.dateCreated}</span>
-                        <span>json</span>
-                        <span>18.5 MB</span>
-                        {base.categories && <span>{base.categories[0]}</span>}
+                        <span title="Date published">
+                            <Moment
+                                date={base.dateCreated}
+                                format="L"
+                                interval={0}
+                            />
+                        </span>
+                        {base.categories ? (
+                            // TODO: Make this link to search for respective category
+                            <Link to={'search?q='}>{base.categories[0]}</Link>
+                        ) : (
+                            <Link to={'search?q='}>Fake Category</Link>
+                        )}
+                        <span>fake json</span>
+                        <span>fake 18.5 MB</span>
                     </div>
                 </aside>
 
