@@ -2,22 +2,10 @@
 
 .home {
     display: block;
-}
 
-.published {
-    margin-top: $spacer * 3;
-    margin-bottom: $spacer;
-
-    > div {
-        text-align: center;
-        margin-top: $spacer;
-        margin-bottom: $spacer;
+    label {
+        height: 0;
+        margin: 0;
+        visibility: hidden;
     }
-}
-
-.subTitle {
-    font-size: $font-size-h4;
-    color: $brand-grey-light;
-    border-bottom: 1px solid $brand-grey-lighter;
-    padding-bottom: $spacer / 2;
 }
