@@ -37,6 +37,11 @@
     }
 }
 
+.description {
+    // respect line breaks from textarea
+    white-space: pre-line;
+}
+
 .meta {
     border-top: 1px solid $brand-grey-lighter;
     border-bottom: 1px solid $brand-grey-lighter;

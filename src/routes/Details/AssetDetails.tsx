@@ -43,7 +43,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     </div>
                 </aside>
 
-                <div>{base.description}</div>
+                <div className={styles.description}>{base.description}</div>
 
                 <ul className={styles.meta}>
                     <li>
