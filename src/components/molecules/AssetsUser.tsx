@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
+import Spinner from '../atoms/Spinner'
 import Asset from '../molecules/Asset'
 import styles from './AssetsUser.module.scss'
 
 export default class AssetsUser extends PureComponent {
-    public state = { results: [] }
+    public state = { results: [], isLoading: true }
 
     public componentDidMount() {
         this.searchOcean()
@@ -21,8 +22,13 @@ export default class AssetsUser extends PureComponent {
                 }
             }
         }
-        const assets = await this.context.ocean.searchAssets(queryRequest)
-        this.setState({ results: assets })
+
+        try {
+            const assets = await this.context.ocean.searchAssets(queryRequest)
+            this.setState({ results: assets, isLoading: false })
+        } catch (error) {
+            this.setState({ isLoading: false })
+        }
     }
 
     public render() {
@@ -30,7 +36,9 @@ export default class AssetsUser extends PureComponent {
             <div className={styles.assetsUser}>
                 <h2 className={styles.subTitle}>Your Data Sets</h2>
 
-                {this.state.results.length ? (
+                {this.state.isLoading ? (
+                    <Spinner />
+                ) : this.state.results.length ? (
                     <div className={styles.assets}>
                         {this.state.results.map((asset, index) => (
                             <Asset key={index} asset={asset} />
