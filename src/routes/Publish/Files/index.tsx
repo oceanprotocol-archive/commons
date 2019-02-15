@@ -31,7 +31,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     public addItem = (value: string) => {
-        this.props.files.push({url: value})
+        this.props.files.push({ url: value })
         // this.props.resetForm()
         this.setState({ isFormShown: !this.state.isFormShown })
     }
