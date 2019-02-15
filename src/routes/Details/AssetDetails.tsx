@@ -38,7 +38,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         ) : (
                             <Link to={'search?q='}>Fake Category</Link>
                         )}
-                        <span>fake json</span>
+                        <span>fake json contentType</span>
                         <span>fake 18.5 MB</span>
                     </div>
                 </aside>
@@ -62,13 +62,13 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         <span className={styles.metaLabel}>
                             <strong>File Encoding</strong>
                         </span>
-                        <span className={styles.metaValue}>UTF-8</span>
+                        <span className={styles.metaValue}>fake UTF-8</span>
                     </li>
                     <li>
                         <span className={styles.metaLabel}>
                             <strong>Compression</strong>
                         </span>
-                        <span className={styles.metaValue}>None</span>
+                        <span className={styles.metaValue}>fake None</span>
                     </li>
                     <li>
                         <span className={styles.metaLabel}>
