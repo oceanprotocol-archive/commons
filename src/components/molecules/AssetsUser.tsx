@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
+import Asset from '../molecules/Asset'
 import styles from './AssetsUser.module.scss'
 
 export default class AssetsUser extends PureComponent {
@@ -16,23 +17,12 @@ export default class AssetsUser extends PureComponent {
             query: {
                 // TODO: query all assets published by current active account
                 $text: {
-                    $search: 'account ID'
+                    $search: 'zoid'
                 }
             }
         }
         const assets = await this.context.ocean.searchAssets(queryRequest)
         this.setState({ results: assets })
-    }
-
-    // TODO: this should be removed and replaced by Asset.tsx component
-    private renderAssetBox = (asset: any) => {
-        const { metadata } = asset.findServiceByType('Metadata')
-        return (
-            <Link key={asset.id} to={`/asset/${asset.id}`}>
-                <div>{metadata.base.name}</div>
-                <div>{metadata.base.description}</div>
-            </Link>
-        )
     }
 
     public render() {
@@ -41,7 +31,11 @@ export default class AssetsUser extends PureComponent {
                 <h2 className={styles.subTitle}>Your Data Sets</h2>
 
                 {this.state.results.length ? (
-                    this.state.results.map(asset => this.renderAssetBox(asset))
+                    <div className={styles.assets}>
+                        {this.state.results.map((asset, index) => (
+                            <Asset key={index} asset={asset} />
+                        ))}
+                    </div>
                 ) : (
                     <div>
                         <p>None yet.</p>
