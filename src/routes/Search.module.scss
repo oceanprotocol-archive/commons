@@ -3,7 +3,7 @@
 .results {
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: $spacer * 2;
+    grid-gap: $spacer;
     max-width: 100%;
 
     @media (min-width: $break-point--small) {
