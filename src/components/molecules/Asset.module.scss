@@ -1,0 +1,38 @@
+@import '../../styles/variables';
+
+.asset {
+    > a {
+        display: block;
+        height: 100%;
+        padding: $spacer;
+        border: 1px solid $brand-grey-lighter;
+        border-radius: $border-radius;
+        background: $brand-white;
+        color: inherit;
+
+        &:hover,
+        &:focus {
+            color: inherit;
+            border-color: $brand-pink;
+            transform: none;
+        }
+    }
+
+    h1 {
+        font-size: $font-size-large;
+        margin-top: 0;
+    }
+
+    p {
+        margin-bottom: 0;
+        font-size: $font-size-small;
+    }
+}
+
+.assetFooter {
+    border-top: 1px solid $brand-grey-lighter;
+    padding-top: $spacer / 2;
+    margin-top: $spacer / 2;
+    font-size: $font-size-small;
+    color: $brand-grey-light;
+}

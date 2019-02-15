@@ -1,8 +1,9 @@
 import queryString from 'query-string'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import Route from '../components/templates/Route'
 import { User } from '../context/User'
+import Asset from '../components/molecules/Asset'
+import styles from './Search.module.scss'
 
 interface SearchState {
     results: any[]
@@ -31,25 +32,21 @@ export default class Search extends Component<SearchProps, SearchState> {
         this.setState({ results: assets })
     }
 
-    private renderAssetBox = (asset: any) => {
-        const { metadata } = asset.findServiceByType('Metadata')
-        return (
-            <Link key={asset.id} to={`/asset/${asset.id}`}>
-                <div>{asset.id}</div>
-                <div>{metadata.base.name}</div>
-                <div>{metadata.base.description}</div>
-            </Link>
+    public renderResults = () =>
+        this.state.results.length ? (
+            <div className={styles.results}>
+                {this.state.results.map(asset => (
+                    <Asset key={asset} asset={asset} />
+                ))}
+            </div>
+        ) : (
+            <div>No data sets yet</div>
         )
-    }
 
     public render() {
         return (
             <Route title="Search Results" wide>
-                {this.state.results.length ? (
-                    this.state.results.map(asset => this.renderAssetBox(asset))
-                ) : (
-                    <div>No data sets yet</div>
-                )}
+                {this.renderResults()}
             </Route>
         )
     }
