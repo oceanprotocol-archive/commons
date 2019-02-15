@@ -49,7 +49,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
     }
 
     public InputComponent = () => {
-        const { type, options, group, name, required } = this.props
+        const { type, options, group, name, required, onChange } = this.props
 
         const wrapClass = this.inputWrapClasses()
 
@@ -63,8 +63,10 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         required={required}
                         onFocus={this.toggleFocus}
                         onBlur={this.toggleFocus}
+                        defaultValue={''}
+                        onChange={onChange}
                     >
-                        <option value="none">---</option>
+                        <option value="">---</option>
                         {options &&
                             options.map((option: string, index: number) => (
                                 <option
