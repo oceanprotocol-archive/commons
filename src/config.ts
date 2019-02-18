@@ -6,7 +6,7 @@ export const aquariusScheme = 'http'
 export const aquariusHost = 'localhost'
 export const aquariusPort = 5000
 
-export const brizoScheme = 'https'
+export const brizoScheme = 'http'
 export const brizoHost = 'localhost'
 export const brizoPort = 8030
 

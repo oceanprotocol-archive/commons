@@ -23,37 +23,6 @@
       "required": true,
       "rows": 5
     },
-    "type": {
-      "label": "Type",
-      "type": "select",
-      "options": ["Data set", "Algorithm", "Container", "Workflow", "Other"]
-    },
-    "author": {
-      "label": "Author",
-      "placeholder": "i.e. Jelly McJellyfish",
-      "type": "text",
-      "required": true
-    },
-    "license": {
-      "label": "License",
-      "type": "select",
-      "required": true,
-      "options": [
-        "Public Domain",
-        "CC BY: Attribution",
-        "CC BY-SA: Attribution ShareAlike",
-        "CC BY-ND: Attribution-NoDerivs",
-        "CC BY-NC: Attribution-NonCommercial",
-        "CC BY-NC-SA: Attribution-NonCommercial-ShareAlike",
-        "CC BY-NC-ND: Attribution-NonCommercial-NoDerivs"
-      ]
-    },
-    "copyrightHolder": {
-      "label": "Copyright Holder",
-      "placeholder": "i.e. fwhfiw",
-      "type": "text",
-      "required": true
-    },
     "categories": {
       "label": "Categories",
       "type": "select",
@@ -89,6 +58,32 @@
         "Sports & Recreation",
         "Communication & Journalism",
         "Other"
+      ]
+    },
+    "copyrightHolder": {
+      "label": "Copyright Holder",
+      "placeholder": "i.e. fwhfiw",
+      "type": "text",
+      "required": true
+    },
+    "author": {
+      "label": "Author",
+      "placeholder": "i.e. Jelly McJellyfish",
+      "type": "text",
+      "required": true
+    },
+    "license": {
+      "label": "License",
+      "type": "select",
+      "required": true,
+      "options": [
+        "Public Domain",
+        "CC BY: Attribution",
+        "CC BY-SA: Attribution ShareAlike",
+        "CC BY-ND: Attribution-NoDerivs",
+        "CC BY-NC: Attribution-NonCommercial",
+        "CC BY-NC-SA: Attribution-NonCommercial-ShareAlike",
+        "CC BY-NC-ND: Attribution-NonCommercial-NoDerivs"
       ]
     }
   }

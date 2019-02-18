@@ -17,14 +17,9 @@ const AssetModel = {
         compression: null,
         contentType: null,
         workExample: null,
-        contentUrls: [],
-        links: [
-            {
-                name: null,
-                type: null,
-                url: null
-            }
-        ],
+        files: [],
+        categories: [],
+        links: [],
         inLanguage: null,
         tags: [],
         price: null
