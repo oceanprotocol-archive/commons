@@ -1,0 +1,24 @@
+{
+  "name": "Squid JavaScript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oceanprotocol/commons-marketplace.git"
+  },
+  "dependencies": [{
+      "name": "keeper-contracts",
+      "version": "~0.6.12"
+    },
+    {
+      "name": "brizo",
+      "version": "~0.2.0"
+    },
+    {
+      "name": "aquarius",
+      "version": "~0.1.8"
+    },
+    {
+      "name": "squid-js",
+      "version": "~0.3.0"
+    }
+  ]
+}
