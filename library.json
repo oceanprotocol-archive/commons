@@ -1,10 +1,11 @@
 {
-  "name": "Squid JavaScript",
+  "name": "commons-marketplace",
   "repository": {
     "type": "git",
     "url": "https://github.com/oceanprotocol/commons-marketplace.git"
   },
-  "dependencies": [{
+  "dependencies": [
+    {
       "name": "keeper-contracts",
       "version": "~0.6.12"
     },
