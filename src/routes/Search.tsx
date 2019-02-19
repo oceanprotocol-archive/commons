@@ -19,16 +19,7 @@ export default class Search extends Component<SearchProps, SearchState> {
 
     public async componentDidMount() {
         const searchParams = queryString.parse(this.props.location.search)
-        const queryRequest: any = {
-            offset: 100,
-            page: 0,
-            query: {
-                $text: {
-                    $search: searchParams.q
-                }
-            }
-        }
-        const assets = await this.context.ocean.searchAssets(queryRequest)
+        const assets = await this.context.ocean.assets.search(searchParams.q)
         this.setState({ results: assets })
     }
 
