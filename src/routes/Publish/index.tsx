@@ -5,6 +5,7 @@ import Form from '../../components/atoms/Form/Form'
 import AssetModel from '../../models/AssetModel'
 import Web3message from '../../components/Web3message'
 import Step from './Step'
+import Progress from './Progress'
 
 import form from '../../data/form-publish.json'
 
@@ -169,7 +170,11 @@ class Publish extends Component<{}, PublishState> {
                     this.publishedState()
                 ) : (
                     <>
-                        <p>Step {this.state.currentStep} </p>
+                        <Progress
+                            steps={form.steps}
+                            currentStep={this.state.currentStep}
+                            totalSteps={form.steps.length}
+                        />
 
                         <Form onSubmit={this.registerAsset}>
                             {form.steps.map((step: any, index: number) => (
