@@ -1,15 +1,10 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
 import Route from '../../components/templates/Route'
-import Button from '../../components/atoms/Button'
 import Form from '../../components/atoms/Form/Form'
-import Input from '../../components/atoms/Form/Input'
-import Label from '../../components/atoms/Form/Label'
-import Row from '../../components/atoms/Form/Row'
-import { User } from '../../context/User'
 import AssetModel from '../../models/AssetModel'
 import Web3message from '../../components/Web3message'
-import Files from './Files/'
+import Step from './Step'
 
 import form from '../../data/form-publish.json'
 
@@ -19,7 +14,7 @@ interface PublishState {
     name?: string
     dateCreated?: Date
     description?: string
-    files?: any[]
+    files?: string[]
     price?: number
     author?: string
     type?: AssetType
@@ -31,10 +26,12 @@ interface PublishState {
     isPublished?: boolean
     publishedDid?: string
     publishingError?: string
+    currentStep?: number
 }
 
 class Publish extends Component<{}, PublishState> {
     public state = {
+        currentStep: 1,
         name: '',
         dateCreated: new Date(),
         description: '',
@@ -50,48 +47,6 @@ class Publish extends Component<{}, PublishState> {
         publishedDid: '',
         publishingError: ''
     }
-
-    public formFields = (entries: any[]) =>
-        entries.map(([key, value]) => {
-            let onChange = this.inputChange
-
-            if (key === 'files' || key === 'categories') {
-                onChange = this.inputToArrayChange
-            }
-
-            if (key === 'files') {
-                return (
-                    <Row key={key}>
-                        <Label htmlFor={key} required>
-                            {value.label}
-                        </Label>
-                        <Files
-                            placeholder={value.placeholder}
-                            name={value.name}
-                            help={value.help}
-                            files={this.state.files}
-                            onChange={onChange}
-                        />
-                    </Row>
-                )
-            }
-
-            return (
-                <Input
-                    key={key}
-                    name={key}
-                    label={value.label}
-                    placeholder={value.placeholder}
-                    required={value.required}
-                    type={value.type}
-                    help={value.help}
-                    options={value.options}
-                    onChange={onChange}
-                    rows={value.rows}
-                    value={(this.state as any)[key]}
-                />
-            )
-        })
 
     private inputChange = (
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -111,6 +66,22 @@ class Publish extends Component<{}, PublishState> {
 
     private tryAgain = () => {
         this.setState({ publishingError: '' })
+    }
+
+    private next = () => {
+        let { currentStep } = this.state
+        currentStep = currentStep >= 2 ? 3 : currentStep + 1
+        this.setState({
+            currentStep: currentStep
+        })
+    }
+
+    private prev = () => {
+        let { currentStep } = this.state
+        currentStep = currentStep <= 1 ? 1 : currentStep - 1
+        this.setState({
+            currentStep: currentStep
+        })
     }
 
     private toStart = () => {
@@ -187,8 +158,6 @@ class Publish extends Component<{}, PublishState> {
     }
 
     public render() {
-        const entries = Object.entries(form.fields)
-
         return (
             <Route title="Publish">
                 <Web3message />
@@ -200,25 +169,27 @@ class Publish extends Component<{}, PublishState> {
                 ) : this.state.isPublished ? (
                     this.publishedState()
                 ) : (
-                    <Form
-                        title={form.title}
-                        description={form.description}
-                        onSubmit={this.registerAsset}
-                    >
-                        {this.formFields(entries)}
+                    <>
+                        <p>Step {this.state.currentStep} </p>
 
-                        <User.Consumer>
-                            {states =>
-                                states.isLogged ? (
-                                    <Button primary>Register asset</Button>
-                                ) : (
-                                    <Button onClick={states.startLogin}>
-                                        Register asset (login first)
-                                    </Button>
-                                )
-                            }
-                        </User.Consumer>
-                    </Form>
+                        <Form onSubmit={this.registerAsset}>
+                            {form.steps.map((step: any, index: number) => (
+                                <Step
+                                    key={index}
+                                    index={index}
+                                    title={step.title}
+                                    currentStep={this.state.currentStep}
+                                    fields={step.fields}
+                                    inputChange={this.inputChange}
+                                    inputToArrayChange={this.inputToArrayChange}
+                                    files={this.state.files}
+                                    state={this.state}
+                                    next={this.next}
+                                    prev={this.prev}
+                                />
+                            ))}
+                        </Form>
+                    </>
                 )}
             </Route>
         )
@@ -249,5 +220,4 @@ class Publish extends Component<{}, PublishState> {
     }
 }
 
-Publish.contextType = User
 export default Publish
