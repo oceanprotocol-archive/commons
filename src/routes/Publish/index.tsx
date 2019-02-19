@@ -70,18 +70,17 @@ class Publish extends Component<{}, PublishState> {
 
     private next = () => {
         let { currentStep } = this.state
-        currentStep = currentStep >= 2 ? 3 : currentStep + 1
-        this.setState({
-            currentStep: currentStep
-        })
+        const totalSteps = form.steps.length
+
+        currentStep =
+            currentStep >= totalSteps - 1 ? totalSteps : currentStep + 1
+        this.setState({ currentStep })
     }
 
     private prev = () => {
         let { currentStep } = this.state
         currentStep = currentStep <= 1 ? 1 : currentStep - 1
-        this.setState({
-            currentStep: currentStep
-        })
+        this.setState({ currentStep })
     }
 
     private toStart = () => {
@@ -186,6 +185,7 @@ class Publish extends Component<{}, PublishState> {
                                     state={this.state}
                                     next={this.next}
                                     prev={this.prev}
+                                    totalSteps={form.steps.length}
                                 />
                             ))}
                         </Form>

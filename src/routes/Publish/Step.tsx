@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, FormEvent } from 'react'
 import Input from '../../components/atoms/Form/Input'
 import Label from '../../components/atoms/Form/Label'
 import Row from '../../components/atoms/Form/Row'
@@ -18,6 +18,7 @@ interface StepProps {
     title: string
     next: any
     prev: any
+    totalSteps: number
 }
 
 export default class Step extends PureComponent<StepProps, {}> {
@@ -31,8 +32,9 @@ export default class Step extends PureComponent<StepProps, {}> {
     }
 
     public nextButton() {
-        let { currentStep, next } = this.props
-        if (currentStep < 3) {
+        let { currentStep, next, totalSteps } = this.props
+
+        if (currentStep < totalSteps) {
             return <Button onClick={next}>Next</Button>
         }
         return null
@@ -47,7 +49,8 @@ export default class Step extends PureComponent<StepProps, {}> {
             inputChange,
             inputToArrayChange,
             files,
-            state
+            state,
+            totalSteps
         } = this.props
 
         if (currentStep !== index + 1) {
@@ -102,17 +105,19 @@ export default class Step extends PureComponent<StepProps, {}> {
                 {this.previousButton()}
                 {this.nextButton()}
 
-                <User.Consumer>
-                    {states =>
-                        states.isLogged ? (
-                            <Button primary>Register asset</Button>
-                        ) : (
-                            <Button onClick={states.startLogin}>
-                                Register asset (login first)
-                            </Button>
-                        )
-                    }
-                </User.Consumer>
+                {currentStep === totalSteps && (
+                    <User.Consumer>
+                        {states =>
+                            states.isLogged ? (
+                                <Button primary>Register asset</Button>
+                            ) : (
+                                <Button onClick={states.startLogin}>
+                                    Register asset (login first)
+                                </Button>
+                            )
+                        }
+                    </User.Consumer>
+                )}
             </>
         )
     }
