@@ -23,6 +23,7 @@ interface StepProps {
     tryAgain: any
     toStart: any
     publishedDid?: string
+    content?: string
 }
 
 export default class Step extends PureComponent<StepProps, {}> {
@@ -60,7 +61,8 @@ export default class Step extends PureComponent<StepProps, {}> {
             state,
             totalSteps,
             tryAgain,
-            toStart
+            toStart,
+            content
         } = this.props
 
         if (currentStep !== index + 1) {
@@ -123,6 +125,7 @@ export default class Step extends PureComponent<StepProps, {}> {
                         tryAgain={tryAgain}
                         toStart={toStart}
                         state={state}
+                        content={content}
                     />
                 )}
 

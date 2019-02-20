@@ -3,6 +3,7 @@ import { Logger } from '@oceanprotocol/squid'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
 import AssetModel from '../../models/AssetModel'
+import { User } from '../../context/User'
 import Step from './Step'
 import Progress from './Progress'
 
@@ -185,6 +186,7 @@ class Publish extends Component<{}, PublishState> {
                             totalSteps={form.steps.length}
                             tryAgain={this.tryAgain}
                             toStart={this.toStart}
+                            content={step.content}
                         />
                     ))}
                 </Form>
@@ -193,4 +195,5 @@ class Publish extends Component<{}, PublishState> {
     }
 }
 
+Publish.contextType = User
 export default Publish

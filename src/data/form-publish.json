@@ -105,7 +105,9 @@
       }
     },
     {
-      "title": "Register"
+      "title": "Register",
+      "description": "We got all the data, now let's register your data set.",
+      "content": "After clicking the button below you will be asked by your wallet to sign this request."
     }
   ]
 }
