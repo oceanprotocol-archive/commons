@@ -17,7 +17,7 @@
 .actions {
     display: flex;
     justify-content: space-between;
-    margin-top: $spacer * 2;
+    padding-top: $spacer / 2;
 
     button:last-child {
         min-width: 12rem;

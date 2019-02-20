@@ -96,7 +96,8 @@ class Publish extends Component<{}, PublishState> {
             copyrightHolder: '',
             categories: [],
             isPublishing: false,
-            isPublished: false
+            isPublished: false,
+            currentStep: 1
         })
     }
 

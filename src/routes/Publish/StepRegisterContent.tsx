@@ -24,12 +24,12 @@ export default class StepRegisterContent extends PureComponent<
     )
 
     public publishedState = () => (
-        <div>
+        <p>
             Your asset is published! See it{' '}
             <a href={'/asset/' + this.props.state.publishedDid}>here</a>, submit
             another asset by clicking{' '}
             <a onClick={() => this.props.toStart()}>here</a>
-        </div>
+        </p>
     )
 
     public render() {
