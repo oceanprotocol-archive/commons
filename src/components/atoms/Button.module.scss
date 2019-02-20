@@ -37,10 +37,9 @@
     }
 
     &:disabled {
-        color: rgba($brand-white, .7);
         cursor: not-allowed;
         pointer-events: none;
-        opacity: .8;
+        opacity: .5;
     }
 }
 
