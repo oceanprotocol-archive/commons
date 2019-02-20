@@ -1,8 +1,9 @@
-import React, { PureComponent, FormEvent } from 'react'
+import React, { PureComponent } from 'react'
 import Input from '../../components/atoms/Form/Input'
 import Label from '../../components/atoms/Form/Label'
 import Row from '../../components/atoms/Form/Row'
 import Button from '../../components/atoms/Button'
+import Web3message from '../../components/Web3message'
 import { User } from '../../context/User'
 import Files from './Files/'
 import styles from './Step.module.scss'
@@ -20,6 +21,7 @@ interface StepProps {
     next: any
     prev: any
     totalSteps: number
+    component?: string
 }
 
 export default class Step extends PureComponent<StepProps, {}> {
@@ -56,12 +58,15 @@ export default class Step extends PureComponent<StepProps, {}> {
             inputToArrayChange,
             files,
             state,
-            totalSteps
+            totalSteps,
+            component
         } = this.props
 
         if (currentStep !== index + 1) {
             return null
         }
+
+        const lastStep = currentStep === totalSteps
 
         return (
             <>
@@ -112,11 +117,13 @@ export default class Step extends PureComponent<StepProps, {}> {
                         )
                     })}
 
+                {lastStep && <Web3message />}
+
                 <div className={styles.actions}>
                     {this.previousButton()}
                     {this.nextButton()}
 
-                    {currentStep === totalSteps && (
+                    {lastStep && (
                         <User.Consumer>
                             {states =>
                                 states.isLogged ? (

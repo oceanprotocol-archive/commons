@@ -18,7 +18,7 @@
           "placeholder": "i.e. https://file.com/file.json",
           "type": "text",
           "required": true,
-          "help": "Provide one or multiple links to your data files."
+          "help": "Provide one or multiple urls to your data set files."
         }
       }
     },
@@ -73,7 +73,7 @@
       }
     },
     {
-      "title": "Credentials",
+      "title": "Authorship",
       "description": "A description about these credentials fields",
       "fields": {
         "author": {
@@ -103,6 +103,9 @@
           ]
         }
       }
+    },
+    {
+      "title": "Register"
     }
   ]
 }

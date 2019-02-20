@@ -2,7 +2,6 @@
 
 .header {
     margin-bottom: $spacer * 1.5;
-    border-bottom: .1rem solid $brand-grey-lighter;
 }
 
 .title {
@@ -19,7 +18,7 @@
     justify-content: space-between;
     border-top: .1rem solid $brand-grey-lighter;
     padding-top: $spacer;
-    margin-top: $spacer * 2;
+    margin-top: $spacer;
 
     button:last-child {
         min-width: 12rem;

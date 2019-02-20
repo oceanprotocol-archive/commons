@@ -3,7 +3,6 @@ import { Logger } from '@oceanprotocol/squid'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
 import AssetModel from '../../models/AssetModel'
-import Web3message from '../../components/Web3message'
 import Step from './Step'
 import Progress from './Progress'
 
@@ -159,9 +158,10 @@ class Publish extends Component<{}, PublishState> {
 
     public render() {
         return (
-            <Route title="Publish">
-                <Web3message />
-
+            <Route
+                title="Publish"
+                description="Publish a new data set into the Ocean Protocol Network."
+            >
                 {this.state.isPublishing ? (
                     this.publishingState()
                 ) : this.state.publishingError ? (
@@ -173,7 +173,6 @@ class Publish extends Component<{}, PublishState> {
                         <Progress
                             steps={form.steps}
                             currentStep={this.state.currentStep}
-                            totalSteps={form.steps.length}
                         />
 
                         <Form onSubmit={this.registerAsset}>
@@ -192,6 +191,7 @@ class Publish extends Component<{}, PublishState> {
                                     next={this.next}
                                     prev={this.prev}
                                     totalSteps={form.steps.length}
+                                    component={step.component}
                                 />
                             ))}
                         </Form>

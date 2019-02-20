@@ -1,25 +1,31 @@
 import React from 'react'
+import styles from './Progress.module.scss'
 
 const Progress = ({
     currentStep,
-    totalSteps,
     steps
 }: {
     currentStep: number
-    totalSteps: number
     steps: any[]
 }) => {
     return (
-        <aside>
-            <ul>
-                {steps.map(({ title }, index) => (
-                    <li key={index}>
-                        {index + 1}
-                        {title}
-                    </li>
-                ))}
-            </ul>
-        </aside>
+        <ul className={styles.progress}>
+            {steps.map(({ title }, index) => (
+                <li
+                    key={index}
+                    className={
+                        currentStep === index + 1
+                            ? styles.active
+                            : currentStep > index + 1
+                            ? styles.completed
+                            : styles.item
+                    }
+                >
+                    <span className={styles.number}>{index + 1}</span>
+                    <span className={styles.label}>{title}</span>
+                </li>
+            ))}
+        </ul>
     )
 }
 

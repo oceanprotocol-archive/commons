@@ -2,6 +2,10 @@
 
 .form {
     width: 100%;
+    background: $brand-white;
+    padding: $spacer;
+    border: 1px solid $brand-grey-lighter;
+    border-radius: $border-radius;
 
     fieldset {
         border: 0;
