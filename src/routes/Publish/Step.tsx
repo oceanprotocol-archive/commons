@@ -3,9 +3,9 @@ import Input from '../../components/atoms/Form/Input'
 import Label from '../../components/atoms/Form/Label'
 import Row from '../../components/atoms/Form/Row'
 import Button from '../../components/atoms/Button'
-import Web3message from '../../components/Web3message'
 import { User } from '../../context/User'
 import Files from './Files/'
+import StepRegisterContent from './StepRegisterContent'
 import styles from './Step.module.scss'
 
 interface StepProps {
@@ -14,14 +14,15 @@ interface StepProps {
     inputChange: any
     inputToArrayChange: any
     fields?: any[]
-    files?: any
     state: any
     title: string
     description: string
     next: any
     prev: any
     totalSteps: number
-    component?: string
+    tryAgain: any
+    toStart: any
+    publishedDid?: string
 }
 
 export default class Step extends PureComponent<StepProps, {}> {
@@ -56,10 +57,10 @@ export default class Step extends PureComponent<StepProps, {}> {
             fields,
             inputChange,
             inputToArrayChange,
-            files,
             state,
             totalSteps,
-            component
+            tryAgain,
+            toStart
         } = this.props
 
         if (currentStep !== index + 1) {
@@ -93,7 +94,7 @@ export default class Step extends PureComponent<StepProps, {}> {
                                         placeholder={value.placeholder}
                                         name={value.name}
                                         help={value.help}
-                                        files={files}
+                                        files={state.files}
                                         onChange={onChange}
                                     />
                                 </Row>
@@ -117,7 +118,13 @@ export default class Step extends PureComponent<StepProps, {}> {
                         )
                     })}
 
-                {lastStep && <Web3message />}
+                {lastStep && (
+                    <StepRegisterContent
+                        tryAgain={tryAgain}
+                        toStart={toStart}
+                        state={state}
+                    />
+                )}
 
                 <div className={styles.actions}>
                     {this.previousButton()}

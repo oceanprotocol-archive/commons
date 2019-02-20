@@ -64,10 +64,6 @@ class Publish extends Component<{}, PublishState> {
         })
     }
 
-    private tryAgain = () => {
-        this.setState({ publishingError: '' })
-    }
-
     private next = () => {
         let { currentStep } = this.state
         const totalSteps = form.steps.length
@@ -81,6 +77,10 @@ class Publish extends Component<{}, PublishState> {
         let { currentStep } = this.state
         currentStep = currentStep <= 1 ? 1 : currentStep - 1
         this.setState({ currentStep })
+    }
+
+    private tryAgain = () => {
+        this.setState({ publishingError: '' })
     }
 
     private toStart = () => {
@@ -162,66 +162,32 @@ class Publish extends Component<{}, PublishState> {
                 title="Publish"
                 description="Publish a new data set into the Ocean Protocol Network."
             >
-                {this.state.isPublishing ? (
-                    this.publishingState()
-                ) : this.state.publishingError ? (
-                    this.errorState()
-                ) : this.state.isPublished ? (
-                    this.publishedState()
-                ) : (
-                    <>
-                        <Progress
-                            steps={form.steps}
+                <Progress
+                    steps={form.steps}
+                    currentStep={this.state.currentStep}
+                />
+
+                <Form onSubmit={this.registerAsset}>
+                    {form.steps.map((step: any, index: number) => (
+                        <Step
+                            key={index}
+                            index={index}
+                            title={step.title}
+                            description={step.description}
                             currentStep={this.state.currentStep}
+                            fields={step.fields}
+                            inputChange={this.inputChange}
+                            inputToArrayChange={this.inputToArrayChange}
+                            state={this.state}
+                            next={this.next}
+                            prev={this.prev}
+                            totalSteps={form.steps.length}
+                            tryAgain={this.tryAgain}
+                            toStart={this.toStart}
                         />
-
-                        <Form onSubmit={this.registerAsset}>
-                            {form.steps.map((step: any, index: number) => (
-                                <Step
-                                    key={index}
-                                    index={index}
-                                    title={step.title}
-                                    description={step.description}
-                                    currentStep={this.state.currentStep}
-                                    fields={step.fields}
-                                    inputChange={this.inputChange}
-                                    inputToArrayChange={this.inputToArrayChange}
-                                    files={this.state.files}
-                                    state={this.state}
-                                    next={this.next}
-                                    prev={this.prev}
-                                    totalSteps={form.steps.length}
-                                    component={step.component}
-                                />
-                            ))}
-                        </Form>
-                    </>
-                )}
+                    ))}
+                </Form>
             </Route>
-        )
-    }
-
-    public publishingState = () => {
-        return <div>Please sign with your crypto wallet</div>
-    }
-
-    public errorState = () => {
-        return (
-            <div>
-                Something went wrong,{' '}
-                <a onClick={() => this.tryAgain()}>try again</a>
-            </div>
-        )
-    }
-
-    public publishedState = () => {
-        return (
-            <div>
-                Your asset is published! See it{' '}
-                <a href={'/asset/' + this.state.publishedDid}>here</a>, submit
-                another asset by clicking{' '}
-                <a onClick={() => this.toStart()}>here</a>
-            </div>
         )
     }
 }

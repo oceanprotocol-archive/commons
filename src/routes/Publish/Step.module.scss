@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 .header {
-    margin-bottom: $spacer * 1.5;
+    margin-bottom: $spacer;
 }
 
 .title {
@@ -11,14 +11,13 @@
 
 .description {
     margin-top: $spacer / 4;
+    margin-bottom: 0;
 }
 
 .actions {
     display: flex;
     justify-content: space-between;
-    border-top: .1rem solid $brand-grey-lighter;
-    padding-top: $spacer;
-    margin-top: $spacer;
+    margin-top: $spacer * 2;
 
     button:last-child {
         min-width: 12rem;
