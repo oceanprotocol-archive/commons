@@ -182,6 +182,7 @@ class Publish extends Component<{}, PublishState> {
                                     key={index}
                                     index={index}
                                     title={step.title}
+                                    description={step.description}
                                     currentStep={this.state.currentStep}
                                     fields={step.fields}
                                     inputChange={this.inputChange}

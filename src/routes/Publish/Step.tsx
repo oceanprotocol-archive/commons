@@ -16,6 +16,7 @@ interface StepProps {
     files?: any
     state: any
     title: string
+    description: string
     next: any
     prev: any
     totalSteps: number
@@ -26,7 +27,11 @@ export default class Step extends PureComponent<StepProps, {}> {
         let { currentStep, prev } = this.props
 
         if (currentStep !== 1) {
-            return <Button onClick={prev}>Previous</Button>
+            return (
+                <Button link onClick={prev}>
+                    ← Previous
+                </Button>
+            )
         }
         return null
     }
@@ -35,7 +40,7 @@ export default class Step extends PureComponent<StepProps, {}> {
         let { currentStep, next, totalSteps } = this.props
 
         if (currentStep < totalSteps) {
-            return <Button onClick={next}>Next</Button>
+            return <Button onClick={next}>Next →</Button>
         }
         return null
     }
@@ -45,6 +50,7 @@ export default class Step extends PureComponent<StepProps, {}> {
             currentStep,
             index,
             title,
+            description,
             fields,
             inputChange,
             inputToArrayChange,
@@ -59,7 +65,11 @@ export default class Step extends PureComponent<StepProps, {}> {
 
         return (
             <>
-                <h3 className={styles.title}>{title}</h3>
+                <header className={styles.header}>
+                    <h2 className={styles.title}>{title}</h2>
+                    <p className={styles.description}>{description}</p>
+                </header>
+
                 {fields &&
                     Object.entries(fields).map(([key, value]) => {
                         let onChange = inputChange
@@ -102,22 +112,24 @@ export default class Step extends PureComponent<StepProps, {}> {
                         )
                     })}
 
-                {this.previousButton()}
-                {this.nextButton()}
+                <div className={styles.actions}>
+                    {this.previousButton()}
+                    {this.nextButton()}
 
-                {currentStep === totalSteps && (
-                    <User.Consumer>
-                        {states =>
-                            states.isLogged ? (
-                                <Button primary>Register asset</Button>
-                            ) : (
-                                <Button onClick={states.startLogin}>
-                                    Register asset (login first)
-                                </Button>
-                            )
-                        }
-                    </User.Consumer>
-                )}
+                    {currentStep === totalSteps && (
+                        <User.Consumer>
+                            {states =>
+                                states.isLogged ? (
+                                    <Button primary>Register asset</Button>
+                                ) : (
+                                    <Button onClick={states.startLogin}>
+                                        Register asset (login first)
+                                    </Button>
+                                )
+                            }
+                        </User.Consumer>
+                    )}
+                </div>
             </>
         )
     }

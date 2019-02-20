@@ -4,6 +4,7 @@
   "steps": [
     {
       "title": "Essentials",
+      "description": "A description about these essential fields",
       "fields": {
         "name": {
           "label": "Title",
@@ -23,6 +24,7 @@
     },
     {
       "title": "Information",
+      "description": "A description about these fields",
       "fields": {
         "description": {
           "label": "Description",
@@ -72,6 +74,7 @@
     },
     {
       "title": "Credentials",
+      "description": "A description about these credentials fields",
       "fields": {
         "author": {
           "label": "Author",
