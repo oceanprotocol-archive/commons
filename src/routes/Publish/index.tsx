@@ -28,6 +28,7 @@ interface PublishState {
     publishedDid?: string
     publishingError?: string
     currentStep?: number
+    validationStatus?: any
 }
 
 class Publish extends Component<{}, PublishState> {
@@ -46,12 +47,19 @@ class Publish extends Component<{}, PublishState> {
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
-        publishingError: ''
+        publishingError: '',
+        validationStatus: {
+            1: false,
+            2: false,
+            3: false
+        }
     }
 
     private inputChange = (
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
     ) => {
+        this.validateInputs(event.currentTarget.name, event.currentTarget.value)
+
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value
         })
@@ -100,6 +108,51 @@ class Publish extends Component<{}, PublishState> {
             isPublished: false,
             currentStep: 1
         })
+    }
+
+    private validateInputs = (name: string, value: any) => {
+        // Step 1
+        if (name === 'name') {
+            if (value !== '') {
+                this.setState({
+                    validationStatus: { 1: true }
+                })
+            } else {
+                this.setState({
+                    validationStatus: { 1: false }
+                })
+            }
+        }
+
+        // Step 2
+        if (name === 'description') {
+            if (value !== '') {
+                this.setState({
+                    validationStatus: { 2: true }
+                })
+            } else {
+                this.setState({
+                    validationStatus: { 2: false }
+                })
+            }
+        }
+
+        // Step 3
+        if (
+            name === 'author' ||
+            name === 'copyrightHolder' ||
+            name === 'license'
+        ) {
+            if (value !== '') {
+                this.setState({
+                    validationStatus: { 3: true }
+                })
+            } else {
+                this.setState({
+                    validationStatus: { 3: false }
+                })
+            }
+        }
     }
 
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {

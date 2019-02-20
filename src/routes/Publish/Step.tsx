@@ -26,19 +26,9 @@ interface StepProps {
     content?: string
 }
 
-interface StepState {
-    inputInvalid: boolean
-}
-
-export default class Step extends PureComponent<StepProps, StepState> {
-    public state = {
-        // TODO: manipulate with some form validation for every step,
-        // should be 'true' by default here
-        inputInvalid: false
-    }
-
+export default class Step extends PureComponent<StepProps, {}> {
     public previousButton() {
-        let { currentStep, prev } = this.props
+        const { currentStep, prev } = this.props
 
         if (currentStep !== 1) {
             return (
@@ -51,12 +41,14 @@ export default class Step extends PureComponent<StepProps, StepState> {
     }
 
     public nextButton() {
-        let { currentStep, next, totalSteps } = this.props
-        const { inputInvalid } = this.state
+        const { currentStep, next, totalSteps, state } = this.props
 
         if (currentStep < totalSteps) {
             return (
-                <Button disabled={inputInvalid} onClick={next}>
+                <Button
+                    disabled={!state.validationStatus[currentStep]}
+                    onClick={next}
+                >
                     Next →
                 </Button>
             )
