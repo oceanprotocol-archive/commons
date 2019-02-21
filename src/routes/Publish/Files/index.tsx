@@ -52,7 +52,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                 <input
                     type="hidden"
                     name={name}
-                    value={files}
+                    value={JSON.stringify(files)}
                     onChange={onChange}
                 />
 

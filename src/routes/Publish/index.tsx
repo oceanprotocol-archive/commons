@@ -49,9 +49,14 @@ class Publish extends Component<{}, PublishState> {
         publishedDid: '',
         publishingError: '',
         validationStatus: {
-            1: false,
-            2: false,
-            3: false
+            1: { name: false, files: false, allFieldsValid: false },
+            2: { description: false, categories: false, allFieldsValid: false },
+            3: {
+                author: false,
+                copyrightHolder: false,
+                license: false,
+                allFieldsValid: false
+            }
         }
     }
 
@@ -111,48 +116,67 @@ class Publish extends Component<{}, PublishState> {
     }
 
     private validateInputs = (name: string, value: any) => {
-        // Step 1
-        if (name === 'name') {
-            if (value !== '') {
-                this.setState({
-                    validationStatus: { 1: true }
-                })
-            } else {
-                this.setState({
-                    validationStatus: { 1: false }
-                })
-            }
+        let { validationStatus } = this.state
+        let hasContent = value.length > 0
+
+        // Setting state for all fields
+        if (hasContent) {
+            this.setState(prevState => ({
+                validationStatus: {
+                    ...prevState.validationStatus,
+                    [this.state.currentStep]: {
+                        ...prevState.validationStatus[this.state.currentStep],
+                        [name]: true
+                    }
+                }
+            }))
+        } else {
+            this.setState(prevState => ({
+                validationStatus: {
+                    ...prevState.validationStatus,
+                    [this.state.currentStep]: {
+                        ...prevState.validationStatus[this.state.currentStep],
+                        [name]: false
+                    }
+                }
+            }))
         }
 
-        // Step 2
-        if (name === 'description') {
-            if (value !== '') {
-                this.setState({
-                    validationStatus: { 2: true }
-                })
-            } else {
-                this.setState({
-                    validationStatus: { 2: false }
-                })
-            }
+        //
+        // Step 1
+        //
+        if (validationStatus[1].name) {
+            this.setState(prevState => ({
+                validationStatus: {
+                    ...prevState.validationStatus,
+                    1: {
+                        ...prevState.validationStatus[1],
+                        allFieldsValid: true
+                    }
+                }
+            }))
         }
+
+        console.log(validationStatus[1])
+
+        //
+        // Step 2
+        //
+        if (validationStatus[2].description) {
+            this.setState(prevState => ({
+                validationStatus: {
+                    ...prevState.validationStatus,
+                    2: {
+                        ...prevState.validationStatus[2],
+                        allFieldsValid: true
+                    }
+                }
+            }))
+        }
+
+        console.log(validationStatus[2])
 
         // Step 3
-        if (
-            name === 'author' ||
-            name === 'copyrightHolder' ||
-            name === 'license'
-        ) {
-            if (value !== '') {
-                this.setState({
-                    validationStatus: { 3: true }
-                })
-            } else {
-                this.setState({
-                    validationStatus: { 3: false }
-                })
-            }
-        }
     }
 
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {

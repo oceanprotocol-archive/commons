@@ -46,7 +46,9 @@ export default class Step extends PureComponent<StepProps, {}> {
         if (currentStep < totalSteps) {
             return (
                 <Button
-                    disabled={!state.validationStatus[currentStep]}
+                    disabled={
+                        !state.validationStatus[currentStep].allFieldsValid
+                    }
                     onClick={next}
                 >
                     Next →
@@ -101,7 +103,7 @@ export default class Step extends PureComponent<StepProps, {}> {
                                     </Label>
                                     <Files
                                         placeholder={value.placeholder}
-                                        name={value.name}
+                                        name={key}
                                         help={value.help}
                                         files={state.files}
                                         onChange={onChange}
