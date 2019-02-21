@@ -73,6 +73,8 @@ class Publish extends Component<{}, PublishState> {
     private inputToArrayChange = (
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
     ) => {
+        this.validateInputs(event.currentTarget.name, event.currentTarget.value)
+
         this.setState({
             [event.currentTarget.name]: [event.currentTarget.value]
         })
@@ -145,6 +147,8 @@ class Publish extends Component<{}, PublishState> {
         //
         // Step 1
         //
+        // TODO: also validate files with validationStatus[1].files here
+        //
         if (validationStatus[1].name) {
             this.setState(prevState => ({
                 validationStatus: {
@@ -157,12 +161,12 @@ class Publish extends Component<{}, PublishState> {
             }))
         }
 
-        console.log(validationStatus[1])
+        // console.log(validationStatus[1])
 
         //
         // Step 2
         //
-        if (validationStatus[2].description) {
+        if (validationStatus[2].description && validationStatus[2].categories) {
             this.setState(prevState => ({
                 validationStatus: {
                     ...prevState.validationStatus,
@@ -174,9 +178,28 @@ class Publish extends Component<{}, PublishState> {
             }))
         }
 
-        console.log(validationStatus[2])
+        // console.log(validationStatus[2])
 
+        //
         // Step 3
+        //
+        if (
+            validationStatus[3].author &&
+            validationStatus[3].copyrightHolder &&
+            validationStatus[3].license
+        ) {
+            this.setState(prevState => ({
+                validationStatus: {
+                    ...prevState.validationStatus,
+                    3: {
+                        ...prevState.validationStatus[3],
+                        allFieldsValid: true
+                    }
+                }
+            }))
+        }
+
+        // console.log(validationStatus[3])
     }
 
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
