@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as Logo } from '@oceanprotocol/art/logo/logo.svg'
+import AccountStatus from './molecules/AccountStatus'
 import styles from './Header.module.scss'
 
 import menu from '../data/menu.json'
@@ -27,6 +28,7 @@ const Header = () => (
                     </NavLink>
                 ))}
             </nav>
+            <AccountStatus />
         </div>
     </header>
 )

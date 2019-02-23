@@ -11,36 +11,6 @@
     padding-bottom: $spacer / 2;
 }
 
-// default: red square
-.indicator {
-    display: inline-block;
-    width: $font-size-small;
-    height: $font-size-small;
-    background: $red;
-    margin-right: $spacer / 8;
-    position: absolute;
-    left: 0;
-    top: ($spacer / 2) + .3rem;
-}
-
-// yellow triangle
-.indicatorCloseEnough {
-    composes: indicator;
-    background: none;
-    width: 0;
-    height: 0;
-    border-left: $font-size-small / 1.75 solid transparent;
-    border-right: $font-size-small / 1.75 solid transparent;
-    border-bottom: $font-size-small solid $yellow;
-}
-
-// green circle
-.indicatorActive {
-    composes: indicator;
-    border-radius: 50%;
-    background: $green;
-}
-
 .account {
     display: inline-block;
     margin-left: $spacer / 8;
