@@ -10,7 +10,14 @@ import Routes from './Routes'
 import './styles/global.scss'
 import styles from './App.module.scss'
 
-import { nodeHost, nodePort, nodeScheme } from './config'
+import {
+    nodeHost,
+    nodePort,
+    nodeScheme,
+    faucetHost,
+    faucetPort,
+    faucetScheme
+} from './config'
 
 declare global {
     interface Window {
@@ -37,6 +44,31 @@ class App extends Component<{}, AppState> {
         this.startLoginProcess()
     }
 
+    private requestFromFaucet = async () => {
+        if (this.state.account !== '') {
+            try {
+                await fetch(
+                    `${faucetScheme}://${faucetHost}:${faucetPort}/faucet`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            address: this.state.account,
+                            agent: 'commons-marketplace'
+                        })
+                    }
+                )
+            } catch (error) {
+                // show error
+            }
+        } else {
+            // no account found
+        }
+    }
+
     public state = {
         isLogged: false,
         isLoading: true,
@@ -48,7 +80,8 @@ class App extends Component<{}, AppState> {
         ),
         account: '',
         ocean: {},
-        startLogin: this.startLogin
+        startLogin: this.startLogin,
+        requestFromFaucet: this.requestFromFaucet
     }
 
     public async componentDidMount() {

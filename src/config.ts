@@ -22,4 +22,8 @@ export const threshold = 0
 export const password = 'node0'
 export const address = '0x00bd138abd70e2f00903268f3db08f2d25677c9e'
 
+export const faucetScheme = 'http'
+export const faucetHost = 'localhost'
+export const faucetPort = 3001
+
 export const verbose = true

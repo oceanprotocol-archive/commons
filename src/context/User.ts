@@ -9,5 +9,8 @@ export const User = React.createContext({
     ocean: {},
     startLogin: () => {
         /* empty */
+    },
+    requestFromFaucet: () => {
+        /* empty */
     }
 })
