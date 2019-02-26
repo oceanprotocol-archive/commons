@@ -28,7 +28,7 @@ const Header = () => (
                     </NavLink>
                 ))}
             </nav>
-            <AccountStatus />
+            <AccountStatus className={styles.accountStatus} />
         </div>
     </header>
 )
