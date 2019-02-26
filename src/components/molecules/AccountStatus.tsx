@@ -1,15 +1,19 @@
 import React, { PureComponent } from 'react'
-// import Blockies from 'react-blockies'
-import Button from '../atoms/Button'
+import cx from 'classnames'
+// import Button from '../atoms/Button'
 import { User } from '../../context/User'
 import styles from './AccountStatus.module.scss'
+
+interface AccountStatusProps {
+    className?: string
+}
 
 interface AccountStatusState {
     popoverOpen: boolean
 }
 
 export default class AccountStatus extends PureComponent<
-    {},
+    AccountStatusProps,
     AccountStatusState
 > {
     public state = {
@@ -25,7 +29,7 @@ export default class AccountStatus extends PureComponent<
     public render() {
         return (
             <div
-                className={styles.status}
+                className={cx(styles.status, this.props.className)}
                 onMouseEnter={() => this.togglePopover()}
                 onMouseLeave={() => this.togglePopover()}
                 onTouchStart={() => this.togglePopover()}
@@ -68,7 +72,7 @@ const AccountPopover = () => (
         <div className={styles.popoverInfoline}>
             Network: &nbsp;<strong>{''}</strong>
         </div>
-        <div className={styles.popoverInfoline}>
+        {/* <div className={styles.popoverInfoline}>
             <User.Consumer>
                 {states => (
                     <Button link onClick={states.requestFromFaucet}>
@@ -76,6 +80,6 @@ const AccountPopover = () => (
                     </Button>
                 )}
             </User.Consumer>
-        </div>
+        </div> */}
     </div>
 )
