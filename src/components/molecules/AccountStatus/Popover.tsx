@@ -19,7 +19,23 @@ const Popover = () => (
             </User.Consumer>
         </div>
         <div className={styles.popoverInfoline}>
-            Network: &nbsp;<strong>{''}</strong>
+            Network: <strong>&nbsp; Fake Network Name</strong>
+            {/* Network:
+            <User.Consumer>
+                {states => states.network && <strong>{states.network}</strong>}
+            </User.Consumer> */}
+        </div>
+        <div className={styles.popoverInfoline}>
+            <span className={styles.balance} title="Fake data">
+                <strong>30</strong> ETH
+            </span>
+            {/* <span className={styles.balance} title={(eth / 1e18).toFixed(10)}>
+                    <strong>{(eth / 1e18).toFixed(3).slice(0, -1)}</strong> ETH
+                </span> */}
+            <span className={styles.balance}>
+                {/* <strong>{ocn}</strong> OCEAN */}
+                <strong>2474290</strong> OCEAN
+            </span>
         </div>
         <div className={styles.popoverInfoline}>
             <Faucet />
