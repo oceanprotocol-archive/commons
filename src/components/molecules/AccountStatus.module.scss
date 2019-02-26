@@ -35,9 +35,9 @@
 $popoverWidth: 18rem;
 
 .popover {
-    position: absolute;
-    top: 1.5rem;
-    right: -($spacer / 3);
+    // position: absolute;
+    // top: 1.5rem;
+    // right: -($spacer / 3);
     width: $popoverWidth;
     padding: $spacer / 2;
     background: $brand-black;
@@ -47,20 +47,20 @@ $popoverWidth: 18rem;
     color: $brand-grey-light;
     font-size: $font-size-small;
 
-    &:after {
-        bottom: 100%;
-        right: 2%;
-        border: solid transparent;
-        content: '';
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-        border-color: transparent;
-        border-bottom-color: $brand-grey-light;
-        border-width: 10px;
-        margin-left: -10px;
-    }
+    // &:after {
+    //     bottom: 100%;
+    //     right: 2%;
+    //     border: solid transparent;
+    //     content: '';
+    //     height: 0;
+    //     width: 0;
+    //     position: absolute;
+    //     pointer-events: none;
+    //     border-color: transparent;
+    //     border-bottom-color: $brand-grey-light;
+    //     border-width: 10px;
+    //     margin-left: -10px;
+    // }
 }
 
 .popoverInfoline {
