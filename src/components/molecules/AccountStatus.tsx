@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import cx from 'classnames'
-// import Button from '../atoms/Button'
+import Button from '../atoms/Button'
 import { User } from '../../context/User'
 import Popover from 'react-popover'
 import styles from './AccountStatus.module.scss'
@@ -15,7 +15,7 @@ const AccountPopover = () => (
                             {states.account}
                         </span>
                     ) : (
-                        'No account selected'
+                        <em>No account selected</em>
                     )
                 }
             </User.Consumer>
@@ -23,15 +23,15 @@ const AccountPopover = () => (
         <div className={styles.popoverInfoline}>
             Network: &nbsp;<strong>{''}</strong>
         </div>
-        {/* <div className={styles.popoverInfoline}>
+        <div className={styles.popoverInfoline}>
             <User.Consumer>
                 {states => (
-                    <Button link onClick={states.requestFromFaucet}>
+                    <Button link onClick={() => states.requestFromFaucet()}>
                         Make it rain
                     </Button>
                 )}
             </User.Consumer>
-        </div> */}
+        </div>
     </div>
 )
 
@@ -41,9 +41,6 @@ interface AccountStatusProps {
 
 interface AccountStatusState {
     popoverIsOpen: boolean
-    preferPlace?: string
-    place?: string
-    enterExitTransitionDurationMs?: number
 }
 
 export default class AccountStatus extends PureComponent<
@@ -63,9 +60,8 @@ export default class AccountStatus extends PureComponent<
     public AccountIndicator = () => (
         <div
             className={cx(styles.status, this.props.className)}
+            onClick={() => this.togglePopover(true)}
             onMouseOver={() => this.togglePopover(true)}
-            onMouseOut={() => this.togglePopover(false)}
-            onTouchStart={() => this.togglePopover(true)}
         >
             <User.Consumer>
                 {states =>
@@ -84,8 +80,6 @@ export default class AccountStatus extends PureComponent<
     public render() {
         const popoverProps = {
             isOpen: this.state.popoverIsOpen,
-            // preferPlace: this.state.preferPlace,
-            // place: this.state.place,
             enterExitTransitionDurationMs: 300,
             tipSize: 0.01,
             onOuterAction: () => this.togglePopover(false),
