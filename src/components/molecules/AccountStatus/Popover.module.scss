@@ -16,9 +16,6 @@ $popoverWidth: 18rem;
 .popoverInfoline {
     border-bottom: .05rem solid $brand-grey;
     padding: $spacer / 3 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
 
     &:first-child {
         padding-top: 0;
@@ -34,22 +31,9 @@ $popoverWidth: 18rem;
     }
 }
 
-.accountName {
-    composes: popoverInfoline;
-    flex-wrap: nowrap;
-
-    // blockies avatar
-    canvas {
-        display: inline-block;
-        border-radius: 50%;
-        overflow: hidden;
-        flex: 0 0 20px;
-        margin-right: $spacer / 4;
-    }
-}
-
 .address {
     width: 15rem;
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

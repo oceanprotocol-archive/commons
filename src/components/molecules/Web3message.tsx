@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
-import Button from '../components/atoms/Button'
-import AccountStatus from './molecules/AccountStatus/'
+import Button from '../atoms/Button'
+import AccountStatus from './AccountStatus/'
 import styles from './Web3message.module.scss'
-import { User } from '../context/User'
+import { User } from '../../context/User'
 
 export default class Web3message extends PureComponent {
     public render() {

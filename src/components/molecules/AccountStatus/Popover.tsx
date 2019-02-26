@@ -9,7 +9,7 @@ const Popover = ({ togglePopover }: { togglePopover: any }) => (
         onMouseOver={togglePopover}
         onMouseOut={togglePopover}
     >
-        <div className={styles.accountName}>
+        <div className={styles.popoverInfoline}>
             <User.Consumer>
                 {states =>
                     states.account ? (

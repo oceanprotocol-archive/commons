@@ -8,7 +8,7 @@ import Label from '../../components/atoms/Form/Label'
 import Row from '../../components/atoms/Form/Row'
 import { User } from '../../context/User'
 import AssetModel from '../../models/AssetModel'
-import Web3message from '../../components/Web3message'
+import Web3message from '../../components/molecules/Web3message'
 import Files from './Files/'
 
 import form from '../../data/form-publish.json'
