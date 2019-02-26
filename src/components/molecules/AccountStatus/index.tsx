@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import Popover from 'react-popover'
+import Popover, { ArrowContainer } from 'react-tiny-popover'
 import AccountPopover from './Popover'
 import AccountIndicator from './Indicator'
 
@@ -8,7 +8,7 @@ interface AccountStatusProps {
 }
 
 interface AccountStatusState {
-    popoverIsOpen: boolean
+    isPopoverOpen: boolean
 }
 
 export default class AccountStatus extends PureComponent<
@@ -16,34 +16,39 @@ export default class AccountStatus extends PureComponent<
     AccountStatusState
 > {
     public state = {
-        popoverIsOpen: false
+        isPopoverOpen: false
     }
 
-    public togglePopover(toState?: boolean) {
-        const popoverIsOpen =
-            typeof toState === 'boolean' ? toState : !this.state.popoverIsOpen
-        this.setState({ popoverIsOpen })
+    public togglePopover() {
+        this.setState(prevState => ({
+            isPopoverOpen: !prevState.isPopoverOpen
+        }))
     }
 
     public render() {
-        const popoverProps = {
-            isOpen: this.state.popoverIsOpen,
-            enterExitTransitionDurationMs: 300,
-            tipSize: 0.01,
-            onOuterAction: () => this.togglePopover(false),
-            body: (
-                <AccountPopover
-                    showPopover={() => this.togglePopover(true)}
-                    hidePopover={() => this.togglePopover(false)}
-                />
-            )
-        }
-
         return (
-            <Popover {...popoverProps}>
+            <Popover
+                isOpen={this.state.isPopoverOpen}
+                padding={10}
+                position={'bottom'}
+                transitionDuration={0.2}
+                windowBorderPadding={15}
+                content={({ position, targetRect, popoverRect }) => (
+                    <ArrowContainer
+                        position={position}
+                        targetRect={targetRect}
+                        popoverRect={popoverRect}
+                        arrowColor={'#8b98a9'}
+                        arrowSize={10}
+                    >
+                        <AccountPopover
+                            togglePopover={() => this.togglePopover()}
+                        />
+                    </ArrowContainer>
+                )}
+            >
                 <AccountIndicator
-                    showPopover={() => this.togglePopover(true)}
-                    hidePopover={() => this.togglePopover(false)}
+                    togglePopover={() => this.togglePopover()}
                     className={this.props.className}
                 />
             </Popover>
