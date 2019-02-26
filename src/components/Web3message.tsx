@@ -24,8 +24,9 @@ export default class Web3message extends PureComponent {
     public noWeb3() {
         return (
             <div className={styles.message}>
-                <AccountStatus /> No Web3 Browser. For publishing an asset you
-                need to use a Web3-capable plugin or browser, like{' '}
+                <AccountStatus className={styles.status} /> No Web3 Browser. For
+                publishing an asset you need to use a Web3-capable plugin or
+                browser, like{' '}
                 <a href="https://docs.oceanprotocol.com/tutorials/wallets/#how-to-setup-metamask">
                     MetaMask
                 </a>
@@ -37,8 +38,8 @@ export default class Web3message extends PureComponent {
     public unlockAccount(states: any) {
         return (
             <div className={styles.message}>
-                <AccountStatus /> Account locked. For publishing an asset you
-                need to unlock your Web3 account.
+                <AccountStatus className={styles.status} /> Account locked. For
+                publishing an asset you need to unlock your Web3 account.
                 <Button link onClick={states.startLogin}>
                     Unlock account
                 </Button>
@@ -49,7 +50,8 @@ export default class Web3message extends PureComponent {
     public haveAccount(account: string) {
         return (
             <div className={styles.message}>
-                <AccountStatus /> Connected with account
+                <AccountStatus className={styles.status} /> Connected with
+                account
                 <code className={styles.account} title={account && account}>
                     {`${account && account.substring(0, 20)}...`}
                 </code>

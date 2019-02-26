@@ -3,7 +3,7 @@
 .message {
     margin-bottom: $spacer;
     color: $brand-grey;
-    padding-left: 1.5rem;
+    padding-left: 2rem;
     position: relative;
     border-bottom: .1rem solid $brand-grey-lighter;
     border-top: .1rem solid $brand-grey-lighter;
@@ -15,4 +15,9 @@
     display: inline-block;
     margin-left: $spacer / 8;
     background: none;
+}
+
+.status {
+    margin-left: -($spacer);
+    margin-right: $spacer / 3;
 }
