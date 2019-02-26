@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import Button from '../components/atoms/Button'
-import AccountStatus from './molecules/AccountStatus'
+import AccountStatus from './molecules/AccountStatus/'
 import styles from './Web3message.module.scss'
 import { User } from '../context/User'
 

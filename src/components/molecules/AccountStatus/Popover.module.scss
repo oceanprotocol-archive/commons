@@ -1,37 +1,4 @@
-@import '../../styles/variables';
-
-.status {
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
-}
-
-// default: red square
-.statusIndicator {
-    width: $font-size-small;
-    height: $font-size-small;
-    display: block;
-    background: $red;
-    margin-bottom: -.1rem;
-}
-
-// yellow triangle
-.statusIndicatorCloseEnough {
-    composes: statusIndicator;
-    background: none;
-    width: 0;
-    height: 0;
-    border-left: $font-size-small / 1.7 solid transparent;
-    border-right: $font-size-small / 1.7 solid transparent;
-    border-bottom: $font-size-small solid $yellow;
-}
-
-// green circle
-.statusIndicatorActive {
-    composes: statusIndicator;
-    border-radius: 50%;
-    background: $green;
-}
+@import '../../../styles/variables';
 
 $popoverWidth: 18rem;
 
