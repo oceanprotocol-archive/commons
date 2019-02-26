@@ -56,20 +56,9 @@ const AccountPopover = () => (
             <User.Consumer>
                 {states =>
                     states.account ? (
-                        <>
-                            {/* <Blockies
-                            size={10}
-                            scale={2}
-                            className={styles.avatar}
-                            seed={activeAccount.getId()}
-                        /> */}
-                            <span
-                                className={styles.address}
-                                title={states.account}
-                            >
-                                {states.account}
-                            </span>
-                        </>
+                        <span className={styles.address} title={states.account}>
+                            {states.account}
+                        </span>
                     ) : (
                         'No account selected'
                     )
@@ -80,9 +69,13 @@ const AccountPopover = () => (
             Network: &nbsp;<strong>{''}</strong>
         </div>
         <div className={styles.popoverInfoline}>
-            <Button link onClick={''}>
-                Make it rain
-            </Button>
+            <User.Consumer>
+                {states => (
+                    <Button link onClick={states.requestFromFaucet}>
+                        Make it rain
+                    </Button>
+                )}
+            </User.Consumer>
         </div>
     </div>
 )
