@@ -31,13 +31,19 @@ export default class AccountStatus extends PureComponent<
             enterExitTransitionDurationMs: 300,
             tipSize: 0.01,
             onOuterAction: () => this.togglePopover(false),
-            body: <AccountPopover />
+            body: (
+                <AccountPopover
+                    showPopover={() => this.togglePopover(true)}
+                    hidePopover={() => this.togglePopover(false)}
+                />
+            )
         }
 
         return (
             <Popover {...popoverProps}>
                 <AccountIndicator
                     showPopover={() => this.togglePopover(true)}
+                    hidePopover={() => this.togglePopover(false)}
                     className={this.props.className}
                 />
             </Popover>

@@ -3,8 +3,18 @@ import { User } from '../../../context/User'
 import Faucet from './Faucet'
 import styles from './Popover.module.scss'
 
-const Popover = () => (
-    <div className={styles.popover}>
+const Popover = ({
+    showPopover,
+    hidePopover
+}: {
+    showPopover: any
+    hidePopover: any
+}) => (
+    <div
+        className={styles.popover}
+        onMouseOver={showPopover}
+        onMouseOut={hidePopover}
+    >
         <div className={styles.accountName}>
             <User.Consumer>
                 {states =>
