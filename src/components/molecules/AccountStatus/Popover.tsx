@@ -10,6 +10,23 @@ const Popover = ({ togglePopover }: { togglePopover: any }) => (
         onMouseOut={togglePopover}
     >
         <div className={styles.popoverInfoline}>
+            <span className={styles.balance} title="Fake data">
+                <strong>30</strong> ETH
+            </span>
+            {/* <span className={styles.balance} title={(eth / 1e18).toFixed(10)}>
+                    <strong>{(eth / 1e18).toFixed(3).slice(0, -1)}</strong> ETH
+                </span> */}
+            <span className={styles.balance}>
+                {/* <strong>{ocn}</strong> OCEAN */}
+                <strong>2474290</strong> OCEAN
+            </span>
+        </div>
+
+        <div className={styles.popoverInfoline}>
+            <Faucet togglePopover={togglePopover} />
+        </div>
+
+        <div className={styles.popoverInfoline}>
             <User.Consumer>
                 {states =>
                     states.account ? (
@@ -22,27 +39,13 @@ const Popover = ({ togglePopover }: { togglePopover: any }) => (
                 }
             </User.Consumer>
         </div>
+
         <div className={styles.popoverInfoline}>
-            Network: <strong>&nbsp; Fake Network Name</strong>
-            {/* Network:
+            Fake Network Name
+            {/*
             <User.Consumer>
-                {states => states.network && <strong>{states.network}</strong>}
+                {states => states.network && states.network}
             </User.Consumer> */}
-        </div>
-        <div className={styles.popoverInfoline}>
-            <span className={styles.balance} title="Fake data">
-                <strong>30</strong> ETH
-            </span>
-            {/* <span className={styles.balance} title={(eth / 1e18).toFixed(10)}>
-                    <strong>{(eth / 1e18).toFixed(3).slice(0, -1)}</strong> ETH
-                </span> */}
-            <span className={styles.balance}>
-                {/* <strong>{ocn}</strong> OCEAN */}
-                <strong>2474290</strong> OCEAN
-            </span>
-        </div>
-        <div className={styles.popoverInfoline}>
-            <Faucet />
         </div>
     </div>
 )
