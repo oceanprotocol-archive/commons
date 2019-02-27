@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Logger } from '@oceanprotocol/squid'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Spinner from './components/atoms/Spinner'
@@ -62,7 +63,7 @@ class App extends Component<{}, AppState> {
                     }
                 )
             } catch (error) {
-                // show error
+                Logger.log(error)
             }
         } else {
             // no account found
