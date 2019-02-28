@@ -1,2 +1,14 @@
 @import '../styles/variables';
 
+.action {
+    text-align: center;
+    margin-top: $spacer * $line-height;
+
+    p {
+        margin-bottom: $spacer;
+    }
+}
+
+.success {
+    color: $green;
+}
