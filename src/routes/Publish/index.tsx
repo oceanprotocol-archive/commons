@@ -7,7 +7,7 @@ import { User } from '../../context/User'
 import Step from './Step'
 import Progress from './Progress'
 
-import form from '../../data/form-publish.json'
+import { steps } from '../../data/form-publish.json'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -82,7 +82,7 @@ class Publish extends Component<{}, PublishState> {
 
     private next = () => {
         let { currentStep } = this.state
-        const totalSteps = form.steps.length
+        const totalSteps = steps.length
 
         currentStep =
             currentStep >= totalSteps - 1 ? totalSteps : currentStep + 1
@@ -147,7 +147,8 @@ class Publish extends Component<{}, PublishState> {
         //
         // Step 1
         //
-        // TODO: also validate files with validationStatus[1].files here
+        // TODO: also validate files with validationStatus[1].files here,
+        // change event for hidden file input is not working
         //
         if (validationStatus[1].name) {
             this.setState(prevState => ({
@@ -166,6 +167,9 @@ class Publish extends Component<{}, PublishState> {
         //
         // Step 2
         //
+        // TODO: validationStatus[2].categories is not working,
+        // select change event is not firing
+        //
         if (validationStatus[2].description && validationStatus[2].categories) {
             this.setState(prevState => ({
                 validationStatus: {
@@ -182,6 +186,9 @@ class Publish extends Component<{}, PublishState> {
 
         //
         // Step 3
+        //
+        // TODO: validationStatus[3].license is not working,
+        // select change event is not firing
         //
         if (
             validationStatus[3].author &&
@@ -262,13 +269,10 @@ class Publish extends Component<{}, PublishState> {
                 title="Publish"
                 description="Publish a new data set into the Ocean Protocol Network."
             >
-                <Progress
-                    steps={form.steps}
-                    currentStep={this.state.currentStep}
-                />
+                <Progress steps={steps} currentStep={this.state.currentStep} />
 
                 <Form onSubmit={this.registerAsset}>
-                    {form.steps.map((step: any, index: number) => (
+                    {steps.map((step: any, index: number) => (
                         <Step
                             key={index}
                             index={index}
@@ -281,7 +285,7 @@ class Publish extends Component<{}, PublishState> {
                             state={this.state}
                             next={this.next}
                             prev={this.prev}
-                            totalSteps={form.steps.length}
+                            totalSteps={steps.length}
                             tryAgain={this.tryAgain}
                             toStart={this.toStart}
                             content={step.content}
