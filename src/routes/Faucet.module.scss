@@ -2,10 +2,11 @@
 
 .action {
     text-align: center;
-    margin-top: $spacer * $line-height;
+    margin-top: $spacer * 2;
 
     p {
-        margin-bottom: $spacer;
+        margin-top: $spacer;
+        color: $brand-grey-light;
     }
 }
 

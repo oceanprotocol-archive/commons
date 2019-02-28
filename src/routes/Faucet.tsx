@@ -41,17 +41,11 @@ class Faucet extends PureComponent<{}, FaucetState> {
         return (
             <Route
                 title="Faucet"
-                description="Shower yourself with some Ether."
+                description="Shower yourself with some Ether for the Ocean POA network."
             >
                 <Web3message />
 
                 <div className={styles.action}>
-                    <p>
-                        Click the button below to request Ether for the Ocean
-                        POA network.
-                        <br /> You can only request Ether once every 24 hours
-                        for your address.
-                    </p>
                     <User.Consumer>
                         {states =>
                             this.state.isLoading ? (
@@ -74,6 +68,11 @@ class Faucet extends PureComponent<{}, FaucetState> {
                             )
                         }
                     </User.Consumer>
+
+                    <p>
+                        You can only request Ether once every 24 hours for your
+                        address.
+                    </p>
                 </div>
             </Route>
         )
