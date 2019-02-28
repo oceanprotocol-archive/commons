@@ -50,7 +50,7 @@ export default class Faucet extends PureComponent<FaucetProps, FaucetState> {
                                 this.getTokens(states.requestFromFaucet)
                             }
                         >
-                            Request Ether & Ocean
+                            Request Ether
                         </Button>
                     )
                 }
