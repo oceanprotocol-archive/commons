@@ -13,7 +13,7 @@ interface FaucetState {
     eth?: string
 }
 
-class Faucet extends PureComponent<{}, FaucetState> {
+export default class Faucet extends PureComponent<{}, FaucetState> {
     public state = {
         isLoading: false,
         success: undefined,
@@ -37,6 +37,50 @@ class Faucet extends PureComponent<{}, FaucetState> {
         }
     }
 
+    private RequestMarkup = () => (
+        <User.Consumer>
+            {states => (
+                <Button
+                    primary
+                    onClick={() => this.getTokens(states.requestFromFaucet)}
+                >
+                    Request Ether
+                </Button>
+            )}
+        </User.Consumer>
+    )
+
+    private ActionMarkup = () => (
+        <div className={styles.action}>
+            {this.state.isLoading ? (
+                <Spinner message="Getting Ether..." />
+            ) : this.state.error ? (
+                <div className={styles.error}>
+                    {this.state.error}{' '}
+                    <Button link onClick={this.reset}>
+                        Try again
+                    </Button>
+                </div>
+            ) : this.state.success ? (
+                <div className={styles.success}>{this.state.success}</div>
+            ) : (
+                <this.RequestMarkup />
+            )}
+
+            <p>
+                You can only request Ether once every 24 hours for your address.
+            </p>
+        </div>
+    )
+
+    private reset = () => {
+        this.setState({
+            error: undefined,
+            success: undefined,
+            isLoading: false
+        })
+    }
+
     public render() {
         return (
             <Route
@@ -45,38 +89,8 @@ class Faucet extends PureComponent<{}, FaucetState> {
             >
                 <Web3message />
 
-                <div className={styles.action}>
-                    <User.Consumer>
-                        {states =>
-                            this.state.isLoading ? (
-                                <Spinner message="Getting Ether..." />
-                            ) : this.state.error ? (
-                                this.state.error
-                            ) : this.state.success ? (
-                                <div className={styles.success}>
-                                    {this.state.success}
-                                </div>
-                            ) : (
-                                <Button
-                                    primary
-                                    onClick={() =>
-                                        this.getTokens(states.requestFromFaucet)
-                                    }
-                                >
-                                    Request Ether
-                                </Button>
-                            )
-                        }
-                    </User.Consumer>
-
-                    <p>
-                        You can only request Ether once every 24 hours for your
-                        address.
-                    </p>
-                </div>
+                <this.ActionMarkup />
             </Route>
         )
     }
 }
-
-export default Faucet
