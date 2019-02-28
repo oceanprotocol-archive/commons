@@ -8,7 +8,7 @@ const Indicator = ({
     togglePopover
 }: {
     className?: string
-    togglePopover: any
+    togglePopover: () => void
 }) => (
     <div
         className={cx(styles.status, className)}

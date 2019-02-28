@@ -1,9 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { User } from '../../../context/User'
-import Faucet from './Faucet'
 import styles from './Popover.module.scss'
 
-const Popover = ({ togglePopover }: { togglePopover: any }) => (
+const Popover = ({ togglePopover }: { togglePopover: () => void }) => (
     <div
         className={styles.popover}
         onMouseOver={togglePopover}
@@ -23,7 +23,7 @@ const Popover = ({ togglePopover }: { togglePopover: any }) => (
         </div>
 
         <div className={styles.popoverInfoline}>
-            <Faucet togglePopover={togglePopover} />
+            <Link to={'/faucet'}>Request Ether</Link>
         </div>
 
         <div className={styles.popoverInfoline}>
