@@ -10,7 +10,7 @@ const Indicator = ({
 }: {
     className?: string
     togglePopover: () => void
-    forwardedRef: any
+    forwardedRef: (ref: HTMLElement | null) => void
 }) => (
     <div
         className={cx(styles.status, className)}

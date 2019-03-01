@@ -1,10 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { User } from '../../../context/User'
 import styles from './Popover.module.scss'
 
-const Popover = ({ forwardedRef }: { forwardedRef: any }) => (
-    <div className={styles.popover} ref={forwardedRef}>
+const Popover = ({
+    forwardedRef,
+    style,
+    arrowProps
+}: {
+    forwardedRef: (ref: HTMLElement | null) => void
+    style: React.CSSProperties
+    arrowProps: {
+        ref: (ref: HTMLElement | null) => void
+        style: React.CSSProperties
+    }
+}) => (
+    <div className={styles.popover} ref={forwardedRef} style={style}>
         <div className={styles.popoverInfoline}>
             <span className={styles.balance} title="Fake data">
                 <strong>30</strong> ETH
@@ -39,6 +49,7 @@ const Popover = ({ forwardedRef }: { forwardedRef: any }) => (
                 {states => states.network && states.network}
             </User.Consumer> */}
         </div>
+        <div ref={arrowProps.ref} style={arrowProps.style} />
     </div>
 )
 

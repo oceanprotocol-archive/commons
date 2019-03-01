@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import TetherComponent from 'react-tether'
+import { Manager, Reference, Popper } from 'react-popper'
 import AccountPopover from './Popover'
 import AccountIndicator from './Indicator'
 
@@ -27,30 +27,29 @@ export default class AccountStatus extends PureComponent<
 
     public render() {
         return (
-            <TetherComponent
-                // http://tether.io/#options
-                attachment="top center"
-                constraints={[
-                    {
-                        to: 'scrollParent',
-                        attachment: 'together',
-                        pin: true
-                    }
-                ]}
-                // https://github.com/danreeves/react-tether#props
-                renderTarget={ref => (
-                    <AccountIndicator
-                        togglePopover={() => this.togglePopover()}
-                        className={this.props.className}
-                        forwardedRef={ref}
-                    />
+            <Manager>
+                <Reference>
+                    {({ ref }) => (
+                        <AccountIndicator
+                            togglePopover={() => this.togglePopover()}
+                            className={this.props.className}
+                            forwardedRef={ref}
+                        />
+                    )}
+                </Reference>
+                {this.state.isPopoverOpen && (
+                    <Popper placement="auto">
+                        {({ ref, style, placement, arrowProps }) => (
+                            <AccountPopover
+                                forwardedRef={ref}
+                                style={style}
+                                arrowProps={arrowProps}
+                                data-placement={placement}
+                            />
+                        )}
+                    </Popper>
                 )}
-                renderElement={ref =>
-                    this.state.isPopoverOpen && (
-                        <AccountPopover forwardedRef={ref} />
-                    )
-                }
-            />
+            </Manager>
         )
     }
 }
