@@ -5,15 +5,18 @@ import styles from './Indicator.module.scss'
 
 const Indicator = ({
     className,
-    togglePopover
+    togglePopover,
+    forwardedRef
 }: {
     className?: string
     togglePopover: () => void
+    forwardedRef: any
 }) => (
     <div
         className={cx(styles.status, className)}
         onMouseOver={togglePopover}
         onMouseOut={togglePopover}
+        ref={forwardedRef}
     >
         <User.Consumer>
             {states =>

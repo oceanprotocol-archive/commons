@@ -3,12 +3,8 @@ import { Link } from 'react-router-dom'
 import { User } from '../../../context/User'
 import styles from './Popover.module.scss'
 
-const Popover = ({ togglePopover }: { togglePopover: () => void }) => (
-    <div
-        className={styles.popover}
-        onMouseOver={togglePopover}
-        onMouseOut={togglePopover}
-    >
+const Popover = ({ forwardedRef }: { forwardedRef: any }) => (
+    <div className={styles.popover} ref={forwardedRef}>
         <div className={styles.popoverInfoline}>
             <span className={styles.balance} title="Fake data">
                 <strong>30</strong> ETH
@@ -20,10 +16,6 @@ const Popover = ({ togglePopover }: { togglePopover: () => void }) => (
                 {/* <strong>{ocn}</strong> OCEAN */}
                 <strong>2474290</strong> OCEAN
             </span>
-        </div>
-
-        <div className={styles.popoverInfoline}>
-            <Link to={'/faucet'}>Request Ether</Link>
         </div>
 
         <div className={styles.popoverInfoline}>
