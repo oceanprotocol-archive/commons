@@ -122,25 +122,35 @@ class Publish extends Component<{}, PublishState> {
 
         // Setting state for all fields
         if (hasContent) {
-            this.setState(prevState => ({
-                validationStatus: {
-                    ...prevState.validationStatus,
-                    [this.state.currentStep]: {
-                        ...prevState.validationStatus[this.state.currentStep],
-                        [name]: true
+            this.setState(
+                prevState => ({
+                    validationStatus: {
+                        ...prevState.validationStatus,
+                        [this.state.currentStep]: {
+                            ...prevState.validationStatus[
+                                this.state.currentStep
+                            ],
+                            [name]: true
+                        }
                     }
-                }
-            }), this.runValidation)
+                }),
+                this.runValidation
+            )
         } else {
-            this.setState(prevState => ({
-                validationStatus: {
-                    ...prevState.validationStatus,
-                    [this.state.currentStep]: {
-                        ...prevState.validationStatus[this.state.currentStep],
-                        [name]: false
+            this.setState(
+                prevState => ({
+                    validationStatus: {
+                        ...prevState.validationStatus,
+                        [this.state.currentStep]: {
+                            ...prevState.validationStatus[
+                                this.state.currentStep
+                            ],
+                            [name]: false
+                        }
                     }
-                }
-            }), this.runValidation)
+                }),
+                this.runValidation
+            )
         }
     }
 
