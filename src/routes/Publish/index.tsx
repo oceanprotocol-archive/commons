@@ -118,7 +118,6 @@ class Publish extends Component<{}, PublishState> {
     }
 
     private validateInputs = (name: string, value: any) => {
-        let { validationStatus } = this.state
         let hasContent = value.length > 0
 
         // Setting state for all fields
@@ -131,7 +130,7 @@ class Publish extends Component<{}, PublishState> {
                         [name]: true
                     }
                 }
-            }))
+            }), this.runValidation)
         } else {
             this.setState(prevState => ({
                 validationStatus: {
@@ -141,9 +140,12 @@ class Publish extends Component<{}, PublishState> {
                         [name]: false
                     }
                 }
-            }))
+            }), this.runValidation)
         }
+    }
 
+    private runValidation = () => {
+        let { validationStatus } = this.state
         //
         // Step 1
         //
