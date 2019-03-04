@@ -41,15 +41,6 @@ class Home extends Component<HomeProps, HomeState> {
                         }
                     />
                 </Form>
-
-                <div className={styles.published}>
-                    <h2 className={styles.subTitle}>Your Data Sets</h2>
-
-                    <div>
-                        <p>None yet.</p>
-                        <Link to="/publish">+ Publish A Data Set</Link>
-                    </div>
-                </div>
             </Route>
         )
     }
