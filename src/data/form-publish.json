@@ -1,17 +1,15 @@
 {
-  "title": "Publish a new data asset",
-  "description": "A cool form description",
   "steps": [
     {
       "title": "Essentials",
-      "description": "A description about these essential fields",
+      "description": "Start by adding a title and URLs for your data set.",
       "fields": {
         "name": {
           "label": "Title",
-          "placeholder": "i.e. My cool data set",
+          "placeholder": "i.e. Almond sales data",
           "type": "text",
           "required": true,
-          "help": "Help me Obiwan"
+          "help": "Enter a concise title. You will be able to enter a more thorough description in the next step."
         },
         "files": {
           "label": "Files",
@@ -24,18 +22,21 @@
     },
     {
       "title": "Information",
-      "description": "A description about these fields",
+      "description": "Further describe and categorize your data set to help people discover it.",
       "fields": {
         "description": {
           "label": "Description",
-          "placeholder": "i.e. My cool data set",
+          "description": "Add a thorough description with as much detail as possible.",
+          "placeholder": "i.e. Almond sales data ",
           "type": "textarea",
           "required": true,
           "rows": 5
         },
         "categories": {
           "label": "Categories",
+          "description": "Pick a category which best fits your data set.",
           "type": "select",
+          "required": true,
           "options": [
             "Image Recognition",
             "Dataset Of Datasets",
@@ -74,7 +75,7 @@
     },
     {
       "title": "Authorship",
-      "description": "A description about these credentials fields",
+      "description": "Give proper attribution for your data set.",
       "fields": {
         "author": {
           "label": "Author",
@@ -84,7 +85,7 @@
         },
         "copyrightHolder": {
           "label": "Copyright Holder",
-          "placeholder": "i.e. fwhfiw",
+          "placeholder": "i.e. Marine Institute of Jellyfish",
           "type": "text",
           "required": true
         },
@@ -106,7 +107,7 @@
     },
     {
       "title": "Register",
-      "description": "We got all the data, now let's register your data set.",
+      "description": "Splendid, we got all the data. Now let's register your data set.",
       "content": "After clicking the button below you will be asked by your wallet to sign this request."
     }
   ]

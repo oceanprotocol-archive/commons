@@ -1,11 +1,10 @@
-import React, { PureComponent, ChangeEvent } from 'react'
+import React, { PureComponent } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
 import ItemForm from './ItemForm'
 import Item from './Item'
 import styles from './index.module.scss'
-import { Logger } from '@oceanprotocol/squid';
 
 interface FilesProps {
     files: any[]
@@ -13,7 +12,6 @@ interface FilesProps {
     help?: string
     name: string
     onChange: any
-    // resetForm: any
 }
 
 interface FilesStates {
