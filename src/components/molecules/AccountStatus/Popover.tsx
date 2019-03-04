@@ -10,15 +10,40 @@ const Popover = ({
     style: React.CSSProperties
 }) => (
     <div className={styles.popover} ref={forwardedRef} style={style}>
+        {/*
+            TODO: uncomment to show real balances,
+            and remove next infoline block with fake data
+        */}
+        {/*
+        <User.Consumer>
+            {states =>
+                (states.balanceEth || states.balanceOcn) && (
+                    <div className={styles.popoverInfoline}>
+                        <span
+                            className={styles.balance}
+                            title={(states.balanceEth / 1e18).toFixed(10)}
+                        >
+                            <strong>
+                                {(states.balanceEth / 1e18)
+                                    .toFixed(3)
+                                    .slice(0, -1)}
+                            </strong>{' '}
+                            ETH
+                        </span>
+                        <span className={styles.balance}>
+                            <strong>{states.balanceOcn}</strong> OCEAN
+                        </span>
+                    </div>
+                )
+            }
+        </User.Consumer>
+        */}
+
         <div className={styles.popoverInfoline}>
             <span className={styles.balance} title="Fake data">
                 <strong>30</strong> ETH
             </span>
-            {/* <span className={styles.balance} title={(eth / 1e18).toFixed(10)}>
-                    <strong>{(eth / 1e18).toFixed(3).slice(0, -1)}</strong> ETH
-                </span> */}
             <span className={styles.balance}>
-                {/* <strong>{ocn}</strong> OCEAN */}
                 <strong>2474290</strong> OCEAN
             </span>
         </div>
@@ -40,9 +65,13 @@ const Popover = ({
         <div className={styles.popoverInfoline}>
             Fake Network Name
             {/*
+                TODO: uncomment to show real network name
+            */}
+            {/*
             <User.Consumer>
                 {states => states.network && states.network}
-            </User.Consumer> */}
+            </User.Consumer>
+            */}
         </div>
     </div>
 )
