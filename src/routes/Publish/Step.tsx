@@ -91,7 +91,7 @@ export default class Step extends PureComponent<StepProps, {}> {
                     Object.entries(fields).map(([key, value]) => {
                         let onChange = inputChange
 
-                        if (key === 'files' || key === 'categories') {
+                        if (key === 'categories') {
                             onChange = inputToArrayChange
                         }
 

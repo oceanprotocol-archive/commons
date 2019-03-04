@@ -21,7 +21,7 @@ interface PublishState {
     type?: AssetType
     license?: string
     copyrightHolder?: string
-    categories?: string[]
+    categories?: string
     tags?: string[]
     isPublishing?: boolean
     isPublished?: boolean
@@ -43,7 +43,7 @@ class Publish extends Component<{}, PublishState> {
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: [],
+        categories: '',
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
@@ -110,7 +110,7 @@ class Publish extends Component<{}, PublishState> {
             type: 'dataset' as AssetType,
             license: '',
             copyrightHolder: '',
-            categories: [],
+            categories: '',
             isPublishing: false,
             isPublished: false,
             currentStep: 1
@@ -159,10 +159,7 @@ class Publish extends Component<{}, PublishState> {
         //
         // Step 1
         //
-        // TODO: also validate files with validationStatus[1].files here,
-        // change event for hidden file input is not working
-        //
-        if (validationStatus[1].name) {
+        if (validationStatus[1].name && validationStatus[1].files) {
             this.setState(prevState => ({
                 validationStatus: {
                     ...prevState.validationStatus,
@@ -174,13 +171,8 @@ class Publish extends Component<{}, PublishState> {
             }))
         }
 
-        // console.log(validationStatus[1])
-
         //
         // Step 2
-        //
-        // TODO: validationStatus[2].categories is not working,
-        // select change event is not firing
         //
         if (validationStatus[2].description && validationStatus[2].categories) {
             this.setState(prevState => ({
@@ -194,13 +186,8 @@ class Publish extends Component<{}, PublishState> {
             }))
         }
 
-        // console.log(validationStatus[2])
-
         //
         // Step 3
-        //
-        // TODO: validationStatus[3].license is not working,
-        // select change event is not firing
         //
         if (
             validationStatus[3].author &&
@@ -217,8 +204,6 @@ class Publish extends Component<{}, PublishState> {
                 }
             }))
         }
-
-        // console.log(validationStatus[3])
     }
 
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {

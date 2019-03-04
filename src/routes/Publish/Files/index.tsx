@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, ChangeEvent } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
 import ItemForm from './ItemForm'
 import Item from './Item'
 import styles from './index.module.scss'
+import { Logger } from '@oceanprotocol/squid';
 
 interface FilesProps {
     files: any[]
@@ -32,12 +33,26 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     public addItem = (value: string) => {
         this.props.files.push({ url: value })
-        // this.props.resetForm()
+        const event = {
+            currentTarget: {
+                name: 'files',
+                value: this.props.files
+            }
+        }
+        this.props.onChange(event as any)
         this.setState({ isFormShown: !this.state.isFormShown })
     }
 
     public removeItem = (index: number) => {
         this.props.files.splice(index, 1)
+        const event = {
+            currentTarget: {
+                name: 'files',
+                value: this.props.files
+            }
+        }
+        this.props.onChange(event as any)
+        this.forceUpdate()
     }
 
     public render() {
