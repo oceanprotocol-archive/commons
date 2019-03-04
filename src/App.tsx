@@ -32,6 +32,9 @@ interface AppState {
     isLoading: boolean
     isWeb3: boolean
     account: string
+    balanceEth: number
+    balanceOcn: number
+    network: string
     web3: Web3
     ocean: {}
     startLogin: () => void
@@ -63,7 +66,7 @@ class App extends Component<{}, AppState> {
                     }
                 )
             } catch (error) {
-                Logger.log(error)
+                Logger.log('requestFromFaucet', error)
             }
         } else {
             // no account found
@@ -74,6 +77,9 @@ class App extends Component<{}, AppState> {
         isLogged: false,
         isLoading: true,
         isWeb3: false,
+        balanceEth: 0,
+        balanceOcn: 0,
+        network: '',
         web3: new Web3(
             new Web3.providers.HttpProvider(
                 `${nodeScheme}://${nodeHost}:${nodePort}`
@@ -141,7 +147,7 @@ class App extends Component<{}, AppState> {
                     })
                 }
             } catch (e) {
-                // continue with default
+                Logger.log('web3 error', e)
             }
         }
         try {
@@ -150,8 +156,16 @@ class App extends Component<{}, AppState> {
                 isLoading: false,
                 ocean
             })
+            // TODO: squid-js balance retrieval fix
+            const accounts = await ocean.getAccounts()
+            const balance = await accounts[0].getBalance()
+            this.setState({
+                balanceEth: balance.eth,
+                balanceOcn: balance.ocn
+            })
+            // TODO: squid-js expose keeper for getNetworkName
         } catch (e) {
-            // show loading error / unable to initialize ocean
+            Logger.log('ocean/balance error', e)
             this.setState({
                 isLoading: false
             })
