@@ -10,43 +10,29 @@ const Popover = ({
     style: React.CSSProperties
 }) => (
     <div className={styles.popover} ref={forwardedRef} style={style}>
-        {/*
-            TODO: uncomment to show real balances,
-            and remove next infoline block with fake data
-        */}
-        {/*
         <User.Consumer>
             {states =>
-                (states.balanceEth || states.balanceOcn) && (
+                states.account &&
+                states.balance && (
                     <div className={styles.popoverInfoline}>
                         <span
                             className={styles.balance}
-                            title={(states.balanceEth / 1e18).toFixed(10)}
+                            title={(states.balance.eth / 1e18).toFixed(10)}
                         >
                             <strong>
-                                {(states.balanceEth / 1e18)
+                                {(states.balance.eth / 1e18)
                                     .toFixed(3)
                                     .slice(0, -1)}
                             </strong>{' '}
                             ETH
                         </span>
                         <span className={styles.balance}>
-                            <strong>{states.balanceOcn}</strong> OCEAN
+                            <strong>{states.balance.ocn}</strong> OCEAN
                         </span>
                     </div>
                 )
             }
         </User.Consumer>
-        */}
-
-        <div className={styles.popoverInfoline}>
-            <span className={styles.balance} title="Fake data">
-                <strong>30</strong> ETH
-            </span>
-            <span className={styles.balance}>
-                <strong>2474290</strong> OCEAN
-            </span>
-        </div>
 
         <div className={styles.popoverInfoline}>
             <User.Consumer>
@@ -63,15 +49,9 @@ const Popover = ({
         </div>
 
         <div className={styles.popoverInfoline}>
-            Fake Network Name
-            {/*
-                TODO: uncomment to show real network name
-            */}
-            {/*
             <User.Consumer>
                 {states => states.network && states.network}
             </User.Consumer>
-            */}
         </div>
     </div>
 )

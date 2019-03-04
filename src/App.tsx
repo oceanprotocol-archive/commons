@@ -32,8 +32,10 @@ interface AppState {
     isLoading: boolean
     isWeb3: boolean
     account: string
-    balanceEth: number
-    balanceOcn: number
+    balance: {
+        eth: number
+        ocn: number
+    }
     network: string
     web3: Web3
     ocean: {}
@@ -77,8 +79,10 @@ class App extends Component<{}, AppState> {
         isLogged: false,
         isLoading: true,
         isWeb3: false,
-        balanceEth: 0,
-        balanceOcn: 0,
+        balance: {
+            eth: 0,
+            ocn: 0
+        },
         network: '',
         web3: new Web3(
             new Web3.providers.HttpProvider(
@@ -159,10 +163,7 @@ class App extends Component<{}, AppState> {
             // TODO: squid-js balance retrieval fix
             const accounts = await ocean.getAccounts()
             const balance = await accounts[0].getBalance()
-            this.setState({
-                balanceEth: balance.eth,
-                balanceOcn: balance.ocn
-            })
+            this.setState({ balance })
             // TODO: squid-js expose keeper for getNetworkName
         } catch (e) {
             Logger.log('ocean/balance error', e)
