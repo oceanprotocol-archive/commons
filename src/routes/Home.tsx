@@ -26,15 +26,19 @@ class Home extends Component<HomeProps, HomeState> {
                 description={meta.description}
                 className={styles.home}
             >
-                <Form onSubmit={this.searchAssets}>
+                <Form onSubmit={this.searchAssets} minimal>
                     <Input
                         type="search"
                         name="search"
-                        label="Search"
+                        label="Search for data sets"
                         placeholder="i.e. almond sales data"
                         value={this.state.search}
                         onChange={this.inputChange}
-                        group={<Button>Search</Button>}
+                        group={
+                            <Button primary disabled={!this.state.search}>
+                                Search
+                            </Button>
+                        }
                     />
                 </Form>
 

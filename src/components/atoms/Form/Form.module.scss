@@ -13,6 +13,13 @@
     }
 }
 
+.formMinimal {
+    composes: form;
+    background: none;
+    padding: 0;
+    border: 0;
+}
+
 .formHeader {
     margin-bottom: $spacer;
 }
