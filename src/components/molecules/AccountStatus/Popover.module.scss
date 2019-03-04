@@ -3,6 +3,7 @@
 $popoverWidth: 18rem;
 
 .popover {
+    position: relative;
     width: $popoverWidth;
     padding: $spacer / 2;
     background: $brand-black;

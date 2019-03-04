@@ -39,11 +39,10 @@ export default class AccountStatus extends PureComponent<
                 </Reference>
                 {this.state.isPopoverOpen && (
                     <Popper placement="auto">
-                        {({ ref, style, placement, arrowProps }) => (
+                        {({ ref, style, placement }) => (
                             <AccountPopover
                                 forwardedRef={ref}
                                 style={style}
-                                arrowProps={arrowProps}
                                 data-placement={placement}
                             />
                         )}

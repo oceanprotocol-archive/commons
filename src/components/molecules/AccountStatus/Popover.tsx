@@ -4,15 +4,10 @@ import styles from './Popover.module.scss'
 
 const Popover = ({
     forwardedRef,
-    style,
-    arrowProps
+    style
 }: {
     forwardedRef: (ref: HTMLElement | null) => void
     style: React.CSSProperties
-    arrowProps: {
-        ref: (ref: HTMLElement | null) => void
-        style: React.CSSProperties
-    }
 }) => (
     <div className={styles.popover} ref={forwardedRef} style={style}>
         <div className={styles.popoverInfoline}>
@@ -49,7 +44,6 @@ const Popover = ({
                 {states => states.network && states.network}
             </User.Consumer> */}
         </div>
-        <div ref={arrowProps.ref} style={arrowProps.style} />
     </div>
 )
 
