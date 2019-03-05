@@ -12,7 +12,6 @@ interface FilesProps {
     help?: string
     name: string
     onChange: any
-    // resetForm: any
 }
 
 interface FilesStates {
@@ -32,12 +31,26 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     public addItem = (value: string) => {
         this.props.files.push({ url: value })
-        // this.props.resetForm()
+        const event = {
+            currentTarget: {
+                name: 'files',
+                value: this.props.files
+            }
+        }
+        this.props.onChange(event as any)
         this.setState({ isFormShown: !this.state.isFormShown })
     }
 
     public removeItem = (index: number) => {
         this.props.files.splice(index, 1)
+        const event = {
+            currentTarget: {
+                name: 'files',
+                value: this.props.files
+            }
+        }
+        this.props.onChange(event as any)
+        this.forceUpdate()
     }
 
     public render() {
@@ -52,7 +65,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                 <input
                     type="hidden"
                     name={name}
-                    value={files}
+                    value={JSON.stringify(files)}
                     onChange={onChange}
                 />
 
