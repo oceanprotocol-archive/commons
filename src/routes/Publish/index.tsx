@@ -169,6 +169,16 @@ class Publish extends Component<{}, PublishState> {
                     }
                 }
             }))
+        } else {
+            this.setState(prevState => ({
+                validationStatus: {
+                    ...prevState.validationStatus,
+                    1: {
+                        ...prevState.validationStatus[1],
+                        allFieldsValid: false
+                    }
+                }
+            }))
         }
 
         //
@@ -181,6 +191,16 @@ class Publish extends Component<{}, PublishState> {
                     2: {
                         ...prevState.validationStatus[2],
                         allFieldsValid: true
+                    }
+                }
+            }))
+        } else {
+            this.setState(prevState => ({
+                validationStatus: {
+                    ...prevState.validationStatus,
+                    2: {
+                        ...prevState.validationStatus[2],
+                        allFieldsValid: false
                     }
                 }
             }))
@@ -200,6 +220,16 @@ class Publish extends Component<{}, PublishState> {
                     3: {
                         ...prevState.validationStatus[3],
                         allFieldsValid: true
+                    }
+                }
+            }))
+        } else {
+            this.setState(prevState => ({
+                validationStatus: {
+                    ...prevState.validationStatus,
+                    3: {
+                        ...prevState.validationStatus[3],
+                        allFieldsValid: false
                     }
                 }
             }))
