@@ -6,14 +6,20 @@ const Form = ({
     description,
     children,
     onSubmit,
+    minimal,
     ...props
 }: {
     title?: string
     description?: string
     children: any
     onSubmit?: any
+    minimal?: boolean
 }) => (
-    <form className={styles.form} onSubmit={onSubmit} {...props}>
+    <form
+        className={minimal ? styles.formMinimal : styles.form}
+        onSubmit={onSubmit}
+        {...props}
+    >
         {title && (
             <header className={styles.formHeader}>
                 <h1 className={styles.formTitle}>{title}</h1>

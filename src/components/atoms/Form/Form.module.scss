@@ -2,11 +2,22 @@
 
 .form {
     width: 100%;
+    background: $brand-white;
+    padding: $spacer;
+    border: 1px solid $brand-grey-lighter;
+    border-radius: $border-radius;
 
     fieldset {
         border: 0;
         padding: 0;
     }
+}
+
+.formMinimal {
+    composes: form;
+    background: none;
+    padding: 0;
+    border: 0;
 }
 
 .formHeader {

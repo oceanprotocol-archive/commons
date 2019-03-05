@@ -1,0 +1,26 @@
+@import '../../styles/variables';
+
+.header {
+    margin-bottom: $spacer;
+}
+
+.title {
+    font-size: $font-size-h2;
+    margin: 0;
+}
+
+.description {
+    margin-top: $spacer / 4;
+    margin-bottom: 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: $spacer / 2;
+
+    button:last-child {
+        min-width: 12rem;
+        margin-left: auto;
+    }
+}
