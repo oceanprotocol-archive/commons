@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Logger } from '@oceanprotocol/squid'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Spinner from './components/atoms/Spinner'
@@ -31,6 +32,11 @@ interface AppState {
     isLoading: boolean
     isWeb3: boolean
     account: string
+    balance: {
+        eth: number
+        ocn: number
+    }
+    network: string
     web3: Web3
     ocean: {}
     startLogin: () => void
@@ -62,7 +68,7 @@ class App extends Component<{}, AppState> {
                     }
                 )
             } catch (error) {
-                // show error
+                Logger.log('requestFromFaucet', error)
             }
         } else {
             // no account found
@@ -73,6 +79,11 @@ class App extends Component<{}, AppState> {
         isLogged: false,
         isLoading: true,
         isWeb3: false,
+        balance: {
+            eth: 0,
+            ocn: 0
+        },
+        network: '',
         web3: new Web3(
             new Web3.providers.HttpProvider(
                 `${nodeScheme}://${nodeHost}:${nodePort}`
@@ -140,7 +151,7 @@ class App extends Component<{}, AppState> {
                     })
                 }
             } catch (e) {
-                // continue with default
+                Logger.log('web3 error', e)
             }
         }
         try {
@@ -149,8 +160,13 @@ class App extends Component<{}, AppState> {
                 isLoading: false,
                 ocean
             })
+            // TODO: squid-js balance retrieval fix
+            const accounts = await ocean.getAccounts()
+            const balance = await accounts[0].getBalance()
+            this.setState({ balance })
+            // TODO: squid-js expose keeper for getNetworkName
         } catch (e) {
-            // show loading error / unable to initialize ocean
+            Logger.log('ocean/balance error', e)
             this.setState({
                 isLoading: false
             })

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import Web3message from '../../components/Web3message'
+import Web3message from '../../components/molecules/Web3message'
 import Spinner from '../../components/atoms/Spinner'
 import styles from './StepRegisterContent.module.scss'
 

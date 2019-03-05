@@ -3,8 +3,8 @@
 .spinner {
     position: relative;
     text-align: center;
-    margin-bottom: $spacer;
-    margin-top: $spacer * 2;
+    margin-top: $spacer * $line-height;
+    margin-bottom: $spacer / 2;
 
     &:before {
         content: '';

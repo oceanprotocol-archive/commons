@@ -7,6 +7,11 @@ export const User = React.createContext({
     account: '',
     web3: {},
     ocean: {},
+    balance: {
+        eth: 0,
+        ocn: 0
+    },
+    network: '',
     startLogin: () => {
         /* empty */
     },
