@@ -12,6 +12,7 @@
     "format": "npm run format:js && npm run format:css",
     "lint:css": "stylelint './src/**/*.{css,scss}'",
     "lint:js": "eslint --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
+    "lint:fix": "eslint --fix --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint": "npm run lint:js && npm run lint:css"
   },
   "dependencies": {

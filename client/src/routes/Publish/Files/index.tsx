@@ -6,11 +6,7 @@ import ItemForm from './ItemForm'
 import Item from './Item'
 import styles from './index.module.scss'
 
-import {
-    serviceHost,
-    servicePort,
-    serviceScheme
-} from '../../../config'
+import { serviceHost, servicePort, serviceScheme } from '../../../config'
 
 interface FilesProps {
     files: any[]
@@ -26,7 +22,7 @@ interface FilesStates {
 
 export default class Files extends PureComponent<FilesProps, FilesStates> {
     public state: FilesStates = {
-        isFormShown: false,
+        isFormShown: false
     }
 
     public toggleForm = (e: Event) => {
@@ -39,13 +35,16 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
         let res: any
         let file: any = { url: value, found: false }
         try {
-            const response = await fetch(`${serviceScheme}://${serviceHost}:${servicePort}/api/v1/urlcheck`, {
-                method: 'POST',
-                body: JSON.stringify({url: value}),
-                headers:{
-                    'Content-Type': 'application/json'
+            const response = await fetch(
+                `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/urlcheck`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify({ url: value }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }
-            })
+            )
             res = await response.json()
             file.size = res.result.contentLength
             file.type = res.result.contentType

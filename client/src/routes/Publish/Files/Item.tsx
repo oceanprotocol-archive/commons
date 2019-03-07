@@ -7,8 +7,11 @@ const Item = ({ item, removeItem }: { item: any; removeItem: any }) => (
         <a href={item.url}>{item.url}</a>
         <div className={styles.details}>
             <span>url: {item.found ? 'confirmed' : 'unconfirmed'}</span>
-            <span>size: { item.found && item.size ? filesize(item.size) : 'unknown'}</span>
-            <span>type: { item.found && item.type ? item.type : 'unknown'}</span>
+            <span>
+                size:
+                {item.found && item.size ? filesize(item.size) : 'unknown'}
+            </span>
+            <span>type: {item.found && item.type ? item.type : 'unknown'}</span>
         </div>
         <button
             type="button"
