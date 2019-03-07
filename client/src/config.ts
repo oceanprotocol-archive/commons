@@ -1,3 +1,7 @@
+export const serviceScheme = 'http'
+export const serviceHost = 'localhost'
+export const servicePort = 4000
+
 export const nodeScheme = 'http'
 export const nodeHost = 'localhost'
 export const nodePort = 8545

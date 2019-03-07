@@ -18,6 +18,7 @@
     "@oceanprotocol/art": "^2.2.0",
     "@oceanprotocol/squid": "^0.3.1",
     "classnames": "^2.2.6",
+    "filesize": "^4.1.2",
     "is-url": "^1.2.4",
     "moment": "^2.24.0",
     "query-string": "^6.2.0",
@@ -33,7 +34,9 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
+    "@types/filesize": "^4.0.1",
     "@types/is-url": "^1.2.28",
+    "@types/jasmine": "^3.3.9",
     "@types/jest": "^24.0.9",
     "@types/node": "^11.9.5",
     "@types/query-string": "^6.2.0",
