@@ -1,0 +1,76 @@
+@import '../../styles/variables';
+
+.progress {
+    display: block;
+    padding: 0;
+    position: relative;
+    margin-top: $spacer * 1.5;
+    margin-bottom: $spacer;
+}
+
+.item {
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+    color: $brand-grey-light;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 60%;
+        height: .1rem;
+        background: $brand-grey-lighter;
+        position: absolute;
+        top: 20%;
+        left: -30%;
+    }
+
+    &:first-child {
+        &:before {
+            display: none;
+        }
+    }
+
+    span {
+        display: block;
+    }
+}
+
+.active {
+    composes: item;
+    font-family: $font-family-button;
+    font-weight: $font-weight-bold;
+    color: $brand-black;
+
+    .number {
+        background: $brand-black;
+    }
+
+    &:before {
+        background: $green;
+    }
+}
+
+.completed {
+    composes: active;
+
+    .number {
+        background: $green;
+    }
+}
+
+.label {
+    margin-top: $spacer / 8;
+    font-size: $font-size-small;
+}
+
+.number {
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: auto;
+    border-radius: 50%;
+    background: $brand-grey-light;
+    color: $brand-white;
+    font-family: $font-family-button;
+    font-weight: $font-weight-bold;
+}

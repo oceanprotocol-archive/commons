@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Publish",
+    "link": "/publish"
+  },
+  {
+    "title": "Invoices",
+    "link": "/invoices"
+  },
+  {
+    "title": "Faucet",
+    "link": "/faucet"
+  },
+  {
+    "title": "About",
+    "link": "/about"
+  },
+  {
+    "title": "Styleguide",
+    "link": "/styleguide"
+  }
+]
