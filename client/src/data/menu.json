@@ -4,6 +4,10 @@
     "link": "/publish"
   },
   {
+    "title": "Invoices",
+    "link": "/invoices"
+  },
+  {
     "title": "Faucet",
     "link": "/faucet"
   },
