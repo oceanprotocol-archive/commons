@@ -1,9 +1,9 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
-import { Link } from 'react-router-dom'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
 import Route from '../components/templates/Route'
+import AssetsUser from '../components/molecules/AssetsUser'
 import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'
@@ -41,6 +41,7 @@ class Home extends Component<HomeProps, HomeState> {
                         }
                     />
                 </Form>
+                <AssetsUser />
             </Route>
         )
     }
