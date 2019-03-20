@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import Route from '../components/templates/Route'
 import { User } from '../context/User'
 import Asset from '../components/molecules/Asset'
+import { Logger } from '@oceanprotocol/squid';
 import styles from './Search.module.scss'
+
 
 interface InvoicesState {
     results: any[]
@@ -12,27 +14,31 @@ export default class Invoices extends Component<{}, InvoicesState> {
     public state = { results: [] }
 
     public async componentDidMount() {
-        /*
-        TODO:
-        - squid-js with exposed contracts
-        - request user to sign (unlock account) to get public key? retrieve it form previous signatures?
-        - subscribe to the `AccessSecretStoreCondition.Fulfill` event filtering by `_grantee` : https://github.com/oceanprotocol/keeper-contracts/blob/release/v0.8/contracts/conditions/AccessSecretStoreCondition.sol#L13
-        AccessSecretStoreCondition.Fulfill({_grantee: 'public key'}, { fromBlock: 0, toBlock: 'latest' }).get((error, eventResult) => {
-        if (error)
-            console.log('Error in myEvent event handler: ' + error);
-        else
-            console.log('events: ' + JSON.stringify(eventResult.args));
-        });
-        */
-        const assets = await this.context.ocean.assets.search('')
-        this.setState({ results: assets })
+
+        // this is currently my published assets
+        this.context.ocean.keeper.didRegistry.contract.getPastEvents('DIDAttributeRegistered', {
+            filter: {_owner:this.context.account},
+            fromBlock: 0,
+            toBlock: 'latest'
+        }, async (error: any, events: any) => {
+            if (error) {
+                Logger.log('error retrieving', error)
+            } else {
+                const results = []
+                for (const event of events) {
+                    const ddo = await this.context.ocean.resolveDID(`did:op:${event.returnValues._did.substring(2)}`)
+                    results.push(ddo)
+                }
+                this.setState({ results })
+            }
+        })
     }
 
     public renderResults = () =>
         this.state.results.length ? (
             <div className={styles.results}>
-                {this.state.results.map(asset => (
-                    <Asset key={asset} asset={asset} />
+                {this.state.results.map((asset, index) => (
+                    <Asset key={index} asset={asset} />
                 ))}
             </div>
         ) : (
