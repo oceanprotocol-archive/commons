@@ -55,4 +55,4 @@ function onError(error: NodeJS.ErrnoException): void {
   }
 }
 
-export default server
+export default server;
