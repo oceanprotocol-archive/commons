@@ -1,8 +1,9 @@
 language: node_js
-node_js:
-    - "11.10.1"
+node_js: node
 
-script: "./.travis.sh"
+script:
+  - npm test
+  - npm run build
 
 notifications:
   email: false

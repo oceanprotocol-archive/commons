@@ -1,0 +1,57 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run serve",
+    "start-watch": "nodemon",
+    "build": "npm run build-ts && npm run tslint",
+    "watch": "npm run watch-ts",
+    "serve": "node dist/index.js",
+    "test": "jest --coverage",
+    "watch-test": "npm run test --watchAll",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "color-js": "^1.0.5",
+    "compression": "^1.7.3",
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.1",
+    "lusca": "^1.6.1",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/compression": "0.0.36",
+    "@types/debug": "^4.1.1",
+    "@types/dotenv": "^6.1.0",
+    "@types/express": "^4.16.1",
+    "@types/jasmine": "^3.3.9",
+    "@types/jest": "^24.0.5",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^11.9.4",
+    "@types/request": "^2.48.1",
+    "chai": "^4.2.0",
+    "jest": "^24.1.0",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10",
+    "supertest": "^3.4.2",
+    "ts-jest": "^24.0.0",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  }
+}
