@@ -1,5 +1,3 @@
-import { MetaDataBase } from "@oceanprotocol/squid";
-
 module.exports = {
     app: {
       port: 4000,
