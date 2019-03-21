@@ -15,17 +15,17 @@ export class RetireRouter {
     if (!req.body.did || !req.body.signature) {
         return res.send({ status: "error", message: "Missing did or signature" });
     }
-    const providers = await getProviders()
+    const providers = await getProviders();
     try {
         const userAddress = await providers.web3.eth.personal.ecRecover(`You are retiering ${req.body.did}`, req.body.signature);
-        console.log('address', userAddress)
-        console.log('did', req.body.did)
+        console.log("address", userAddress);
+        console.log("did", req.body.did);
         // TODO: check for address owner of did
         // TODO: retire (call aquarius?)
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-    res.send({status: "success"})
+    res.send({status: "success"});
   }
 
   /**

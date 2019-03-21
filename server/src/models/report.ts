@@ -1,5 +1,5 @@
-import mongoose, { Schema } from 'mongoose'
-import timestamps from 'mongoose-timestamp'
+import mongoose, { Schema } from "mongoose";
+import timestamps from "mongoose-timestamp";
 
 export const ReportSchema = new Schema(
     {
@@ -16,13 +16,13 @@ export const ReportSchema = new Schema(
             required: true
         }
     }
-)
+);
 
-ReportSchema.plugin(timestamps)
+ReportSchema.plugin(timestamps);
 ReportSchema.index({
     did: 1,
     account: 1,
     createdAt: 1
-})
+});
 
-export default mongoose.model('Report', ReportSchema)
+export default mongoose.model("Report", ReportSchema);

@@ -45,10 +45,10 @@ mongoose
         useFindAndModify: false
     })
     .catch(error => {
-        log("Error connecting to database")
-        log(error)
-        process.exit(1)
-    })
+        log("Error connecting to database");
+        log(error);
+        process.exit(1);
+    });
 // listen
 const server = app.listen(config.app.port);
 server.on("listening", onListening);

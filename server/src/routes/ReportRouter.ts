@@ -17,15 +17,15 @@ export class ReportRouter {
         return res.send({ status: "error", message: "Missing did or signature" });
     }
     const did = req.body.did;
-    const providers = await getProviders()
+    const providers = await getProviders();
     try {
         const account = await providers.web3.eth.personal.ecRecover(`You are reporting ${did}`, req.body.signature);
         const report = new Report({ did, account });
-        await report.save()
-        return res.send({status: "success"})
+        await report.save();
+        return res.send({status: "success"});
     } catch (error) {
-        console.log(error)
-        return res.send({status: "failed"})
+        console.log(error);
+        return res.send({status: "failed"});
     }
   }
 
