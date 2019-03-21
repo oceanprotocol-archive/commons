@@ -31,29 +31,9 @@ export default class Details extends Component<DetailsProps, DetailsState> {
     private purchaseAsset = async (ddo: any) => {
         try {
             const account = await this.context.ocean.getAccounts()
-            const service = ddo.findServiceByType('Access')
-            const serviceAgreementSignatureResult = await this.context.ocean.signServiceAgreement(
-                ddo.id,
-                service.serviceDefinitionId,
-                account[0]
-            )
-            await this.context.ocean.initializeServiceAgreement(
-                ddo.id,
-                service.serviceDefinitionId,
-                serviceAgreementSignatureResult.agreementId,
-                serviceAgreementSignatureResult.signature,
-                (files: any) => {
-                    Logger.log('downloading files', files)
-                    files.forEach((file: any) => {
-                        const parsedUrl: any = queryString.parseUrl(file)
-                        setTimeout(() => {
-                            // eslint-disable-next-line
-                            window.open(parsedUrl.query.url)
-                        }, 100)
-                    })
-                },
-                account[0]
-            )
+            const accessService = ddo.findServiceByType('Access')
+            const agreementId = await this.context.ocean.assets.order(ddo.id, accessService.serviceDefinitionId, account[0])
+            Logger.log('agreementId', agreementId)
         } catch (e) {
             Logger.log('error', e)
         }
