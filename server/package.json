@@ -26,6 +26,8 @@
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
     "lusca": "^1.6.1",
+    "mongoose": "^5.4.19",
+    "mongoose-timestamp": "^0.6.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
     "request": "^2.88.0",

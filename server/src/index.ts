@@ -1,6 +1,7 @@
 import debug from "debug";
 import express from "express";
 import compression from "compression";
+import mongoose from "mongoose";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 
@@ -36,6 +37,18 @@ app.use("/api/v1/retire", Retire);
 app.use((req, res, next) => {
     res.status(404).send();
 });
+// mongo
+mongoose
+    .connect(config.app.database, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+    })
+    .catch(error => {
+        log("Error connecting to database")
+        log(error)
+        process.exit(1)
+    })
 // listen
 const server = app.listen(config.app.port);
 server.on("listening", onListening);

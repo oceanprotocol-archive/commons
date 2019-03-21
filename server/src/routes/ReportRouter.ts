@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import Report from "../models/report";
 import { getProviders } from "../utils";
 
 export class ReportRouter {
@@ -15,15 +16,17 @@ export class ReportRouter {
     if (!req.body.did || !req.body.signature) {
         return res.send({ status: "error", message: "Missing did or signature" });
     }
+    const did = req.body.did;
     const providers = await getProviders()
     try {
-        const userAddress = await providers.web3.eth.personal.ecRecover(`You are reporting ${req.body.did}`, req.body.signature);
-        console.log('address', userAddress)
-        // TODO: save report
+        const account = await providers.web3.eth.personal.ecRecover(`You are reporting ${did}`, req.body.signature);
+        const report = new Report({ did, account });
+        await report.save()
+        return res.send({status: "success"})
     } catch (error) {
         console.log(error)
+        return res.send({status: "failed"})
     }
-    res.send({status: "success"})
   }
 
   /**

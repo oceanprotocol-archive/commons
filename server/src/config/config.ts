@@ -1,3 +1,5 @@
+import { MetaDataBase } from "@oceanprotocol/squid";
+
 module.exports = {
     app: {
       port: 4000,
@@ -22,6 +24,7 @@ module.exports = {
       threshold: 0,
       password: 'node0',
       address: '0x00bd138abd70e2f00903268f3db08f2d25677c9e',
-      verbose: true
+      verbose: true,
+      database: 'mongodb://localhost/commons'
     }
   };
