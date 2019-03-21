@@ -32,7 +32,11 @@ export default class Details extends Component<DetailsProps, DetailsState> {
         try {
             const account = await this.context.ocean.getAccounts()
             const accessService = ddo.findServiceByType('Access')
-            const agreementId = await this.context.ocean.assets.order(ddo.id, accessService.serviceDefinitionId, account[0])
+            const agreementId = await this.context.ocean.assets.order(
+                ddo.id,
+                accessService.serviceDefinitionId,
+                account[0]
+            )
             Logger.log('agreementId', agreementId)
         } catch (e) {
             Logger.log('error', e)
