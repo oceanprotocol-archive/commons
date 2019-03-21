@@ -9,7 +9,7 @@
     "build": "npm run build-ts && npm run tslint",
     "watch": "npm run watch-ts",
     "serve": "node dist/index.js",
-    "test": "jest --coverage",
+    "test": "jest --coverage --forceExit",
     "watch-test": "npm run test --watchAll",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
