@@ -1,7 +1,5 @@
 import { Router, Request, Response } from "express";
-import Web3 from "web3";
-
-const config = require("../config/config");
+import { getProviders } from "../utils";
 
 export class ReportRouter {
   router: Router;
@@ -15,13 +13,13 @@ export class ReportRouter {
 
   public async reportDid(req: Request, res: Response) {
     if (!req.body.did || !req.body.signature) {
-        return res.send({ status: "error", message: "Missing url or signature" });
+        return res.send({ status: "error", message: "Missing did or signature" });
     }
-    const web3 = new Web3(config.app.node)
+    const providers = await getProviders()
     try {
-        const userAddress = await web3.eth.personal.ecRecover(`You are reporting ${req.body.did}`, req.body.signature);
+        const userAddress = await providers.web3.eth.personal.ecRecover(`You are reporting ${req.body.did}`, req.body.signature);
         console.log('address', userAddress)
-        // report
+        // TODO: save report
     } catch (error) {
         console.log(error)
     }

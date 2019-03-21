@@ -1,7 +1,5 @@
 import { Router, Request, Response } from "express";
-import Web3 from "web3";
-
-const config = require("../config/config");
+import { getProviders } from "../utils";
 
 export class SignalingRouter {
   router: Router;
@@ -17,16 +15,24 @@ export class SignalingRouter {
     if (!req.body.did || !req.body.signature || !req.body.signal) {
         return res.send({ status: "error", message: "Missing did, signalling or signature" });
     }
-    const web3 = new Web3(config.app.node)
+    const providers = await getProviders()
     try {
-        const userAddress = await web3.eth.personal.ecRecover(`You are signalling ${req.body.did}`, req.body.signature);
+        const userAddress = await providers.web3.eth.personal.ecRecover(`You are signalling ${req.body.did}`, req.body.signature);
         console.log('address', userAddress)
         console.log('signalling', req.body.signal)
         console.log('did', req.body.did)
-        // save signal
+        // TODO: save signal
     } catch (error) {
         console.log(error)
     }
+    res.send({status: "success"})
+  }
+
+  public async getSignalingDid(req: Request, res: Response) {
+    if (!req.body.did) {
+        return res.send({ status: "error", message: "Missing did" });
+    }
+    // TODO: get signaling
     res.send({status: "success"})
   }
 
