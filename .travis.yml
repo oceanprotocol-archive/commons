@@ -5,7 +5,7 @@ node_js:
 services:
   - mongodb
 
-script: ".travis.sh"
+script: "./.travis.sh"
 
 notifications:
   email: false
