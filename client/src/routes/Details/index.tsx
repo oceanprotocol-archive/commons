@@ -6,6 +6,7 @@ import Spinner from '../../components/atoms/Spinner'
 import { User } from '../../context/User'
 import AssetDetails from './AssetDetails'
 import stylesApp from '../../App.module.scss'
+import { serviceHost, servicePort, serviceScheme } from '../../config'
 
 interface DetailsState {
     ddo: any
@@ -59,6 +60,37 @@ export default class Details extends Component<DetailsProps, DetailsState> {
         }
     }
 
+    private reportAsset = async (ddo: any) => {
+        try {
+            const account = await this.context.account
+            const signature = await this.context.web3.eth.personal.sign(`You are reporting ${ddo.id}`, account, null)
+
+            try {
+                const response = await fetch(
+                    `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/report`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify({ did: ddo.id  , signature }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
+                const res = await response.json()
+                console.log(res)
+            } catch (error) {
+                // error
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    private signalAsset = async (ddo: any) => {
+
+    }
+
     public render() {
         const { metadata, ddo } = this.state
 
@@ -71,6 +103,8 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                         metadata={metadata}
                         ddo={ddo}
                         purchaseAsset={this.purchaseAsset}
+                        signalAsset={this.signalAsset}
+                        reportAsset={this.reportAsset}
                     />
                 ) : (
                     <div className={stylesApp.loader}>

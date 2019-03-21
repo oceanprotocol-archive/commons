@@ -6,6 +6,9 @@ import bodyParser from "body-parser";
 
 // routes
 import UrlCheckRouter from "./routes/UrlCheckRouter";
+import Report from "./routes/ReportRouter";
+import Signaling from "./routes/SignalingRouter";
+import Retire from "./routes/RetireRouter";
 
 // config
 const config = require("./config/config");
@@ -26,6 +29,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
 // routes
 app.use("/api/v1/urlcheck", UrlCheckRouter);
+app.use("/api/v1/report", Report);
+app.use("/api/v1/signaling", Signaling);
+app.use("/api/v1/retire", Retire);
 /// catch 404
 app.use((req, res, next) => {
     res.status(404).send();
