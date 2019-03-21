@@ -14,7 +14,13 @@ interface AssetDetailsProps {
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
     public render() {
-        const { metadata, ddo, purchaseAsset, reportAsset, signalAsset } = this.props
+        const {
+            metadata,
+            ddo,
+            purchaseAsset,
+            reportAsset,
+            signalAsset
+        } = this.props
         const { base } = metadata
 
         return (
@@ -86,13 +92,9 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     Download asset
                 </Button>
 
-                <Button onClick={() => reportAsset(ddo)}>
-                    Report asset
-                </Button>
+                <Button onClick={() => reportAsset(ddo)}>Report asset</Button>
 
-                <Button onClick={() => signalAsset(ddo)}>
-                    Like asset
-                </Button>
+                <Button onClick={() => signalAsset(ddo)}>Like asset</Button>
 
                 <pre>
                     <code>{JSON.stringify(metadata, null, 2)}</code>

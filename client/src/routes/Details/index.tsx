@@ -63,33 +63,34 @@ export default class Details extends Component<DetailsProps, DetailsState> {
     private reportAsset = async (ddo: any) => {
         try {
             const account = await this.context.account
-            const signature = await this.context.web3.eth.personal.sign(`You are reporting ${ddo.id}`, account, null)
+            const signature = await this.context.web3.eth.personal.sign(
+                `You are reporting ${ddo.id}`,
+                account,
+                null
+            )
 
             try {
                 const response = await fetch(
                     `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/report`,
                     {
                         method: 'POST',
-                        body: JSON.stringify({ did: ddo.id  , signature }),
+                        body: JSON.stringify({ did: ddo.id, signature }),
                         headers: {
                             'Content-Type': 'application/json'
                         }
                     }
                 )
                 const res = await response.json()
-                console.log(res)
+                // console.log(res)
             } catch (error) {
                 // error
             }
-
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
 
-    private signalAsset = async (ddo: any) => {
-
-    }
+    private signalAsset = async (ddo: any) => {}
 
     public render() {
         const { metadata, ddo } = this.state
