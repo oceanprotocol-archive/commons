@@ -1,5 +1,6 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { User } from '../../context/User'
 import Button from '../../components/atoms/Button'
 import Moment from 'react-moment'
 import styles from './AssetDetails.module.scss'
@@ -13,7 +14,7 @@ interface AssetDetailsProps {
     retireAsset: any
 }
 
-export default class AssetDetails extends PureComponent<AssetDetailsProps> {
+export default class AssetDetails extends Component<AssetDetailsProps> {
     public render() {
         const {
             metadata,
@@ -23,6 +24,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
             signalAsset,
             retireAsset
         } = this.props
+        const assetOwner = this.context.account === ddo.proof.creator
         const { base } = metadata
 
         return (
@@ -98,7 +100,9 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
 
                 <Button onClick={() => signalAsset(ddo)}>Like asset</Button>
 
-                <Button onClick={() => retireAsset(ddo)}>Retire asset</Button>
+                {assetOwner ? (
+                        <Button onClick={() => retireAsset(ddo)}>Retire asset</Button>
+                    ) : null}
 
                 <pre>
                     <code>{JSON.stringify(metadata, null, 2)}</code>
@@ -107,3 +111,5 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
         )
     }
 }
+
+AssetDetails.contextType = User
