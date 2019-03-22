@@ -4,6 +4,7 @@ import Route from '../components/templates/Route'
 import { User } from '../context/User'
 import Asset from '../components/molecules/Asset'
 import styles from './Search.module.scss'
+import { Logger } from '@oceanprotocol/squid';
 
 interface SearchState {
     results: any[]
@@ -26,8 +27,8 @@ export default class Search extends Component<SearchProps, SearchState> {
     public renderResults = () =>
         this.state.results.length ? (
             <div className={styles.results}>
-                {this.state.results.map(asset => (
-                    <Asset key={asset} asset={asset} />
+                {this.state.results.map((asset: any) => (
+                    <Asset key={asset.id} asset={asset} />
                 ))}
             </div>
         ) : (
