@@ -41,9 +41,12 @@ export default class Invoices extends Component<{}, InvoicesState> {
     public renderResults = () =>
         this.state.results.length ? (
             <div className={styles.results}>
-                {this.state.results.map((asset, index) => (
-                    <Asset key={index} asset={asset} />
-                ))}
+                {this.state.results
+                    .filter(asset => !!asset)
+                    .map((asset, index) => (
+                        <Asset key={index} asset={asset} />
+                    ))
+                }
             </div>
         ) : (
             <div>No invoices yet</div>
