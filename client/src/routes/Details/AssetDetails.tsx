@@ -10,6 +10,7 @@ interface AssetDetailsProps {
     purchaseAsset: any
     reportAsset: any
     signalAsset: any
+    retireAsset: any
 }
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
@@ -19,7 +20,8 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
             ddo,
             purchaseAsset,
             reportAsset,
-            signalAsset
+            signalAsset,
+            retireAsset
         } = this.props
         const { base } = metadata
 
@@ -95,6 +97,8 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                 <Button onClick={() => reportAsset(ddo)}>Report asset</Button>
 
                 <Button onClick={() => signalAsset(ddo)}>Like asset</Button>
+
+                <Button onClick={() => retireAsset(ddo)}>Retire asset</Button>
 
                 <pre>
                     <code>{JSON.stringify(metadata, null, 2)}</code>

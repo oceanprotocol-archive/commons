@@ -17,15 +17,26 @@ export class RetireRouter {
     }
     const providers = await getProviders();
     try {
-        const userAddress = await providers.web3.eth.personal.ecRecover(`You are retiering ${req.body.did}`, req.body.signature);
-        console.log("address", userAddress);
-        console.log("did", req.body.did);
-        // TODO: check for address owner of did
-        // TODO: retire (call aquarius?)
+        const userAccount = await providers.web3.eth.personal.ecRecover(`You are retiring ${req.body.did}`, req.body.signature);
+        const events = await providers.ocean.keeper.didRegistry.contract.getPastEvents(
+            "DIDAttributeRegistered", {
+                filter: { 
+                    _owner: userAccount, 
+                    _did: req.body.did.replace("did:op:", "0x")
+                },
+                fromBlock: 0,
+                toBlock: "latest"
+            }
+        )
+        if (events.length > 0) {
+            // TODO: retire asset in Aquarius
+            res.send({status: "success"});
+        } else {
+            return res.send({ status: "error", message: "Not owner of asset" });
+        }
     } catch (error) {
-        console.log(error);
+        return res.send({ status: "error" });
     }
-    res.send({status: "success"});
   }
 
   /**

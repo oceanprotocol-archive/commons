@@ -10,33 +10,31 @@ export default class AssetsUser extends PureComponent {
     public state = { results: [], isLoading: true }
 
     public componentDidMount() {
-        this.searchOcean()
+        this.getUserAssets()
     }
 
-    private async searchOcean() {
-        this.context.ocean.keeper.didRegistry.contract.getPastEvents(
-            'DIDAttributeRegistered',
-            {
-                filter: { _owner: this.context.account },
-                fromBlock: 0,
-                toBlock: 'latest'
-            },
-            async (error: any, events: any) => {
-                if (error) {
-                    Logger.log('error retrieving', error)
-                    this.setState({ isLoading: false })
-                } else {
-                    const results = []
-                    for (const event of events) {
-                        const ddo = await this.context.ocean.resolveDID(
-                            `did:op:${event.returnValues._did.substring(2)}`
-                        )
-                        results.push(ddo)
-                    }
-                    this.setState({ results, isLoading: false })
+    private async getUserAssets() {
+        try {
+            const userEvents = await this.context.ocean.keeper.didRegistry.contract.getPastEvents(
+                'DIDAttributeRegistered',
+                {
+                    filter: { _owner: this.context.account },
+                    fromBlock: 0,
+                    toBlock: 'latest'
                 }
+            )
+            const results = []
+            for (const event of userEvents) {
+                const ddo = await this.context.ocean.resolveDID(
+                    `did:op:${event.returnValues._did.substring(2)}`
+                )
+                results.push(ddo)
             }
-        )
+            this.setState({ results, isLoading: false })
+        } catch (error) {
+            Logger.log('Error getting user assets:', error)
+            this.setState({ isLoading: false })
+        }
     }
 
     public render() {
