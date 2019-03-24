@@ -1,19 +1,15 @@
 {
-  "name": "backend",
+  "name": "commons-marketplace-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "npm run serve",
+    "start": "node dist/index.js",
     "start-watch": "nodemon",
-    "build": "npm run build-ts && npm run tslint",
-    "watch": "npm run watch-ts",
-    "serve": "node dist/index.js",
+    "build": "tsc",
+    "watch": "tsc -w",
     "test": "jest --coverage",
-    "watch-test": "npm run test --watchAll",
-    "build-ts": "tsc",
-    "watch-ts": "tsc -w",
-    "tslint": "tslint -c tslint.json -p tsconfig.json"
+    "watch-test": "npm run test --watchAll"
   },
   "author": "",
   "license": "ISC",
@@ -47,9 +43,7 @@
     "nodemon": "^1.18.10",
     "supertest": "^3.4.2",
     "ts-jest": "^24.0.0",
-    "ts-node": "^8.0.2",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.3"
+    "ts-node": "^8.0.2"
   },
   "jest": {
     "preset": "ts-jest"

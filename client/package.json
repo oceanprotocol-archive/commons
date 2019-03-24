@@ -1,19 +1,12 @@
 {
-  "name": "commons-marketplace",
+  "name": "commons-marketplace-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "npm run lint && react-scripts test",
-    "eject": "react-scripts eject",
-    "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
-    "format:css": "prettier-stylelint --write --quiet 'src/**/*.{css,scss}'",
-    "format": "npm run format:js && npm run format:css",
-    "lint:css": "stylelint './src/**/*.{css,scss}'",
-    "lint:js": "eslint --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
-    "lint:fix": "eslint --fix --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
-    "lint": "npm run lint:js && npm run lint:css"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@oceanprotocol/art": "^2.2.0",
@@ -47,21 +40,8 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/react-transition-group": "^2.0.16",
     "@types/web3": "^1.0.18",
-    "@typescript-eslint/eslint-plugin": "^1.4.2",
-    "@typescript-eslint/parser": "^1.4.2",
-    "eslint": "5.12.0",
-    "eslint-config-oceanprotocol": "^1.3.0",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-prettier": "^3.0.1",
     "node-sass": "^4.11.0",
-    "prettier": "^1.16.4",
-    "prettier-stylelint": "^0.4.2",
-    "react-scripts": "^2.1.5",
-    "stylelint": "^9.10.1",
-    "stylelint-config-bigchaindb": "^1.2.1",
-    "stylelint-config-css-modules": "^1.3.0",
-    "stylelint-config-standard": "^18.2.0",
-    "typescript": "^3.3.3333"
+    "react-scripts": "^2.1.5"
   },
   "browserslist": [
     ">0.2%",

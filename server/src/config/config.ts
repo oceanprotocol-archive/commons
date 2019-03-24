@@ -1,5 +1,5 @@
 module.exports = {
     app: {
-      port: 4000
+        port: 4000
     }
-  };
+}

@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-    - "11.10.1"
+  - '11.10.1'
 
-script: "./.travis.sh"
+script:
+  - ./scripts/install.sh
+  - ./scripts/test.sh
 
 notifications:
   email: false
