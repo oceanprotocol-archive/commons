@@ -1,10 +1,10 @@
 language: node_js
-node_js:
-  - '11.10.1'
+node_js: node
 
 script:
   - ./scripts/install.sh
   - ./scripts/test.sh
+  - ./scripts/build.sh
 
 notifications:
   email: false
