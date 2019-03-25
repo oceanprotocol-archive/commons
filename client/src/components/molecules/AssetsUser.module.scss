@@ -1,15 +1,8 @@
 @import '../../styles/variables';
 
 .assetsUser {
-    margin-top: $spacer * 3;
+    margin-top: $spacer;
     margin-bottom: $spacer;
-
-    > div {
-        margin-bottom: $spacer;
-    }
-}
-
-.assets {
 }
 
 .subTitle {
@@ -18,4 +11,9 @@
     border-bottom: 1px solid $brand-grey-lighter;
     padding-bottom: $spacer / 2;
     margin-bottom: 0;
+}
+
+.link {
+    display: block;
+    margin-top: $spacer / 2;
 }

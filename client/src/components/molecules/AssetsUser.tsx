@@ -1,12 +1,15 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
+import { Logger } from '@oceanprotocol/squid'
 import { User } from '../../context/User'
 import Spinner from '../atoms/Spinner'
-import Asset from '../molecules/Asset'
+import Asset from './Asset'
 import styles from './AssetsUser.module.scss'
-import { Logger } from '@oceanprotocol/squid'
 
-export default class AssetsUser extends PureComponent {
+export default class AssetsUser extends PureComponent<
+    { list?: boolean; recent?: boolean },
+    { results: any[]; isLoading: boolean }
+> {
     public state = { results: [], isLoading: true }
 
     public componentDidMount() {
@@ -42,21 +45,33 @@ export default class AssetsUser extends PureComponent {
     public render() {
         return (
             <div className={styles.assetsUser}>
-                <h2 className={styles.subTitle}>Your Data Sets</h2>
+                {this.props.recent && (
+                    <h2 className={styles.subTitle}>Your Latest Data Sets</h2>
+                )}
 
                 {this.state.isLoading ? (
                     <Spinner />
                 ) : this.state.results.length ? (
-                    <div className={styles.assets}>
+                    <>
                         {this.state.results
+                            .slice(0, this.props.recent ? 5 : undefined)
                             .filter(asset => !!asset)
                             .map((asset: any) => (
-                            <Asset key={asset.id} asset={asset} list />
-                        ))}
-                    </div>
+                                <Asset
+                                    list={this.props.list}
+                                    key={asset.id}
+                                    asset={asset}
+                                />
+                            ))}
+                        {this.props.recent && (
+                            <Link className={styles.link} to={'/history'}>
+                                All Data Sets
+                            </Link>
+                        )}
+                    </>
                 ) : (
                     <div>
-                        <p>None yet.</p>
+                        <p>No Data Sets Yet.</p>
                         <Link to="/publish">+ Publish A Data Set</Link>
                     </div>
                 )}

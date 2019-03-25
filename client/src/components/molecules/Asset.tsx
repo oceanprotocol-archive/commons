@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 import styles from './Asset.module.scss'
 
 const AssetLink = ({ asset, list }: { asset: any; list?: boolean }) => {
@@ -10,6 +11,9 @@ const AssetLink = ({ asset, list }: { asset: any; list?: boolean }) => {
         <article className={styles.assetList}>
             <Link to={`/asset/${asset.id}`}>
                 <h1>{base.name}</h1>
+                <div className={styles.date} title={base.dateCreated}>
+                    {moment(base.dateCreated, 'YYYYMMDD').fromNow()}
+                </div>
             </Link>
         </article>
     ) : (
