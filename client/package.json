@@ -1,7 +1,8 @@
 {
   "name": "commons-marketplace-client",
+  "description": "Ocean Protocol marketplace frontend to explore, download, and publish open data sets.",
   "version": "0.1.0",
-  "private": true,
+  "license": "Apache-2.0",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts --max_old_space_size=4096 build",
@@ -41,6 +42,10 @@
     "node-sass": "^4.11.0",
     "react-scripts": "^2.1.8",
     "typescript": "^3.3.4000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oceanprotocol/commons-marketplace"
   },
   "browserslist": [
     ">0.2%",

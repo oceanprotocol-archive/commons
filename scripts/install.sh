@@ -5,7 +5,7 @@ components="server client"
 
 for component in $components
 do
-    echo "Installing dependencies: $component"
+    echo "\n\nInstalling dependencies: $component\n"
     cd $component
     npm install
     cd ..
