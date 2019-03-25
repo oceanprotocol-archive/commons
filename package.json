@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "install": "./scripts/install.sh",
-    "start": "cd client && npm run start",
+    "start": "concurrently \"cd client && npm run start\" \"cd server && npm run start-watch\"",
     "build": "./scripts/build.sh",
     "test": "npm run lint && scripts/test.sh",
     "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
+    "concurrently": "^4.1.0",
     "eslint": "5.12.0",
     "eslint-config-oceanprotocol": "^1.3.0",
     "eslint-config-prettier": "^4.1.0",
