@@ -21,7 +21,7 @@ export default class Details extends Component<DetailsProps, DetailsState> {
     public state = { ddo: {}, metadata: { base: { name: '' } } }
 
     public async componentDidMount() {
-        const ddo = await this.context.ocean.resolveDID(
+        const ddo = await this.context.ocean.assets.resolve(
             this.props.match.params.did
         )
         const { metadata } = ddo.findServiceByType('Metadata')
@@ -30,7 +30,7 @@ export default class Details extends Component<DetailsProps, DetailsState> {
 
     private purchaseAsset = async (ddo: any) => {
         try {
-            const account = await this.context.ocean.getAccounts()
+            const account = await this.context.ocean.accounts.list()
             const accessService = ddo.findServiceByType('Access')
             const agreementId = await this.context.ocean.assets.order(
                 ddo.id,

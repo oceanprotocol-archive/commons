@@ -161,7 +161,7 @@ class App extends Component<{}, AppState> {
                 ocean
             })
             // TODO: squid-js balance retrieval fix
-            const accounts = await ocean.getAccounts()
+            const accounts = await ocean.accounts.list()
             const balance = await accounts[0].getBalance()
             this.setState({ balance })
             // TODO: squid-js expose keeper for getNetworkName

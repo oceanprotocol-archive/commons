@@ -28,7 +28,7 @@ export default class AssetsUser extends PureComponent {
                 } else {
                     const results = []
                     for (const event of events) {
-                        const ddo = await this.context.ocean.resolveDID(
+                        const ddo = await this.context.ocean.assets.resolve(
                             `did:op:${event.returnValues._did.substring(2)}`
                         )
                         results.push(ddo)
