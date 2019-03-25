@@ -8,9 +8,9 @@
     "build": "./scripts/build.sh",
     "test": "npm run lint && scripts/test.sh",
     "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
-    "format:css": "prettier-stylelint --write --quiet '**/*.{css,scss}'",
+    "format:css": "prettier-stylelint --ignore-path .gitignore --write --quiet '**/*.{css,scss}'",
     "format": "npm run format:js && npm run format:css",
-    "lint:css": "stylelint './**/*.{css,scss}'",
+    "lint:css": "stylelint --ignore-path .gitignore './**/*.{css,scss}'",
     "lint:js": "eslint --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint": "npm run lint:js && npm run lint:css"

@@ -27,7 +27,7 @@ npm start
 ```
 
 This will run client and server in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser. The server is
+Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
 The page will reload if you make edits to files in either `./client` or `./server`.
 

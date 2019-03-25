@@ -2,12 +2,12 @@ import { Router, Request, Response, NextFunction } from 'express'
 import request from 'request'
 
 export class UrlCheckRouter {
-    router: Router
+    public router: Router
 
     /**
      * Initialize the UrlCheckRouter
      */
-    constructor() {
+    public constructor() {
         this.router = Router()
     }
 
@@ -25,22 +25,28 @@ export class UrlCheckRouter {
                 if (response.statusCode.toString().startsWith('2')) {
                     const result: any = {}
                     result.found = true
+
                     if (response.headers['content-length']) {
                         result.contentLength =
                             response.headers['content-length']
                     }
+
                     if (response.headers['content-type']) {
                         const typeAndCharset = response.headers[
                             'content-type'
                         ].split(';')
-                        result.contentType = typeAndCharset[0]
+
+                        result.contentType = typeAndCharset[0] // eslint-disable-line prefer-destructuring
+
                         if (typeAndCharset[1]) {
+                            /* eslint-disable prefer-destructuring */
                             result.contentCharset = typeAndCharset[1].split(
                                 '='
                             )[1]
+                            /* eslint-enable prefer-destructuring */
                         }
                     }
-                    return res.send({ status: 'success', result: result })
+                    return res.send({ status: 'success', result })
                 }
                 return res.send({ status: 'error', message: error })
             }
@@ -51,7 +57,7 @@ export class UrlCheckRouter {
      * Take each handler, and attach to one of the Express.Router's
      * endpoints.
      */
-    init() {
+    public init() {
         this.router.post('/', this.checkUrl)
     }
 }
