@@ -52,8 +52,7 @@ export default class AssetsUser extends PureComponent {
                             .filter(asset => !!asset)
                             .map((asset: any) => (
                                 <Asset key={asset.id} asset={asset} />
-                            ))
-                        }
+                            ))}
                     </div>
                 ) : (
                     <div>

@@ -273,7 +273,10 @@ class Publish extends Component<{}, PublishState> {
         }
 
         try {
-            const asset = await this.context.ocean.assets.create(newAsset, account[0])
+            const asset = await this.context.ocean.assets.create(
+                newAsset,
+                account[0]
+            )
             this.setState({
                 publishedDid: asset.id,
                 isPublished: true

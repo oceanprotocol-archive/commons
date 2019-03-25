@@ -45,8 +45,7 @@ export default class Invoices extends Component<{}, InvoicesState> {
                     .filter(asset => !!asset)
                     .map((asset, index) => (
                         <Asset key={index} asset={asset} />
-                    ))
-                }
+                    ))}
             </div>
         ) : (
             <div>No invoices yet</div>
