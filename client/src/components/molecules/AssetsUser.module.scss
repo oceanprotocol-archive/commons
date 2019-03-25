@@ -5,25 +5,11 @@
     margin-bottom: $spacer;
 
     > div {
-        text-align: center;
-        margin-top: $spacer;
         margin-bottom: $spacer;
     }
 }
 
 .assets {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: $spacer;
-    max-width: 100%;
-
-    @media (min-width: $break-point--small) {
-        grid-template-columns: 2fr 2fr;
-    }
-
-    @media (min-width: $break-point--medium) {
-        grid-template-columns: 2fr 2fr 2fr;
-    }
 }
 
 .subTitle {
@@ -31,4 +17,5 @@
     color: $brand-grey-light;
     border-bottom: 1px solid $brand-grey-lighter;
     padding-bottom: $spacer / 2;
+    margin-bottom: 0;
 }

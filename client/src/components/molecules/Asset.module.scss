@@ -29,6 +29,28 @@
     }
 }
 
+.assetList {
+    > a {
+        display: block;
+        color: $brand-grey-dark;
+        border-bottom: 1px solid $brand-grey-lighter;
+        padding-top: $spacer / 2;
+        padding-bottom: $spacer / 2;
+
+        &:hover,
+        &:focus {
+            color: $brand-pink;
+            transform: none;
+        }
+    }
+
+    h1 {
+        font-size: $font-size-base;
+        color: inherit;
+        margin: 0;
+    }
+}
+
 .assetFooter {
     border-top: 1px solid $brand-grey-lighter;
     padding-top: $spacer / 2;

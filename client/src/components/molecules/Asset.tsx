@@ -2,11 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Asset.module.scss'
 
-const AssetLink = ({ asset }: { asset: any }) => {
+const AssetLink = ({ asset, list }: { asset: any; list?: boolean }) => {
     const { metadata } = asset.findServiceByType('Metadata')
     const { base } = metadata
 
-    return (
+    return list ? (
+        <article className={styles.assetList}>
+            <Link to={`/asset/${asset.id}`}>
+                <h1>{base.name}</h1>
+            </Link>
+        </article>
+    ) : (
         <article className={styles.asset}>
             <Link to={`/asset/${asset.id}`}>
                 <h1>{base.name}</h1>
