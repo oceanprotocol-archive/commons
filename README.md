@@ -2,40 +2,44 @@
 
 <h1 align="center">commons-marketplace</h1>
 
-> Marketplace front-end to explore, download, and publish open data sets.
+> Marketplace front-end and backend server to explore, download, and publish open data sets.
 
 [![Build Status](https://travis-ci.com/oceanprotocol/commons-marketplace.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons-marketplace)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-7b1173.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
 
-- [Development](#development)
+- [Get Started](#get-started)
+- [Production](#production)
 - [Testing](#testing)
 - [Code Style](#code-style)
 - [License](#license)
 
 <img alt="screen shot 2019-02-08 at 16 53 57" src="https://user-images.githubusercontent.com/90316/52489283-27080e80-2bc2-11e9-8ec0-508c21eb86f7.png">
 
-## Development
+## Get Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To spin up both, the client and the server in a watch mode for local development, execute:
 
 ```bash
+npm install
 npm start
 ```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This will run client and server in development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+The page will reload if you make edits to files in either `./client` or `./server`.
+
+## Production
+
+To create a production build of both, the client and the server:
 
 ```bash
 npm run build
 ```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the client for production to the `./client/build` folder, and the server into the `./server/dist` folder.
 
 ## Testing
 

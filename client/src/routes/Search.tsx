@@ -4,7 +4,6 @@ import Route from '../components/templates/Route'
 import { User } from '../context/User'
 import Asset from '../components/molecules/Asset'
 import styles from './Search.module.scss'
-import { Logger } from '@oceanprotocol/squid'
 
 interface SearchState {
     results: any[]

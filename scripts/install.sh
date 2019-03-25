@@ -1,12 +1,12 @@
 #/usr/bin/env/sh
 set -e
+
 components="server client"
 
 for component in $components
 do
-    echo "Testing: $component"
+    echo "\n\nInstalling dependencies: $component\n"
     cd $component
     npm install
-    npm test
     cd ..
 done
