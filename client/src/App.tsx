@@ -160,11 +160,10 @@ class App extends Component<{}, AppState> {
                 isLoading: false,
                 ocean
             })
-            // TODO: squid-js balance retrieval fix
             const accounts = await ocean.accounts.list()
             const balance = await accounts[0].getBalance()
-            this.setState({ balance })
-            // TODO: squid-js expose keeper for getNetworkName
+            const network = await ocean.keeper.getNetworkName()
+            this.setState({ balance, network })
         } catch (e) {
             Logger.log('ocean/balance error', e)
             this.setState({

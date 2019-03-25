@@ -50,8 +50,8 @@ export default class AssetsUser extends PureComponent {
                     <div className={styles.assets}>
                         {this.state.results
                             .filter(asset => !!asset)
-                            .map((asset, index) => (
-                                <Asset key={index} asset={asset} />
+                            .map((asset: any) => (
+                                <Asset key={asset.id} asset={asset} />
                             ))
                         }
                     </div>
