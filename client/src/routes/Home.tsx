@@ -3,7 +3,7 @@ import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
 import Route from '../components/templates/Route'
-import AssetsUser from '../components/molecules/AssetsUser'
+import AssetsUser from '../components/organisms/AssetsUser'
 import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'

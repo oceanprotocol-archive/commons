@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Logger } from '@oceanprotocol/squid'
 import { User } from '../../context/User'
 import Spinner from '../atoms/Spinner'
-import Asset from './Asset'
+import Asset from '../molecules/Asset'
 import styles from './AssetsUser.module.scss'
 
 export default class AssetsUser extends PureComponent<
