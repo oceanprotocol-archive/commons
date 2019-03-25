@@ -3,7 +3,6 @@ import Route from '../components/templates/Route'
 import { User } from '../context/User'
 import Asset from '../components/molecules/Asset'
 import { Logger } from '@oceanprotocol/squid'
-import styles from './Search.module.scss'
 
 interface InvoicesState {
     results: any[]
@@ -40,23 +39,17 @@ export default class Invoices extends Component<{}, InvoicesState> {
 
     public renderResults = () =>
         this.state.results.length ? (
-            <div className={styles.results}>
-                {this.state.results
-                    .filter(asset => !!asset)
-                    .map((asset, index) => (
-                        <Asset key={index} asset={asset} />
-                    ))}
-            </div>
+            this.state.results
+                .filter(asset => !!asset)
+                .map((asset, index) => (
+                    <Asset key={index} asset={asset} list />
+            ))
         ) : (
             <div>No invoices yet</div>
         )
 
     public render() {
-        return (
-            <Route title="Your invoices" wide>
-                {this.renderResults()}
-            </Route>
-        )
+        return <Route title="History">{this.renderResults()}</Route>
     }
 }
 
