@@ -48,9 +48,12 @@ export default class AssetsUser extends PureComponent {
                     <Spinner />
                 ) : this.state.results.length ? (
                     <div className={styles.assets}>
-                        {this.state.results.map((asset, index) => (
-                            <Asset key={index} asset={asset} />
-                        ))}
+                        {this.state.results
+                            .filter(asset => !!asset)
+                            .map((asset, index) => (
+                                <Asset key={index} asset={asset} />
+                            ))
+                        }
                     </div>
                 ) : (
                     <div>
