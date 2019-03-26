@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
-import queryString from 'query-string'
 import { Logger } from '@oceanprotocol/squid'
 import Button from '../../components/atoms/Button'
-import styles from './AssetDetails.module.scss'
+import Spinner from '../../components/atoms/Spinner'
+import styles from './AssetFilesDetails.module.scss'
 
 interface AssetFilesDetailsProps {
     ocean: any
@@ -13,9 +13,10 @@ interface AssetFilesDetailsProps {
 export default class AssetFilesDetails extends PureComponent<
     AssetFilesDetailsProps
 > {
-    public state = { decryptedFiles: [] }
+    public state = { decryptedFiles: [], isLoading: false, error: null }
 
     private purchaseAsset = async (ddo: any) => {
+        this.setState({ isLoading: true, error: null })
         try {
             const account = await this.props.ocean.getAccounts()
             const service = ddo.findServiceByType('Access')
@@ -32,67 +33,60 @@ export default class AssetFilesDetails extends PureComponent<
                 (files: any) => this.setState({ decryptedFiles: files }),
                 account[0]
             )
-        } catch (e) {
-            Logger.log('error', e)
+
+            this.setState({ isLoading: false })
+        } catch (error) {
+            Logger.log('error', error)
+            this.setState({ isLoading: false, error: error.message })
         }
     }
 
     public render() {
         const { files, ddo } = this.props
-        const filesArray = this.state.decryptedFiles
-            ? this.state.decryptedFiles
-            : files
+        const filesArray =
+            this.state.decryptedFiles.length > 0
+                ? this.state.decryptedFiles
+                : files
 
         return (
             <>
-                {filesArray.length > 0 &&
+                {this.state.decryptedFiles.length > 0 ? (
                     filesArray.forEach(file => (
                         <>
-                            <h2>{file.name}</h2>
                             <ul>
-                                <li>
-                                    <span className={styles.metaLabel}>
-                                        <strong>Content Type</strong>
-                                    </span>
-                                    <span className={styles.metaValue}>
-                                        {file.contentType}
-                                    </span>
-                                </li>
-                                <li>
-                                    <span className={styles.metaLabel}>
-                                        <strong>Size</strong>
-                                    </span>
-                                    <span className={styles.metaValue}>
-                                        {file.contentLength}
-                                    </span>
-                                </li>
-                                <li>
-                                    <span className={styles.metaLabel}>
-                                        <strong>File Encoding</strong>
-                                    </span>
-                                    <span className={styles.metaValue}>
-                                        {file.encoding}
-                                    </span>
-                                </li>
-                                <li>
-                                    <span className={styles.metaLabel}>
-                                        <strong>Compression</strong>
-                                    </span>
-                                    <span className={styles.metaValue}>
-                                        {file.compression}
-                                    </span>
-                                </li>
+                                {/*
+                                    TODO: getting this metadata depends on a change to to OEP-8,
+                                    see: https://github.com/oceanprotocol/OEPs/pull/154
+                                */}
+                                {/* <li>{file.contentType}</li> */}
+                                <li>{file.contentLength}</li>
+                                {/* <li>{file.encoding}</li> */}
+                                {/* <li>{file.compression}</li> */}
                             </ul>
 
                             {file.url && (
                                 <Button href={file.url}>Download asset</Button>
                             )}
                         </>
-                    ))}
-
-                <Button onClick={() => this.purchaseAsset(ddo)}>
-                    Get downloads
-                </Button>
+                    ))
+                ) : this.state.isLoading ? (
+                    <Spinner message="Decrypting files, please sign with your wallet..." />
+                ) : (
+                    <>
+                        <Button
+                            primary
+                            className={styles.buttonMain}
+                            onClick={() => this.purchaseAsset(ddo)}
+                        >
+                            Get asset files
+                        </Button>
+                        {this.state.error && (
+                            <div className={styles.error}>
+                                {this.state.error}
+                            </div>
+                        )}
+                    </>
+                )}
             </>
         )
     }
