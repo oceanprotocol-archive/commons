@@ -17,6 +17,7 @@ export default class AssetsUser extends PureComponent<
     }
 
     private async searchOcean() {
+        if (this.context.account) {
         this.context.ocean.keeper.didRegistry.contract.getPastEvents(
             'DIDAttributeRegistered',
             {
@@ -35,19 +36,25 @@ export default class AssetsUser extends PureComponent<
                             `did:op:${event.returnValues._did.substring(2)}`
                         )
                         results.push(ddo)
+                        }
+                        this.setState({ results, isLoading: false })
                     }
-                    this.setState({ results, isLoading: false })
                 }
-            }
-        )
+            )
+        }
+
+        this.setState({ isLoading: false })
     }
 
     public render() {
         return (
-            <div className={styles.assetsUser}>
-                {this.props.recent && (
-                    <h2 className={styles.subTitle}>Your Latest Data Sets</h2>
-                )}
+            this.context.account && (
+                <div className={styles.assetsUser}>
+                    {this.props.recent && (
+                        <h2 className={styles.subTitle}>
+                            Your Latest Data Sets
+                        </h2>
+                    )}
 
                 {this.state.isLoading ? (
                     <Spinner />
