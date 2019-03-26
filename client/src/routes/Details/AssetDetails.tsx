@@ -5,13 +5,14 @@ import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 
 interface AssetDetailsProps {
+    ocean: any
     metadata: any
     ddo: any
 }
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
     public render() {
-        const { metadata, ddo } = this.props
+        const { ocean, metadata, ddo } = this.props
         const { base } = metadata
 
         return (
@@ -71,6 +72,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                 <AssetFilesDetails
                     files={base.files ? base.files : []}
                     ddo={ddo}
+                    ocean={ocean}
                 />
 
                 <pre>

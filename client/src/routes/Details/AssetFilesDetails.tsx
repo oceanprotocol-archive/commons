@@ -5,37 +5,31 @@ import Button from '../../components/atoms/Button'
 import styles from './AssetDetails.module.scss'
 
 interface AssetFilesDetailsProps {
+    ocean: any
     files: any[]
-    ddo: string
+    ddo: any
 }
 
 export default class AssetFilesDetails extends PureComponent<
     AssetFilesDetailsProps
 > {
+    public state = { decryptedFiles: [] }
+
     private purchaseAsset = async (ddo: any) => {
         try {
-            const account = await this.context.ocean.getAccounts()
+            const account = await this.props.ocean.getAccounts()
             const service = ddo.findServiceByType('Access')
-            const serviceAgreementSignatureResult = await this.context.ocean.signServiceAgreement(
+            const serviceAgreementSignatureResult = await this.props.ocean.signServiceAgreement(
                 ddo.id,
                 service.serviceDefinitionId,
                 account[0]
             )
-            await this.context.ocean.initializeServiceAgreement(
+            await this.props.ocean.initializeServiceAgreement(
                 ddo.id,
                 service.serviceDefinitionId,
                 serviceAgreementSignatureResult.agreementId,
                 serviceAgreementSignatureResult.signature,
-                (files: any) => {
-                    Logger.log('downloading files', files)
-                    files.forEach((file: any) => {
-                        const parsedUrl: any = queryString.parseUrl(file)
-                        // setTimeout(() => {
-                        //     // eslint-disable-next-line
-                        //     window.open(parsedUrl.query.url)
-                        // }, 100)
-                    })
-                },
+                (files: any) => this.setState({ decryptedFiles: files }),
                 account[0]
             )
         } catch (e) {
@@ -45,13 +39,14 @@ export default class AssetFilesDetails extends PureComponent<
 
     public render() {
         const { files, ddo } = this.props
+        const filesArray = this.state.decryptedFiles
+            ? this.state.decryptedFiles
+            : files
 
         return (
             <>
-                {files.forEach(file => {
-                    const parsedUrl: any = queryString.parseUrl(file)
-
-                    return (
+                {filesArray.length > 0 &&
+                    filesArray.forEach(file => (
                         <>
                             <h2>{file.name}</h2>
                             <ul>
@@ -89,12 +84,11 @@ export default class AssetFilesDetails extends PureComponent<
                                 </li>
                             </ul>
 
-                            <Button href={parsedUrl.query.url}>
-                                Download asset
-                            </Button>
+                            {file.url && (
+                                <Button href={file.url}>Download asset</Button>
+                            )}
                         </>
-                    )
-                })}
+                    ))}
 
                 <Button onClick={() => this.purchaseAsset(ddo)}>
                     Get downloads

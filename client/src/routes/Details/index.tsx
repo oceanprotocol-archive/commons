@@ -34,7 +34,11 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                 title={metadata.base ? metadata.base.name : 'Loading Details'}
             >
                 {metadata && metadata.base.name ? (
-                    <AssetDetails metadata={metadata} ddo={ddo} />
+                    <AssetDetails
+                        ocean={this.context.ocean}
+                        metadata={metadata}
+                        ddo={ddo}
+                    />
                 ) : (
                     <div className={stylesApp.loader}>
                         <Spinner message={'Loading asset...'} />
