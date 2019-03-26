@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
     app: {
       port: 4000,
       serviceScheme: "http",
@@ -25,4 +25,6 @@ module.exports = {
       verbose: true,
       database: "mongodb://localhost/commons"
     }
-  };
+}
+
+export default config

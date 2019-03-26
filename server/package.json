@@ -1,22 +1,17 @@
 {
-  "name": "backend",
+  "name": "commons-marketplace-server",
+  "description": "Ocean Protocol marketplace backend.",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "npm run serve",
+    "start": "node dist/index.js",
     "start-watch": "nodemon",
-    "build": "npm run build-ts && npm run tslint",
-    "watch": "npm run watch-ts",
-    "serve": "node dist/index.js",
+    "build": "tsc",
+    "watch": "tsc -w",
     "test": "jest --coverage --forceExit",
-    "watch-test": "npm run test --watchAll",
-    "build-ts": "tsc",
-    "watch-ts": "tsc -w",
-    "tslint": "tslint -c tslint.json -p tsconfig.json"
+    "watch-test": "npm run test --watchAll"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@oceanprotocol/squid": "^0.4.0",
     "body-parser": "^1.18.3",
@@ -52,8 +47,11 @@
     "supertest": "^3.4.2",
     "ts-jest": "^24.0.0",
     "ts-node": "^8.0.2",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.3"
+    "typescript": "^3.3.4000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oceanprotocol/commons-marketplace"
   },
   "jest": {
     "preset": "ts-jest",
