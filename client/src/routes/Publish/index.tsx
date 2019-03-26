@@ -21,7 +21,7 @@ interface PublishState {
     type?: AssetType
     license?: string
     copyrightHolder?: string
-    categories?: string[]
+    categories?: string
     tags?: string[]
     isPublishing?: boolean
     isPublished?: boolean
@@ -43,7 +43,7 @@ class Publish extends Component<{}, PublishState> {
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: [],
+        categories: '',
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
@@ -110,7 +110,7 @@ class Publish extends Component<{}, PublishState> {
             type: 'dataset' as AssetType,
             license: '',
             copyrightHolder: '',
-            categories: [],
+            categories: '',
             isPublishing: false,
             isPublished: false,
             currentStep: 1
@@ -257,7 +257,7 @@ class Publish extends Component<{}, PublishState> {
                 files: this.state.files,
                 price: this.state.price,
                 type: this.state.type,
-                categories: this.state.categories,
+                categories: [this.state.categories],
                 size: '',
                 encoding: '',
                 compression: undefined,
