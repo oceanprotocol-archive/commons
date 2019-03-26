@@ -7,7 +7,7 @@ import Asset from '../molecules/Asset'
 import styles from './AssetsUser.module.scss'
 
 export default class AssetsUser extends PureComponent<
-    { list?: boolean; recent?: boolean },
+    { list?: boolean; recent?: number },
     { results: any[]; isLoading: boolean }
 > {
     public state = { results: [], isLoading: true }
@@ -61,28 +61,34 @@ export default class AssetsUser extends PureComponent<
                 ) : this.state.results.length ? (
                     <>
                         {this.state.results
-                            .slice(0, this.props.recent ? 5 : undefined)
-                            .filter(asset => !!asset)
-                            .map((asset: any) => (
-                                <Asset
-                                    list={this.props.list}
-                                    key={asset.id}
-                                    asset={asset}
-                                />
-                            ))}
-                        {this.props.recent && (
-                            <Link className={styles.link} to={'/history'}>
-                                All Data Sets
-                            </Link>
-                        )}
-                    </>
-                ) : (
-                    <div>
-                        <p>No Data Sets Yet.</p>
-                        <Link to="/publish">+ Publish A Data Set</Link>
-                    </div>
-                )}
-            </div>
+                                .slice(
+                                    0,
+                                    this.props.recent
+                                        ? this.props.recent
+                                        : undefined
+                                )
+                                .filter(asset => !!asset)
+                                .map((asset: any) => (
+                                    <Asset
+                                        list={this.props.list}
+                                        key={asset.id}
+                                        asset={asset}
+                                    />
+                                ))}
+                            {this.props.recent && (
+                                <Link className={styles.link} to={'/history'}>
+                                    All Data Sets
+                                </Link>
+                            )}
+                        </>
+                    ) : (
+                        <div className={styles.empty}>
+                            <p>No Data Sets Yet.</p>
+                            <Link to="/publish">+ Publish A Data Set</Link>
+                        </div>
+                    )}
+                </div>
+            )
         )
     }
 }

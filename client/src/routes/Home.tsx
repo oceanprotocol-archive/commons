@@ -41,7 +41,7 @@ class Home extends Component<HomeProps, HomeState> {
                         }
                     />
                 </Form>
-                <AssetsUser recent list />
+                <AssetsUser recent={5} list />
             </Route>
         )
     }
