@@ -34,9 +34,11 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         </span>
                         {base.categories ? (
                             // TODO: Make this link to search for respective category
-                            <Link to={'search?q='}>{base.categories[0]}</Link>
+                            <Link to={`/search?q=${base.categories[0]}`}>
+                                {base.categories[0]}
+                            </Link>
                         ) : (
-                            <Link to={'search?q='}>Fake Category</Link>
+                            <Link to={'/search?q='}>Fake Category</Link>
                         )}
                         <span>
                             {base.files ? base.files.length : 0} data files
