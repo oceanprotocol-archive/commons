@@ -37,7 +37,9 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                 accessService.serviceDefinitionId,
                 account[0]
             )
-            Logger.log('agreementId', agreementId)
+            const folder = ""
+            const path = await this.context.ocean.assets.consume(agreementId, ddo.id, accessService.serviceDefinitionId, account[0], folder)
+            Logger.log('path', path)
         } catch (e) {
             Logger.log('error', e)
         }
