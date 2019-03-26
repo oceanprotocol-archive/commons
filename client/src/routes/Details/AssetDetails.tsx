@@ -1,18 +1,17 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
-import Button from '../../components/atoms/Button'
 import Moment from 'react-moment'
 import styles from './AssetDetails.module.scss'
+import AssetFilesDetails from './AssetFilesDetails'
 
 interface AssetDetailsProps {
     metadata: any
     ddo: any
-    purchaseAsset: any
 }
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
     public render() {
-        const { metadata, ddo, purchaseAsset } = this.props
+        const { metadata, ddo } = this.props
         const { base } = metadata
 
         return (
@@ -38,8 +37,9 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         ) : (
                             <Link to={'search?q='}>Fake Category</Link>
                         )}
-                        <span>fake json contentType</span>
-                        <span>fake 18.5 MB</span>
+                        <span>
+                            {base.files ? base.files.length : 0} data files
+                        </span>
                     </div>
                 </aside>
 
@@ -60,18 +60,6 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     </li>
                     <li>
                         <span className={styles.metaLabel}>
-                            <strong>File Encoding</strong>
-                        </span>
-                        <span className={styles.metaValue}>fake UTF-8</span>
-                    </li>
-                    <li>
-                        <span className={styles.metaLabel}>
-                            <strong>Compression</strong>
-                        </span>
-                        <span className={styles.metaValue}>fake None</span>
-                    </li>
-                    <li>
-                        <span className={styles.metaLabel}>
                             <strong>DID</strong>
                         </span>
                         <span className={styles.metaValue}>
@@ -80,9 +68,10 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     </li>
                 </ul>
 
-                <Button onClick={() => purchaseAsset(ddo)}>
-                    Download asset
-                </Button>
+                <AssetFilesDetails
+                    files={base.files ? base.files : []}
+                    ddo={ddo}
+                />
 
                 <pre>
                     <code>{JSON.stringify(metadata, null, 2)}</code>

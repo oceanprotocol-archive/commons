@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Logger } from '@oceanprotocol/squid'
-import queryString from 'query-string'
 import Route from '../../components/templates/Route'
 import Spinner from '../../components/atoms/Spinner'
 import { User } from '../../context/User'
@@ -28,23 +26,6 @@ export default class Details extends Component<DetailsProps, DetailsState> {
         this.setState({ ddo, metadata: { base: metadata.base } })
     }
 
-    private purchaseAsset = async (ddo: any) => {
-        try {
-            const account = await this.context.ocean.accounts.list()
-            const accessService = ddo.findServiceByType('Access')
-            const agreementId = await this.context.ocean.assets.order(
-                ddo.id,
-                accessService.serviceDefinitionId,
-                account[0]
-            )
-            const folder = ""
-            const path = await this.context.ocean.assets.consume(agreementId, ddo.id, accessService.serviceDefinitionId, account[0], folder)
-            Logger.log('path', path)
-        } catch (e) {
-            Logger.log('error', e)
-        }
-    }
-
     public render() {
         const { metadata, ddo } = this.state
 
@@ -53,11 +34,7 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                 title={metadata.base ? metadata.base.name : 'Loading Details'}
             >
                 {metadata && metadata.base.name ? (
-                    <AssetDetails
-                        metadata={metadata}
-                        ddo={ddo}
-                        purchaseAsset={this.purchaseAsset}
-                    />
+                    <AssetDetails metadata={metadata} ddo={ddo} />
                 ) : (
                     <div className={stylesApp.loader}>
                         <Spinner message={'Loading asset...'} />
