@@ -28,7 +28,7 @@ export default class AssetsUser extends PureComponent {
                 } else {
                     const results = []
                     for (const event of events) {
-                        const ddo = await this.context.ocean.resolveDID(
+                        const ddo = await this.context.ocean.assets.resolve(
                             `did:op:${event.returnValues._did.substring(2)}`
                         )
                         results.push(ddo)
@@ -48,9 +48,11 @@ export default class AssetsUser extends PureComponent {
                     <Spinner />
                 ) : this.state.results.length ? (
                     <div className={styles.assets}>
-                        {this.state.results.map((asset: any) => (
-                            <Asset key={asset.id} asset={asset} />
-                        ))}
+                        {this.state.results
+                            .filter(asset => !!asset)
+                            .map((asset: any) => (
+                                <Asset key={asset.id} asset={asset} />
+                            ))}
                     </div>
                 ) : (
                     <div>

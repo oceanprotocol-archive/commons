@@ -89,11 +89,6 @@ export default class Step extends PureComponent<StepProps, {}> {
 
                 {fields &&
                     Object.entries(fields).map(([key, value]) => {
-                        let onChange = inputChange
-
-                        if (key === 'categories') {
-                            onChange = inputToArrayChange
-                        }
 
                         if (key === 'files') {
                             return (
@@ -106,7 +101,7 @@ export default class Step extends PureComponent<StepProps, {}> {
                                         name={key}
                                         help={value.help}
                                         files={state.files}
-                                        onChange={onChange}
+                                        onChange={inputChange}
                                     />
                                 </Row>
                             )
@@ -122,7 +117,7 @@ export default class Step extends PureComponent<StepProps, {}> {
                                 type={value.type}
                                 help={value.help}
                                 options={value.options}
-                                onChange={onChange}
+                                onChange={inputChange}
                                 rows={value.rows}
                                 value={(state as any)[key]}
                             />
