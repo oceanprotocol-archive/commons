@@ -258,10 +258,6 @@ class Publish extends Component<{}, PublishState> {
                 price: this.state.price,
                 type: this.state.type,
                 categories: [this.state.categories],
-                size: '',
-                encoding: '',
-                compression: undefined,
-                contentType: '',
                 workExample: undefined,
                 inLanguage: undefined,
                 tags: ''

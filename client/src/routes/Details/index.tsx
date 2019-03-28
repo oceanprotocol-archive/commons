@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Logger } from '@oceanprotocol/squid'
-import queryString from 'query-string'
 import Route from '../../components/templates/Route'
 import Spinner from '../../components/atoms/Spinner'
 import { User } from '../../context/User'
@@ -37,8 +36,14 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                 accessService.serviceDefinitionId,
                 account[0]
             )
-            const folder = ""
-            const path = await this.context.ocean.assets.consume(agreementId, ddo.id, accessService.serviceDefinitionId, account[0], folder)
+            const folder = ''
+            const path = await this.context.ocean.assets.consume(
+                agreementId,
+                ddo.id,
+                accessService.serviceDefinitionId,
+                account[0],
+                folder
+            )
             Logger.log('path', path)
         } catch (e) {
             Logger.log('error', e)
