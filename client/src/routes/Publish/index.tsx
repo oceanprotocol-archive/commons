@@ -243,7 +243,7 @@ class Publish extends Component<{}, PublishState> {
             isPublishing: true
         })
         const { ocean } = this.context
-        const account = await ocean.getAccounts()
+        const account = await ocean.accounts.list()
         const newAsset = {
             // OEP-08 Attributes
             // https://github.com/oceanprotocol/OEPs/tree/master/8
@@ -273,7 +273,10 @@ class Publish extends Component<{}, PublishState> {
         }
 
         try {
-            const asset = await ocean.registerAsset(newAsset, account[0])
+            const asset = await this.context.ocean.assets.create(
+                newAsset,
+                account[0]
+            )
             this.setState({
                 publishedDid: asset.id,
                 isPublished: true

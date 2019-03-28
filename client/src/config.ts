@@ -7,7 +7,7 @@ export const nodeHost = 'localhost'
 export const nodePort = 8545
 
 export const aquariusScheme = 'http'
-export const aquariusHost = 'localhost'
+export const aquariusHost = 'aquarius'
 export const aquariusPort = 5000
 
 export const brizoScheme = 'http'
