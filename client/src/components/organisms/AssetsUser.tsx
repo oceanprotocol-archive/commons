@@ -18,24 +18,24 @@ export default class AssetsUser extends PureComponent<
 
     private async searchOcean() {
         if (this.context.account) {
-        this.context.ocean.keeper.didRegistry.contract.getPastEvents(
-            'DIDAttributeRegistered',
-            {
-                filter: { _owner: this.context.account },
-                fromBlock: 0,
-                toBlock: 'latest'
-            },
-            async (error: any, events: any) => {
-                if (error) {
-                    Logger.log('error retrieving', error)
-                    this.setState({ isLoading: false })
-                } else {
-                    const results = []
-                    for (const event of events) {
-                        const ddo = await this.context.ocean.assets.resolve(
-                            `did:op:${event.returnValues._did.substring(2)}`
-                        )
-                        results.push(ddo)
+            this.context.ocean.keeper.didRegistry.contract.getPastEvents(
+                'DIDAttributeRegistered',
+                {
+                    filter: { _owner: this.context.account },
+                    fromBlock: 0,
+                    toBlock: 'latest'
+                },
+                async (error: any, events: any) => {
+                    if (error) {
+                        Logger.log('error retrieving', error)
+                        this.setState({ isLoading: false })
+                    } else {
+                        const results = []
+                        for (const event of events) {
+                            const ddo = await this.context.ocean.assets.resolve(
+                                `did:op:${event.returnValues._did.substring(2)}`
+                            )
+                            results.push(ddo)
                         }
                         this.setState({ results, isLoading: false })
                     }
@@ -56,11 +56,11 @@ export default class AssetsUser extends PureComponent<
                         </h2>
                     )}
 
-                {this.state.isLoading ? (
-                    <Spinner />
-                ) : this.state.results.length ? (
-                    <>
-                        {this.state.results
+                    {this.state.isLoading ? (
+                        <Spinner />
+                    ) : this.state.results.length ? (
+                        <>
+                            {this.state.results
                                 .slice(
                                     0,
                                     this.props.recent
