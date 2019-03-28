@@ -39,10 +39,18 @@ const getFileCompression = async (contentType: string) => {
         contentType === 'application/x-lzma' ||
         contentType === 'application/x-xz' ||
         contentType === 'application/x-tar' ||
+        contentType === 'application/x-gtar' ||
         contentType === 'application/x-bzip2' ||
-        contentType === 'application/x-7z-compressed'
+        contentType === 'application/x-7z-compressed' ||
+        contentType === 'application/x-rar-compressed' ||
+        contentType === 'application/x-apple-diskimage'
     ) {
         const contentTypeSplit = contentType.split('/')
+
+        if (contentTypeSplit[1].includes('x-')) {
+            return contentTypeSplit[1].replace('x-', '')
+        }
+
         return contentTypeSplit[1]
     } else {
         return 'none'
