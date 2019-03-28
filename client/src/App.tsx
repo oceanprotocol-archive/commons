@@ -160,7 +160,7 @@ class App extends Component<{}, AppState> {
                 isLoading: false,
                 ocean
             })
-            const accounts = await ocean.getAccounts()
+            const accounts = await ocean.accounts.list()
             const balance = await accounts[0].getBalance()
             const network = await ocean.keeper.getNetworkName()
             this.setState({ balance, network })

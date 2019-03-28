@@ -22,7 +22,7 @@ export default class Details extends Component<DetailsProps, DetailsState> {
     public state = { ddo: {}, metadata: { base: { name: '' } } }
 
     public async componentDidMount() {
-        const ddo = await this.context.ocean.resolveDID(
+        const ddo = await this.context.ocean.assets.resolve(
             this.props.match.params.did
         )
         const { metadata } = ddo.findServiceByType('Metadata')
@@ -31,30 +31,16 @@ export default class Details extends Component<DetailsProps, DetailsState> {
 
     private purchaseAsset = async (ddo: any) => {
         try {
-            const account = await this.context.ocean.getAccounts()
-            const service = ddo.findServiceByType('Access')
-            const serviceAgreementSignatureResult = await this.context.ocean.signServiceAgreement(
+            const account = await this.context.ocean.accounts.list()
+            const accessService = ddo.findServiceByType('Access')
+            const agreementId = await this.context.ocean.assets.order(
                 ddo.id,
-                service.serviceDefinitionId,
+                accessService.serviceDefinitionId,
                 account[0]
             )
-            await this.context.ocean.initializeServiceAgreement(
-                ddo.id,
-                service.serviceDefinitionId,
-                serviceAgreementSignatureResult.agreementId,
-                serviceAgreementSignatureResult.signature,
-                (files: any) => {
-                    Logger.log('downloading files', files)
-                    files.forEach((file: any) => {
-                        const parsedUrl: any = queryString.parseUrl(file)
-                        setTimeout(() => {
-                            // eslint-disable-next-line
-                            window.open(parsedUrl.query.url)
-                        }, 100)
-                    })
-                },
-                account[0]
-            )
+            const folder = ""
+            const path = await this.context.ocean.assets.consume(agreementId, ddo.id, accessService.serviceDefinitionId, account[0], folder)
+            Logger.log('path', path)
         } catch (e) {
             Logger.log('error', e)
         }
