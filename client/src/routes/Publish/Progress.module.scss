@@ -38,7 +38,6 @@
 
 .active {
     composes: item;
-    font-family: $font-family-button;
     font-weight: $font-weight-bold;
     color: $brand-black;
 
@@ -71,6 +70,5 @@
     border-radius: 50%;
     background: $brand-grey-light;
     color: $brand-white;
-    font-family: $font-family-button;
     font-weight: $font-weight-bold;
 }
