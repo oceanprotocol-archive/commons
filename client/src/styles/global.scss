@@ -2,6 +2,7 @@
 
 @import 'variables';
 @import 'animations';
+@import '../../node_modules/@oceanprotocol/typographies/sass/ocean-typo.scss';
 
 *,
 *:before,
@@ -84,7 +85,7 @@ ol {
         &:before {
             content: counter(ol-counter) '.';
             counter-increment: ol-counter;
-            font-family: $font-family-button;
+            font-weight: $font-weight-bold;
             top: -1px;
         }
     }
@@ -131,8 +132,7 @@ ol {
 b,
 strong,
 .bold {
-    font-family: $font-family-button;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
 }
 
 em,
@@ -158,7 +158,7 @@ h5 {
     font-family: $font-family-title;
     color: inherit;
     line-height: 1.2;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
 }
 
 h1 {
@@ -264,7 +264,6 @@ table {
     }
 
     th {
-        font-family: $font-family-button;
         font-weight: 600;
     }
 }

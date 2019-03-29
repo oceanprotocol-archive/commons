@@ -72,7 +72,7 @@
 .link {
     display: inline-block;
     margin: 0 $spacer / 2;
-    font-family: $font-family-button;
+    font-weight: $font-weight-bold;
     color: $brand-grey;
 
     &:last-child {
