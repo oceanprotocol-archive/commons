@@ -70,6 +70,12 @@
             "Communication & Journalism",
             "Other"
           ]
+        },
+        "dateCreated": {
+          "label": "Creation Date",
+          "description": "Select the date the asset was created, or was updated for the last time.",
+          "type": "date",
+          "required": true
         }
       }
     },

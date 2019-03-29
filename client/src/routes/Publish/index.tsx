@@ -13,7 +13,7 @@ type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
 interface PublishState {
     name?: string
-    dateCreated?: Date
+    dateCreated?: string
     description?: string
     files?: string[]
     price?: number
@@ -35,7 +35,7 @@ class Publish extends Component<{}, PublishState> {
     public state = {
         currentStep: 1,
         name: '',
-        dateCreated: new Date(),
+        dateCreated: '',
         description: '',
         files: [],
         price: 0,
@@ -50,7 +50,12 @@ class Publish extends Component<{}, PublishState> {
         publishingError: '',
         validationStatus: {
             1: { name: false, files: false, allFieldsValid: false },
-            2: { description: false, categories: false, allFieldsValid: false },
+            2: {
+                description: false,
+                categories: false,
+                dateCreated: false,
+                allFieldsValid: false
+            },
             3: {
                 author: false,
                 copyrightHolder: false,
@@ -102,7 +107,7 @@ class Publish extends Component<{}, PublishState> {
     private toStart = () => {
         this.setState({
             name: '',
-            dateCreated: new Date(),
+            dateCreated: '',
             description: '',
             files: [],
             price: 0,
@@ -184,7 +189,11 @@ class Publish extends Component<{}, PublishState> {
         //
         // Step 2
         //
-        if (validationStatus[2].description && validationStatus[2].categories) {
+        if (
+            validationStatus[2].description &&
+            validationStatus[2].categories &&
+            validationStatus[2].dateCreated
+        ) {
             this.setState(prevState => ({
                 validationStatus: {
                     ...prevState.validationStatus,
@@ -250,7 +259,7 @@ class Publish extends Component<{}, PublishState> {
             base: Object.assign(AssetModel.base, {
                 name: this.state.name,
                 description: this.state.description,
-                dateCreated: new Date().toString(),
+                dateCreated: new Date(this.state.dateCreated).toString(),
                 author: this.state.author,
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
