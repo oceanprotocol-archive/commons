@@ -1,12 +1,14 @@
 import cx from 'classnames'
 import React, { PureComponent } from 'react'
 import slugify from 'slugify'
+import DatePicker from 'react-datepicker'
 import { ReactComponent as SearchIcon } from '../../../img/search.svg'
 import Help from './Help'
-import styles from './Input.module.scss'
 import Label from './Label'
 import Row from './Row'
 import InputGroup from './InputGroup'
+import 'react-datepicker/dist/react-datepicker-cssmodules.css'
+import styles from './Input.module.scss'
 
 interface InputProps {
     name: string
@@ -27,10 +29,11 @@ interface InputProps {
 
 interface InputState {
     isFocused: boolean
+    startDate?: any
 }
 
 export default class Input extends PureComponent<InputProps, InputState> {
-    public state: InputState = { isFocused: false }
+    public state: InputState = { isFocused: false, startDate: new Date() }
 
     public inputWrapClasses() {
         if (this.props.type === 'search') {
@@ -48,6 +51,12 @@ export default class Input extends PureComponent<InputProps, InputState> {
         this.setState({ isFocused: !this.state.isFocused })
     }
 
+    public handleDateChange = (date: any) => {
+        this.setState({
+            startDate: date
+        })
+    }
+
     public InputComponent = () => {
         const {
             type,
@@ -61,77 +70,91 @@ export default class Input extends PureComponent<InputProps, InputState> {
 
         const wrapClass = this.inputWrapClasses()
 
-        if (type === 'select') {
-            return (
-                <div className={wrapClass}>
-                    <select
-                        id={name}
-                        className={styles.select}
-                        name={name}
-                        required={required}
-                        onFocus={this.toggleFocus}
-                        onBlur={this.toggleFocus}
-                        onChange={onChange}
-                        value={value}
-                    >
-                        <option value="">---</option>
+        switch (type) {
+            case 'select':
+                return (
+                    <div className={wrapClass}>
+                        <select
+                            id={name}
+                            className={styles.select}
+                            name={name}
+                            required={required}
+                            onFocus={this.toggleFocus}
+                            onBlur={this.toggleFocus}
+                            onChange={onChange}
+                            value={value}
+                        >
+                            <option value="">---</option>
+                            {options &&
+                                options
+                                    .sort((a, b) => a.localeCompare(b))
+                                    .map((option: string, index: number) => (
+                                        <option
+                                            key={index}
+                                            value={slugify(option, {
+                                                lower: true
+                                            })}
+                                        >
+                                            {option}
+                                        </option>
+                                    ))}
+                        </select>
+                    </div>
+                )
+            case 'textarea':
+                return (
+                    <div className={wrapClass}>
+                        <textarea
+                            id={name}
+                            className={styles.input}
+                            onFocus={this.toggleFocus}
+                            onBlur={this.toggleFocus}
+                            {...this.props}
+                        />
+                    </div>
+                )
+            case 'radio':
+            case 'checkbox':
+                return (
+                    <div className={styles.radioGroup}>
                         {options &&
-                            options
-                                .sort((a, b) => a.localeCompare(b))
-                                .map((option: string, index: number) => (
-                                    <option
-                                        key={index}
+                            options.map((option: string, index: number) => (
+                                <div className={styles.radioWrap} key={index}>
+                                    <input
+                                        className={styles.radio}
+                                        id={slugify(option, {
+                                            lower: true
+                                        })}
+                                        type={type}
+                                        name={name}
                                         value={slugify(option, {
+                                            lower: true
+                                        })}
+                                    />
+                                    <label
+                                        className={styles.radioLabel}
+                                        htmlFor={slugify(option, {
                                             lower: true
                                         })}
                                     >
                                         {option}
-                                    </option>
-                                ))}
-                    </select>
-                </div>
-            )
-        } else if (type === 'textarea') {
-            return (
-                <div className={wrapClass}>
-                    <textarea
-                        id={name}
-                        className={styles.input}
-                        onFocus={this.toggleFocus}
-                        onBlur={this.toggleFocus}
-                        {...this.props}
-                    />
-                </div>
-            )
-        } else if (type === 'radio' || type === 'checkbox') {
-            return (
-                <div className={styles.radioGroup}>
-                    {options &&
-                        options.map((option: string, index: number) => (
-                            <div className={styles.radioWrap} key={index}>
-                                <input
-                                    className={styles.radio}
-                                    id={slugify(option, {
-                                        lower: true
-                                    })}
-                                    type={type}
-                                    name={name}
-                                    value={slugify(option, {
-                                        lower: true
-                                    })}
-                                />
-                                <label
-                                    className={styles.radioLabel}
-                                    htmlFor={slugify(option, {
-                                        lower: true
-                                    })}
-                                >
-                                    {option}
-                                </label>
-                            </div>
-                        ))}
-                </div>
-            )
+                                    </label>
+                                </div>
+                            ))}
+                    </div>
+                )
+            case 'date':
+                return (
+                    <div className={wrapClass}>
+                        <DatePicker
+                            selected={this.state.startDate}
+                            onChange={this.handleDateChange}
+                            className={styles.input}
+                            onFocus={this.toggleFocus}
+                            onBlur={this.toggleFocus}
+                        />
+                    </div>
+                )
         }
 
         return (

@@ -10,6 +10,11 @@
     &.isFocused {
         background: $brand-black;
     }
+
+    > div,
+    > div > div {
+        width: 100%;
+    }
 }
 
 .inputWrapSearch {
@@ -158,6 +163,26 @@
     padding-left: 2.5rem;
     display: flex;
     align-items: center;
+}
+
+:global .react-datepicker {
+    font-family: inherit;
+    color: inherit;
+    border-color: $brand-grey-lighter;
+}
+
+:global .react-datepicker__current-month,
+:global .react-datepicker-time__header,
+:global .react-datepicker-year-header {
+    font-weight: $font-weight-bold;
+}
+
+:global .react-datepicker__month-container {
+    float: none;
+}
+
+:global .react-datepicker-popper {
+    max-width: 16rem;
 }
 
 // Size modifiers
