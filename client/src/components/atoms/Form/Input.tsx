@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React, { PureComponent } from 'react'
+import React, { PureComponent, FormEvent, ChangeEvent } from 'react'
 import slugify from 'slugify'
 import DatePicker from 'react-datepicker'
 import { ReactComponent as SearchIcon } from '../../../img/search.svg'
@@ -21,7 +21,13 @@ interface InputProps {
     options?: string[]
     additionalComponent?: any
     value?: string
-    onChange?: any
+    onChange?(
+        event:
+            | FormEvent<HTMLInputElement>
+            | ChangeEvent<HTMLInputElement>
+            | ChangeEvent<HTMLSelectElement>
+            | ChangeEvent<HTMLTextAreaElement>
+    ): void
     rows?: number
     group?: any
     multiple?: boolean
@@ -29,11 +35,14 @@ interface InputProps {
 
 interface InputState {
     isFocused: boolean
-    startDate?: any
+    startDate?: Date
 }
 
 export default class Input extends PureComponent<InputProps, InputState> {
-    public state: InputState = { isFocused: false, startDate: new Date() }
+    public state: InputState = {
+        isFocused: false,
+        startDate: new Date()
+    }
 
     public inputWrapClasses() {
         if (this.props.type === 'search') {
@@ -51,7 +60,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
         this.setState({ isFocused: !this.state.isFocused })
     }
 
-    public handleDateChange = (date: any) => {
+    public handleDateChange = (date: Date) => {
         this.setState({
             startDate: date
         })

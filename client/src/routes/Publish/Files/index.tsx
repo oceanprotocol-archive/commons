@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
@@ -8,12 +8,25 @@ import styles from './index.module.scss'
 
 import { serviceHost, servicePort, serviceScheme } from '../../../config'
 
+interface File {
+    url: string
+    found: boolean
+    size: number
+    type: string
+}
+
 interface FilesProps {
-    files: any[]
+    files: [File]
     placeholder: string
     help?: string
     name: string
-    onChange: any
+    onChange(
+        event:
+            | ChangeEvent<HTMLInputElement>
+            | FormEvent<HTMLInputElement>
+            | ChangeEvent<HTMLSelectElement>
+            | ChangeEvent<HTMLTextAreaElement>
+    ): void
 }
 
 interface FilesStates {
@@ -33,7 +46,8 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     public addItem = async (value: string) => {
         let res: any
-        let file: any = { url: value, found: false }
+        let file: File = { url: value, found: false, size: 0, type: '' }
+
         try {
             const response = await fetch(
                 `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/urlcheck`,

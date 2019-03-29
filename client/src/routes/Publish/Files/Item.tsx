@@ -2,7 +2,13 @@ import React from 'react'
 import styles from './Item.module.scss'
 import filesize from 'filesize'
 
-const Item = ({ item, removeItem }: { item: any; removeItem: any }) => (
+const Item = ({
+    item,
+    removeItem
+}: {
+    item: { url: string; found: boolean; type: string; size: number }
+    removeItem(): void
+}) => (
     <li>
         <a href={item.url}>{item.url}</a>
         <div className={styles.details}>

@@ -4,8 +4,8 @@ import Spinner from '../../components/atoms/Spinner'
 import styles from './StepRegisterContent.module.scss'
 
 interface StepRegisterContentProps {
-    tryAgain: any
-    toStart: any
+    tryAgain(): void
+    toStart(): void
     state: any
     content?: string
 }

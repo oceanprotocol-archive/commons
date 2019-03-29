@@ -5,7 +5,7 @@ import Button from '../../../components/atoms/Button'
 import styles from './ItemForm.module.scss'
 
 interface ItemFormProps {
-    addItem: any
+    addItem(url: string): void
     placeholder: string
 }
 

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, FormEvent, ChangeEvent } from 'react'
 import Input from '../../components/atoms/Form/Input'
 import Label from '../../components/atoms/Form/Label'
 import Row from '../../components/atoms/Form/Row'
@@ -8,20 +8,38 @@ import Files from './Files/'
 import StepRegisterContent from './StepRegisterContent'
 import styles from './Step.module.scss'
 
+interface Fields {
+    label: string
+    placeholder?: string
+    help?: string
+    type: string
+    required?: boolean
+    options?: string
+    rows?: number
+}
+
 interface StepProps {
     currentStep: number
     index: number
-    inputChange: any
-    inputToArrayChange: any
-    fields?: any[]
+    inputChange(
+        event:
+            | FormEvent<HTMLInputElement>
+            | ChangeEvent<HTMLInputElement>
+            | ChangeEvent<HTMLSelectElement>
+            | ChangeEvent<HTMLTextAreaElement>
+    ): void
+    inputToArrayChange(
+        event: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
+    ): void
+    fields?: Fields
     state: any
     title: string
     description: string
-    next: any
-    prev: any
+    next(): void
+    prev(): void
     totalSteps: number
-    tryAgain: any
-    toStart: any
+    tryAgain(): void
+    toStart(): void
     publishedDid?: string
     content?: string
 }
@@ -66,7 +84,6 @@ export default class Step extends PureComponent<StepProps, {}> {
             description,
             fields,
             inputChange,
-            inputToArrayChange,
             state,
             totalSteps,
             tryAgain,
@@ -89,7 +106,6 @@ export default class Step extends PureComponent<StepProps, {}> {
 
                 {fields &&
                     Object.entries(fields).map(([key, value]) => {
-
                         if (key === 'files') {
                             return (
                                 <Row key={key}>
