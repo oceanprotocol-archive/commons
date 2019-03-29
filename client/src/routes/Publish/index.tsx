@@ -259,7 +259,7 @@ class Publish extends Component<{}, PublishState> {
             base: Object.assign(AssetModel.base, {
                 name: this.state.name,
                 description: this.state.description,
-                dateCreated: new Date(this.state.dateCreated).toString(),
+                dateCreated: new Date(this.state.dateCreated).toISOString(),
                 author: this.state.author,
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
