@@ -25,7 +25,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         {base.copyrightHolder}
                     </h2>
                     <div className={styles.metaPrimaryData}>
-                        <span title="Date published">
+                        <span title="Date created">
                             <Moment
                                 date={base.dateCreated}
                                 format="L"
