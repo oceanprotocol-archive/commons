@@ -6,7 +6,12 @@ const Item = ({
     item,
     removeItem
 }: {
-    item: { url: string; found: boolean; type: string; size: number }
+    item: {
+        url: string
+        found: boolean
+        contentType: string
+        contentLength: number
+    }
     removeItem(): void
 }) => (
     <li>
@@ -16,11 +21,13 @@ const Item = ({
         <div className={styles.details}>
             <span>URL {item.found ? 'confirmed' : ' not confirmed'}</span>
             <span>
-                {item.found && item.size ? filesize(item.size) : 'unknown size'}
+                {item.found && item.contentLength
+                    ? filesize(item.contentLength)
+                    : 'unknown size'}
             </span>
             <span>
-                {item.found && item.type
-                    ? item.type.split('/')[1]
+                {item.found && item.contentType
+                    ? item.contentType.split('/')[1]
                     : 'unknown type'}
             </span>
         </div>

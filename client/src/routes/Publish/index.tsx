@@ -53,7 +53,6 @@ class Publish extends Component<{}, PublishState> {
             2: {
                 description: false,
                 categories: false,
-                dateCreated: false,
                 allFieldsValid: false
             },
             3: {
@@ -122,7 +121,7 @@ class Publish extends Component<{}, PublishState> {
         })
     }
 
-    private validateInputs = (name: string, value: any) => {
+    private validateInputs = (name: string, value: string) => {
         let hasContent = value.length > 0
 
         // Setting state for all fields
@@ -189,11 +188,7 @@ class Publish extends Component<{}, PublishState> {
         //
         // Step 2
         //
-        if (
-            validationStatus[2].description &&
-            validationStatus[2].categories &&
-            validationStatus[2].dateCreated
-        ) {
+        if (validationStatus[2].description && validationStatus[2].categories) {
             this.setState(prevState => ({
                 validationStatus: {
                     ...prevState.validationStatus,

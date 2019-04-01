@@ -60,7 +60,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
         this.setState({ isFocused: !this.state.isFocused })
     }
 
-    public handleDateChange = (date: Date) => {
+    private handleDateChange = (date: Date) => {
         this.setState({
             startDate: date
         })
@@ -161,6 +161,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             className={styles.input}
                             onFocus={this.toggleFocus}
                             onBlur={this.toggleFocus}
+                            id={name}
+                            name={name}
                         />
                     </div>
                 )

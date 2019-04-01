@@ -33,7 +33,7 @@
           "rows": 5
         },
         "categories": {
-          "label": "Categories",
+          "label": "Category",
           "help": "Pick a category which best fits your data set.",
           "type": "select",
           "required": true,
