@@ -157,6 +157,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     <div className={wrapClass}>
                         <DatePicker
                             selected={this.state.startDate}
+                            // TODO: this needs to be able to receive this.props.onChange too
                             onChange={this.handleDateChange}
                             className={styles.input}
                             onFocus={this.toggleFocus}
