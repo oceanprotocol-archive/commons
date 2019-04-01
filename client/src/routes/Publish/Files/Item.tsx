@@ -4,17 +4,17 @@ import filesize from 'filesize'
 
 const Item = ({ item, removeItem }: { item: any; removeItem: any }) => (
     <li>
-        <a href={item.url}>{item.url}</a>
+        <a href={item.url} className={styles.linkUrl}>
+            {item.url}
+        </a>
         <div className={styles.details}>
-            <span>url: {item.found ? 'confirmed' : 'unconfirmed'}</span>
+            <span>URL {item.found ? 'confirmed' : ' not confirmed'}</span>
             <span>
-                {item.found && item.contentLength
-                    ? filesize(item.contentLength)
-                    : 'unknown size'}
+                {item.found && item.size ? filesize(item.size) : 'unknown size'}
             </span>
             <span>
-                {item.found && item.contentType
-                    ? item.contentType
+                {item.found && item.type
+                    ? item.type.split('/')[1]
                     : 'unknown type'}
             </span>
         </div>

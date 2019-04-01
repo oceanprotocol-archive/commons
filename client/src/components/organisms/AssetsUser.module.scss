@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+
+.assetsUser {
+    margin-top: $spacer;
+    margin-bottom: $spacer;
+}
+
+.subTitle {
+    font-size: $font-size-h4;
+    color: $brand-grey-light;
+    border-bottom: 1px solid $brand-grey-lighter;
+    padding-bottom: $spacer / 2;
+    margin-bottom: 0;
+}
+
+.link {
+    display: block;
+    margin-top: $spacer / 2;
+}
+
+.empty {
+    text-align: center;
+    margin-top: $spacer;
+    color: $brand-grey-light;
+}
