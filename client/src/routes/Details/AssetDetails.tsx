@@ -25,6 +25,15 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         {base.copyrightHolder}
                     </h2>
                     <div className={styles.metaPrimaryData}>
+
+                        <span title="Date created">
+                            <Moment
+                                date={base.dateCreated}
+                                format="L"
+                                interval={0}
+                            />
+                        </span>
+          
                         {base.categories ? (
                             // TODO: Make this link to search for respective category
                             <Link to={`/search?q=${base.categories[0]}`}>
@@ -33,14 +42,6 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         ) : (
                             <Link to={'/search?q='}>Fake Category</Link>
                         )}
-
-                        <span title="Date published">
-                            <Moment
-                                date={base.dateCreated}
-                                format="L"
-                                interval={0}
-                            />
-                        </span>
 
                         {base.files && (
                             <span>{base.files.length} data files</span>

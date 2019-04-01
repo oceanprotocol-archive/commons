@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
@@ -10,9 +10,10 @@ import { serviceHost, servicePort, serviceScheme } from '../../../config'
 
 interface File {
     url: string
+    found: boolean
     checksum?: string
     checksumType?: string
-    contentLength?: string
+    contentLength?: number
     contentType?: string
     resourceId?: string
     encoding?: string
@@ -24,7 +25,13 @@ interface FilesProps {
     placeholder: string
     help?: string
     name: string
-    onChange: any
+    onChange(
+        event:
+            | ChangeEvent<HTMLInputElement>
+            | FormEvent<HTMLInputElement>
+            | ChangeEvent<HTMLSelectElement>
+            | ChangeEvent<HTMLTextAreaElement>
+    ): void
 }
 
 interface FilesStates {
@@ -70,7 +77,14 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     public addItem = async (value: string) => {
         let res: any
-        let file: any = { url: value, found: false }
+        let file: File = {
+            url: value,
+            found: false,
+            contentLength: 0,
+            contentType: '',
+            compression: ''
+        }
+
         try {
             const response = await fetch(
                 `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/urlcheck`,
@@ -85,7 +99,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
             res = await response.json()
             file.contentLength = res.result.contentLength
             file.contentType = res.result.contentType
-            file.compression = await getFileCompression(file.contentType)
+            file.compression = await getFileCompression(res.result.contentType)
             file.found = res.result.found
         } catch (error) {
             // error
