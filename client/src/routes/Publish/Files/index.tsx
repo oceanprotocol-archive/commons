@@ -13,7 +13,7 @@ interface File {
     found: boolean
     checksum?: string
     checksumType?: string
-    contentLength?: string
+    contentLength?: number
     contentType?: string
     resourceId?: string
     encoding?: string
@@ -77,7 +77,13 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     public addItem = async (value: string) => {
         let res: any
-        let file: File = { url: value, found: false, size: 0, type: '' }
+        let file: File = {
+            url: value,
+            found: false,
+            contentLength: 0,
+            contentType: '',
+            compression: ''
+        }
 
         try {
             const response = await fetch(
@@ -93,7 +99,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
             res = await response.json()
             file.contentLength = res.result.contentLength
             file.contentType = res.result.contentType
-            file.compression = await getFileCompression(file.contentType)
+            file.compression = await getFileCompression(res.result.contentType)
             file.found = res.result.found
         } catch (error) {
             // error
