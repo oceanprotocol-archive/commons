@@ -13,7 +13,7 @@ type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
 interface PublishState {
     name?: string
-    dateCreated?: Date
+    dateCreated?: string
     description?: string
     files?: string[]
     price?: number
@@ -35,7 +35,7 @@ class Publish extends Component<{}, PublishState> {
     public state = {
         currentStep: 1,
         name: '',
-        dateCreated: new Date(),
+        dateCreated: '',
         description: '',
         files: [],
         price: 0,
@@ -50,7 +50,11 @@ class Publish extends Component<{}, PublishState> {
         publishingError: '',
         validationStatus: {
             1: { name: false, files: false, allFieldsValid: false },
-            2: { description: false, categories: false, allFieldsValid: false },
+            2: {
+                description: false,
+                categories: false,
+                allFieldsValid: false
+            },
             3: {
                 author: false,
                 copyrightHolder: false,
@@ -102,7 +106,7 @@ class Publish extends Component<{}, PublishState> {
     private toStart = () => {
         this.setState({
             name: '',
-            dateCreated: new Date(),
+            dateCreated: '',
             description: '',
             files: [],
             price: 0,
@@ -117,7 +121,7 @@ class Publish extends Component<{}, PublishState> {
         })
     }
 
-    private validateInputs = (name: string, value: any) => {
+    private validateInputs = (name: string, value: string) => {
         let hasContent = value.length > 0
 
         // Setting state for all fields
@@ -243,14 +247,14 @@ class Publish extends Component<{}, PublishState> {
             isPublishing: true
         })
         const { ocean } = this.context
-        const account = await ocean.getAccounts()
+        const account = await ocean.accounts.list()
         const newAsset = {
             // OEP-08 Attributes
             // https://github.com/oceanprotocol/OEPs/tree/master/8
             base: Object.assign(AssetModel.base, {
                 name: this.state.name,
                 description: this.state.description,
-                dateCreated: new Date().toString(),
+                dateCreated: new Date(this.state.dateCreated).toISOString(),
                 author: this.state.author,
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
@@ -258,10 +262,6 @@ class Publish extends Component<{}, PublishState> {
                 price: this.state.price,
                 type: this.state.type,
                 categories: [this.state.categories],
-                size: '',
-                encoding: '',
-                compression: undefined,
-                contentType: '',
                 workExample: undefined,
                 inLanguage: undefined,
                 tags: ''
@@ -273,7 +273,10 @@ class Publish extends Component<{}, PublishState> {
         }
 
         try {
-            const asset = await ocean.registerAsset(newAsset, account[0])
+            const asset = await this.context.ocean.assets.create(
+                newAsset,
+                account[0]
+            )
             this.setState({
                 publishedDid: asset.id,
                 isPublished: true

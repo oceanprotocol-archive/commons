@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+.buttonMain {
+    margin: auto;
+    margin-bottom: $spacer / 2;
+    display: block;
+}
+
+.error {
+    text-align: center;
+    color: $red;
+    font-size: $font-size-small;
+}

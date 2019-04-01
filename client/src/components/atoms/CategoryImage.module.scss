@@ -1,0 +1,9 @@
+@import '../../styles/variables';
+
+.categoryImage {
+    height: 4rem;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: $spacer / $line-height;
+    background-color: $brand-grey-lighter;
+}

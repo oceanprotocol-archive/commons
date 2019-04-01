@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Logger } from '@oceanprotocol/squid'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from './components/organisms/Header'
+import Footer from './components/organisms/Footer'
 import Spinner from './components/atoms/Spinner'
 import { User } from './context/User'
 import { provideOcean } from './ocean'
@@ -160,7 +160,7 @@ class App extends Component<{}, AppState> {
                 isLoading: false,
                 ocean
             })
-            const accounts = await ocean.getAccounts()
+            const accounts = await ocean.accounts.list()
             const balance = await accounts[0].getBalance()
             const network = await ocean.keeper.getNetworkName()
             this.setState({ balance, network })

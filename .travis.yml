@@ -1,12 +1,12 @@
 language: node_js
-node_js:
-    - "11.10.1"
+node_js: node
 
-script: "./.travis.sh"
+script:
+  # - ./scripts/install.sh # runs automatically with npm ci
+  - ./scripts/test.sh
+  - ./scripts/build.sh
 
 notifications:
   email: false
 
-cache:
-  directories:
-    - node_modules
+cache: npm

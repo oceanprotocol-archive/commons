@@ -1,9 +1,9 @@
 @import '../../../styles/variables';
 
 .linkUrl {
-    font-size: $font-size-mini;
+    font-size: $font-size-small;
     display: block;
-    font-family: $font-family-base;
+    margin-bottom: $spacer / 8;
 
     // TODO: truncate long urls with ellipsis
 }
@@ -14,7 +14,7 @@
     appearance: none;
     border: 0;
     background: none;
-    font-family: $font-family-button;
+    font-weight: $font-weight-bold;
     font-size: $font-size-h4;
     color: $brand-grey-light;
     line-height: $line-height;
@@ -23,7 +23,7 @@
     display: inline-block;
     vertical-align: middle;
     position: absolute;
-    top: $spacer / 4;
+    top: $spacer / 8;
     right: 0;
     transition: .2s ease-out;
 
@@ -35,10 +35,9 @@
 
 .details {
     font-size: $font-size-mini;
-    font-size: .85rem;
-    color: #6e7e93;
+    color: $brand-grey-light;
 
     span {
-        padding-right: .5rem;
+        padding-right: $spacer;
     }
 }
