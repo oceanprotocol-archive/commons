@@ -1,4 +1,4 @@
-@import '../styles/variables';
+@import '../../styles/variables';
 
 .header {
     width: 100%;
@@ -6,7 +6,7 @@
 }
 
 .headerContent {
-    composes: wide from './atoms/Content.module.scss';
+    composes: wide from '../atoms/Content.module.scss';
     display: flex;
     align-items: center;
 }

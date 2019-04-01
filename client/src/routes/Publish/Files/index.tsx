@@ -11,12 +11,17 @@ import { serviceHost, servicePort, serviceScheme } from '../../../config'
 interface File {
     url: string
     found: boolean
-    size: number
-    type: string
+    checksum?: string
+    checksumType?: string
+    contentLength?: string
+    contentType?: string
+    resourceId?: string
+    encoding?: string
+    compression?: string
 }
 
 interface FilesProps {
-    files: [File]
+    files: File[]
     placeholder: string
     help?: string
     name: string
@@ -31,6 +36,32 @@ interface FilesProps {
 
 interface FilesStates {
     isFormShown: boolean
+}
+
+const getFileCompression = async (contentType: string) => {
+    // TODO: add all the possible archive & compression MIME types
+    if (
+        contentType === 'application/zip' ||
+        contentType === 'application/gzip' ||
+        contentType === 'application/x-lzma' ||
+        contentType === 'application/x-xz' ||
+        contentType === 'application/x-tar' ||
+        contentType === 'application/x-gtar' ||
+        contentType === 'application/x-bzip2' ||
+        contentType === 'application/x-7z-compressed' ||
+        contentType === 'application/x-rar-compressed' ||
+        contentType === 'application/x-apple-diskimage'
+    ) {
+        const contentTypeSplit = contentType.split('/')
+
+        if (contentTypeSplit[1].includes('x-')) {
+            return contentTypeSplit[1].replace('x-', '')
+        }
+
+        return contentTypeSplit[1]
+    } else {
+        return 'none'
+    }
 }
 
 export default class Files extends PureComponent<FilesProps, FilesStates> {
@@ -60,8 +91,9 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                 }
             )
             res = await response.json()
-            file.size = res.result.contentLength
-            file.type = res.result.contentType
+            file.contentLength = res.result.contentLength
+            file.contentType = res.result.contentType
+            file.compression = await getFileCompression(file.contentType)
             file.found = res.result.found
         } catch (error) {
             // error

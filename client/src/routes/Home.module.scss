@@ -3,6 +3,10 @@
 .home {
     display: block;
 
+    form {
+        margin-bottom: $spacer * 3;
+    }
+
     label {
         height: 0;
         margin: 0;

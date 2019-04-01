@@ -10,14 +10,19 @@ const Item = ({
     removeItem(): void
 }) => (
     <li>
-        <a href={item.url}>{item.url}</a>
+        <a href={item.url} className={styles.linkUrl}>
+            {item.url}
+        </a>
         <div className={styles.details}>
-            <span>url: {item.found ? 'confirmed' : 'unconfirmed'}</span>
+            <span>URL {item.found ? 'confirmed' : ' not confirmed'}</span>
             <span>
-                size:
-                {item.found && item.size ? filesize(item.size) : 'unknown'}
+                {item.found && item.size ? filesize(item.size) : 'unknown size'}
             </span>
-            <span>type: {item.found && item.type ? item.type : 'unknown'}</span>
+            <span>
+                {item.found && item.type
+                    ? item.type.split('/')[1]
+                    : 'unknown type'}
+            </span>
         </div>
         <button
             type="button"
