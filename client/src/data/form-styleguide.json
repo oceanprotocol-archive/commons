@@ -38,6 +38,12 @@
       "type": "select",
       "required": true,
       "options": ["Automotive", "Technology"]
+    },
+    "date": {
+      "label": "Date",
+      "placeholder": "i.e. 2019-08-12",
+      "type": "date",
+      "required": true
     }
   }
 }

@@ -8,7 +8,7 @@ import NotFound from './routes/NotFound'
 import Publish from './routes/Publish/'
 import Search from './routes/Search'
 import Faucet from './routes/Faucet'
-import Invoices from './routes/Invoices'
+import History from './routes/History'
 import Styleguide from './routes/Styleguide'
 
 const Routes = () => (
@@ -20,7 +20,7 @@ const Routes = () => (
         <Route component={Search} path="/search" />
         <Route component={Details} path="/asset/:did" />
         <Route component={Faucet} path="/faucet" />
-        <Route component={Invoices} path="/invoices" />
+        <Route component={History} path="/history" />
         <Route component={NotFound} />
     </Switch>
 )

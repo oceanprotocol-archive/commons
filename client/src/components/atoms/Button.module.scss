@@ -8,9 +8,9 @@
     display: inline-block;
     width: fit-content;
     padding: $spacer / 4 $spacer;
-    font-family: $font-family-button;
     font-size: $font-size-base;
-    font-weight: 600;
+    font-family: $font-family-base;
+    font-weight: $font-weight-bold;
     text-transform: uppercase;
     border-radius: 2px;
     transition: .2s ease-out;

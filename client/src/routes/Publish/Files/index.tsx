@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
@@ -8,16 +8,60 @@ import styles from './index.module.scss'
 
 import { serviceHost, servicePort, serviceScheme } from '../../../config'
 
+interface File {
+    url: string
+    found: boolean
+    checksum?: string
+    checksumType?: string
+    contentLength?: number
+    contentType?: string
+    resourceId?: string
+    encoding?: string
+    compression?: string
+}
+
 interface FilesProps {
-    files: any[]
+    files: File[]
     placeholder: string
     help?: string
     name: string
-    onChange: any
+    onChange(
+        event:
+            | ChangeEvent<HTMLInputElement>
+            | FormEvent<HTMLInputElement>
+            | ChangeEvent<HTMLSelectElement>
+            | ChangeEvent<HTMLTextAreaElement>
+    ): void
 }
 
 interface FilesStates {
     isFormShown: boolean
+}
+
+const getFileCompression = async (contentType: string) => {
+    // TODO: add all the possible archive & compression MIME types
+    if (
+        contentType === 'application/zip' ||
+        contentType === 'application/gzip' ||
+        contentType === 'application/x-lzma' ||
+        contentType === 'application/x-xz' ||
+        contentType === 'application/x-tar' ||
+        contentType === 'application/x-gtar' ||
+        contentType === 'application/x-bzip2' ||
+        contentType === 'application/x-7z-compressed' ||
+        contentType === 'application/x-rar-compressed' ||
+        contentType === 'application/x-apple-diskimage'
+    ) {
+        const contentTypeSplit = contentType.split('/')
+
+        if (contentTypeSplit[1].includes('x-')) {
+            return contentTypeSplit[1].replace('x-', '')
+        }
+
+        return contentTypeSplit[1]
+    } else {
+        return 'none'
+    }
 }
 
 export default class Files extends PureComponent<FilesProps, FilesStates> {
@@ -33,7 +77,14 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     public addItem = async (value: string) => {
         let res: any
-        let file: any = { url: value, found: false }
+        let file: File = {
+            url: value,
+            found: false,
+            contentLength: 0,
+            contentType: '',
+            compression: ''
+        }
+
         try {
             const response = await fetch(
                 `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/urlcheck`,
@@ -46,8 +97,9 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                 }
             )
             res = await response.json()
-            file.size = res.result.contentLength
-            file.type = res.result.contentType
+            file.contentLength = res.result.contentLength
+            file.contentType = res.result.contentType
+            file.compression = await getFileCompression(res.result.contentType)
             file.found = res.result.found
         } catch (error) {
             // error

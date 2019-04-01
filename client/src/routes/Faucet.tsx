@@ -3,7 +3,7 @@ import Route from '../components/templates/Route'
 import Button from '../components/atoms/Button'
 import Spinner from '../components/atoms/Spinner'
 import { User } from '../context/User'
-import Web3message from '../components/molecules/Web3message'
+import Web3message from '../components/organisms/Web3message'
 import styles from './Faucet.module.scss'
 
 interface FaucetState {
