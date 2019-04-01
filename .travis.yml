@@ -2,13 +2,11 @@ language: node_js
 node_js: node
 
 script:
-  - ./scripts/install.sh
+  # - ./scripts/install.sh # runs automatically with npm ci
   - ./scripts/test.sh
   - ./scripts/build.sh
 
 notifications:
   email: false
 
-cache:
-  directories:
-    - node_modules
+cache: npm
