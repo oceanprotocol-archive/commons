@@ -35,7 +35,7 @@ class Publish extends Component<{}, PublishState> {
     public state = {
         currentStep: 1,
         name: '',
-        dateCreated: '',
+        dateCreated: new Date().toISOString(),
         description: '',
         files: [],
         price: 0,
@@ -106,7 +106,7 @@ class Publish extends Component<{}, PublishState> {
     private toStart = () => {
         this.setState({
             name: '',
-            dateCreated: '',
+            dateCreated: new Date().toISOString(),
             description: '',
             files: [],
             price: 0,
