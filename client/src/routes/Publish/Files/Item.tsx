@@ -8,10 +8,15 @@ const Item = ({ item, removeItem }: { item: any; removeItem: any }) => (
         <div className={styles.details}>
             <span>url: {item.found ? 'confirmed' : 'unconfirmed'}</span>
             <span>
-                size:
-                {item.found && item.size ? filesize(item.size) : 'unknown'}
+                {item.found && item.contentLength
+                    ? filesize(item.contentLength)
+                    : 'unknown size'}
             </span>
-            <span>type: {item.found && item.type ? item.type : 'unknown'}</span>
+            <span>
+                {item.found && item.contentType
+                    ? item.contentType
+                    : 'unknown type'}
+            </span>
         </div>
         <button
             type="button"
