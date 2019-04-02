@@ -5,14 +5,13 @@ import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 
 interface AssetDetailsProps {
-    ocean: any
     metadata: any
     ddo: any
 }
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
     public render() {
-        const { ocean, metadata, ddo } = this.props
+        const { metadata, ddo } = this.props
         const { base } = metadata
 
         return (
@@ -25,7 +24,6 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         {base.copyrightHolder}
                     </h2>
                     <div className={styles.metaPrimaryData}>
-
                         <span title="Date created">
                             <Moment
                                 date={base.dateCreated}
@@ -33,7 +31,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                                 interval={0}
                             />
                         </span>
-          
+
                         {base.categories ? (
                             // TODO: Make this link to search for respective category
                             <Link to={`/search?q=${base.categories[0]}`}>
@@ -77,7 +75,6 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                 <AssetFilesDetails
                     files={base.files ? base.files : []}
                     ddo={ddo}
-                    ocean={ocean}
                 />
 
                 <pre>
