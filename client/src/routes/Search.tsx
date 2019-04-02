@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import queryString from 'query-string'
+import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
 import Route from '../components/templates/Route'
 import { User } from '../context/User'
@@ -21,8 +22,21 @@ export default class Search extends Component<SearchProps, SearchState> {
 
     public async componentDidMount() {
         const searchParams = queryString.parse(this.props.location.search)
+
+        const queryRequest = {
+            offset: 500,
+            page: 1,
+            query: {
+                text: searchParams.text
+            },
+            sort: {
+                text: 1
+            }
+        }
+
         const assets = await this.context.ocean.assets.search(searchParams.text)
         this.setState({ results: assets, isLoading: false })
+        Logger.log(`Loaded ${assets.length} assets`)
     }
 
     public renderResults = () =>
@@ -39,8 +53,14 @@ export default class Search extends Component<SearchProps, SearchState> {
         )
 
     public render() {
+        const searchTerm = queryString.parse(this.props.location.search).text
+
         return (
-            <Route title="Search Results" wide>
+            <Route
+                title={`Search Results for <span>${searchTerm}</span>`}
+                titleReverse
+                wide
+            >
                 {this.renderResults()}
             </Route>
         )

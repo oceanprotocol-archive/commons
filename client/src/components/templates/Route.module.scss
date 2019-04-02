@@ -3,13 +3,21 @@
 .header {
     margin-top: $spacer;
     margin-bottom: $spacer;
+}
 
-    h1 {
-        margin: 0;
-    }
+.title {
+    margin: 0;
+}
 
-    p {
-        margin-top: $spacer / 2;
-        font-size: $font-size-large;
+.description {
+    margin-top: $spacer / 2;
+    font-size: $font-size-large;
+}
+
+.titleReverse {
+    color: $brand-grey-light;
+
+    span {
+        color: $brand-grey-dark;
     }
 }
