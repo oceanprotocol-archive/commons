@@ -7,6 +7,11 @@
 
 .title {
     margin: 0;
+    font-size: $font-size-h2;
+
+    @media (min-width: $break-point--small) {
+        font-size: $font-size-h1;
+    }
 }
 
 .description {
@@ -15,6 +20,7 @@
 }
 
 .titleReverse {
+    composes: title;
     color: $brand-grey-light;
 
     span {
