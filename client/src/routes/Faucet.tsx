@@ -21,16 +21,24 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
         eth: 'xx'
     }
 
-    private getTokens = async (requestFromFaucet: () => void) => {
+    private getTokens = async (requestFromFaucet: () => any) => {
         this.setState({ isLoading: true })
 
         try {
-            await requestFromFaucet()
+            const response = await requestFromFaucet()
+
+            if (response.error) {
+                this.setState({
+                    isLoading: false,
+                    error: response.error
+                })
+
+                return
+            }
+
             this.setState({
                 isLoading: false,
-                success: `Successfully added ${
-                    this.state.eth
-                } ETH to your account.`
+                success: `Successfully added ETH to your account.`
             })
         } catch (error) {
             this.setState({ isLoading: false, error })
@@ -56,10 +64,8 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
                 <Spinner message="Getting Ether..." />
             ) : this.state.error ? (
                 <div className={styles.error}>
-                    {this.state.error}{' '}
-                    <Button link onClick={this.reset}>
-                        Try again
-                    </Button>
+                    <p>{this.state.error}</p>
+                    <Button onClick={this.reset}>Try again</Button>
                 </div>
             ) : this.state.success ? (
                 <div className={styles.success}>{this.state.success}</div>
