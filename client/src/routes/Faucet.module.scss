@@ -13,3 +13,10 @@
 .success {
     color: $green;
 }
+
+.error {
+    &,
+    p {
+        color: $red;
+    }
+}

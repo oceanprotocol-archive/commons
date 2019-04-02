@@ -53,7 +53,7 @@ class App extends Component<{}, AppState> {
     private requestFromFaucet = async () => {
         if (this.state.account !== '') {
             try {
-                await fetch(
+                const response = await fetch(
                     `${faucetScheme}://${faucetHost}:${faucetPort}/faucet`,
                     {
                         method: 'POST',
@@ -67,6 +67,8 @@ class App extends Component<{}, AppState> {
                         })
                     }
                 )
+
+                return response.json()
             } catch (error) {
                 Logger.log('requestFromFaucet', error)
             }
