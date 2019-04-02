@@ -54,8 +54,14 @@ export default class AssetFilesDetails extends PureComponent<
                 <div className={styles.files}>
                     {files.map(file => (
                         <ul key={file.index} className={styles.file}>
-                            <li>{file.contentType.split('/')[1]}</li>
-                            <li>{filesize(file.contentLength)}</li>
+                            <li>
+                                {file.contentType &&
+                                    file.contentType.split('/')[1]}
+                            </li>
+                            <li>
+                                {file.contentLength &&
+                                    filesize(file.contentLength)}
+                            </li>
                             {/* <li>{file.encoding}</li> */}
                             {/* <li>{file.compression}</li> */}
                         </ul>

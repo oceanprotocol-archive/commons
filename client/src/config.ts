@@ -19,13 +19,11 @@ export const aquariusPort = 443
 export const brizoScheme = 'https'
 export const brizoHost = 'nginx-brizo.dev-ocean.com'
 export const brizoPort = 443
+export const brizoAddress = '0x413c9ba0a05b8a600899b41b0c62dd661e689354'
 
 export const parityScheme = 'https'
 export const parityHost = 'nile.dev-ocean.com'
 export const parityPort = 443
-export const threshold = 0
-export const password = 'ocean_secret'
-export const address = '0x413c9ba0a05b8a600899b41b0c62dd661e689354'
 
 export const secretStoreScheme = 'https'
 export const secretStoreHost = 'secret-store.dev-ocean.com'
