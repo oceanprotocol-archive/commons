@@ -1,24 +1,22 @@
 import { Ocean } from '@oceanprotocol/squid'
 
 import {
-    address,
     aquariusHost,
     aquariusPort,
     aquariusScheme,
     brizoHost,
     brizoPort,
     brizoScheme,
+    brizoAddress,
     nodeHost,
     nodePort,
     nodeScheme,
     parityHost,
     parityPort,
     parityScheme,
-    password,
     secretStoreHost,
     secretStorePort,
     secretStoreScheme,
-    threshold,
     verbose
 } from './config'
 
@@ -33,11 +31,9 @@ export async function provideOcean() {
         nodeUri,
         aquariusUri,
         brizoUri,
+        brizoAddress,
         parityUri,
         secretStoreUri,
-        threshold,
-        password,
-        address,
         verbose
     }
 

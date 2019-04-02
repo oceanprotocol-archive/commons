@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
+import filesize from 'filesize'
+import { User } from '../../context/User'
 import Button from '../../components/atoms/Button'
 import Spinner from '../../components/atoms/Spinner'
 import styles from './AssetFilesDetails.module.scss'
 
 interface AssetFilesDetailsProps {
-    ocean: any
     files: any[]
     ddo: any
 }
@@ -13,26 +14,30 @@ interface AssetFilesDetailsProps {
 export default class AssetFilesDetails extends PureComponent<
     AssetFilesDetailsProps
 > {
-    public state = { decryptedFiles: [], isLoading: false, error: null }
+    public state = { isLoading: false, error: null }
 
     private purchaseAsset = async (ddo: any) => {
         this.setState({ isLoading: true, error: null })
+
+        const { ocean } = this.context
+        const accounts = await ocean.accounts.list()
+
         try {
-            const account = await this.props.ocean.getAccounts()
             const service = ddo.findServiceByType('Access')
-            const serviceAgreementSignatureResult = await this.props.ocean.signServiceAgreement(
+            const agreementId = await ocean.assets.order(
                 ddo.id,
                 service.serviceDefinitionId,
-                account[0]
+                accounts[0]
             )
-            await this.props.ocean.initializeServiceAgreement(
+
+            const path = await ocean.assets.consume(
+                agreementId,
                 ddo.id,
                 service.serviceDefinitionId,
-                serviceAgreementSignatureResult.agreementId,
-                serviceAgreementSignatureResult.signature,
-                (files: any) => this.setState({ decryptedFiles: files }),
-                account[0]
+                accounts[0],
+                ''
             )
+            Logger.log('path', path)
 
             this.setState({ isLoading: false })
         } catch (error) {
@@ -43,51 +48,46 @@ export default class AssetFilesDetails extends PureComponent<
 
     public render() {
         const { files, ddo } = this.props
-        const filesArray =
-            this.state.decryptedFiles.length > 0
-                ? this.state.decryptedFiles
-                : files
 
-        return (
+        return files ? (
             <>
-                {this.state.decryptedFiles.length > 0 ? (
-                    filesArray.forEach(file => (
-                        <>
-                            <ul>
-                                {/*
-                                    TODO: getting this metadata depends on a change to to OEP-8,
-                                    see: https://github.com/oceanprotocol/OEPs/pull/154
-                                */}
-                                {/* <li>{file.contentType}</li> */}
-                                <li>{file.contentLength}</li>
-                                {/* <li>{file.encoding}</li> */}
-                                {/* <li>{file.compression}</li> */}
-                            </ul>
+                <div className={styles.files}>
+                    {files.map(file => (
+                        <ul key={file.index} className={styles.file}>
+                            <li>
+                                {file.contentType &&
+                                    file.contentType.split('/')[1]}
+                            </li>
+                            <li>
+                                {file.contentLength &&
+                                    filesize(file.contentLength)}
+                            </li>
+                            {/* <li>{file.encoding}</li> */}
+                            {/* <li>{file.compression}</li> */}
+                        </ul>
+                    ))}
+                </div>
 
-                            {file.url && (
-                                <Button href={file.url}>Download asset</Button>
-                            )}
-                        </>
-                    ))
-                ) : this.state.isLoading ? (
+                {this.state.isLoading ? (
                     <Spinner message="Decrypting files, please sign with your wallet..." />
                 ) : (
-                    <>
-                        <Button
-                            primary
-                            className={styles.buttonMain}
-                            onClick={() => this.purchaseAsset(ddo)}
-                        >
-                            Get asset files
-                        </Button>
-                        {this.state.error && (
-                            <div className={styles.error}>
-                                {this.state.error}
-                            </div>
-                        )}
-                    </>
+                    <Button
+                        primary
+                        className={styles.buttonMain}
+                        onClick={() => this.purchaseAsset(ddo)}
+                    >
+                        Get asset files
+                    </Button>
+                )}
+
+                {this.state.error && (
+                    <div className={styles.error}>{this.state.error}</div>
                 )}
             </>
+        ) : (
+            <div>No files attached.</div>
         )
     }
 }
+
+AssetFilesDetails.contextType = User
