@@ -17,7 +17,6 @@ interface AssetDetailsProps {
 export default class AssetDetails extends Component<AssetDetailsProps> {
     public render() {
         const {
-            ocean,
             metadata,
             ddo,
             reportAsset,

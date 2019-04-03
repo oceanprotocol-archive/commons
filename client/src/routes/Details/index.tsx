@@ -97,7 +97,6 @@ export default class Details extends Component<DetailsProps, DetailsState> {
             >
                 {metadata && metadata.base.name ? (
                     <AssetDetails
-                        ocean={this.context.ocean}
                         metadata={metadata}
                         ddo={ddo}
                         signalAsset={this.signalAsset}
