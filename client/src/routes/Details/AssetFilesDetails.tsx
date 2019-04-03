@@ -11,13 +11,26 @@ interface AssetFilesDetailsProps {
     ddo: any
 }
 
+interface AssetFilesDetailsState {
+    isLoading: boolean
+    error: string
+    message: string
+}
+
 export default class AssetFilesDetails extends PureComponent<
-    AssetFilesDetailsProps
+    AssetFilesDetailsProps,
+    AssetFilesDetailsState
 > {
-    public state = { isLoading: false, error: null }
+    public state = {
+        isLoading: false,
+        error: '',
+        message: 'Decrypting files, please sign with your wallet...'
+    }
+
+    private resetState = () => this.setState({ isLoading: true, error: '' })
 
     private purchaseAsset = async (ddo: any) => {
-        this.setState({ isLoading: true, error: null })
+        this.resetState()
 
         const { ocean } = this.context
         const accounts = await ocean.accounts.list()
@@ -69,7 +82,7 @@ export default class AssetFilesDetails extends PureComponent<
                 </div>
 
                 {this.state.isLoading ? (
-                    <Spinner message="Decrypting files, please sign with your wallet..." />
+                    <Spinner message={this.state.message} />
                 ) : (
                     <Button
                         primary
@@ -80,7 +93,7 @@ export default class AssetFilesDetails extends PureComponent<
                     </Button>
                 )}
 
-                {this.state.error && (
+                {this.state.error !== '' && (
                     <div className={styles.error}>{this.state.error}</div>
                 )}
             </>
