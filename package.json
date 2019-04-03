@@ -1,5 +1,5 @@
 {
-  "name": "commons-marketplace",
+  "name": "commons",
   "description": "Ocean Protocol marketplace to explore, download, and publish open data sets.",
   "version": "0.1.0",
   "private": true,
@@ -36,6 +36,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/oceanprotocol/commons-marketplace"
+    "url": "https://github.com/oceanprotocol/commons"
   }
 }

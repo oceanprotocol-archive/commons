@@ -7,7 +7,6 @@ import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 
 interface AssetDetailsProps {
-    ocean: any
     metadata: any
     ddo: any
     reportAsset: any
@@ -38,7 +37,6 @@ export default class AssetDetails extends Component<AssetDetailsProps> {
                         {base.copyrightHolder}
                     </h2>
                     <div className={styles.metaPrimaryData}>
-
                         <span title="Date created">
                             <Moment
                                 date={base.dateCreated}
@@ -90,7 +88,6 @@ export default class AssetDetails extends Component<AssetDetailsProps> {
                 <AssetFilesDetails
                     files={base.files ? base.files : []}
                     ddo={ddo}
-                    ocean={ocean}
                 />
 
                 <Button onClick={() => reportAsset(ddo)}>Report asset</Button>

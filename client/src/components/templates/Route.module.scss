@@ -3,13 +3,27 @@
 .header {
     margin-top: $spacer;
     margin-bottom: $spacer;
+}
 
-    h1 {
-        margin: 0;
+.title {
+    margin: 0;
+    font-size: $font-size-h2;
+
+    @media (min-width: $break-point--small) {
+        font-size: $font-size-h1;
     }
+}
 
-    p {
-        margin-top: $spacer / 2;
-        font-size: $font-size-large;
+.description {
+    margin-top: $spacer / 2;
+    font-size: $font-size-large;
+}
+
+.titleReverse {
+    composes: title;
+    color: $brand-grey-light;
+
+    span {
+        color: $brand-grey-dark;
     }
 }

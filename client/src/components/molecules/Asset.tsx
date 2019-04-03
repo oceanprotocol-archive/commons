@@ -20,12 +20,14 @@ const AssetLink = ({ asset, list }: { asset: any; list?: boolean }) => {
     ) : (
         <article className={styles.asset}>
             <Link to={`/asset/${asset.id}`}>
-                <CategoryImage category={base.categories[0][0]} />
+                {base.categories && (
+                    <CategoryImage category={base.categories[0]} />
+                )}
                 <h1>{base.name}</h1>
                 <p>{base.description.substring(0, 90)}...</p>
 
                 <footer className={styles.assetFooter}>
-                    {base.categories && <div>{base.categories[0][0]}</div>}
+                    {base.categories && <div>{base.categories[0]}</div>}
                 </footer>
             </Link>
         </article>

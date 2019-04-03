@@ -11,3 +11,26 @@
     color: $red;
     font-size: $font-size-small;
 }
+
+.files {
+    text-align: center;
+}
+
+.file {
+    display: inline-block;
+    border: .1rem solid $brand-grey-light;
+    padding: $spacer $spacer / 2;
+    text-align: left;
+    margin-left: $spacer / 4;
+    margin-right: $spacer / 4;
+
+    li {
+        font-size: $font-size-small;
+        font-weight: $font-weight-bold;
+        color: $brand-grey-light;
+
+        &:before {
+            display: none;
+        }
+    }
+}

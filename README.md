@@ -1,16 +1,25 @@
 [![banner](https://raw.githubusercontent.com/oceanprotocol/art/master/github/repo-banner%402x.png)](https://oceanprotocol.com)
 
-<h1 align="center">commons-marketplace</h1>
+<h1 align="center">Commons</h1>
 
 > Marketplace front-end and backend server to explore, download, and publish open data sets.
+> https://commons.oceanprotocol.com
 
-[![Build Status](https://travis-ci.com/oceanprotocol/commons-marketplace.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons-marketplace)
+[![Build Status](https://travis-ci.com/oceanprotocol/commons.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-7b1173.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
 
-- [Prerequisites](#prerequisites)
+---
+
+**This marketplace is deployed under https://commons.oceanprotocol.com and can be used there. Feel free to [report any issues](https://github.com/oceanprotocol/commons/issues) you encounter.**
+
+If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
+
+---
+
 - [Get Started](#get-started)
+  - [Use with Barge](#use-with-barge)
 - [Production](#production)
 - [Testing](#testing)
 - [Code Style](#code-style)
@@ -18,22 +27,9 @@
 
 <img alt="screen shot 2019-02-08 at 16 53 57" src="https://user-images.githubusercontent.com/90316/52489283-27080e80-2bc2-11e9-8ec0-508c21eb86f7.png">
 
-## Prerequisites
-
-To make use of all the functionality, you need to connect to the Ocean network.
-
-For local development, you can spin up [`barge`](https://github.com/oceanprotocol/barge) to use a local network:
-
-```bash
-git clone git@github.com:oceanprotocol/barge.git
-cd barge
-
-./start_ocean.sh --latest --no-pleuston --local-spree-node
-```
-
-The default configuration of the client & server is to connect to this local network. Modify `./client/src/config.ts`, and `./server/src/config/config.ts` to change that.
-
 ## Get Started
+
+To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to Ocean's Nile test network remotely.
 
 To spin up both, the client and the server in a watch mode for local development, execute:
 
@@ -46,6 +42,19 @@ This will run both, client and server in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
 The page will reload if you make edits to files in either `./client` or `./server`.
+
+### Use with Barge
+
+If you prefer to connect to locally running components instead of remote connections to Ocean's Nile network, you can spin up [`barge`](https://github.com/oceanprotocol/barge) and use a local network:
+
+```bash
+git clone git@github.com:oceanprotocol/barge.git
+cd barge
+
+./start_ocean.sh --latest --no-pleuston --local-spree-node
+```
+
+Modify `./client/src/config.ts` to use those local connections.
 
 ## Production
 

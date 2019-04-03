@@ -41,9 +41,9 @@ export default class AssetsUser extends PureComponent<
                     }
                 }
             )
+        } else {
+            this.setState({ isLoading: false })
         }
-
-        this.setState({ isLoading: false })
     }
 
     public render() {

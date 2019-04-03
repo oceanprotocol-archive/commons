@@ -3,9 +3,13 @@
 .form {
     width: 100%;
     background: $brand-white;
-    padding: $spacer;
+    padding: $spacer / 1.5;
     border: 1px solid $brand-grey-lighter;
     border-radius: $border-radius;
+
+    @media (min-width: $break-point--small) {
+        padding: $spacer;
+    }
 
     fieldset {
         border: 0;
