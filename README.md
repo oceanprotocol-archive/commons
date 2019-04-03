@@ -10,6 +10,14 @@
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
 
+---
+
+**This marketplace is deployed under https://commons.oceanprotocol.com and can be used there. Feel free to [report any issues](https://github.com/oceanprotocol/commons/issues) you encounter.**
+
+If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
+
+---
+
 - [Get Started](#get-started)
   - [Use with Barge](#use-with-barge)
 - [Production](#production)
