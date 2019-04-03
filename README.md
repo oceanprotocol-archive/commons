@@ -1,13 +1,22 @@
 [![banner](https://raw.githubusercontent.com/oceanprotocol/art/master/github/repo-banner%402x.png)](https://oceanprotocol.com)
 
-<h1 align="center">commons-marketplace</h1>
+<h1 align="center">Commons</h1>
 
 > Marketplace front-end and backend server to explore, download, and publish open data sets.
+> https://commons.oceanprotocol.com
 
-[![Build Status](https://travis-ci.com/oceanprotocol/commons-marketplace.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons-marketplace)
+[![Build Status](https://travis-ci.com/oceanprotocol/commons.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-7b1173.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
+
+---
+
+**This marketplace is deployed under https://commons.oceanprotocol.com and can be used there. Feel free to [report any issues](https://github.com/oceanprotocol/commons/issues) you encounter.**
+
+If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
+
+---
 
 - [Get Started](#get-started)
   - [Use with Barge](#use-with-barge)

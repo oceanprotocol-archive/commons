@@ -63,7 +63,7 @@ class App extends Component<{}, AppState> {
                         },
                         body: JSON.stringify({
                             address: this.state.account,
-                            agent: 'commons-marketplace'
+                            agent: 'commons'
                         })
                     }
                 )
