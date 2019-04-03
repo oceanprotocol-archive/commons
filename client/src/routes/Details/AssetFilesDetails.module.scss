@@ -1,49 +1,8 @@
 @import '../../styles/variables';
 
-.buttonMain {
-    margin: auto;
-    margin-bottom: $spacer / 2;
-    display: block;
-}
-
-.error {
-    text-align: center;
-    color: $red;
-    font-size: $font-size-small;
-}
-
 .files {
     text-align: center;
-}
-
-.file {
-    display: inline-block;
-    background: $brand-grey;
-    padding: $spacer $spacer / 2;
-    text-align: left;
-    margin-left: $spacer / 4;
-    margin-right: $spacer / 4;
-    position: relative;
-    min-height: 100px;
-
-    &:before {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 0;
-        height: 0;
-        border-top: 1rem solid $body-background;
-        border-left: 1rem solid transparent;
-    }
-
-    li {
-        font-size: $font-size-small;
-        font-weight: $font-weight-bold;
-        color: $brand-white;
-
-        &:before {
-            display: none;
-        }
-    }
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
