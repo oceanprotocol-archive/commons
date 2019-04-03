@@ -95,8 +95,10 @@ export default class AssetDetails extends Component<AssetDetailsProps> {
                 <Button onClick={() => signalAsset(ddo)}>Like asset</Button>
 
                 {assetOwner ? (
-                        <Button onClick={() => retireAsset(ddo)}>Retire asset</Button>
-                    ) : null}
+                    <Button onClick={() => retireAsset(ddo)}>
+                        Retire asset
+                    </Button>
+                ) : null}
 
                 <pre>
                     <code>{JSON.stringify(metadata, null, 2)}</code>

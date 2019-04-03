@@ -20,18 +20,23 @@ export default class AssetFilesDetails extends PureComponent<
         this.setState({ isLoading: true, error: null })
 
         const { ocean } = this.context
-        const accounts = await ocean.accounts.list()
 
         try {
-            const account = await this.props.ocean.accounts.list()
+            const accounts = await ocean.accounts.list()
             const accessService = ddo.findServiceByType('Access')
-            const agreementId = await this.props.ocean.assets.order(
+            const agreementId = await ocean.assets.order(
                 ddo.id,
                 accessService.serviceDefinitionId,
-                account[0]
+                accounts[0]
             )
             const folder = ''
-            await this.props.ocean.assets.consume(agreementId, ddo.id, accessService.serviceDefinitionId, account[0], folder)
+            await ocean.assets.consume(
+                agreementId,
+                ddo.id,
+                accessService.serviceDefinitionId,
+                accounts[0],
+                folder
+            )
             this.setState({ isLoading: false })
         } catch (error) {
             Logger.log('error', error)
