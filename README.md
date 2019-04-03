@@ -1,10 +1,10 @@
 [![banner](https://raw.githubusercontent.com/oceanprotocol/art/master/github/repo-banner%402x.png)](https://oceanprotocol.com)
 
-<h1 align="center">commons-marketplace</h1>
+<h1 align="center">Commons</h1>
 
 > Marketplace front-end and backend server to explore, download, and publish open data sets.
 
-[![Build Status](https://travis-ci.com/oceanprotocol/commons-marketplace.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons-marketplace)
+[![Build Status](https://travis-ci.com/oceanprotocol/commons.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-7b1173.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
@@ -25,7 +25,7 @@ To make use of all the functionality, you need to connect to the Ocean network. 
 To spin up both, the client and the server in a watch mode for local development, execute:
 
 ```bash
-npm install
+npm install-all
 npm start
 ```
 
