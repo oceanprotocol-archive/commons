@@ -18,23 +18,27 @@ interface SearchProps {
 }
 
 export default class Search extends Component<SearchProps, SearchState> {
-    public state = { results: [], isLoading: true }
+    public state = { results: [], isLoading: true, page: 0 }
 
     public async componentDidMount() {
         const searchParams = queryString.parse(this.props.location.search)
+        const { text } = searchParams
 
-        const queryRequest = {
-            offset: 500,
-            page: 1,
+        const searchQuery = {
+            text,
+            offset: 100,
+            page: 0,
             query: {
-                text: searchParams.text
+                value: 1
             },
             sort: {
-                text: 1
+                datePublished: 1
             }
         }
 
-        const assets = await this.context.ocean.assets.search(searchParams.text)
+        const assets = await this.context.ocean.aquarius.queryMetadataByText(
+            searchQuery
+        )
         this.setState({ results: assets, isLoading: false })
         Logger.log(`Loaded ${assets.length} assets`)
     }
@@ -49,7 +53,7 @@ export default class Search extends Component<SearchProps, SearchState> {
                 ))}
             </div>
         ) : (
-            <div>No data sets yet</div>
+            <div>No data sets found.</div>
         )
 
     public render() {
