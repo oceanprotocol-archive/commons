@@ -8,12 +8,12 @@ import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'
 
-interface HomeState {
-    search?: string
-}
-
 interface HomeProps {
     history: any
+}
+
+interface HomeState {
+    search?: string
 }
 
 class Home extends Component<HomeProps, HomeState> {

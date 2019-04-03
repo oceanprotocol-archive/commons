@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import queryString from 'query-string'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
@@ -7,27 +7,36 @@ import { User } from '../context/User'
 import Asset from '../components/molecules/Asset'
 import styles from './Search.module.scss'
 
-interface SearchState {
-    results: any[]
-    isLoading: boolean
-}
-
 interface SearchProps {
-    location: any
-    history: any
+    location: Location
+    history: History
 }
 
-export default class Search extends Component<SearchProps, SearchState> {
-    public state = { results: [], isLoading: true, page: 0 }
+interface SearchState {
+    assets: any[]
+    isLoading: boolean
+    page: number
+}
 
-    public async componentDidMount() {
-        const searchParams = queryString.parse(this.props.location.search)
-        const { text } = searchParams
+export default class Search extends PureComponent<SearchProps, SearchState> {
+    public state = {
+        assets: [],
+        isLoading: true,
+        page: 0
+    }
 
+    private readonly searchTerm = queryString.parse(this.props.location.search)
+        .text
+
+    public componentDidMount() {
+        this.searchAssets()
+    }
+
+    private searchAssets = async () => {
         const searchQuery = {
-            text,
+            text: this.searchTerm,
             offset: 100,
-            page: 0,
+            page: this.state.page,
             query: {
                 price: [-1, 1]
             },
@@ -39,16 +48,16 @@ export default class Search extends Component<SearchProps, SearchState> {
         const assets = await this.context.ocean.aquarius.queryMetadataByText(
             searchQuery
         )
-        this.setState({ results: assets, isLoading: false })
+        this.setState({ assets, isLoading: false })
         Logger.log(`Loaded ${assets.length} assets`)
     }
 
     public renderResults = () =>
         this.state.isLoading ? (
             <Spinner message="Searching..." />
-        ) : this.state.results.length ? (
+        ) : this.state.assets.length ? (
             <div className={styles.results}>
-                {this.state.results.map((asset: any) => (
+                {this.state.assets.map((asset: any) => (
                     <Asset key={asset.id} asset={asset} />
                 ))}
             </div>
@@ -57,11 +66,9 @@ export default class Search extends Component<SearchProps, SearchState> {
         )
 
     public render() {
-        const searchTerm = queryString.parse(this.props.location.search).text
-
         return (
             <Route
-                title={`Search Results for <span>${searchTerm}</span>`}
+                title={`Search Results for <span>${this.searchTerm}</span>`}
                 titleReverse
                 wide
             >
