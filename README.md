@@ -3,6 +3,7 @@
 <h1 align="center">Commons</h1>
 
 > Marketplace front-end and backend server to explore, download, and publish open data sets.
+> https://commons.oceanprotocol.com
 
 [![Build Status](https://travis-ci.com/oceanprotocol/commons.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-7b1173.svg?style=flat-square)](https://github.com/prettier/prettier)
@@ -25,7 +26,7 @@ To make use of all the functionality, you need to connect to the Ocean network. 
 To spin up both, the client and the server in a watch mode for local development, execute:
 
 ```bash
-npm install-all
+npm install
 npm start
 ```
 
