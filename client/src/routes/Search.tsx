@@ -29,7 +29,7 @@ export default class Search extends Component<SearchProps, SearchState> {
             offset: 100,
             page: 0,
             query: {
-                value: 1
+                price: [-1, 1]
             },
             sort: {
                 datePublished: 1
