@@ -18,7 +18,7 @@ import {
     faucetHost,
     faucetPort,
     faucetScheme
-} from './config'
+} from './config/config'
 
 declare global {
     interface Window {
