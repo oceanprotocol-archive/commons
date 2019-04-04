@@ -29,7 +29,12 @@ If you're a developer and want to contribute to, or want to utilize this marketp
 
 ## Get Started
 
-To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to Ocean's Nile test network remotely.
+To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to [Ocean's Nile test network](https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet) remotely.
+
+This repo contains a client and a server, both written in TypeScript:
+
+- **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
+- **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking.
 
 To spin up both, the client and the server in a watch mode for local development, execute:
 
@@ -58,7 +63,7 @@ Modify `./client/src/config.ts` to use those local connections.
 
 ## Production
 
-To create a production build of both, the client and the server:
+To create a production build of both, the client and the server, run from the root of the project:
 
 ```bash
 npm run build
@@ -72,12 +77,11 @@ Builds the client for production to the `./client/build` folder, and the server 
 npm test
 ```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner in the interactive watch mode.
 
 ## Code Style
 
-For linting and auto-formatting you can use:
+For linting and auto-formatting you can use from the root of the project:
 
 ```bash
 # auto format all ts & css with eslint & stylelint
