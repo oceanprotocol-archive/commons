@@ -3,3 +3,35 @@
 .message {
     margin-bottom: $spacer;
 }
+
+.success {
+    composes: message;
+    background: $green;
+    padding: $spacer / 1.5;
+    border-radius: $border-radius;
+    color: $brand-white;
+    font-weight: $font-weight-bold;
+    text-align: center;
+
+    &,
+    a,
+    button {
+        color: $brand-white;
+    }
+
+    a,
+    button {
+        transition: color .2s ease-out;
+
+        &:hover,
+        &:focus {
+            color: $brand-pink;
+            transform: none;
+        }
+    }
+
+    a {
+        display: inline-block;
+        margin-right: $spacer;
+    }
+}

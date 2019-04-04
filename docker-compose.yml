@@ -1,7 +1,24 @@
-version: '2.1'
+version: '3.4'
+
 services:
 
-  mongo:
-    image: mongo:4
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
     ports:
-      - 27017:27017
+      - 3000:3000
+    depends_on:
+      - server
+    environment:
+      - SERVICE_SCHEME=http
+      - SERVICE_HOST=localhost
+      - SERVICE_PORT=4000
+
+  server:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    ports:
+      - 4000:4000
+    command: npm run start

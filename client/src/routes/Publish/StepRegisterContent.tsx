@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import Web3message from '../../components/organisms/Web3message'
 import Spinner from '../../components/atoms/Spinner'
+import Button from '../../components/atoms/Button'
 import styles from './StepRegisterContent.module.scss'
 
 interface StepRegisterContentProps {
@@ -26,11 +27,14 @@ export default class StepRegisterContent extends PureComponent<
     )
 
     public publishedState = () => (
-        <div className={styles.message}>
-            Your asset is published! See it{' '}
-            <a href={'/asset/' + this.props.state.publishedDid}>here</a>, submit
-            another asset by clicking{' '}
-            <a onClick={() => this.props.toStart()}>here</a>
+        <div className={styles.success}>
+            <p>Your asset is published!</p>
+            <Button link to={'/asset/' + this.props.state.publishedDid}>
+                See published asset
+            </Button>
+            <Button link onClick={() => this.props.toStart()}>
+                Publish another asset
+            </Button>
         </div>
     )
 
@@ -38,7 +42,6 @@ export default class StepRegisterContent extends PureComponent<
         return (
             <>
                 <Web3message />
-
                 {this.props.state.isPublishing ? (
                     this.publishingState()
                 ) : this.props.state.publishingError ? (

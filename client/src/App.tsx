@@ -18,7 +18,7 @@ import {
     faucetHost,
     faucetPort,
     faucetScheme
-} from './config'
+} from './config/config'
 
 declare global {
     interface Window {
@@ -40,6 +40,7 @@ interface AppState {
     web3: Web3
     ocean: {}
     startLogin: () => void
+    message: string
 }
 
 class App extends Component<{}, AppState> {
@@ -94,7 +95,8 @@ class App extends Component<{}, AppState> {
         account: '',
         ocean: {},
         startLogin: this.startLogin,
-        requestFromFaucet: this.requestFromFaucet
+        requestFromFaucet: this.requestFromFaucet,
+        message: 'Connecting to Ocean...'
     }
 
     public async componentDidMount() {
@@ -185,7 +187,7 @@ class App extends Component<{}, AppState> {
                             <main className={styles.main}>
                                 {this.state.isLoading ? (
                                     <div className={styles.loader}>
-                                        <Spinner message="Connecting to Ocean..." />
+                                        <Spinner message={this.state.message} />
                                     </div>
                                 ) : (
                                     <Routes />

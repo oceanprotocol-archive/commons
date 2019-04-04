@@ -1,19 +1,8 @@
 import React, { PureComponent } from 'react'
-import { Logger } from '@oceanprotocol/squid'
-import filesize from 'filesize'
-import { User } from '../../context/User'
-import Button from '../../components/atoms/Button'
-import Spinner from '../../components/atoms/Spinner'
+import AssetFile from './AssetFile'
 import styles from './AssetFilesDetails.module.scss'
 
-interface AssetFilesDetailsProps {
-    files: any[]
-    ddo: any
-}
-
-export default class AssetFilesDetails extends PureComponent<
-    AssetFilesDetailsProps
-> {
+export default class AssetFilesDetails extends PureComponent<{ files: any[], ddo: any }> {
     public state = { isLoading: false, error: null }
 
     private purchaseAsset = async (ddo: any) => {
@@ -51,41 +40,12 @@ export default class AssetFilesDetails extends PureComponent<
             <>
                 <div className={styles.files}>
                     {files.map(file => (
-                        <ul key={file.index} className={styles.file}>
-                            <li>
-                                {file.contentType &&
-                                    file.contentType.split('/')[1]}
-                            </li>
-                            <li>
-                                {file.contentLength &&
-                                    filesize(file.contentLength)}
-                            </li>
-                            {/* <li>{file.encoding}</li> */}
-                            {/* <li>{file.compression}</li> */}
-                        </ul>
+                        <AssetFile key={file.index} ddo={ddo} file={file} />
                     ))}
                 </div>
-
-                {this.state.isLoading ? (
-                    <Spinner message="Decrypting files, please sign with your wallet..." />
-                ) : (
-                    <Button
-                        primary
-                        className={styles.buttonMain}
-                        onClick={() => this.purchaseAsset(ddo)}
-                    >
-                        Get asset files
-                    </Button>
-                )}
-
-                {this.state.error && (
-                    <div className={styles.error}>{this.state.error}</div>
-                )}
             </>
         ) : (
             <div>No files attached.</div>
         )
     }
 }
-
-AssetFilesDetails.contextType = User
