@@ -80,9 +80,9 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     ddo={ddo}
                 />
 
-                <pre>
+                {/* <pre>
                     <code>{JSON.stringify(metadata, null, 2)}</code>
-                </pre>
+                </pre> */}
             </>
         )
     }
