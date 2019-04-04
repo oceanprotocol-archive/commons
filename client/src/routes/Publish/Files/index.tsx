@@ -6,7 +6,7 @@ import ItemForm from './ItemForm'
 import Item from './Item'
 import styles from './index.module.scss'
 
-import { serviceHost, servicePort, serviceScheme } from '../../../config'
+import { serviceHost, servicePort, serviceScheme } from '../../../config/config'
 
 interface File {
     url: string
