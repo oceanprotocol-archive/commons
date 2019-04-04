@@ -18,7 +18,7 @@ import {
     secretStorePort,
     secretStoreScheme,
     verbose
-} from './config'
+} from './config/config'
 
 export async function provideOcean() {
     const nodeUri = `${nodeScheme}://${nodeHost}:${nodePort}`
