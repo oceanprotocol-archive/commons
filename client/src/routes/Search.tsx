@@ -34,10 +34,10 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
     private searchAssets = async () => {
         const searchQuery = {
-            text: this.searchTerm,
             offset: 100,
             page: this.state.page,
             query: {
+                text: [this.searchTerm],
                 price: [-1, 1]
             },
             sort: {
@@ -45,7 +45,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
             }
         }
 
-        const assets = await this.context.ocean.aquarius.queryMetadataByText(
+        const assets = await this.context.ocean.aquarius.queryMetadata(
             searchQuery
         )
         this.setState({ assets, isLoading: false })
