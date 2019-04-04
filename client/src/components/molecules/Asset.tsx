@@ -12,8 +12,11 @@ const AssetLink = ({ asset, list }: { asset: any; list?: boolean }) => {
         <article className={styles.assetList}>
             <Link to={`/asset/${asset.id}`}>
                 <h1>{base.name}</h1>
-                <div className={styles.date} title={base.dateCreated}>
-                    {moment(base.dateCreated, 'YYYYMMDD').fromNow()}
+                <div
+                    className={styles.date}
+                    title={`Published on ${base.datePublished}`}
+                >
+                    {moment(base.datePublished, 'YYYYMMDD').fromNow()}
                 </div>
             </Link>
         </article>
