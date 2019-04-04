@@ -14,7 +14,7 @@ RUN npm install -g serve
 RUN bash scripts/install.sh
 RUN bash scripts/build.sh
 
-ENTRYPOINT ["/pleuston/scripts/docker-entrypoint.sh"]
+ENTRYPOINT ["serve", "-s", "build"]
 
 # Expose listen port
 EXPOSE 4000
