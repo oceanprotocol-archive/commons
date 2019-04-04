@@ -10,6 +10,13 @@ interface AssetDetailsProps {
 }
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
+    private datafilesLine = (files: any) => {
+        if (files.length === 1) {
+            return <span>{files.length} data file</span>
+        }
+        return <span>{files.length} data files</span>
+    }
+
     public render() {
         const { metadata, ddo } = this.props
         const { base } = metadata
@@ -32,18 +39,14 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                             />
                         </span>
 
-                        {base.categories ? (
+                        {base.categories && (
                             // TODO: Make this link to search for respective category
                             <Link to={`/search?q=${base.categories[0]}`}>
                                 {base.categories[0]}
                             </Link>
-                        ) : (
-                            <Link to={'/search?q='}>Fake Category</Link>
                         )}
 
-                        {base.files && (
-                            <span>{base.files.length} data files</span>
-                        )}
+                        {base.files && this.datafilesLine(base.files)}
                     </div>
                 </aside>
 
@@ -77,9 +80,9 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     ddo={ddo}
                 />
 
-                <pre>
+                {/* <pre>
                     <code>{JSON.stringify(metadata, null, 2)}</code>
-                </pre>
+                </pre> */}
             </>
         )
     }
