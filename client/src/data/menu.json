@@ -1,15 +1,18 @@
 [
   {
     "title": "Publish",
-    "link": "/publish"
+    "link": "/publish",
+    "web3": true
   },
   {
     "title": "History",
-    "link": "/history"
+    "link": "/history",
+    "web3": true
   },
   {
     "title": "Faucet",
-    "link": "/faucet"
+    "link": "/faucet",
+    "web3": true
   },
   {
     "title": "About",
