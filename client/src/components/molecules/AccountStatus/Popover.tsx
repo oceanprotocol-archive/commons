@@ -7,7 +7,7 @@ export default class Popover extends PureComponent<{
     style: React.CSSProperties
 }> {
     public render() {
-        const { account, balance, network } = this.context
+        const { account, balance, network, isWeb3 } = this.context
         return (
             <div
                 className={styles.popover}
@@ -31,15 +31,22 @@ export default class Popover extends PureComponent<{
                     </div>
                 )}
 
-                <div className={styles.popoverInfoline}>
-                    {account ? (
-                        <span className={styles.address} title={account}>
-                            {account}
-                        </span>
-                    ) : (
-                        <em>No account selected</em>
-                    )}
-                </div>
+                {!isWeb3 ? (
+                    <div className={styles.popoverInfoline}>
+                        No Web3 detected. Use a browser with MetaMask installed
+                        to publish assets.
+                    </div>
+                ) : (
+                    <div className={styles.popoverInfoline}>
+                        {account ? (
+                            <span className={styles.address} title={account}>
+                                {account}
+                            </span>
+                        ) : (
+                            <em>No account selected</em>
+                        )}
+                    </div>
+                )}
 
                 <div className={styles.popoverInfoline}>
                     {network && network}
