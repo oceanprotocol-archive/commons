@@ -7,7 +7,7 @@ export default class Popover extends PureComponent<{
     style: React.CSSProperties
 }> {
     public render() {
-        const { account, balance, network, isWeb3 } = this.context
+        const { account, balance, network, isWeb3, isNile } = this.context
         return (
             <div
                 className={styles.popover}
@@ -37,20 +37,26 @@ export default class Popover extends PureComponent<{
                         to publish assets.
                     </div>
                 ) : (
-                    <div className={styles.popoverInfoline}>
-                        {account ? (
-                            <span className={styles.address} title={account}>
-                                {account}
-                            </span>
-                        ) : (
-                            <em>No account selected</em>
-                        )}
-                    </div>
+                    <>
+                        <div className={styles.popoverInfoline}>
+                            {account ? (
+                                <span
+                                    className={styles.address}
+                                    title={account}
+                                >
+                                    {account}
+                                </span>
+                            ) : (
+                                <em>No account selected</em>
+                            )}
+                        </div>
+                        <div className={styles.popoverInfoline}>
+                            {network && !isNile
+                                ? 'Please connect to Custom RPC\n https://nile.dev-ocean.com'
+                                : network && `Connected to ${network} network`}
+                        </div>
+                    </>
                 )}
-
-                <div className={styles.popoverInfoline}>
-                    {network && network}
-                </div>
             </div>
         )
     }

@@ -22,7 +22,7 @@ const Indicator = ({
             {states =>
                 !states.isWeb3 ? (
                     <span className={styles.statusIndicator} />
-                ) : !states.isLogged ? (
+                ) : !states.isLogged || !states.isNile ? (
                     <span className={styles.statusIndicatorCloseEnough} />
                 ) : states.isLogged ? (
                     <span className={styles.statusIndicatorActive} />
