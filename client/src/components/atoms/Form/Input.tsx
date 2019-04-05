@@ -23,6 +23,7 @@ interface InputProps {
     value?: string
     onChange?(
         event:
+            | any
             | FormEvent<HTMLInputElement>
             | ChangeEvent<HTMLInputElement>
             | ChangeEvent<HTMLSelectElement>
@@ -39,6 +40,7 @@ interface InputState {
 }
 
 export default class Input extends PureComponent<InputProps, InputState> {
+    hiddenDate: any
     public state: InputState = {
         isFocused: false,
         startDate: new Date()
@@ -64,6 +66,13 @@ export default class Input extends PureComponent<InputProps, InputState> {
         this.setState({
             startDate: date
         })
+        const event = {
+            currentTarget: {
+                name: 'startDate',
+                value: date
+            }
+        }
+        this.props.onChange!(event as any)
     }
 
     public InputComponent = () => {
@@ -157,7 +166,6 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     <div className={wrapClass}>
                         <DatePicker
                             selected={this.state.startDate}
-                            // TODO: this needs to be able to receive this.props.onChange too
                             onChange={this.handleDateChange}
                             className={styles.input}
                             onFocus={this.toggleFocus}
