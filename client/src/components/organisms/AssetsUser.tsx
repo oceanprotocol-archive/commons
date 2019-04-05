@@ -18,29 +18,43 @@ export default class AssetsUser extends PureComponent<
 
     private async searchOcean() {
         if (this.context.account) {
-            this.context.ocean.keeper.didRegistry.contract.getPastEvents(
-                'DIDAttributeRegistered',
-                {
-                    filter: { _owner: this.context.account },
-                    fromBlock: 0,
-                    toBlock: 'latest'
-                },
-                async (error: any, events: any) => {
-                    if (error) {
-                        Logger.log('error retrieving', error)
-                        this.setState({ isLoading: false })
-                    } else {
-                        const results = []
-                        for (const event of events) {
-                            const ddo = await this.context.ocean.assets.resolve(
-                                `did:op:${event.returnValues._did.substring(2)}`
-                            )
-                            results.push(ddo)
-                        }
-                        this.setState({ results, isLoading: false })
-                    }
+            try {
+                const publishedEvents = await this.context.ocean.keeper.didRegistry.contract.getPastEvents(
+                    'DIDAttributeRegistered',
+                    {
+                        filter: { _owner: this.context.account },
+                        fromBlock: 0,
+                        toBlock: 'latest'
+                    })
+                const results = []
+                for (const event of publishedEvents) {
+                    const ddo = await this.context.ocean.assets.resolve(
+                        `did:op:${event.returnValues._did.substring(2)}`
+                    )
+                    results.push(ddo)
                 }
-            )
+                this.setState({ results, isLoading: false })
+                /*
+                const consumedEvents = this.context.ocean.keeper.templates.escrowAccessSecretStoreTemplate.contract.getPastEvents(
+                    'AgreementCreated',
+                    {
+                        filter: { _accessConsumer: this.context.account },
+                        fromBlock: 0,
+                        toBlock: 'latest'
+                    })
+                const consumedResults = []
+                for (const event of publishedEvents) {
+                    const ddo = await this.context.ocean.assets.resolve(
+                        `did:op:${event.returnValues._did.substring(2)}`
+                    )
+                    consumedResults.push(ddo)
+                }
+                this.setState({ consumedResults, isLoading: false })
+                */
+            } catch (error) {
+                Logger.log('error getting history', error)
+                this.setState({ isLoading: false })
+            }
         } else {
             this.setState({ isLoading: false })
         }
