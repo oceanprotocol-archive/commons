@@ -105,12 +105,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                                 options
                                     .sort((a, b) => a.localeCompare(b))
                                     .map((option: string, index: number) => (
-                                        <option
-                                            key={index}
-                                            value={slugify(option, {
-                                                lower: true
-                                            })}
-                                        >
+                                        <option key={index} value={option}>
                                             {option}
                                         </option>
                                     ))}
