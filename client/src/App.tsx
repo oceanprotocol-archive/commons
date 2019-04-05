@@ -31,6 +31,7 @@ interface AppState {
     isLogged: boolean
     isLoading: boolean
     isWeb3: boolean
+    isNile: boolean
     account: string
     balance: {
         eth: number
@@ -82,6 +83,7 @@ class App extends Component<{}, AppState> {
         isLogged: false,
         isLoading: true,
         isWeb3: false,
+        isNile: false,
         balance: {
             eth: 0,
             ocn: 0
@@ -167,7 +169,8 @@ class App extends Component<{}, AppState> {
             const accounts = await ocean.accounts.list()
             const balance = await accounts[0].getBalance()
             const network = await ocean.keeper.getNetworkName()
-            this.setState({ balance, network })
+            const isNile = network === 'Nile'
+            this.setState({ balance, network, isNile })
         } catch (e) {
             Logger.log('ocean/balance error', e)
             this.setState({
