@@ -15,6 +15,7 @@ interface SearchProps {
 
 interface SearchState {
     results: any[]
+    offset: number
     totalPages: number
     currentPage: number
     isLoading: boolean
@@ -23,6 +24,7 @@ interface SearchState {
 export default class Search extends PureComponent<SearchProps, SearchState> {
     public state = {
         results: [],
+        offset: 25,
         totalPages: 1,
         currentPage: 1,
         isLoading: true
@@ -37,7 +39,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
     private searchAssets = async () => {
         const searchQuery = {
-            offset: 100,
+            offset: this.state.offset,
             page: this.state.currentPage,
             query: {
                 text: [this.searchTerm],
