@@ -15,6 +15,7 @@ interface SearchProps {
 
 interface SearchState {
     results: any[]
+    totalResults: number
     offset: number
     totalPages: number
     currentPage: number
@@ -24,6 +25,7 @@ interface SearchState {
 export default class Search extends PureComponent<SearchProps, SearchState> {
     public state = {
         results: [],
+        totalResults: 0,
         offset: 25,
         totalPages: 1,
         currentPage: 1,
@@ -55,6 +57,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         )
         this.setState({
             results: search.results,
+            totalResults: search.totalResults,
             totalPages: search.totalPages,
             currentPage: search.page + 1, // first page is always 0 in response
             isLoading: false
@@ -81,11 +84,13 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         )
 
     public render() {
-        const { totalPages, currentPage } = this.state
+        const { totalResults, totalPages, currentPage } = this.state
 
         return (
             <Route
-                title={`Search Results for <span>${this.searchTerm}</span>`}
+                title={`${totalResults > 0 && totalResults} Results for <span>${
+                    this.searchTerm
+                }</span>`}
                 titleReverse
                 wide
             >
