@@ -30,7 +30,8 @@
     margin-bottom: $spacer / 2;
     text-align: left;
     position: relative;
-    min-height: 100px;
+    height: 8rem;
+    width: 6rem;
 
     &:before {
         content: '';
