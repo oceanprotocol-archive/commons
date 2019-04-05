@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './Button.module.scss'
 
@@ -10,6 +11,7 @@ interface ButtonProps {
     href?: string
     onClick?: any
     disabled?: boolean
+    to?: string
 }
 
 export default class Button extends PureComponent<ButtonProps, any> {
@@ -21,6 +23,7 @@ export default class Button extends PureComponent<ButtonProps, any> {
             href,
             children,
             className,
+            to,
             ...props
         } = this.props
 
@@ -32,11 +35,23 @@ export default class Button extends PureComponent<ButtonProps, any> {
             classes = styles.button
         }
 
-        return href ? (
-            <a href={href} className={cx(classes, className)} {...props}>
-                {children}
-            </a>
-        ) : (
+        if (to) {
+            return (
+                <Link to={to} className={cx(classes, className)} {...props}>
+                    {children}
+                </Link>
+            )
+        }
+
+        if (href) {
+            return (
+                <a href={href} className={cx(classes, className)} {...props}>
+                    {children}
+                </a>
+            )
+        }
+
+        return (
             <button className={cx(classes, className)} {...props}>
                 {children}
             </button>
