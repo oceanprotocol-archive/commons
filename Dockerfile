@@ -11,6 +11,7 @@ COPY . /commons
 WORKDIR /commons
 
 RUN npm install -g serve
+RUN npm install
 RUN bash scripts/install.sh
 RUN bash scripts/build.sh
 
