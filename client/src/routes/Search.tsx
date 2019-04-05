@@ -13,14 +13,14 @@ interface SearchProps {
 }
 
 interface SearchState {
-    assets: any[]
+    results: any[]
     isLoading: boolean
     page: number
 }
 
 export default class Search extends PureComponent<SearchProps, SearchState> {
     public state = {
-        assets: [],
+        results: [],
         isLoading: true,
         page: 0
     }
@@ -45,19 +45,19 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
             }
         }
 
-        const assets = await this.context.ocean.aquarius.queryMetadata(
+        const search = await this.context.ocean.aquarius.queryMetadata(
             searchQuery
         )
-        this.setState({ assets, isLoading: false })
-        Logger.log(`Loaded ${assets.length} assets`)
+        this.setState({ results: search.results, isLoading: false })
+        Logger.log(`Loaded ${this.state.results.length} assets`)
     }
 
     public renderResults = () =>
         this.state.isLoading ? (
             <Spinner message="Searching..." />
-        ) : this.state.assets.length ? (
+        ) : this.state.results && this.state.results.length ? (
             <div className={styles.results}>
-                {this.state.assets.map((asset: any) => (
+                {this.state.results.map((asset: any) => (
                     <Asset key={asset.id} asset={asset} />
                 ))}
             </div>
