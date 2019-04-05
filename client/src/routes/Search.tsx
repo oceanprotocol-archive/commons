@@ -5,6 +5,7 @@ import Spinner from '../components/atoms/Spinner'
 import Route from '../components/templates/Route'
 import { User } from '../context/User'
 import Asset from '../components/molecules/Asset'
+import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
 
 interface SearchProps {
@@ -14,15 +15,17 @@ interface SearchProps {
 
 interface SearchState {
     results: any[]
+    totalPages: number
+    currentPage: number
     isLoading: boolean
-    page: number
 }
 
 export default class Search extends PureComponent<SearchProps, SearchState> {
     public state = {
         results: [],
-        isLoading: true,
-        page: 0
+        totalPages: 1,
+        currentPage: 1,
+        isLoading: true
     }
 
     private readonly searchTerm = queryString.parse(this.props.location.search)
@@ -35,7 +38,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
     private searchAssets = async () => {
         const searchQuery = {
             offset: 100,
-            page: this.state.page,
+            page: this.state.currentPage,
             query: {
                 text: [this.searchTerm],
                 price: [-1, 1]
@@ -48,8 +51,17 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         const search = await this.context.ocean.aquarius.queryMetadata(
             searchQuery
         )
-        this.setState({ results: search.results, isLoading: false })
+        this.setState({
+            results: search.results,
+            totalPages: search.totalPages,
+            currentPage: search.page + 1, // first page is always 0 in response
+            isLoading: false
+        })
         Logger.log(`Loaded ${this.state.results.length} assets`)
+    }
+
+    private setPage = (page: number) => {
+        this.setState({ currentPage: page })
     }
 
     public renderResults = () =>
@@ -66,6 +78,8 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         )
 
     public render() {
+        const { totalPages, currentPage } = this.state
+
         return (
             <Route
                 title={`Search Results for <span>${this.searchTerm}</span>`}
@@ -73,6 +87,14 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                 wide
             >
                 {this.renderResults()}
+
+                <Pagination
+                    totalPages={totalPages}
+                    currentPage={currentPage}
+                    prevPage={currentPage - 1}
+                    nextPage={currentPage + 1}
+                    setPage={this.setPage}
+                />
             </Route>
         )
     }
