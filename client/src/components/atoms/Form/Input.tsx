@@ -23,7 +23,6 @@ interface InputProps {
     value?: string
     onChange?(
         event:
-            | any
             | FormEvent<HTMLInputElement>
             | ChangeEvent<HTMLInputElement>
             | ChangeEvent<HTMLSelectElement>
@@ -36,14 +35,13 @@ interface InputProps {
 
 interface InputState {
     isFocused: boolean
-    startDate?: Date
+    dateCreated?: Date
 }
 
 export default class Input extends PureComponent<InputProps, InputState> {
-    hiddenDate: any
     public state: InputState = {
         isFocused: false,
-        startDate: new Date()
+        dateCreated: new Date()
     }
 
     public inputWrapClasses() {
@@ -64,11 +62,11 @@ export default class Input extends PureComponent<InputProps, InputState> {
 
     private handleDateChange = (date: Date) => {
         this.setState({
-            startDate: date
+            dateCreated: date
         })
         const event = {
             currentTarget: {
-                name: 'startDate',
+                name: 'dateCreated',
                 value: date
             }
         }
@@ -165,7 +163,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                 return (
                     <div className={wrapClass}>
                         <DatePicker
-                            selected={this.state.startDate}
+                            selected={this.state.dateCreated}
                             onChange={this.handleDateChange}
                             className={styles.input}
                             onFocus={this.toggleFocus}
