@@ -6,14 +6,14 @@
       "fields": {
         "name": {
           "label": "Title",
-          "placeholder": "i.e. Almond sales data",
+          "placeholder": "e.g. Almond sales data",
           "type": "text",
           "required": true,
           "help": "Enter a concise title. You will be able to enter a more thorough description in the next step."
         },
         "files": {
           "label": "Files",
-          "placeholder": "i.e. https://file.com/file.json",
+          "placeholder": "e.g. https://file.com/file.json",
           "type": "text",
           "required": true,
           "help": "Provide one or multiple urls to your data set files."
@@ -27,7 +27,7 @@
         "description": {
           "label": "Description",
           "help": "Add a thorough description with as much detail as possible.",
-          "placeholder": "i.e. Almond sales data ",
+          "placeholder": "e.g. Almond sales data ",
           "type": "textarea",
           "required": true,
           "rows": 5
@@ -85,13 +85,13 @@
       "fields": {
         "author": {
           "label": "Author",
-          "placeholder": "i.e. Jelly McJellyfish",
+          "placeholder": "e.g. Jelly McJellyfish",
           "type": "text",
           "required": true
         },
         "copyrightHolder": {
           "label": "Copyright Holder",
-          "placeholder": "i.e. Marine Institute of Jellyfish",
+          "placeholder": "e.g. Marine Institute of Jellyfish",
           "type": "text",
           "required": true
         },
