@@ -4,20 +4,20 @@
   "fields": {
     "name": {
       "label": "Your name",
-      "placeholder": "i.e. Jelly McJellyfish",
+      "placeholder": "e.g. Jelly McJellyfish",
       "type": "text",
       "required": true,
       "help": "Help me"
     },
     "email": {
       "label": "Your email",
-      "placeholder": "i.e. jelly@mcjellyfish.com",
+      "placeholder": "e.g. jelly@mcjellyfish.com",
       "type": "email",
       "required": true
     },
     "message": {
       "label": "Your message",
-      "placeholder": "i.e. jelly@mcjellyfish.com",
+      "placeholder": "e.g. jelly@mcjellyfish.com",
       "type": "textarea",
       "required": true
     },
@@ -41,7 +41,7 @@
     },
     "date": {
       "label": "Date",
-      "placeholder": "i.e. 2019-08-12",
+      "placeholder": "e.g. 2019-08-12",
       "type": "date",
       "required": true
     }
