@@ -1,3 +1,6 @@
+//
+// commons-server connection
+//
 export const serviceScheme = process.env.SERVICE_SCHEME || 'http'
 export const serviceHost = process.env.SERVICE_HOST || 'localhost'
 export const servicePort = process.env.SERVICE_PORT || 4000
