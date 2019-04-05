@@ -7,10 +7,6 @@
     max-width: 100%;
 
     @media (min-width: $break-point--small) {
-        grid-template-columns: 2fr 2fr;
-    }
-
-    @media (min-width: $break-point--medium) {
-        grid-template-columns: 2fr 2fr 2fr;
+        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
     }
 }
