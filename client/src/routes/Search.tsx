@@ -62,6 +62,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
     private setPage = (page: number) => {
         this.setState({ currentPage: page })
+        this.searchAssets()
     }
 
     public renderResults = () =>
@@ -92,7 +93,6 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                     totalPages={totalPages}
                     currentPage={currentPage}
                     prevPage={currentPage - 1}
-                    nextPage={currentPage + 1}
                     setPage={this.setPage}
                 />
             </Route>
