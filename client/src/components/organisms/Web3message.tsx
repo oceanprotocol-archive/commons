@@ -11,6 +11,8 @@ export default class Web3message extends PureComponent {
                 {states =>
                     !states.isWeb3
                         ? this.noWeb3()
+                        : !states.isNile
+                        ? this.wrongNetwork(states.network)
                         : !states.isLogged
                         ? this.unlockAccount(states)
                         : states.isLogged
@@ -54,6 +56,17 @@ export default class Web3message extends PureComponent {
                 <code className={styles.account} title={account && account}>
                     {`${account && account.substring(0, 20)}...`}
                 </code>
+            </div>
+        )
+    }
+
+    public wrongNetwork(network: string) {
+        return (
+            <div className={styles.message}>
+                <AccountStatus className={styles.status} /> Not connected to
+                Nile network, but to {network}.<br />
+                Please connect in MetaMask with Custom RPC{' '}
+                <code>{`https://nile.dev-ocean.com`}</code>
             </div>
         )
     }

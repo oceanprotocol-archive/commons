@@ -48,6 +48,7 @@ export default class AssetsUser extends PureComponent<
 
     public render() {
         return (
+            this.context.isNile &&
             this.context.account && (
                 <div className={styles.assetsUser}>
                     {this.props.recent && (
