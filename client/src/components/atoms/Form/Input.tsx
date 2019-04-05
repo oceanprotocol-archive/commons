@@ -35,13 +35,13 @@ interface InputProps {
 
 interface InputState {
     isFocused: boolean
-    startDate?: Date
+    dateCreated?: Date
 }
 
 export default class Input extends PureComponent<InputProps, InputState> {
     public state: InputState = {
         isFocused: false,
-        startDate: new Date()
+        dateCreated: new Date()
     }
 
     public inputWrapClasses() {
@@ -62,8 +62,15 @@ export default class Input extends PureComponent<InputProps, InputState> {
 
     private handleDateChange = (date: Date) => {
         this.setState({
-            startDate: date
+            dateCreated: date
         })
+        const event = {
+            currentTarget: {
+                name: 'dateCreated',
+                value: date
+            }
+        }
+        this.props.onChange!(event as any)
     }
 
     public InputComponent = () => {
@@ -151,8 +158,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                 return (
                     <div className={wrapClass}>
                         <DatePicker
-                            selected={this.state.startDate}
-                            // TODO: this needs to be able to receive this.props.onChange too
+                            selected={this.state.dateCreated}
                             onChange={this.handleDateChange}
                             className={styles.input}
                             onFocus={this.toggleFocus}
