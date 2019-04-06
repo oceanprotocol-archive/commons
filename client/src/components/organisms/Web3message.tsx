@@ -26,9 +26,9 @@ export default class Web3message extends PureComponent {
     public noWeb3() {
         return (
             <div className={styles.message}>
-                <AccountStatus className={styles.status} /> No Web3 Browser. For
-                publishing an asset you need to{' '}
-                <a href="https://docs.oceanprotocol.com/tutorials/metamask-setup/">
+                <AccountStatus className={styles.status} /> Not a Web3 Browser. For
+                publishing or consuming an asset you need to{' '}
+                <a href="https://docs.oceanprotocol.com/tutorials/metamask-setup/" target="_blank">
                     setup MetaMask
                 </a>{' '}
                 or use any other Web3-capable plugin or browser.

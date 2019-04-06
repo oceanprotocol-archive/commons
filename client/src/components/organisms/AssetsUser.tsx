@@ -4,6 +4,7 @@ import { Logger } from '@oceanprotocol/squid'
 import { User } from '../../context/User'
 import Spinner from '../atoms/Spinner'
 import Asset from '../molecules/Asset'
+import Web3message from './Web3message'
 import styles from './AssetsUser.module.scss'
 
 export default class AssetsUser extends PureComponent<
@@ -49,7 +50,7 @@ export default class AssetsUser extends PureComponent<
     public render() {
         return (
             this.context.isNile &&
-            this.context.account && (
+            this.context.account ? (
                 <div className={styles.assetsUser}>
                     {this.props.recent && (
                         <h2 className={styles.subTitle}>
@@ -89,6 +90,8 @@ export default class AssetsUser extends PureComponent<
                         </div>
                     )}
                 </div>
+            ) : (
+                <Web3message />
             )
         )
     }

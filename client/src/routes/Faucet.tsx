@@ -47,14 +47,25 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
 
     private RequestMarkup = () => (
         <User.Consumer>
-            {states => (
-                <Button
-                    primary
-                    onClick={() => this.getTokens(states.requestFromFaucet)}
-                >
-                    Request Ether
-                </Button>
-            )}
+            {states =>
+                states.isLogged ? (
+                    <Button
+                        primary
+                        onClick={() => this.getTokens(states.requestFromFaucet)}
+                    >
+                        Request Ether
+                    </Button>
+                ) :
+                states.isWeb3 ? (
+                    <Button onClick={states.startLogin}>
+                        Request Ether (unlock Metamask)
+                    </Button>
+                ) : (
+                    <Button onClick={(e: Event) => window.open("https://docs.oceanprotocol.com/tutorials/metamask-setup/", "_blank")}>
+                        Request Ether (install Metamask)
+                    </Button>
+                )
+            }
         </User.Consumer>
     )
 
@@ -93,7 +104,13 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
                 title="Faucet"
                 description="Shower yourself with some Ether for the Ocean POA network."
             >
-                <Web3message />
+                <User.Consumer>
+                    {states =>
+                        !states.isNile && (
+                            <Web3message />
+                        )
+                    }
+                </User.Consumer>
 
                 <this.ActionMarkup />
             </Route>
