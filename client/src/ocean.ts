@@ -1,4 +1,5 @@
 import { Ocean } from '@oceanprotocol/squid'
+import Web3 from 'web3'
 
 import {
     aquariusHost,
@@ -20,7 +21,7 @@ import {
     verbose
 } from './config/config'
 
-export async function provideOcean() {
+export async function provideOcean(web3provider: Web3) {
     const nodeUri = `${nodeScheme}://${nodeHost}:${nodePort}`
     const aquariusUri = `${aquariusScheme}://${aquariusHost}:${aquariusPort}`
     const brizoUri = `${brizoScheme}://${brizoHost}:${brizoPort}`
@@ -28,6 +29,7 @@ export async function provideOcean() {
     const secretStoreUri = `${secretStoreScheme}://${secretStoreHost}:${secretStorePort}`
 
     const config = {
+        web3provider,
         nodeUri,
         aquariusUri,
         brizoUri,
@@ -37,7 +39,7 @@ export async function provideOcean() {
         verbose
     }
 
-    const ocean = await Ocean.getInstance(config)
+    const ocean: Ocean = await Ocean.getInstance(config)
 
     return { ocean }
 }
