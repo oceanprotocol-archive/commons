@@ -10,31 +10,29 @@
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
 
+<img alt="screen shot 2019-02-08 at 16 53 57" src="https://user-images.githubusercontent.com/90316/52489283-27080e80-2bc2-11e9-8ec0-508c21eb86f7.png">
+
 ---
 
-**This marketplace is deployed under https://commons.oceanprotocol.com and can be used there. Feel free to [report any issues](https://github.com/oceanprotocol/commons/issues) you encounter.**
+### 🦑🦑🦑 This marketplace is deployed under https://commons.oceanprotocol.com and can be used there. Feel free to [report any issues](https://github.com/oceanprotocol/commons/issues) you encounter. 🦑🦑🦑
 
 If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
 
 ---
 
-- [Get Started](#get-started)
-  - [Use with Barge](#use-with-barge)
-- [Production](#production)
-- [Testing](#testing)
-- [Code Style](#code-style)
-- [License](#license)
-
-<img alt="screen shot 2019-02-08 at 16 53 57" src="https://user-images.githubusercontent.com/90316/52489283-27080e80-2bc2-11e9-8ec0-508c21eb86f7.png">
-
-## Get Started
-
-To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to [Ocean's Nile test network](https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet) remotely.
+- [🏄 Get Started](#-get-started)
+  - [🐳 Use with Barge](#-use-with-barge)
+- [🛳 Production](#-production)
+- [👩‍🔬 Testing](#-testing)
+- [✨ Code Style](#-code-style)
+- [🏛 License](#-license)
 
 This repo contains a client and a server, both written in TypeScript:
 
 - **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 - **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking.
+
+## 🏄 Get Started
 
 To spin up both, the client and the server in a watch mode for local development, execute:
 
@@ -43,12 +41,11 @@ npm install
 npm start
 ```
 
-This will run both, client and server in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view the client in the browser. The page will reload if you make edits to files in either `./client` or `./server`.
 
-The page will reload if you make edits to files in either `./client` or `./server`.
+To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to [Ocean's Nile test network](https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet) remotely.
 
-### Use with Barge
+### 🐳 Use with Barge
 
 If you prefer to connect to locally running components instead of remote connections to Ocean's Nile network, you can spin up [`barge`](https://github.com/oceanprotocol/barge) and use a local network:
 
@@ -59,9 +56,9 @@ cd barge
 ./start_ocean.sh --latest --no-pleuston --local-spree-node
 ```
 
-Modify `./client/src/config.ts` to use those local connections.
+Modify `./client/src/config/config.ts` to use those local connections.
 
-## Production
+## 🛳 Production
 
 To create a production build of both, the client and the server, run from the root of the project:
 
@@ -71,7 +68,7 @@ npm run build
 
 Builds the client for production to the `./client/build` folder, and the server into the `./server/dist` folder.
 
-## Testing
+## 👩‍🔬 Testing
 
 ```bash
 npm test
@@ -79,7 +76,7 @@ npm test
 
 Launches the test runner in the interactive watch mode.
 
-## Code Style
+## ✨ Code Style
 
 For linting and auto-formatting you can use from the root of the project:
 
@@ -91,7 +88,7 @@ npm run lint
 npm run format
 ```
 
-## License
+## 🏛 License
 
 ```text
 Copyright 2018 Ocean Protocol Foundation Ltd.

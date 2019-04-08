@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
 import filesize from 'filesize'
-import { User } from '../../context/User'
 import Button from '../../components/atoms/Button'
 import Spinner from '../../components/atoms/Spinner'
+import { User } from '../../context/User'
 import styles from './AssetFile.module.scss'
 
 interface AssetFileProps {
@@ -79,13 +79,31 @@ export default class AssetFile extends PureComponent<
                 {this.state.isLoading ? (
                     <Spinner message={this.state.message} />
                 ) : (
-                    <Button
-                        primary
-                        className={styles.buttonMain}
-                        onClick={() => this.purchaseAsset(ddo, file.index)}
-                    >
-                        Get file
-                    </Button>
+                    <User.Consumer>
+                        {states =>
+                            states.isLogged ? (
+                                <Button
+                                    primary
+                                    className={styles.buttonMain}
+                                    onClick={() =>
+                                        this.purchaseAsset(ddo, file.index)
+                                    }
+                                >
+                                    Get file
+                                </Button>
+                            ) : (
+                                states.isWeb3 && (
+                                    <Button
+                                        primary
+                                        className={styles.buttonMain}
+                                        onClick={states.startLogin}
+                                    >
+                                        Get file
+                                    </Button>
+                                )
+                            )
+                        }
+                    </User.Consumer>
                 )}
 
                 {this.state.error !== '' && (
