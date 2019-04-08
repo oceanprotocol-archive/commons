@@ -39,7 +39,7 @@ interface AppState {
     }
     network: string
     web3: Web3
-    ocean: {}
+    ocean: any
     startLogin: () => void
     message: string
 }
@@ -95,7 +95,7 @@ class App extends Component<{}, AppState> {
             )
         ),
         account: '',
-        ocean: {},
+        ocean: {} as any,
         startLogin: this.startLogin,
         requestFromFaucet: this.requestFromFaucet,
         message: 'Connecting to Ocean...'
@@ -106,73 +106,77 @@ class App extends Component<{}, AppState> {
     }
 
     private startLoginProcess = async () => {
-        if (window.web3) {
-            const web3 = new Web3(window.web3.currentProvider)
-            try {
-                const accounts = await web3.eth.getAccounts()
+        try {
+            if (this.state.isWeb3 && window.ethereum) {
+                await window.ethereum.enable()
+                const accounts = await this.state.ocean.accounts.list()
                 if (accounts.length > 0) {
+                    const balance = await accounts[0].getBalance()
                     this.setState({
                         isLogged: true,
-                        isWeb3: true,
-                        account: accounts[0],
-                        web3
+                        balance,
+                        account: accounts[0].getId()
                     })
                 } else {
-                    if (accounts.length === 0 && window.ethereum) {
-                        await window.ethereum.enable()
-                        const newAccounts = await web3.eth.getAccounts()
-                        if (newAccounts.length > 0) {
-                            this.setState({
-                                isLogged: true,
-                                isWeb3: true,
-                                account: newAccounts[0],
-                                web3
-                            })
-                        } else {
-                            // failed to unlock
-                        }
-                    } else {
-                        // no unlock procedure
-                    }
+                    // not unlocked
                 }
-            } catch (e) {
-                // something went wrong, show error?
+            } else {
+                // no metamask/mist, show installation guide!
             }
-        } else {
-            // no metamask/mist, show installation guide!
+        } catch (e) {
+            Logger.log('error logging', e)
+            // error in logging process
+            // show error
+            // rerun bootstrap process?
         }
     }
 
     private bootstrap = async () => {
-        if (window.web3) {
-            this.setState({ isWeb3: true })
-            const web3 = new Web3(window.web3.currentProvider)
-            try {
-                const accounts = await web3.eth.getAccounts()
+        try {
+            if (window.web3) {
+                const web3 = new Web3(window.web3.currentProvider)
+                const { ocean } = await provideOcean(web3)
+                const accounts = await ocean.accounts.list()
+                const network = await ocean.keeper.getNetworkName()
+                const isNile = network === 'Nile'
                 if (accounts.length > 0) {
+                    const balance = await accounts[0].getBalance()
                     this.setState({
+                        isWeb3: true,
                         isLogged: true,
-                        account: accounts[0],
-                        web3
+                        isNile,
+                        ocean,
+                        web3,
+                        balance,
+                        network,
+                        account: accounts[0].getId(),
+                        isLoading: false
+                    })
+                } else {
+                    this.setState({
+                        isWeb3: true,
+                        isNile,
+                        ocean,
+                        web3,
+                        network,
+                        isLoading: false
                     })
                 }
-            } catch (e) {
-                Logger.log('web3 error', e)
+            } else {
+                const { ocean } = await provideOcean(this.state.web3)
+                const network = await ocean.keeper.getNetworkName()
+                const isNile = network === 'Nile'
+                this.setState({
+                    isNile,
+                    ocean,
+                    network,
+                    isLoading: false
+                })
             }
-        }
-        try {
-            const { ocean } = await provideOcean()
-            this.setState({
-                isLoading: false,
-                ocean
-            })
-            const accounts = await ocean.accounts.list()
-            const balance = await accounts[0].getBalance()
-            const network = await ocean.keeper.getNetworkName()
-            const isNile = network === 'Nile'
-            this.setState({ balance, network, isNile })
         } catch (e) {
-            Logger.log('ocean/balance error', e)
+            // error in bootstrap process
+            // show error connecting to ocean
+            Logger.log('web3 error', e)
             this.setState({
                 isLoading: false
             })
