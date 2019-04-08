@@ -10,3 +10,13 @@ notifications:
   email: false
 
 cache: npm
+
+deploy:
+  - provider: releases
+    skip_cleanup: true
+    api_key:
+      secure: "KA1LufU7feHaoEzdYjx/RgfDANf/zze5RK+yGXNJKlfeRgZYc1eNXr7fhMpAMV8vOXd5zTbfRYh9IoEr6GEO/LfYKqqAijxg0qdEPvwHsbQ2yZvxXxk3YmsCMzlYBUXltgnzhxH6jGGq3qEGpEezg1Ie2yB/J/hH565InpDe4WfS/+UdEC2Rn7s3kPE4ZrTzomM58Hz6G7eGa2pwynB/F4FCYBt6EZXidbt+6ejB3D/GzpgXMAkMFbNUmX3sK7zZjnsQK7WUalGEmc2Jy4n+jDXEQTJKKgITOKhgf6e8zwtQv9P0tsB/+l8KbJYsr/o5Fvz0aGeD8PQyKaWliCwR5HN4dhsm9022nrcwHF/Df6WYlfLOj5JNKzwgUwMBt36r3biGx+F7GXZ62B3rKi3TRWwV2dXyhmbnbhU2m8ldc9kq730DBUP8DWICM1CaXjQksnQtHE9xEbwrGp5aobO4oHbC5wFW20ZQ26FVxQ8vGlPmepfvlfZ2KBAClYI9cUyysOdXQFBQYECC/8n9+Izey4OyRIR4AGLNVrV8aW8SN9TVExDzNKrBTSRvDsyAgFNOfe47fO8ESglkz8AEoDRLtKJ2OpSGsOTSsICCENdHDDOYHF0h4uS4Fs9uW9eqHzZyDH/sZuwcwWiMgz+ALDS97HK9jkPlFISXdlv3HyTc5d4="
+    on:
+        tags: true
+        all_branches: true
+
