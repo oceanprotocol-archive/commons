@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
+import Markdown from '../../components/atoms/Markdown'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 
@@ -54,7 +55,10 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     </div>
                 </aside>
 
-                <div className={styles.description}>{base.description}</div>
+                <Markdown
+                    text={base.description}
+                    className={styles.description}
+                />
 
                 <ul className={styles.meta}>
                     <li>
