@@ -88,9 +88,9 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
         return (
             <Route
-                title={`${totalResults > 0 && totalResults} Results for <span>${
-                    this.searchTerm
-                }</span>`}
+                title={`${
+                    totalResults > 0 ? totalResults : ''
+                } Results for <span>${this.searchTerm}</span>`}
                 titleReverse
                 wide
             >
