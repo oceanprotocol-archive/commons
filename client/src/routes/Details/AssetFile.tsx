@@ -85,18 +85,22 @@ export default class AssetFile extends PureComponent<
                                 <Button
                                     primary
                                     className={styles.buttonMain}
-                                    onClick={() => this.purchaseAsset(ddo, file.index)}
+                                    onClick={() =>
+                                        this.purchaseAsset(ddo, file.index)
+                                    }
                                 >
                                     Get file
                                 </Button>
-                            ) :
-                            states.isWeb3 && (
-                                <Button
-                                    primary
-                                    className={styles.buttonMain}
-                                    onClick={states.startLogin}>
-                                    Get file
-                                </Button>
+                            ) : (
+                                states.isWeb3 && (
+                                    <Button
+                                        primary
+                                        className={styles.buttonMain}
+                                        onClick={states.startLogin}
+                                    >
+                                        Get file
+                                    </Button>
+                                )
                             )
                         }
                     </User.Consumer>

@@ -150,7 +150,7 @@ class App extends Component<{}, AppState> {
                         balance,
                         network,
                         account: accounts[0].getId(),
-                        isLoading: false,
+                        isLoading: false
                     })
                 } else {
                     this.setState({

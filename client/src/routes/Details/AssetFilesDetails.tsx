@@ -20,9 +20,7 @@ export default class AssetFilesDetails extends PureComponent<{
                 </div>
                 <User.Consumer>
                     {states =>
-                        (!states.isNile || !states.isLogged) && (
-                            <Web3message />
-                        )
+                        (!states.isNile || !states.isLogged) && <Web3message />
                     }
                 </User.Consumer>
             </>

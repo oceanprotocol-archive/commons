@@ -10,15 +10,13 @@ interface FaucetState {
     isLoading: boolean
     success?: string
     error?: string
-    eth?: string
 }
 
 export default class Faucet extends PureComponent<{}, FaucetState> {
     public state = {
         isLoading: false,
         success: undefined,
-        error: undefined,
-        eth: 'xx'
+        error: undefined
     }
 
     private getTokens = async (requestFromFaucet: () => any) => {
@@ -55,15 +53,10 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
                     >
                         Request Ether
                     </Button>
-                ) :
-                states.isWeb3 ? (
-                    <Button onClick={states.startLogin}>
-                        Request Ether (unlock Metamask)
-                    </Button>
+                ) : states.isWeb3 ? (
+                    <Web3message />
                 ) : (
-                    <Button onClick={(e: Event) => window.open("https://docs.oceanprotocol.com/tutorials/metamask-setup/", "_blank")}>
-                        Request Ether (install Metamask)
-                    </Button>
+                    <Web3message />
                 )
             }
         </User.Consumer>
@@ -105,11 +98,7 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
                 description="Shower yourself with some Ether for the Ocean POA network."
             >
                 <User.Consumer>
-                    {states =>
-                        !states.isNile && (
-                            <Web3message />
-                        )
-                    }
+                    {states => !states.isNile && <Web3message />}
                 </User.Consumer>
 
                 <this.ActionMarkup />

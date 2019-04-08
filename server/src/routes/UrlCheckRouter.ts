@@ -22,7 +22,10 @@ export class UrlCheckRouter {
                 headers: { Range: 'bytes=0-' }
             },
             (error, response) => {
-                if (response && response.statusCode.toString().startsWith('2')) {
+                if (
+                    response &&
+                    response.statusCode.toString().startsWith('2')
+                ) {
                     const result: any = {}
                     result.found = true
 
