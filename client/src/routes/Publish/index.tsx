@@ -6,6 +6,7 @@ import AssetModel from '../../models/AssetModel'
 import { User } from '../../context/User'
 import Step from './Step'
 import Progress from './Progress'
+import ReactGA from 'react-ga'
 
 import { steps } from '../../data/form-publish.json'
 
@@ -90,6 +91,12 @@ class Publish extends Component<{}, PublishState> {
 
         currentStep =
             currentStep >= totalSteps - 1 ? totalSteps : currentStep + 1
+
+        ReactGA.event({
+            category: 'Publish',
+            action: 'nextStep ' + currentStep
+        })
+
         this.setState({ currentStep })
     }
 
@@ -242,6 +249,10 @@ class Publish extends Component<{}, PublishState> {
 
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        ReactGA.event({
+            category: 'Publish',
+            action: 'registerAsset-start'
+        });
         this.setState({
             publishingError: '',
             isPublishing: true
@@ -281,11 +292,19 @@ class Publish extends Component<{}, PublishState> {
                 publishedDid: asset.id,
                 isPublished: true
             })
+            ReactGA.event({
+                category: 'Publish',
+                action: 'registerAsset-end' + asset.id
+            })
         } catch (e) {
             // make readable errors
             Logger.log('error:', e)
             this.setState({
-                publishingError: e
+                publishingError: e.message
+            })
+            ReactGA.event({
+                category: 'Publish',
+                action: 'registerAsset-error' + e.message
             })
         }
         this.setState({

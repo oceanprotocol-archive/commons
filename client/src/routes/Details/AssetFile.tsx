@@ -5,6 +5,7 @@ import Button from '../../components/atoms/Button'
 import Spinner from '../../components/atoms/Spinner'
 import { User } from '../../context/User'
 import styles from './AssetFile.module.scss'
+import ReactGA from 'react-ga'
 
 interface AssetFileProps {
     file: any
@@ -32,10 +33,15 @@ export default class AssetFile extends PureComponent<
     private purchaseAsset = async (ddo: any, index: number) => {
         this.resetState()
 
-        const { ocean } = this.context
-        const accounts = await ocean.accounts.list()
+        ReactGA.event({
+            category: 'Purchase',
+            action: 'purchaseAsset-start ' + ddo.id
+        })
 
+        const { ocean } = this.context
+        
         try {
+            const accounts = await ocean.accounts.list()
             const service = ddo.findServiceByType('Access')
             const agreementId = await ocean.assets.order(
                 ddo.id,
@@ -52,11 +58,18 @@ export default class AssetFile extends PureComponent<
                 index
             )
             Logger.log('path', path)
-
+            ReactGA.event({
+                category: 'Purchase',
+                action: 'purchaseAsset-end ' + ddo.id
+            })
             this.setState({ isLoading: false })
         } catch (error) {
             Logger.log('error', error)
             this.setState({ isLoading: false, error: error.message })
+            ReactGA.event({
+                category: 'Purchase',
+                action: 'purchaseAsset-error ' + error.message
+            })
         }
     }
 
