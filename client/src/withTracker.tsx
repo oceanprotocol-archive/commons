@@ -5,7 +5,7 @@ interface TrackerProps {
     location: any
 }
 
-ReactGA.initialize('UA-60614729-11');
+ReactGA.initialize('UA-60614729-11', {testMode: process.env.NODE_ENV === 'test'})
 
 export default function withTracker(WrappedComponent: any, options: any = {}) {
     const trackPage = (page: any) => {
