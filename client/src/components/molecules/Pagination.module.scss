@@ -1,0 +1,35 @@
+@import '../../styles/variables';
+
+.pagination {
+    display: flex;
+    margin-top: $spacer * 2;
+    margin-bottom: $spacer;
+    justify-content: center;
+
+    > div {
+        &:first-child {
+            padding: $spacer / 4;
+        }
+
+        &:last-child {
+            padding: $spacer / 4;
+            text-align: right;
+        }
+    }
+}
+
+.number {
+    text-align: center;
+    font-weight: $font-weight-bold;
+    padding: $spacer / 4;
+    margin-left: $spacer / 4;
+    margin-right: $spacer / 4;
+    display: inline-block;
+}
+
+.current {
+    composes: number;
+    cursor: default;
+    pointer-events: none;
+    color: $brand-grey-light;
+}

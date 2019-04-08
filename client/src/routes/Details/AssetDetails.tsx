@@ -31,7 +31,11 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         {base.copyrightHolder}
                     </h2>
                     <div className={styles.metaPrimaryData}>
-                        <span title="Date created">
+                        <span
+                            title={`Date created, published on ${
+                                base.datePublished
+                            }`}
+                        >
                             <Moment
                                 date={base.dateCreated}
                                 format="L"
@@ -41,7 +45,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
 
                         {base.categories && (
                             // TODO: Make this link to search for respective category
-                            <Link to={`/search?q=${base.categories[0]}`}>
+                            <Link to={`/search?text=${base.categories[0]}`}>
                                 {base.categories[0]}
                             </Link>
                         )}
