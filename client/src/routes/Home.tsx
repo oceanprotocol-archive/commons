@@ -31,7 +31,7 @@ class Home extends Component<HomeProps, HomeState> {
                         type="search"
                         name="search"
                         label="Search for data sets"
-                        placeholder="e.g. almond sales data"
+                        placeholder="e.g. shapes of plants"
                         value={this.state.search}
                         onChange={this.inputChange}
                         group={
