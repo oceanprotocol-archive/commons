@@ -76,7 +76,7 @@ export default class AssetFile extends PureComponent<
     public render() {
         const { ddo, file } = this.props
         const { isLoading, message, error } = this.state
-        const { isLogged, startLogin } = this.context
+        const { isLogged } = this.context
 
         return (
             <div className={styles.fileWrap}>
@@ -97,11 +97,7 @@ export default class AssetFile extends PureComponent<
                     <Button
                         primary
                         className={styles.buttonMain}
-                        onClick={
-                            isLogged
-                                ? () => this.purchaseAsset(ddo, file.index)
-                                : startLogin
-                        }
+                        onClick={() => this.purchaseAsset(ddo, file.index)}
                         disabled={!isLogged}
                     >
                         Get file
