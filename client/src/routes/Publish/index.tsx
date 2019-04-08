@@ -252,7 +252,7 @@ class Publish extends Component<{}, PublishState> {
         ReactGA.event({
             category: 'Publish',
             action: 'registerAsset-start'
-        });
+        })
         this.setState({
             publishingError: '',
             isPublishing: true
