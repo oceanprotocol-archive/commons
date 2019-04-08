@@ -10,15 +10,13 @@ interface FaucetState {
     isLoading: boolean
     success?: string
     error?: string
-    eth?: string
 }
 
 export default class Faucet extends PureComponent<{}, FaucetState> {
     public state = {
         isLoading: false,
         success: undefined,
-        error: undefined,
-        eth: 'xx'
+        error: undefined
     }
 
     private getTokens = async (requestFromFaucet: () => any) => {
@@ -47,14 +45,20 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
 
     private RequestMarkup = () => (
         <User.Consumer>
-            {states => (
-                <Button
-                    primary
-                    onClick={() => this.getTokens(states.requestFromFaucet)}
-                >
-                    Request Ether
-                </Button>
-            )}
+            {states =>
+                states.isLogged ? (
+                    <Button
+                        primary
+                        onClick={() => this.getTokens(states.requestFromFaucet)}
+                    >
+                        Request Ether
+                    </Button>
+                ) : states.isWeb3 ? (
+                    <Web3message />
+                ) : (
+                    <Web3message />
+                )
+            }
         </User.Consumer>
     )
 
@@ -93,7 +97,9 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
                 title="Faucet"
                 description="Shower yourself with some Ether for the Ocean POA network."
             >
-                <Web3message />
+                <User.Consumer>
+                    {states => !states.isNile && <Web3message />}
+                </User.Consumer>
 
                 <this.ActionMarkup />
             </Route>
