@@ -6,7 +6,7 @@
       "fields": {
         "name": {
           "label": "Title",
-          "placeholder": "e.g. Almond sales data",
+          "placeholder": "e.g. Shapes of Desert Plants",
           "type": "text",
           "required": true,
           "help": "Enter a concise title. You will be able to enter a more thorough description in the next step."
@@ -27,7 +27,7 @@
         "description": {
           "label": "Description",
           "help": "Add a thorough description with as much detail as possible.",
-          "placeholder": "e.g. Almond sales data ",
+          "placeholder": "e.g. Shapes of 23 common desert plants.",
           "type": "textarea",
           "required": true,
           "rows": 5
