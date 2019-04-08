@@ -300,11 +300,11 @@ class Publish extends Component<{}, PublishState> {
             // make readable errors
             Logger.log('error:', e)
             this.setState({
-                publishingError: e
+                publishingError: e.message
             })
             ReactGA.event({
                 category: 'Publish',
-                action: 'registerAsset-error' + e
+                action: 'registerAsset-error' + e.message
             })
         }
         this.setState({

@@ -68,7 +68,7 @@ export default class AssetFile extends PureComponent<
             this.setState({ isLoading: false, error: error.message })
             ReactGA.event({
                 category: 'Purchase',
-                action: 'purchaseAsset-error ' + error
+                action: 'purchaseAsset-error ' + error.message
             })
         }
     }
