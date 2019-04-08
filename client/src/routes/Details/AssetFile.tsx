@@ -39,7 +39,7 @@ export default class AssetFile extends PureComponent<
         })
 
         const { ocean } = this.context
-        
+
         try {
             const accounts = await ocean.accounts.list()
             const service = ddo.findServiceByType('Access')
@@ -75,6 +75,8 @@ export default class AssetFile extends PureComponent<
 
     public render() {
         const { ddo, file } = this.props
+        const { isLoading, message, error } = this.state
+        const { isLogged, startLogin } = this.context
 
         return (
             <div className={styles.fileWrap}>
@@ -89,39 +91,24 @@ export default class AssetFile extends PureComponent<
                     {/* <li>{file.compression}</li> */}
                 </ul>
 
-                {this.state.isLoading ? (
-                    <Spinner message={this.state.message} />
+                {isLoading ? (
+                    <Spinner message={message} />
                 ) : (
-                    <User.Consumer>
-                        {states =>
-                            states.isLogged ? (
-                                <Button
-                                    primary
-                                    className={styles.buttonMain}
-                                    onClick={() =>
-                                        this.purchaseAsset(ddo, file.index)
-                                    }
-                                >
-                                    Get file
-                                </Button>
-                            ) : (
-                                states.isWeb3 && (
-                                    <Button
-                                        primary
-                                        className={styles.buttonMain}
-                                        onClick={states.startLogin}
-                                    >
-                                        Get file
-                                    </Button>
-                                )
-                            )
+                    <Button
+                        primary
+                        className={styles.buttonMain}
+                        onClick={
+                            isLogged
+                                ? () => this.purchaseAsset(ddo, file.index)
+                                : startLogin
                         }
-                    </User.Consumer>
+                        disabled={!isLogged}
+                    >
+                        Get file
+                    </Button>
                 )}
 
-                {this.state.error !== '' && (
-                    <div className={styles.error}>{this.state.error}</div>
-                )}
+                {error !== '' && <div className={styles.error}>{error}</div>}
             </div>
         )
     }
