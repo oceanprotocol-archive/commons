@@ -21,4 +21,4 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 4000:4000
-    command: npm run start
+

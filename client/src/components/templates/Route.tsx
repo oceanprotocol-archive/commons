@@ -21,7 +21,8 @@ const Route = ({
 }) => (
     <div className={className}>
         <Helmet defaultTitle={meta.title} titleTemplate={`%s - ${meta.title}`}>
-            <title>{title}</title>
+            {/* Strip HTML from passed title */}
+            <title>{title.replace(/(<([^>]+)>)/gi, '')}</title>
             {description && <meta name="description" content={description} />}
         </Helmet>
 

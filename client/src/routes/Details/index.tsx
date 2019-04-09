@@ -6,14 +6,14 @@ import AssetDetails from './AssetDetails'
 import stylesApp from '../../App.module.scss'
 import { serviceHost, servicePort, serviceScheme } from '../../config'
 
+interface DetailsProps {
+    location: Location
+    match: any
+}
+
 interface DetailsState {
     ddo: any
     metadata: { base: { name: string } }
-}
-
-interface DetailsProps {
-    location: any
-    match: any
 }
 
 export default class Details extends Component<DetailsProps, DetailsState> {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import Markdown from '../../components/atoms/Markdown'
 import styles from './Asset.module.scss'
 import CategoryImage from '../atoms/CategoryImage'
 
@@ -27,7 +28,10 @@ const AssetLink = ({ asset, list }: { asset: any; list?: boolean }) => {
                     <CategoryImage category={base.categories[0]} />
                 )}
                 <h1>{base.name}</h1>
-                <p>{base.description.substring(0, 90)}...</p>
+                <Markdown
+                    className={styles.description}
+                    text={`${base.description.substring(0, 90)}...`}
+                />
 
                 <footer className={styles.assetFooter}>
                     {base.categories && <div>{base.categories[0]}</div>}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import withTracker from './withTracker'
 
 import About from './routes/About'
 import Details from './routes/Details/'
@@ -13,15 +14,15 @@ import Styleguide from './routes/Styleguide'
 
 const Routes = () => (
     <Switch>
-        <Route exact component={Home} path="/" />
-        <Route component={Styleguide} path="/styleguide" />
-        <Route component={About} path="/about" />
-        <Route component={Publish} path="/publish" />
-        <Route component={Search} path="/search" />
-        <Route component={Details} path="/asset/:did" />
-        <Route component={Faucet} path="/faucet" />
-        <Route component={History} path="/history" />
-        <Route component={NotFound} />
+        <Route exact component={withTracker(Home)} path="/" />
+        <Route component={withTracker(Styleguide)} path="/styleguide" />
+        <Route component={withTracker(About)} path="/about" />
+        <Route component={withTracker(Publish)} path="/publish" />
+        <Route component={withTracker(Search)} path="/search" />
+        <Route component={withTracker(Details)} path="/asset/:did" />
+        <Route component={withTracker(Faucet)} path="/faucet" />
+        <Route component={withTracker(History)} path="/history" />
+        <Route component={withTracker(NotFound)} />
     </Switch>
 )
 

@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
 import filesize from 'filesize'
-import { User } from '../../context/User'
 import Button from '../../components/atoms/Button'
 import Spinner from '../../components/atoms/Spinner'
+import { User } from '../../context/User'
 import styles from './AssetFile.module.scss'
+import ReactGA from 'react-ga'
 
 interface AssetFileProps {
     file: any
@@ -32,10 +33,15 @@ export default class AssetFile extends PureComponent<
     private purchaseAsset = async (ddo: any, index: number) => {
         this.resetState()
 
+        ReactGA.event({
+            category: 'Purchase',
+            action: 'purchaseAsset-start ' + ddo.id
+        })
+
         const { ocean } = this.context
-        const accounts = await ocean.accounts.list()
 
         try {
+            const accounts = await ocean.accounts.list()
             const service = ddo.findServiceByType('Access')
             const agreementId = await ocean.assets.order(
                 ddo.id,
@@ -52,16 +58,25 @@ export default class AssetFile extends PureComponent<
                 index
             )
             Logger.log('path', path)
-
+            ReactGA.event({
+                category: 'Purchase',
+                action: 'purchaseAsset-end ' + ddo.id
+            })
             this.setState({ isLoading: false })
         } catch (error) {
             Logger.log('error', error)
             this.setState({ isLoading: false, error: error.message })
+            ReactGA.event({
+                category: 'Purchase',
+                action: 'purchaseAsset-error ' + error.message
+            })
         }
     }
 
     public render() {
         const { ddo, file } = this.props
+        const { isLoading, message, error } = this.state
+        const { isLogged } = this.context
 
         return (
             <div className={styles.fileWrap}>
@@ -76,21 +91,20 @@ export default class AssetFile extends PureComponent<
                     {/* <li>{file.compression}</li> */}
                 </ul>
 
-                {this.state.isLoading ? (
-                    <Spinner message={this.state.message} />
+                {isLoading ? (
+                    <Spinner message={message} />
                 ) : (
                     <Button
                         primary
                         className={styles.buttonMain}
                         onClick={() => this.purchaseAsset(ddo, file.index)}
+                        disabled={!isLogged}
                     >
                         Get file
                     </Button>
                 )}
 
-                {this.state.error !== '' && (
-                    <div className={styles.error}>{this.state.error}</div>
-                )}
+                {error !== '' && <div className={styles.error}>{error}</div>}
             </div>
         )
     }

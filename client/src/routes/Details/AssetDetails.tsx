@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { User } from '../../context/User'
 import Button from '../../components/atoms/Button'
 import Moment from 'react-moment'
+import Markdown from '../../components/atoms/Markdown'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 
@@ -43,7 +44,11 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         {base.copyrightHolder}
                     </h2>
                     <div className={styles.metaPrimaryData}>
-                        <span title="Date created">
+                        <span
+                            title={`Date created, published on ${
+                                base.datePublished
+                            }`}
+                        >
                             <Moment
                                 date={base.dateCreated}
                                 format="L"
@@ -53,7 +58,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
 
                         {base.categories && (
                             // TODO: Make this link to search for respective category
-                            <Link to={`/search?q=${base.categories[0]}`}>
+                            <Link to={`/search?text=${base.categories[0]}`}>
                                 {base.categories[0]}
                             </Link>
                         )}
@@ -62,7 +67,10 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     </div>
                 </aside>
 
-                <div className={styles.description}>{base.description}</div>
+                <Markdown
+                    text={base.description}
+                    className={styles.description}
+                />
 
                 <ul className={styles.meta}>
                     <li>

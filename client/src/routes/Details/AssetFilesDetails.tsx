@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
 import AssetFile from './AssetFile'
+import { User } from '../../context/User'
+import Web3message from '../../components/organisms/Web3message'
 import styles from './AssetFilesDetails.module.scss'
 
 export default class AssetFilesDetails extends PureComponent<{ files: any[], ddo: any }> {
@@ -43,6 +45,11 @@ export default class AssetFilesDetails extends PureComponent<{ files: any[], ddo
                         <AssetFile key={file.index} ddo={ddo} file={file} />
                     ))}
                 </div>
+                <User.Consumer>
+                    {states =>
+                        (!states.isNile || !states.isLogged) && <Web3message />
+                    }
+                </User.Consumer>
             </>
         ) : (
             <div>No files attached.</div>
