@@ -12,14 +12,6 @@ notifications:
 cache: npm
 
 deploy:
-  - provider: releases
-    skip_cleanup: true
-    api_key:
-      secure: "txBAvszimYY9QqenZckMI+fC/qhnsD4zAUcULs/8D8rGaW7+lCGClV0MShh5T8o/aVbSRctFaHeEESGAuedxmETsQnkBe1XekE1WiXqADzcOp5rrfzIZruED50Zy9dafZGHNJVJax1J1BPb2GePhYg51WX/0OuKb0h5J5tZQvLXVHhtc5hNx5/0kzQNQpyjf8MA/MdZj/Qh5wPx8eKmdt+yTUfqFyzYwh7nE2U+KsHzC5CZdwGXnqZBsWqrNX+l35oFcAu7M7kIzm5RRugrqpmQQqMNDVka1cj3UW0VWve7V5IcnQCfRnat7wXKLPEmC/tBUB3LNRi4X+YKxkkcRaFStJeJw5sQhEK10Jso71p35u0X/AyNVQfzMZou1fFrJsqNGmlB9c/n4zHyepY6jOpEQDBiggvCcf0lvPrJmJvKW9+8HhVBlf9Pre1TmsAciw2jjIrClaTIF/vYk7C/ix37OcMVrijoH8yMOZEZLvpXJhLN/IMvLHyxduvO7ClzT4eWNSoduyZvYB8kGz5OIml7gCtSLQ0qM1We8u5lHTHhqFHChFlgK2F90NBaZV4U1DkxerQgY+EiCVrrDPHAcHmliKgzzYqBfOxsfCJ/odBwg+ASGBy+yLFpCTw5OB1Ap+fvwInz1eQQ0rTP44+24Kt0Nt4lJcFQp3bE+xyzUdk0="
-    on:
-        tags: true
-        all_branches: true
-
   - provider: script
     skip_cleanup: true
     script: bash -ex ./scripts/deploy_on_k8s.sh

@@ -2,7 +2,7 @@
 
 <h1 align="center">Commons</h1>
 
-> Marketplace front-end and backend server to explore, download, and publish open data sets.
+> 🏄‍♀️ Marketplace front-end and backend server to explore, download, and publish open data sets.
 > https://commons.oceanprotocol.com
 
 [![Build Status](https://travis-ci.com/oceanprotocol/commons.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons)
@@ -14,19 +14,19 @@
 
 ---
 
-### 🦑🦑🦑 This marketplace is deployed under https://commons.oceanprotocol.com and can be used there. Feel free to [report any issues](https://github.com/oceanprotocol/commons/issues) you encounter. 🦑🦑🦑
+<h3 align="center">🦑🦑🦑<br />This marketplace is deployed under <a href="https://commons.oceanprotocol.com">commons.oceanprotocol.com</a> and can be used there. Feel free to <a href="https://github.com/oceanprotocol/commons/issues">report any issues</a> you encounter.<br />🦑🦑🦑</h3>
 
-If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
+<p align="center">If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.</p>
 
 ---
 
 - [🏄 Get Started](#-get-started)
   - [🐳 Use with Barge](#-use-with-barge)
-- [🛳 Production](#-production)
-- [👩‍🔬 Testing](#-testing)
-- [🎁 Contributing](#-contributing)
-- [⬆️ Bumping version](#-bumping-version)
+- [�‍🔬 Testing](#-testing)
 - [✨ Code Style](#-code-style)
+- [🛳 Production](#-production)
+- [⬆️ Releases](#️-releases)
+- [🎁 Contributing](#-contributing)
 - [🏛 License](#-license)
 
 This repo contains a client and a server, both written in TypeScript:
@@ -60,16 +60,6 @@ cd barge
 
 Modify `./client/src/config/config.ts` to use those local connections.
 
-## 🛳 Production
-
-To create a production build of both, the client and the server, run from the root of the project:
-
-```bash
-npm run build
-```
-
-Builds the client for production to the `./client/build` folder, and the server into the `./server/dist` folder.
-
 ## 👩‍🔬 Testing
 
 ```bash
@@ -77,19 +67,6 @@ npm test
 ```
 
 Launches the test runner in the interactive watch mode.
-
-## 🎁 Contributing
-
-See the page titled "[Ways to Contribute](https://docs.oceanprotocol.com/concepts/contributing/)" in the Ocean Protocol documentation.
-
-## ⬆️ Bumping version
-
-Use the `bumpversion.sh` script to bump the project version. You can execute the script using {major|minor|patch} as first argument to bump the version accordingly:
-  - To bump the patch version: `./bumpversion.sh patch`
-  - To bump the minor version: `./bumpversion.sh minor`
-  - To bump the major version: `./bumpversion.sh major`
-
-After that, you need to commit, push and git tag the commit if desired/needed.
 
 ## ✨ Code Style
 
@@ -102,6 +79,40 @@ npm run lint
 # auto format all ts & css with prettier, taking all configs into account
 npm run format
 ```
+
+## 🛳 Production
+
+To create a production build of both, the client and the server, run from the root of the project:
+
+```bash
+npm run build
+```
+
+Builds the client for production to the `./client/build` folder, and the server into the `./server/dist` folder.
+
+## ⬆️ Releases
+
+Running any release task does the following:
+
+- bumps the project version
+- creates a Git tag
+- updates CHANGELOG.md file with commit messages
+- commits and pushes everything
+- creates a GitHub release with commit messages as description
+
+You can execute the script using {major|minor|patch} as first argument to bump the version accordingly:
+
+- To bump a patch version: `npm run release`
+- To bump a minor version: `npm run release-minor`
+- To bump a major version: `npm run release-major`
+
+By creating the Git tag with these tasks, Travis will trigger a new Kubernetes deployment automatically aftr a successful tag build.
+
+For the GitHub releases steps a GitHub personal access token, exported as `GITHUB_TOKEN` is required. [Setup](https://github.com/release-it/release-it#github-releases)
+
+## 🎁 Contributing
+
+See the page titled "[Ways to Contribute](https://docs.oceanprotocol.com/concepts/contributing/)" in the Ocean Protocol documentation.
 
 ## 🏛 License
 
