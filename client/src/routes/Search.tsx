@@ -28,7 +28,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         totalResults: 0,
         offset: 25,
         totalPages: 1,
-        currentPage: 0,
+        currentPage: 1,
         isLoading: true
     }
 
@@ -59,15 +59,14 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
             results: search.results,
             totalResults: search.totalResults,
             totalPages: search.totalPages,
-            currentPage: search.page, // first page is always 0 in response
             isLoading: false
         })
         Logger.log(`Loaded ${this.state.results.length} assets`)
     }
 
-    private setPage = (page: number) => {
-        this.setState({ currentPage: page })
-        this.searchAssets()
+    private setPage = async (page: number) => {
+        await this.setState({ currentPage: page, isLoading: true })
+        await this.searchAssets()
     }
 
     public renderResults = () =>

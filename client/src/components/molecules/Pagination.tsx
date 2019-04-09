@@ -47,7 +47,7 @@ export default class Pagination extends PureComponent<{
 }> {
     public render() {
         const { currentPage, totalPages, prevPage, setPage } = this.props
-        const isFirst = currentPage === 0
+        const isFirst = currentPage === 1
         const isLast = currentPage === totalPages
 
         return totalPages > 1 ? (
