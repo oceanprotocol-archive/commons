@@ -10,7 +10,7 @@ import styles from './Search.module.scss'
 
 interface SearchProps {
     location: Location
-    history: History
+    history: any
 }
 
 interface SearchState {
@@ -73,6 +73,11 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     private setPage = async (page: number) => {
+        this.props.history.push({
+            pathname: this.props.location.pathname,
+            search: `?text=${this.searchTerm}&page=${page}`
+        })
+
         await this.setState({ currentPage: page, isLoading: true })
         await this.searchAssets()
     }
