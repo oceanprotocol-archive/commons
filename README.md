@@ -5,7 +5,7 @@
 > 🏄‍♀️ Marketplace front-end and backend server to explore, download, and publish open data sets.
 > https://commons.oceanprotocol.com
 
-[![Build Status](https://travis-ci.com/oceanprotocol/commons.svg?token=3psqw6c8KMDqfdGQ2x6d&branch=master)](https://travis-ci.com/oceanprotocol/commons)
+[![Build Status](https://travis-ci.com/oceanprotocol/commons.svg?branch=master)](https://travis-ci.com/oceanprotocol/commons)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-7b1173.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
@@ -20,11 +20,6 @@
 
 If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
 
-This repo contains a client and a server, both written in TypeScript:
-
-- **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
-- **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking.
-
 - [🏄 Get Started](#-get-started)
   - [🐳 Use with Barge](#-use-with-barge)
 - [👩‍🔬 Testing](#-testing)
@@ -33,6 +28,11 @@ This repo contains a client and a server, both written in TypeScript:
 - [⬆️ Releases](#️-releases)
 - [🎁 Contributing](#-contributing)
 - [🏛 License](#-license)
+
+This repo contains a client and a server, both written in TypeScript:
+
+- **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
+- **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking.
 
 ## 🏄 Get Started
 
