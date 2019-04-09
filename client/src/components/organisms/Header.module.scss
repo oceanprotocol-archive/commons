@@ -49,12 +49,17 @@
     overflow-y: hidden;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin-right: -($spacer / 2);
+    margin-right: -($spacer / 1.5);
     padding-right: $spacer;
+    border-left: 1px solid $brand-grey-lighter;
+    margin-left: $spacer / 8;
 
     @media (min-width: $break-point--medium) {
         padding-right: 0;
         margin-right: 0;
+        margin-left: 0;
+        border-left: 0;
+        overflow: initial;
     }
 
     &::-webkit-scrollbar,
@@ -93,6 +98,6 @@
 }
 
 .accountStatus {
-    margin-left: $spacer;
-    margin-bottom: .2rem;
+    margin-left: $spacer / 2;
+    margin-bottom: -.5rem;
 }

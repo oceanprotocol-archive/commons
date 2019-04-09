@@ -13,6 +13,8 @@ $popoverWidth: 18rem;
     color: $brand-grey-light;
     font-size: $font-size-small;
     animation: showPopup .2s ease-in forwards;
+    white-space: initial;
+    text-align: left;
 }
 
 @keyframes showPopup {

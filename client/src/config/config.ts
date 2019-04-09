@@ -73,3 +73,8 @@ export const faucetPort = process.env.REACT_APP_FAUCET_PORT || 443
 // export const faucetPort = 3001
 
 export const verbose = true
+
+//
+// APP CONFIG
+//
+export const analyticsId = 'UA-60614729-11'

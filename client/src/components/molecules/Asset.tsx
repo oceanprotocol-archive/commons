@@ -28,7 +28,10 @@ const AssetLink = ({ asset, list }: { asset: any; list?: boolean }) => {
                     <CategoryImage category={base.categories[0]} />
                 )}
                 <h1>{base.name}</h1>
-                <Markdown text={`${base.description.substring(0, 90)}...`} />
+                <Markdown
+                    className={styles.description}
+                    text={`${base.description.substring(0, 90)}...`}
+                />
 
                 <footer className={styles.assetFooter}>
                     {base.categories && <div>{base.categories[0]}</div>}
