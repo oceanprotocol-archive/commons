@@ -25,7 +25,7 @@ If you're a developer and want to contribute to, or want to utilize this marketp
 - [🛳 Production](#-production)
 - [👩‍🔬 Testing](#-testing)
 - [🎁 Contributing](#-contributing)
-- [⬆️ Bumping version](#-bumping-version)
+- [⬆️ Releases](#️-releases)
 - [✨ Code Style](#-code-style)
 - [🏛 License](#-license)
 
@@ -82,14 +82,25 @@ Launches the test runner in the interactive watch mode.
 
 See the page titled "[Ways to Contribute](https://docs.oceanprotocol.com/concepts/contributing/)" in the Ocean Protocol documentation.
 
-## ⬆️ Bumping version
+## ⬆️ Releases
 
-Use the `bumpversion.sh` script to bump the project version. You can execute the script using {major|minor|patch} as first argument to bump the version accordingly:
-  - To bump the patch version: `./bumpversion.sh patch`
-  - To bump the minor version: `./bumpversion.sh minor`
-  - To bump the major version: `./bumpversion.sh major`
+Running any release task does the following:
 
-After that, you need to commit, push and git tag the commit if desired/needed.
+- bumps the project version
+- creates a Git tag
+- updates CHANGELOG.md file with commit messages
+- commits and pushes everything
+- creates a GitHub release with commit messages as description
+
+You can execute the script using {major|minor|patch} as first argument to bump the version accordingly:
+
+- To bump a patch version: `npm run release`
+- To bump a minor version: `npm run release-minor`
+- To bump a major version: `npm run release-major`
+
+By creating the Git tag with these tasks, Travis will trigger a new Kubernetes deployment automatically aftr a successful tag build.
+
+For the GitHub releases steps a GitHub personal access token, exported as `GITHUB_TOKEN` is required. [Setup](https://github.com/release-it/release-it#github-releases)
 
 ## ✨ Code Style
 

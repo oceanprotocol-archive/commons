@@ -15,10 +15,11 @@
     "lint:js": "eslint --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint": "npm run lint:js && npm run lint:css",
-    "release": "npm run changelog && git add . && git commit -m 'update changelog' && ./node_modules/release-it/bin/release-it.js --src.tagName='v%s' --github.release --non-interactive --no-npm.publish",
-    "release-minor": "npm run changelog && git add . && git commit -m 'update changelog' && ./node_modules/release-it/bin/release-it.js minor --src.tagName='v%s' --github.release --non-interactive --no-npm.publish",
-    "release-major": "npm run changelog && git add . && git commit -m 'update changelog' && ./node_modules/release-it/bin/release-it.js major --src.tagName='v%s' --github.release --non-interactive --no-npm.publish",
-    "changelog": "auto-changelog"
+    "release": "./node_modules/release-it/bin/release-it.js --src.tagName='v%s' --github.release --non-interactive --no-npm.publish",
+    "release-minor": "./node_modules/release-it/bin/release-it.js minor --src.tagName='v%s' --github.release --non-interactive --no-npm.publish",
+    "release-major": "./node_modules/release-it/bin/release-it.js major --src.tagName='v%s' --github.release --non-interactive --no-npm.publish",
+    "changelog": "auto-changelog",
+    "beforeStage": "npm run changelog"
   },
   "dependencies": {},
   "devDependencies": {
