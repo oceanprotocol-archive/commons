@@ -34,8 +34,16 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
     private readonly searchTerm = queryString.parse(this.props.location.search)
         .text
+    private readonly searchPage = queryString.parse(this.props.location.search)
+        .page
 
-    public componentDidMount() {
+    public async componentDidMount() {
+        // switch to respective page if query string is present
+        if (this.searchPage) {
+            const currentPage = Number(this.searchPage)
+            await this.setState({ currentPage })
+        }
+
         this.searchAssets()
     }
 
