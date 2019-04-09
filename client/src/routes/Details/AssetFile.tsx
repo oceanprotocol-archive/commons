@@ -25,7 +25,7 @@ export default class AssetFile extends PureComponent<
     public state = {
         isLoading: false,
         error: '',
-        message: 'Decrypting file, please sign...'
+        message: 'Decrypting file URL, please sign...'
     }
 
     private resetState = () => this.setState({ isLoading: true, error: '' })
