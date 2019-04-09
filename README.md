@@ -16,23 +16,23 @@
 
 <h3 align="center">🦑🦑🦑<br />This marketplace is deployed under <a href="https://commons.oceanprotocol.com">commons.oceanprotocol.com</a> and can be used there. Feel free to <a href="https://github.com/oceanprotocol/commons/issues">report any issues</a> you encounter.<br />🦑🦑🦑</h3>
 
-<p align="center">If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.</p>
-
 ---
 
-- [🏄 Get Started](#-get-started)
-  - [🐳 Use with Barge](#-use-with-barge)
-- [�‍🔬 Testing](#-testing)
-- [✨ Code Style](#-code-style)
-- [🛳 Production](#-production)
-- [⬆️ Releases](#️-releases)
-- [🎁 Contributing](#-contributing)
-- [🏛 License](#-license)
+If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
 
 This repo contains a client and a server, both written in TypeScript:
 
 - **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 - **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking.
+
+- [🏄 Get Started](#-get-started)
+  - [🐳 Use with Barge](#-use-with-barge)
+- [👩‍🔬 Testing](#-testing)
+- [✨ Code Style](#-code-style)
+- [🛳 Production](#-production)
+- [⬆️ Releases](#️-releases)
+- [🎁 Contributing](#-contributing)
+- [🏛 License](#-license)
 
 ## 🏄 Get Started
 
