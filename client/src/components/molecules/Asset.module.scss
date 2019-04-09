@@ -1,6 +1,10 @@
 @import '../../styles/variables';
 
 .asset {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+
     > a {
         display: block;
         height: 100%;
@@ -22,11 +26,6 @@
     h1 {
         font-size: $font-size-large;
         margin-top: 0;
-    }
-
-    p {
-        margin-bottom: 0;
-        font-size: $font-size-small;
     }
 }
 
@@ -51,6 +50,24 @@
         font-size: $font-size-base;
         color: inherit;
         margin: 0;
+    }
+}
+
+.description {
+    &,
+    p,
+    strong,
+    a,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-weight: $font-weight-base;
+        font-family: $font-family-base;
+        margin-bottom: 0;
+        font-size: $font-size-small;
+        color: $brand-grey;
     }
 }
 

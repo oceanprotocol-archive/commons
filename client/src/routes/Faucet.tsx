@@ -36,52 +36,12 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
 
             this.setState({
                 isLoading: false,
-                success: `Successfully added ETH to your account.`
+                success: 'Successfully added ETH to your account.'
             })
         } catch (error) {
             this.setState({ isLoading: false, error })
         }
     }
-
-    private RequestMarkup = () => (
-        <User.Consumer>
-            {states =>
-                states.isLogged ? (
-                    <Button
-                        primary
-                        onClick={() => this.getTokens(states.requestFromFaucet)}
-                    >
-                        Request Ether
-                    </Button>
-                ) : states.isWeb3 ? (
-                    <Web3message />
-                ) : (
-                    <Web3message />
-                )
-            }
-        </User.Consumer>
-    )
-
-    private ActionMarkup = () => (
-        <div className={styles.action}>
-            {this.state.isLoading ? (
-                <Spinner message="Getting Ether..." />
-            ) : this.state.error ? (
-                <div className={styles.error}>
-                    <p>{this.state.error}</p>
-                    <Button onClick={this.reset}>Try again</Button>
-                </div>
-            ) : this.state.success ? (
-                <div className={styles.success}>{this.state.success}</div>
-            ) : (
-                <this.RequestMarkup />
-            )}
-
-            <p>
-                You can only request Ether once every 24 hours for your address.
-            </p>
-        </div>
-    )
 
     private reset = () => {
         this.setState({
@@ -91,18 +51,57 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
         })
     }
 
+    private Success = () => (
+        <div className={styles.success}>{this.state.success}</div>
+    )
+
+    private Error = () => (
+        <div className={styles.error}>
+            <p>{this.state.error}</p>
+            <Button onClick={() => this.reset()}>Try again</Button>
+        </div>
+    )
+
+    private Action = () => (
+        <>
+            <Button
+                primary
+                onClick={() => this.getTokens(this.context.requestFromFaucet)}
+                disabled={!this.context.isLogged}
+            >
+                Request Ether
+            </Button>
+            <p>
+                You can only request Ether once every 24 hours for your address.
+            </p>
+        </>
+    )
+
     public render() {
+        const { isWeb3 } = this.context
+        const { isLoading, error, success } = this.state
+
         return (
             <Route
                 title="Faucet"
-                description="Shower yourself with some Ether for the Ocean POA network."
+                description="Shower yourself with some Ether for Ocean's Nile test network."
             >
-                <User.Consumer>
-                    {states => !states.isNile && <Web3message />}
-                </User.Consumer>
+                <Web3message />
 
-                <this.ActionMarkup />
+                <div className={styles.action}>
+                    {isLoading ? (
+                        <Spinner message="Getting Ether..." />
+                    ) : error ? (
+                        <this.Error />
+                    ) : success ? (
+                        <this.Success />
+                    ) : (
+                        isWeb3 && <this.Action />
+                    )}
+                </div>
             </Route>
         )
     }
 }
+
+Faucet.contextType = User

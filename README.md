@@ -24,6 +24,8 @@ If you're a developer and want to contribute to, or want to utilize this marketp
   - [🐳 Use with Barge](#-use-with-barge)
 - [🛳 Production](#-production)
 - [👩‍🔬 Testing](#-testing)
+- [🎁 Contributing](#-contributing)
+- [⬆️ Bumping version](#-bumping-version)
 - [✨ Code Style](#-code-style)
 - [🏛 License](#-license)
 
@@ -75,6 +77,19 @@ npm test
 ```
 
 Launches the test runner in the interactive watch mode.
+
+## 🎁 Contributing
+
+See the page titled "[Ways to Contribute](https://docs.oceanprotocol.com/concepts/contributing/)" in the Ocean Protocol documentation.
+
+## ⬆️ Bumping version
+
+Use the `bumpversion.sh` script to bump the project version. You can execute the script using {major|minor|patch} as first argument to bump the version accordingly:
+  - To bump the patch version: `./bumpversion.sh patch`
+  - To bump the minor version: `./bumpversion.sh minor`
+  - To bump the major version: `./bumpversion.sh major`
+
+After that, you need to commit, push and git tag the commit if desired/needed.
 
 ## ✨ Code Style
 
