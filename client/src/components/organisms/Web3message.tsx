@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import Dotdotdot from 'react-dotdotdot'
 import Button from '../atoms/Button'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Web3message.module.scss'
@@ -33,10 +34,11 @@ export default class Web3message extends PureComponent {
 
     private haveAccount = (account: string) => (
         <div className={styles.message}>
-            <AccountStatus className={styles.status} /> Connected with account
-            <code className={styles.account} title={account && account}>
-                {`${account && account.substring(0, 20)}...`}
-            </code>
+            <AccountStatus className={styles.status} />
+            <Dotdotdot clamp={1}>
+                Connected with account
+                <code className={styles.account}>{account}</code>
+            </Dotdotdot>
         </div>
     )
 

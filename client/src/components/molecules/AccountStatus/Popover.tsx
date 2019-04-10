@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import Dotdotdot from 'react-dotdotdot'
 import { User } from '../../../context/User'
 import styles from './Popover.module.scss'
 
@@ -40,12 +41,11 @@ export default class Popover extends PureComponent<{
                     <>
                         <div className={styles.popoverInfoline}>
                             {account ? (
-                                <span
-                                    className={styles.address}
-                                    title={account}
-                                >
-                                    {account}
-                                </span>
+                                <Dotdotdot clamp={1}>
+                                    <span className={styles.address}>
+                                        {account}
+                                    </span>
+                                </Dotdotdot>
                             ) : (
                                 <em>No account selected</em>
                             )}
