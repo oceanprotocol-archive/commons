@@ -20,6 +20,9 @@ import {
     faucetScheme
 } from './config/config'
 
+const POLL_ACCOUNTS = 1000 // every 1s
+const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
+
 declare global {
     interface Window {
         web3: Web3
@@ -45,6 +48,9 @@ interface AppState {
 }
 
 class App extends Component<{}, AppState> {
+    private accountsInterval: any
+    private networkInterval: any
+
     public startLogin = (event?: any) => {
         if (event) {
             event.preventDefault()
@@ -102,33 +108,9 @@ class App extends Component<{}, AppState> {
     }
 
     public async componentDidMount() {
-        this.bootstrap()
-    }
-
-    private startLoginProcess = async () => {
-        try {
-            if (this.state.isWeb3 && window.ethereum) {
-                await window.ethereum.enable()
-                const accounts = await this.state.ocean.accounts.list()
-                if (accounts.length > 0) {
-                    const balance = await accounts[0].getBalance()
-                    this.setState({
-                        isLogged: true,
-                        balance,
-                        account: accounts[0].getId()
-                    })
-                } else {
-                    // not unlocked
-                }
-            } else {
-                // no metamask/mist, show installation guide!
-            }
-        } catch (e) {
-            Logger.log('error logging', e)
-            // error in logging process
-            // show error
-            // rerun bootstrap process?
-        }
+        await this.bootstrap()
+        this.initAccountsPoll()
+        this.initNetworkPoll()
     }
 
     private bootstrap = async () => {
@@ -180,6 +162,86 @@ class App extends Component<{}, AppState> {
             this.setState({
                 isLoading: false
             })
+        }
+    }
+
+    private initAccountsPoll() {
+        if (!this.accountsInterval) {
+            this.accountsInterval = setInterval(
+                this.fetchAccounts,
+                POLL_ACCOUNTS
+            )
+        }
+    }
+
+    private initNetworkPoll() {
+        if (!this.networkInterval) {
+            this.networkInterval = setInterval(this.fetchNetwork, POLL_NETWORK)
+        }
+    }
+
+    private fetchAccounts = async () => {
+        const { web3 } = window
+        const { ocean } = this.state
+
+        if (web3) {
+            const accounts = await ocean.accounts.list()
+
+            if (accounts.length > 0) {
+                const account = accounts[0].getId()
+
+                if (account !== this.state.account) {
+                    const balance = await accounts[0].getBalance()
+                    this.setState({ account, balance, isLogged: true })
+                }
+            } else {
+                this.state.isLogged !== false &&
+                    this.setState({ isLogged: false, account: '' })
+            }
+        } else {
+            this.state.isWeb3 !== false &&
+                this.setState({
+                    isWeb3: false,
+                    isLogged: false
+                })
+        }
+    }
+
+    private fetchNetwork = async () => {
+        const { web3 } = window
+        const { ocean } = this.state
+
+        if (web3) {
+            const network = await ocean.keeper.getNetworkName()
+            const isNile = network === 'Nile'
+
+            network !== this.state.network && this.setState({ isNile, network })
+        }
+    }
+
+    private startLoginProcess = async () => {
+        try {
+            if (this.state.isWeb3 && window.ethereum) {
+                await window.ethereum.enable()
+                const accounts = await this.state.ocean.accounts.list()
+                if (accounts.length > 0) {
+                    const balance = await accounts[0].getBalance()
+                    this.setState({
+                        isLogged: true,
+                        balance,
+                        account: accounts[0].getId()
+                    })
+                } else {
+                    // not unlocked
+                }
+            } else {
+                // no metamask/mist, show installation guide!
+            }
+        } catch (e) {
+            Logger.log('error logging', e)
+            // error in logging process
+            // show error
+            // rerun bootstrap process?
         }
     }
 
