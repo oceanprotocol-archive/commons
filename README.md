@@ -10,7 +10,7 @@
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
 
-<img alt="screen shot 2019-02-08 at 16 53 57" src="https://user-images.githubusercontent.com/90316/52489283-27080e80-2bc2-11e9-8ec0-508c21eb86f7.png">
+<img width="1218" alt="Commons UI" src="https://user-images.githubusercontent.com/90316/55874266-296ef080-5b92-11e9-8ac6-2423cb2a80fb.png">
 
 ---
 
