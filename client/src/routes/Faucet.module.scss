@@ -12,6 +12,19 @@
 
 .success {
     color: $green;
+
+    p {
+        margin-top: $spacer / 2;
+    }
+
+    strong {
+        display: block;
+    }
+
+    code {
+        overflow-wrap: break-word;
+        display: inline;
+    }
 }
 
 .error {
