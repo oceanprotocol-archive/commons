@@ -10,13 +10,15 @@ interface FaucetState {
     isLoading: boolean
     success?: string
     error?: string
+    trxHash?: string
 }
 
 export default class Faucet extends PureComponent<{}, FaucetState> {
     public state = {
         isLoading: false,
         success: undefined,
-        error: undefined
+        error: undefined,
+        trxHash: undefined
     }
 
     private getTokens = async (requestFromFaucet: () => any) => {
@@ -25,18 +27,20 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
         try {
             const response = await requestFromFaucet()
 
-            if (response.error) {
+            if (!response.success) {
                 this.setState({
                     isLoading: false,
-                    error: response.error
+                    error: response.message
                 })
-
                 return
             }
 
+            const { trxHash } = response
+
             this.setState({
                 isLoading: false,
-                success: 'Successfully added ETH to your account.'
+                success: response.message,
+                trxHash
             })
         } catch (error) {
             this.setState({ isLoading: false, error })
@@ -52,7 +56,13 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
     }
 
     private Success = () => (
-        <div className={styles.success}>{this.state.success}</div>
+        <div className={styles.success}>
+            <strong>{this.state.success}</strong>
+            <p>
+                <strong>Your Transaction Hash</strong>
+                <code>{this.state.trxHash}</code>
+            </p>
+        </div>
     )
 
     private Error = () => (

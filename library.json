@@ -20,6 +20,10 @@
     {
       "name": "squid-js",
       "version": "~0.5.3"
+    },
+    {
+      "name": "faucet",
+      "version": "~0.2.0"
     }
   ]
 }
