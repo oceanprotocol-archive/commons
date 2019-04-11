@@ -25,18 +25,17 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
         try {
             const response = await requestFromFaucet()
 
-            if (response.error) {
+            if (!response.success) {
                 this.setState({
                     isLoading: false,
-                    error: response.error
+                    error: response.message
                 })
-
                 return
             }
 
             this.setState({
                 isLoading: false,
-                success: 'Successfully added ETH to your account.'
+                success: response.message
             })
         } catch (error) {
             this.setState({ isLoading: false, error })
