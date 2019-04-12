@@ -5,9 +5,8 @@ WORKDIR /app/backend/
 
 COPY . .
 
-RUN npm install
+RUN npm install && \
+    npm run build
 
-RUN npm run build
-
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "serve"]
 

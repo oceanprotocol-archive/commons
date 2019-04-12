@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "install": "./scripts/install.sh",
-    "start": "concurrently \"cd client && npm run start\" \"cd server && npm run start-watch\"",
+    "start": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
     "build": "./scripts/build.sh",
     "test": "npm run lint && scripts/test.sh",
     "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
