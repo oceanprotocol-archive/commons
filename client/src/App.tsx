@@ -109,42 +109,60 @@ class App extends Component<{}, AppState> {
 
     public async componentDidMount() {
         await this.bootstrap()
-        this.initAccountsPoll()
-        this.initNetworkPoll()
+        // this.initAccountsPoll()
+        // this.initNetworkPoll()
     }
 
     private bootstrap = async () => {
         try {
             if (window.web3) {
-                const web3 = new Web3(window.web3.currentProvider)
-                const { ocean } = await provideOcean(web3)
+                let web3provider = new Web3(window.web3.currentProvider)
+                this.setState({
+                    isWeb3: true,
+                    message: 'Setting up Web3...'
+                })
+
+                //
+                // Detecting network with window.web3
+                //
+                let isNile
+
+                await web3provider.eth.net.getId((err, netId) => {
+                    if (err) return
+
+                    isNile = netId === 8995
+
+                    this.setState({ isNile, network: netId.toString() })
+                })
+
+                if (!isNile) {
+                    web3provider = this.state.web3
+                }
+
+                //
+                // Provide the Ocean
+                //
+                this.setState({ message: 'Connecting to Ocean...' })
+
+                const { ocean } = await provideOcean(this.state.web3)
+
+                // Get accounts
                 const accounts = await ocean.accounts.list()
-                const network = await ocean.keeper.getNetworkName()
-                const isNile = network === 'Nile'
+
                 if (accounts.length > 0) {
                     const balance = await accounts[0].getBalance()
                     this.setState({
-                        isWeb3: true,
                         isLogged: true,
-                        isNile,
                         ocean,
-                        web3,
                         balance,
-                        network,
                         account: accounts[0].getId(),
-                        isLoading: false
-                    })
-                } else {
-                    this.setState({
-                        isWeb3: true,
-                        isNile,
-                        ocean,
-                        web3,
-                        network,
                         isLoading: false
                     })
                 }
             } else {
+                //
+                // No Web3 browser
+                //
                 const { ocean } = await provideOcean(this.state.web3)
                 const network = await ocean.keeper.getNetworkName()
                 const isNile = network === 'Nile'
@@ -159,9 +177,7 @@ class App extends Component<{}, AppState> {
             // error in bootstrap process
             // show error connecting to ocean
             Logger.log('web3 error', e)
-            this.setState({
-                isLoading: false
-            })
+            this.setState({ isLoading: false })
         }
     }
 
