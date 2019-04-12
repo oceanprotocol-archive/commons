@@ -13,32 +13,42 @@ export default class AssetsUser extends PureComponent<
 > {
     public state = { results: [], isLoading: true }
 
+    public _isMounted: boolean = false
+
     public componentDidMount() {
-        this.searchOcean()
+        this._isMounted = true
+        this._isMounted && this.searchOcean()
+    }
+
+    public componentWillUnmount() {
+        this._isMounted = false
     }
 
     private async searchOcean() {
-        if (this.context.account) {
-            this.context.ocean.keeper.didRegistry.contract.getPastEvents(
+        const { account, ocean } = this.context
+
+        if (account) {
+            ocean.keeper.didRegistry.contract.getPastEvents(
                 'DIDAttributeRegistered',
                 {
-                    filter: { _owner: this.context.account },
+                    filter: { _owner: account },
                     fromBlock: 0,
                     toBlock: 'latest'
                 },
                 async (error: any, events: any) => {
                     if (error) {
                         Logger.log('error retrieving', error)
-                        this.setState({ isLoading: false })
+                        this._isMounted && this.setState({ isLoading: false })
                     } else {
                         const results = []
                         for (const event of events) {
-                            const ddo = await this.context.ocean.assets.resolve(
+                            const ddo = await ocean.assets.resolve(
                                 `did:op:${event.returnValues._did.substring(2)}`
                             )
                             results.push(ddo)
                         }
-                        this.setState({ results, isLoading: false })
+                        this._isMounted &&
+                            this.setState({ results, isLoading: false })
                     }
                 }
             )
@@ -48,7 +58,9 @@ export default class AssetsUser extends PureComponent<
     }
 
     public render() {
-        return this.context.isNile && this.context.account ? (
+        const { account, isNile } = this.context
+
+        return isNile && account ? (
             <div className={styles.assetsUser}>
                 {this.props.recent && (
                     <h2 className={styles.subTitle}>
