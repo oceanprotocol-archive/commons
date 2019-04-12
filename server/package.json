@@ -3,14 +3,13 @@
   "description": "Ocean Protocol marketplace backend.",
   "version": "1.0.0",
   "license": "Apache-2.0",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "start-watch": "nodemon",
+    "start": "nodemon --exec ts-node src/server.ts",
+    "serve": "node dist/server.js",
     "build": "tsc",
-    "watch": "tsc -w",
     "test": "jest --coverage",
-    "watch-test": "npm run test --watchAll"
+    "test-watch": "npm run test --watchAll"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
