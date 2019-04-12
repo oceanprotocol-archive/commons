@@ -143,8 +143,8 @@ class App extends Component<{}, AppState> {
                 // Provide the Ocean
                 //
                 this.setState({ message: 'Connecting to Ocean...' })
-
-                const { ocean } = await provideOcean(this.state.web3)
+                const { ocean } = await provideOcean(web3provider)
+                this.setState({ ocean, isLoading: false })
 
                 // Get accounts
                 const accounts = await ocean.accounts.list()
@@ -153,10 +153,8 @@ class App extends Component<{}, AppState> {
                     const balance = await accounts[0].getBalance()
                     this.setState({
                         isLogged: true,
-                        ocean,
                         balance,
-                        account: accounts[0].getId(),
-                        isLoading: false
+                        account: accounts[0].getId()
                     })
                 }
             } else {
@@ -164,13 +162,14 @@ class App extends Component<{}, AppState> {
                 // No Web3 browser
                 //
                 const { ocean } = await provideOcean(this.state.web3)
+                this.setState({ isLoading: false })
+
                 const network = await ocean.keeper.getNetworkName()
                 const isNile = network === 'Nile'
                 this.setState({
                     isNile,
                     ocean,
-                    network,
-                    isLoading: false
+                    network
                 })
             }
         } catch (e) {
