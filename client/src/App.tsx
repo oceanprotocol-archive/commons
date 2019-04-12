@@ -109,8 +109,9 @@ class App extends Component<{}, AppState> {
 
     public async componentDidMount() {
         await this.bootstrap()
-        // this.initAccountsPoll()
-        // this.initNetworkPoll()
+
+        this.initAccountsPoll()
+        this.initNetworkPoll()
     }
 
     private bootstrap = async () => {
@@ -131,8 +132,8 @@ class App extends Component<{}, AppState> {
                     if (err) return
 
                     isNile = netId === 8995
-
-                    this.setState({ isNile, network: netId.toString() })
+                    const network = isNile ? 'Nile' : netId.toString()
+                    this.setState({ isNile, network })
                 })
 
                 if (!isNile) {
@@ -146,16 +147,22 @@ class App extends Component<{}, AppState> {
                 const { ocean } = await provideOcean(web3provider)
                 this.setState({ ocean, isLoading: false })
 
-                // Get accounts
+                // Set proper network names now that we have Ocean
+                const network = await ocean.keeper.getNetworkName()
+                isNile = network === 'Nile'
+                this.setState({ isNile, network })
+
+                // Get accounts with Ocean
                 const accounts = await ocean.accounts.list()
 
                 if (accounts.length > 0) {
-                    const balance = await accounts[0].getBalance()
                     this.setState({
                         isLogged: true,
-                        balance,
                         account: accounts[0].getId()
                     })
+
+                    const balance = await accounts[0].getBalance()
+                    this.setState({ balance })
                 }
             } else {
                 //
@@ -181,7 +188,7 @@ class App extends Component<{}, AppState> {
     }
 
     private initAccountsPoll() {
-        if (!this.accountsInterval) {
+        if (!this.accountsInterval && this.state.ocean.length) {
             this.accountsInterval = setInterval(
                 this.fetchAccounts,
                 POLL_ACCOUNTS
@@ -190,7 +197,7 @@ class App extends Component<{}, AppState> {
     }
 
     private initNetworkPoll() {
-        if (!this.networkInterval) {
+        if (!this.networkInterval && this.state.ocean.length) {
             this.networkInterval = setInterval(this.fetchNetwork, POLL_NETWORK)
         }
     }
@@ -206,8 +213,16 @@ class App extends Component<{}, AppState> {
                 const account = accounts[0].getId()
 
                 if (account !== this.state.account) {
-                    const balance = await accounts[0].getBalance()
-                    this.setState({ account, balance, isLogged: true })
+                    this.setState({ account, isLogged: true })
+                }
+
+                const balance = await accounts[0].getBalance()
+
+                if (
+                    balance.eth !== this.state.balance.eth ||
+                    balance.ocn !== this.state.balance.ocn
+                ) {
+                    this.setState({ balance })
                 }
             } else {
                 this.state.isLogged !== false &&
