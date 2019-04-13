@@ -154,29 +154,9 @@ export default class Step extends PureComponent<StepProps, {}> {
                     {this.nextButton()}
 
                     {lastStep && (
-                        <User.Consumer>
-                            {states =>
-                                states.isLogged ? (
-                                    <Button primary>Register asset</Button>
-                                ) : states.isWeb3 ? (
-                                    <Button onClick={states.startLogin}>
-                                        Register asset (unlock Metamask)
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        onClick={(e: Event) => {
-                                            e.preventDefault()
-                                            window.open(
-                                                'https://docs.oceanprotocol.com/tutorials/metamask-setup/',
-                                                '_blank'
-                                            )
-                                        }}
-                                    >
-                                        Register asset (install Metamask)
-                                    </Button>
-                                )
-                            }
-                        </User.Consumer>
+                        <Button disabled={!this.context.isLogged} primary>
+                            Register asset
+                        </Button>
                     )}
                 </div>
             </>

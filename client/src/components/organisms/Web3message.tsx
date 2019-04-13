@@ -9,7 +9,7 @@ export default class Web3message extends PureComponent {
     private noWeb3 = () => (
         <div className={styles.message}>
             <AccountStatus className={styles.status} /> Not a Web3 Browser. For
-            publishing or downloading an asset you need to{' '}
+            publishing and downloading an asset you need to{' '}
             <a
                 href="https://docs.oceanprotocol.com/tutorials/metamask-setup/"
                 target="_blank"
@@ -21,14 +21,11 @@ export default class Web3message extends PureComponent {
         </div>
     )
 
-    private unlockAccount = (states: any) => (
+    private unlockAccount = () => (
         <div className={styles.message}>
-            <AccountStatus className={styles.status} /> Account locked. For
-            publishing and downloading an asset you need to unlock your Web3
-            account.{' '}
-            <Button link onClick={states.startLogin}>
-                Unlock account
-            </Button>
+            <AccountStatus className={styles.status} /> No accounts detected.
+            For publishing and downloading an asset you need to unlock your Web3
+            account.
         </div>
     )
 
@@ -52,20 +49,18 @@ export default class Web3message extends PureComponent {
     )
 
     public render() {
-        return (
-            <User.Consumer>
-                {states =>
-                    !states.isWeb3
-                        ? this.noWeb3()
-                        : !states.isNile
-                        ? this.wrongNetwork(states.network)
-                        : !states.isLogged
-                        ? this.unlockAccount(states)
-                        : states.isLogged
-                        ? this.haveAccount(states.account)
-                        : null
-                }
-            </User.Consumer>
-        )
+        const { isWeb3, isNile, isLogged, network, account } = this.context
+
+        return !isWeb3
+            ? this.noWeb3()
+            : !isNile
+            ? this.wrongNetwork(network)
+            : !isLogged
+            ? this.unlockAccount()
+            : isLogged
+            ? this.haveAccount(account)
+            : null
     }
 }
+
+Web3message.contextType = User

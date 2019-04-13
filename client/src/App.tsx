@@ -43,45 +43,31 @@ interface AppState {
     network: string
     web3: Web3
     ocean: any
-    startLogin: () => void
+    requestFromFaucet(): void
     message: string
 }
 
 class App extends Component<{}, AppState> {
-    private accountsInterval: any
-    private networkInterval: any
-
-    public startLogin = (event?: any) => {
-        if (event) {
-            event.preventDefault()
-        }
-        this.startLoginProcess()
-    }
+    private accountsInterval: any = null
+    private networkInterval: any = null
 
     private requestFromFaucet = async () => {
-        if (this.state.account !== '') {
-            try {
-                const response = await fetch(
-                    `${faucetScheme}://${faucetHost}:${faucetPort}/faucet`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            address: this.state.account,
-                            agent: 'commons'
-                        })
-                    }
-                )
-
-                return response.json()
-            } catch (error) {
-                Logger.log('requestFromFaucet', error)
-            }
-        } else {
-            // no account found
+        try {
+            const url = `${faucetScheme}://${faucetHost}:${faucetPort}/faucet`
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    address: this.state.account,
+                    agent: 'commons'
+                })
+            })
+            return response.json()
+        } catch (error) {
+            Logger.log('requestFromFaucet', error)
         }
     }
 
@@ -102,7 +88,6 @@ class App extends Component<{}, AppState> {
         ),
         account: '',
         ocean: {} as any,
-        startLogin: this.startLogin,
         requestFromFaucet: this.requestFromFaucet,
         message: 'Connecting to Ocean...'
     }
@@ -116,68 +101,72 @@ class App extends Component<{}, AppState> {
 
     private bootstrap = async () => {
         try {
-            if (window.web3) {
-                let web3provider = new Web3(window.web3.currentProvider)
-                this.setState({
-                    isWeb3: true,
-                    message: 'Setting up Web3...'
-                })
+            //
+            // Start with Web3 detection
+            //
+            this.setState({ message: 'Setting up Web3...' })
 
+            // Modern dapp browsers
+            if (window.ethereum) {
+                window.web3 = new Web3(window.ethereum)
+                this.setState({ isWeb3: true })
+            }
+            // Legacy dapp browsers
+            else if (window.web3) {
+                window.web3 = new Web3(window.web3.currentProvider)
+                this.setState({ isWeb3: true })
+            }
+            // Non-dapp browsers
+            else {
+                this.setState({ isWeb3: false })
+            }
+
+            // Modern & legacy dapp browsers
+            if (this.state.isWeb3) {
                 //
                 // Detecting network with window.web3
                 //
                 let isNile
 
-                await web3provider.eth.net.getId((err, netId) => {
+                await window.web3.eth.net.getId((err, netId) => {
                     if (err) return
 
                     isNile = netId === 8995
                     const network = isNile ? 'Nile' : netId.toString()
-                    this.setState({ isNile, network })
+
+                    if (
+                        isNile !== this.state.isNile ||
+                        network !== this.state.network
+                    ) {
+                        this.setState({ isNile, network })
+                    }
                 })
 
                 if (!isNile) {
-                    web3provider = this.state.web3
+                    window.web3 = this.state.web3
                 }
 
                 //
                 // Provide the Ocean
                 //
                 this.setState({ message: 'Connecting to Ocean...' })
-                const { ocean } = await provideOcean(web3provider)
+
+                const { ocean } = await provideOcean(window.web3)
                 this.setState({ ocean, isLoading: false })
 
                 // Set proper network names now that we have Ocean
-                const network = await ocean.keeper.getNetworkName()
-                isNile = network === 'Nile'
-                this.setState({ isNile, network })
+                this.fetchNetwork()
 
-                // Get accounts with Ocean
-                const accounts = await ocean.accounts.list()
-
-                if (accounts.length > 0) {
-                    this.setState({
-                        isLogged: true,
-                        account: accounts[0].getId()
-                    })
-
-                    const balance = await accounts[0].getBalance()
-                    this.setState({ balance })
-                }
-            } else {
-                //
-                // No Web3 browser
-                //
+                // Get accounts
+                this.fetchAccounts()
+            }
+            // Non-dapp browsers
+            else {
+                this.setState({ message: 'Connecting to Ocean...' })
                 const { ocean } = await provideOcean(this.state.web3)
-                this.setState({ isLoading: false })
+                this.setState({ ocean, isLoading: false })
 
-                const network = await ocean.keeper.getNetworkName()
-                const isNile = network === 'Nile'
-                this.setState({
-                    isNile,
-                    ocean,
-                    network
-                })
+                this.fetchNetwork()
             }
         } catch (e) {
             // error in bootstrap process
@@ -188,7 +177,7 @@ class App extends Component<{}, AppState> {
     }
 
     private initAccountsPoll() {
-        if (!this.accountsInterval && this.state.ocean.length) {
+        if (!this.accountsInterval) {
             this.accountsInterval = setInterval(
                 this.fetchAccounts,
                 POLL_ACCOUNTS
@@ -197,16 +186,28 @@ class App extends Component<{}, AppState> {
     }
 
     private initNetworkPoll() {
-        if (!this.networkInterval && this.state.ocean.length) {
+        if (!this.networkInterval) {
             this.networkInterval = setInterval(this.fetchNetwork, POLL_NETWORK)
         }
     }
 
     private fetchAccounts = async () => {
-        const { web3 } = window
-        const { ocean } = this.state
+        const { ocean, isWeb3, isLogged, isNile } = this.state
 
-        if (web3) {
+        if (isWeb3) {
+            // Modern dapp browsers
+            if (window.ethereum) {
+                if (!isLogged && isNile) {
+                    try {
+                        await window.ethereum.enable()
+                    } catch (error) {
+                        // User denied account access...
+                        this.accountsInterval = null
+                        return
+                    }
+                }
+            }
+
             const accounts = await ocean.accounts.list()
 
             if (accounts.length > 0) {
@@ -225,53 +226,20 @@ class App extends Component<{}, AppState> {
                     this.setState({ balance })
                 }
             } else {
-                this.state.isLogged !== false &&
+                isLogged !== false &&
                     this.setState({ isLogged: false, account: '' })
             }
-        } else {
-            this.state.isWeb3 !== false &&
-                this.setState({
-                    isWeb3: false,
-                    isLogged: false
-                })
         }
     }
 
     private fetchNetwork = async () => {
-        const { web3 } = window
-        const { ocean } = this.state
+        const { ocean, isWeb3 } = this.state
 
-        if (web3) {
+        if (isWeb3) {
             const network = await ocean.keeper.getNetworkName()
             const isNile = network === 'Nile'
 
             network !== this.state.network && this.setState({ isNile, network })
-        }
-    }
-
-    private startLoginProcess = async () => {
-        try {
-            if (this.state.isWeb3 && window.ethereum) {
-                await window.ethereum.enable()
-                const accounts = await this.state.ocean.accounts.list()
-                if (accounts.length > 0) {
-                    const balance = await accounts[0].getBalance()
-                    this.setState({
-                        isLogged: true,
-                        balance,
-                        account: accounts[0].getId()
-                    })
-                } else {
-                    // not unlocked
-                }
-            } else {
-                // no metamask/mist, show installation guide!
-            }
-        } catch (e) {
-            Logger.log('error logging', e)
-            // error in logging process
-            // show error
-            // rerun bootstrap process?
         }
     }
 
