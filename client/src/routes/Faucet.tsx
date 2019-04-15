@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { FaucetResponse } from '../ocean'
 import Route from '../components/templates/Route'
 import Button from '../components/atoms/Button'
 import Spinner from '../components/atoms/Spinner'
@@ -21,7 +22,9 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
         trxHash: undefined
     }
 
-    private getTokens = async (requestFromFaucet: () => any) => {
+    private getTokens = async (
+        requestFromFaucet: () => Promise<FaucetResponse>
+    ) => {
         this.setState({ isLoading: true })
 
         try {

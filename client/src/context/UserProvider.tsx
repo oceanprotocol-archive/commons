@@ -1,17 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Web3 from 'web3'
 import { Logger } from '@oceanprotocol/squid'
 import { User } from '.'
-import { provideOcean } from '../ocean'
-
-import {
-    nodeHost,
-    nodePort,
-    nodeScheme,
-    faucetHost,
-    faucetPort,
-    faucetScheme
-} from '../config/config'
+import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
+import { nodeHost, nodePort, nodeScheme } from '../config/config'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
@@ -42,34 +34,11 @@ interface UserProviderState {
     network: string
     web3: Web3
     ocean: any
-    requestFromFaucet(): Promise<{}>
+    requestFromFaucet(account: string): Promise<FaucetResponse>
     message: string
 }
 
-export default class UserProvider extends Component<{}, UserProviderState> {
-    private accountsInterval: any = null
-    private networkInterval: any = null
-
-    private requestFromFaucet = async () => {
-        try {
-            const url = `${faucetScheme}://${faucetHost}:${faucetPort}/faucet`
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    address: this.state.account,
-                    agent: 'commons'
-                })
-            })
-            return response.json()
-        } catch (error) {
-            Logger.log('requestFromFaucet', error)
-        }
-    }
-
+export default class UserProvider extends PureComponent<{}, UserProviderState> {
     public state = {
         isLogged: false,
         isLoading: true,
@@ -87,9 +56,12 @@ export default class UserProvider extends Component<{}, UserProviderState> {
         ),
         account: '',
         ocean: {} as any,
-        requestFromFaucet: this.requestFromFaucet,
+        requestFromFaucet: () => requestFromFaucet(''),
         message: 'Connecting to Ocean...'
     }
+
+    private accountsInterval: any = null
+    private networkInterval: any = null
 
     public async componentDidMount() {
         await this.bootstrap()
@@ -162,7 +134,11 @@ export default class UserProvider extends Component<{}, UserProviderState> {
 
                 // Get accounts
                 await this.fetchAccounts()
-                this.setState({ isLoading: false })
+                this.setState({
+                    isLoading: false,
+                    requestFromFaucet: () =>
+                        requestFromFaucet(this.state.account)
+                })
 
                 // Set proper network names now that we have Ocean
                 this.fetchNetwork()
@@ -218,10 +194,14 @@ export default class UserProvider extends Component<{}, UserProviderState> {
             const accounts = await ocean.accounts.list()
 
             if (accounts.length > 0) {
-                const account = accounts[0].getId()
+                const account = await accounts[0].getId()
 
                 if (account !== this.state.account) {
-                    this.setState({ account, isLogged: true })
+                    this.setState({
+                        account,
+                        isLogged: true,
+                        requestFromFaucet: () => requestFromFaucet(account)
+                    })
                 }
 
                 const balance = await accounts[0].getBalance()
