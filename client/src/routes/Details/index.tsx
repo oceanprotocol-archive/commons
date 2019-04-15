@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Route from '../../components/templates/Route'
 import Spinner from '../../components/atoms/Spinner'
-import { User } from '../../context/User'
+import { User } from '../../context'
 import AssetDetails from './AssetDetails'
 import stylesApp from '../../App.module.scss'
 
@@ -29,18 +29,14 @@ export default class Details extends Component<DetailsProps, DetailsState> {
     public render() {
         const { metadata, ddo } = this.state
 
-        return (
-            <Route
-                title={metadata.base ? metadata.base.name : 'Loading Details'}
-            >
-                {metadata && metadata.base.name ? (
-                    <AssetDetails metadata={metadata} ddo={ddo} />
-                ) : (
-                    <div className={stylesApp.loader}>
-                        <Spinner message={'Loading asset...'} />
-                    </div>
-                )}
+        return metadata.base.name !== '' ? (
+            <Route title={metadata.base.name}>
+                <AssetDetails metadata={metadata} ddo={ddo} />
             </Route>
+        ) : (
+            <div className={stylesApp.loader}>
+                <Spinner message={'Loading asset...'} />
+            </div>
         )
     }
 }

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import AssetFile from './AssetFile'
-import { User } from '../../context/User'
+import { User } from '../../context'
 import Web3message from '../../components/organisms/Web3message'
 import styles from './AssetFilesDetails.module.scss'
 

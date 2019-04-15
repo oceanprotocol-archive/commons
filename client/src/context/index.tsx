@@ -13,10 +13,11 @@ export const User = React.createContext({
         ocn: 0
     },
     network: '',
-    startLogin: () => {
-        /* empty */
-    },
     requestFromFaucet: () => {
         /* empty */
-    }
+    },
+    unlockAccounts: () => {
+        /* empty */
+    },
+    message: ''
 })

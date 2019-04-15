@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react'
+import { FaucetResponse } from '../ocean'
 import Route from '../components/templates/Route'
 import Button from '../components/atoms/Button'
 import Spinner from '../components/atoms/Spinner'
-import { User } from '../context/User'
+import { User } from '../context'
 import Web3message from '../components/organisms/Web3message'
 import styles from './Faucet.module.scss'
 
@@ -21,7 +22,9 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
         trxHash: undefined
     }
 
-    private getTokens = async (requestFromFaucet: () => any) => {
+    private getTokens = async (
+        requestFromFaucet: () => Promise<FaucetResponse>
+    ) => {
         this.setState({ isLoading: true })
 
         try {
@@ -77,7 +80,7 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
             <Button
                 primary
                 onClick={() => this.getTokens(this.context.requestFromFaucet)}
-                disabled={!this.context.isLogged}
+                disabled={!this.context.isLogged || !this.context.isNile}
             >
                 Request Ether
             </Button>

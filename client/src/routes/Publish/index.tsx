@@ -3,7 +3,8 @@ import { Logger } from '@oceanprotocol/squid'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
 import AssetModel from '../../models/AssetModel'
-import { User } from '../../context/User'
+import { User } from '../../context'
+import Web3message from '../../components/organisms/Web3message'
 import Step from './Step'
 import Progress from './Progress'
 import ReactGA from 'react-ga'
@@ -318,6 +319,10 @@ class Publish extends Component<{}, PublishState> {
                 title="Publish"
                 description="Publish a new data set into the Ocean Protocol Network."
             >
+                {(!this.context.isLogged || !this.context.isNile) && (
+                    <Web3message />
+                )}
+
                 <Progress steps={steps} currentStep={this.state.currentStep} />
 
                 <Form onSubmit={this.registerAsset}>

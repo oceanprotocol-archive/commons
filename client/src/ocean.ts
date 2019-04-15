@@ -1,4 +1,4 @@
-import { Ocean } from '@oceanprotocol/squid'
+import { Ocean, Logger } from '@oceanprotocol/squid'
 import Web3 from 'web3'
 
 import {
@@ -9,6 +9,9 @@ import {
     brizoPort,
     brizoScheme,
     brizoAddress,
+    faucetHost,
+    faucetPort,
+    faucetScheme,
     nodeHost,
     nodePort,
     nodeScheme,
@@ -42,4 +45,33 @@ export async function provideOcean(web3provider: Web3) {
     const ocean: Ocean = await Ocean.getInstance(config)
 
     return { ocean }
+}
+
+//
+// Faucet
+//
+export interface FaucetResponse {
+    success: boolean
+    message: string
+    trxHash?: string
+}
+
+export async function requestFromFaucet(account: string) {
+    try {
+        const url = `${faucetScheme}://${faucetHost}:${faucetPort}/faucet`
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                address: account,
+                agent: 'commons'
+            })
+        })
+        return response.json()
+    } catch (error) {
+        Logger.log('requestFromFaucet', error)
+    }
 }
