@@ -130,18 +130,15 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 this.setState({ message: 'Connecting to Ocean...' })
 
                 const { ocean } = await provideOcean(web3)
-                this.setState({ ocean })
+                this.setState({ ocean, message: 'Getting accounts...' })
 
                 // Get accounts
                 await this.fetchAccounts()
-                this.setState({
-                    isLoading: false,
-                    requestFromFaucet: () =>
-                        requestFromFaucet(this.state.account)
-                })
 
                 // Set proper network names now that we have Ocean
-                this.fetchNetwork()
+                await this.fetchNetwork()
+
+                this.setState({ isLoading: false })
             }
             // Non-dapp browsers
             else {

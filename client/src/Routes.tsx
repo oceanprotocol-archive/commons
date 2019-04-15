@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import withTracker from './withTracker'
+import withTracker from './hoc/withTracker'
 
 import About from './routes/About'
 import Details from './routes/Details/'
