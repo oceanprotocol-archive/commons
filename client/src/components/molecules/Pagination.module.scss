@@ -22,10 +22,11 @@
     font-weight: $font-weight-bold;
     padding: $spacer / 4 $spacer / 2;
     margin-left: -1px;
+    margin-top: -1px;
     display: inline-block;
     cursor: pointer;
     border: 1px solid $brand-grey-lighter;
-    min-width: 3rem;
+    min-width: 3.5rem;
 
     &,
     &:hover,
