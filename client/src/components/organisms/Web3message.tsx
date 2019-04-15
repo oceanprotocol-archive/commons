@@ -10,7 +10,7 @@ export default class Web3message extends PureComponent {
     private message = (
         message: string,
         account?: string,
-        unlockAccounts?: () => Promise<any>
+        unlockAccounts?: () => any
     ) => (
         <div className={styles.message}>
             <AccountStatus className={styles.status} />{' '}
