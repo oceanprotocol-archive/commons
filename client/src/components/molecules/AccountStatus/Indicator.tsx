@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import { User } from '../../../context/User'
+import { User } from '../../../context'
 import styles from './Indicator.module.scss'
 
 const Indicator = ({

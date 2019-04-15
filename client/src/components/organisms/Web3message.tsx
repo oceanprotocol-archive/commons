@@ -1,64 +1,36 @@
 import React, { PureComponent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
-import Button from '../atoms/Button'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Web3message.module.scss'
-import { User } from '../../context/User'
+import { User } from '../../context'
+import content from '../../data/web3message.json'
 
 export default class Web3message extends PureComponent {
-    private noWeb3 = () => (
+    private message = (message: string, account?: string) => (
         <div className={styles.message}>
-            <AccountStatus className={styles.status} /> Not a Web3 Browser. For
-            publishing and downloading an asset you need to{' '}
-            <a
-                href="https://docs.oceanprotocol.com/tutorials/metamask-setup/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                setup MetaMask
-            </a>{' '}
-            or use any other Web3-capable plugin or browser.
-        </div>
-    )
-
-    private unlockAccount = () => (
-        <div className={styles.message}>
-            <AccountStatus className={styles.status} /> No accounts detected.
-            For publishing and downloading an asset you need to unlock your Web3
-            account.
-        </div>
-    )
-
-    private haveAccount = (account: string) => (
-        <div className={styles.message}>
-            <AccountStatus className={styles.status} />
-            <Dotdotdot clamp={1}>
-                Connected with account
-                <code className={styles.account}>{account}</code>
-            </Dotdotdot>
-        </div>
-    )
-
-    private wrongNetwork = (network: string) => (
-        <div className={styles.message}>
-            <AccountStatus className={styles.status} /> Not connected to Nile
-            network, but to {network}.<br />
-            Please connect in MetaMask with Custom RPC{' '}
-            <code>{`https://nile.dev-ocean.com`}</code>
+            <AccountStatus className={styles.status} />{' '}
+            {account ? (
+                <Dotdotdot clamp={1}>
+                    {message}
+                    <code className={styles.account}>{account}</code>
+                </Dotdotdot>
+            ) : (
+                <span dangerouslySetInnerHTML={{ __html: message }} />
+            )}
         </div>
     )
 
     public render() {
-        const { isWeb3, isNile, isLogged, network, account } = this.context
+        const { isWeb3, isNile, isLogged, account } = this.context
 
         return !isWeb3
-            ? this.noWeb3()
+            ? this.message(content.noweb3)
             : !isNile
-            ? this.wrongNetwork(network)
+            ? this.message(content.wrongNetwork)
             : !isLogged
-            ? this.unlockAccount()
+            ? this.message(content.noAccount)
             : isLogged
-            ? this.haveAccount(account)
+            ? this.message(content.hasAccount, account)
             : null
     }
 }

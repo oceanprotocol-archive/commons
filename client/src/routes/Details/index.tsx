@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Route from '../../components/templates/Route'
 import Spinner from '../../components/atoms/Spinner'
-import { User } from '../../context/User'
+import { User } from '../../context'
 import AssetDetails from './AssetDetails'
 import stylesApp from '../../App.module.scss'
 

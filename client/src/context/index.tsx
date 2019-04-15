@@ -15,5 +15,6 @@ export const User = React.createContext({
     network: '',
     requestFromFaucet: () => {
         /* empty */
-    }
+    },
+    message: ''
 })

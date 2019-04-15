@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import { Logger } from '@oceanprotocol/squid'
-import { User } from '../../context/User'
+import { User } from '../../context'
 import Spinner from '../atoms/Spinner'
 import Asset from '../molecules/Asset'
 import styles from './AssetsUser.module.scss'

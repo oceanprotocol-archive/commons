@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
-import { User } from '../../../context/User'
+import { User } from '../../../context'
 import styles from './Popover.module.scss'
 
 export default class Popover extends PureComponent<{

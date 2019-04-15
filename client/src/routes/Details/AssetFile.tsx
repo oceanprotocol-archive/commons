@@ -3,7 +3,7 @@ import { Logger } from '@oceanprotocol/squid'
 import filesize from 'filesize'
 import Button from '../../components/atoms/Button'
 import Spinner from '../../components/atoms/Spinner'
-import { User } from '../../context/User'
+import { User } from '../../context'
 import styles from './AssetFile.module.scss'
 import ReactGA from 'react-ga'
 
