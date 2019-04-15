@@ -3,9 +3,9 @@
 .pagination {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin-top: $spacer * 2;
     margin-bottom: $spacer;
-    justify-content: center;
     padding-left: 0;
 
     li {
@@ -42,8 +42,14 @@
     }
 }
 
-.current {
+.current,
+.prev,
+.next,
+.break {
     composes: number;
+}
+
+.current {
     cursor: default;
     pointer-events: none;
 
@@ -56,19 +62,10 @@
     }
 }
 
-.prev {
-    composes: number;
-}
-
 .next {
-    composes: number;
     text-align: right;
 }
 
 .prevNextDisabled {
     opacity: 0;
-}
-
-.break {
-    composes: number;
 }

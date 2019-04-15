@@ -127,7 +127,7 @@ const categoryImageFile = (category: string) => {
         case 'Transportation':
         case 'transport':
             return transport
-        case 'Urban Plannin':
+        case 'Urban Planning':
         case 'urbanplanning':
             return urbanplanning
         case 'Visual Arts & Design':

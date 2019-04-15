@@ -4,7 +4,7 @@ import Pagination from './Pagination'
 
 describe('Button', () => {
     it('renders without crashing', () => {
-        const { container, getByRole } = render(
+        const { container } = render(
             <Pagination
                 totalPages={20}
                 currentPage={1}
@@ -12,5 +12,6 @@ describe('Button', () => {
             />
         )
         expect(container.firstChild).toBeInTheDocument()
+        container.firstChild && expect(container.firstChild.nodeName).toBe('UL')
     })
 })
