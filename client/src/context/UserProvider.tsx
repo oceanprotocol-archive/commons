@@ -35,10 +35,20 @@ interface UserProviderState {
     web3: Web3
     ocean: any
     requestFromFaucet(account: string): Promise<FaucetResponse>
+    unlockAccounts(): Promise<any>
     message: string
 }
 
 export default class UserProvider extends PureComponent<{}, UserProviderState> {
+    private unlockAccounts = async () => {
+        try {
+            await window.ethereum.enable()
+        } catch (error) {
+            // User denied account access...
+            return null
+        }
+    }
+
     public state = {
         isLogged: false,
         isLoading: true,
@@ -57,6 +67,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         account: '',
         ocean: {} as any,
         requestFromFaucet: () => requestFromFaucet(''),
+        unlockAccounts: () => this.unlockAccounts(),
         message: 'Connecting to Ocean...'
     }
 
@@ -68,6 +79,21 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
         this.initAccountsPoll()
         this.initNetworkPoll()
+    }
+
+    private initAccountsPoll() {
+        if (!this.accountsInterval) {
+            this.accountsInterval = setInterval(
+                this.fetchAccounts,
+                POLL_ACCOUNTS
+            )
+        }
+    }
+
+    private initNetworkPoll() {
+        if (!this.networkInterval) {
+            this.networkInterval = setInterval(this.fetchNetwork, POLL_NETWORK)
+        }
     }
 
     private getWeb3 = async () => {
@@ -156,39 +182,25 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         }
     }
 
-    private initAccountsPoll() {
-        if (!this.accountsInterval) {
-            this.accountsInterval = setInterval(
-                this.fetchAccounts,
-                POLL_ACCOUNTS
-            )
-        }
-    }
-
-    private initNetworkPoll() {
-        if (!this.networkInterval) {
-            this.networkInterval = setInterval(this.fetchNetwork, POLL_NETWORK)
-        }
-    }
-
     private fetchAccounts = async () => {
         const { ocean, isWeb3, isLogged, isNile } = this.state
 
         if (isWeb3) {
+            let accounts
+
             // Modern dapp browsers
             if (window.ethereum) {
                 if (!isLogged && isNile) {
-                    try {
-                        await window.ethereum.enable()
-                    } catch (error) {
-                        // User denied account access...
-                        this.accountsInterval = null
-                        return
-                    }
+                    // simply set to empty, and have user click a button somewhere
+                    // to initiate account unlocking
+                    accounts = []
+
+                    // alternatively, automatically prompt for account unlocking
+                    // await this.unlockAccounts()
                 }
             }
 
-            const accounts = await ocean.accounts.list()
+            accounts = await ocean.accounts.list()
 
             if (accounts.length > 0) {
                 const account = await accounts[0].getId()

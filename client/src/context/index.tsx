@@ -16,5 +16,8 @@ export const User = React.createContext({
     requestFromFaucet: () => {
         /* empty */
     },
+    unlockAccounts: () => {
+        /* empty */
+    },
     message: ''
 })
