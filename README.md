@@ -79,10 +79,20 @@ To run all tests, including all linting tests:
 npm test
 ```
 
-For local development, you can start the test runner in interactive watch mode:
+For local development, you can start the test runners for client & server in a watch mode.
 
 ```bash
-npm test:watch
+npm run test:watch
+```
+
+This will work for daily development but it misses the full interactivity of the test runner. If you need that, you will need to run them in individual terminal sessions:
+
+```bash
+cd client/
+npm run test:watch
+
+cd server/
+npm run test:watch
 ```
 
 ## ✨ Code Style

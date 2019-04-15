@@ -9,7 +9,7 @@
     "serve": "node dist/server.js",
     "build": "tsc",
     "test": "jest --coverage",
-    "test-watch": "npm run test --watchAll"
+    "test:watch": "jest --coverage --watch"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

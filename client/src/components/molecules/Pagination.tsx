@@ -17,17 +17,17 @@ export default class Pagination extends PureComponent<
     PaginationState
 > {
     public state = { smallViewport: true }
-    private mq = matchMedia && window.matchMedia('(min-width: 600px)')
+    private mq = window.matchMedia && window.matchMedia('(min-width: 600px)')
 
     public componentDidMount() {
-        if (matchMedia) {
+        if (window.matchMedia) {
             this.mq.addListener(this.viewportChange)
             this.viewportChange(this.mq)
         }
     }
 
     public componentWillUnmount() {
-        if (matchMedia) {
+        if (window.matchMedia) {
             this.mq.removeListener(this.viewportChange)
         }
     }

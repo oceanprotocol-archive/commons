@@ -8,6 +8,7 @@
     "start": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
     "build": "./scripts/build.sh",
     "test": "npm run lint && scripts/test.sh",
+    "test:watch": "npm run lint && concurrently \"cd client && npm run test:watch\" \"cd server && npm run test:watch\"",
     "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
     "format:css": "prettier-stylelint --ignore-path .gitignore --write --quiet '**/*.{css,scss}'",
     "format": "npm run format:js && npm run format:css",
