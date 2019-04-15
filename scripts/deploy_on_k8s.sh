@@ -41,4 +41,4 @@ EOF
  "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"marketplace-commons\",\"image\":\"oceanprotocol/commons_client:${TRAVIS_TAG}\"}]}}}}"
 
 /tmp/kubectl patch deployment marketplace-server-commons -p\
- "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"marketplac-server-commons\",\"image\":\"oceanprotocol/commons_server:${TRAVIS_TAG}\"}]}}}}"
+ "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"marketplace-server-commons\",\"image\":\"oceanprotocol/commons_server:${TRAVIS_TAG}\"}]}}}}"
