@@ -20,6 +20,7 @@
     "release-minor": "./node_modules/release-it/bin/release-it.js minor --git.tagName='v${version}' --github.release --non-interactive --no-npm.publish",
     "release-major": "./node_modules/release-it/bin/release-it.js major --git.tagName='v${version}' --github.release --non-interactive --no-npm.publish",
     "changelog": "auto-changelog",
+    "changelog:commit": "npm run changelog && git add CHANGELOG.md && git commit -m 'update changelog' && git push",
     "beforeStage": "npm run changelog"
   },
   "dependencies": {},
