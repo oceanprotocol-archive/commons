@@ -72,13 +72,16 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         Logger.log(`Loaded ${this.state.results.length} assets`)
     }
 
-    private setPage = async (page: number) => {
+    private handlePageClick = async (data: { selected: number }) => {
+        // react-pagination starts counting at 0, we start at 1
+        let toPage = data.selected + 1
+
         this.props.history.push({
             pathname: this.props.location.pathname,
-            search: `?text=${this.searchTerm}&page=${page}`
+            search: `?text=${this.searchTerm}&page=${toPage}`
         })
 
-        await this.setState({ currentPage: page, isLoading: true })
+        await this.setState({ currentPage: toPage, isLoading: true })
         await this.searchAssets()
     }
 
@@ -111,8 +114,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                 <Pagination
                     totalPages={totalPages}
                     currentPage={currentPage}
-                    prevPage={currentPage - 1}
-                    setPage={this.setPage}
+                    handlePageClick={this.handlePageClick}
                 />
             </Route>
         )

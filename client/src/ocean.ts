@@ -22,7 +22,7 @@ import {
     secretStorePort,
     secretStoreScheme,
     verbose
-} from './config/config'
+} from './config'
 
 export async function provideOcean(web3provider: Web3) {
     const nodeUri = `${nodeScheme}://${nodeHost}:${nodePort}`

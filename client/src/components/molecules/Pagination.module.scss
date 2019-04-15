@@ -2,18 +2,17 @@
 
 .pagination {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-top: $spacer * 2;
     margin-bottom: $spacer;
-    justify-content: center;
+    padding-left: 0;
 
-    > div {
-        &:first-child {
-            padding: $spacer / 4;
-        }
+    li {
+        margin: 0;
 
-        &:last-child {
-            padding: $spacer / 4;
-            text-align: right;
+        &:before {
+            display: none;
         }
     }
 }
@@ -21,15 +20,53 @@
 .number {
     text-align: center;
     font-weight: $font-weight-bold;
-    padding: $spacer / 4;
-    margin-left: $spacer / 4;
-    margin-right: $spacer / 4;
+    padding: $spacer / 4 $spacer / 2;
+    margin-left: -1px;
+    margin-top: -1px;
     display: inline-block;
+    cursor: pointer;
+    border: 1px solid $brand-grey-lighter;
+    min-width: 3.5rem;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        transform: none;
+        outline: 0;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: lighten($brand-grey-lighter, 7%);
+    }
+}
+
+.current,
+.prev,
+.next,
+.break {
+    composes: number;
 }
 
 .current {
-    composes: number;
     cursor: default;
     pointer-events: none;
-    color: $brand-grey-light;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        color: $brand-grey-light;
+        background: lighten($brand-grey-lighter, 7%);
+    }
+}
+
+.next {
+    text-align: right;
+}
+
+.prevNextDisabled {
+    opacity: 0;
 }

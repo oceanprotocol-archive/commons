@@ -127,7 +127,7 @@ const categoryImageFile = (category: string) => {
         case 'Transportation':
         case 'transport':
             return transport
-        case 'Urban Plannin':
+        case 'Urban Planning':
         case 'urbanplanning':
             return urbanplanning
         case 'Visual Arts & Design':
@@ -148,6 +148,7 @@ export default class CategoryImage extends PureComponent<{ category: string }> {
                 style={{
                     backgroundImage: `url(${image})`
                 }}
+                {...this.props}
             />
         )
     }

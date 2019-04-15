@@ -1,82 +1,72 @@
 import React, { PureComponent } from 'react'
-import Button from '../atoms/Button'
+import ReactPaginate from 'react-paginate'
 import styles from './Pagination.module.scss'
 
-const PageNumber = ({
-    i,
-    current,
-    setPage
-}: {
-    i: number
-    current: boolean
-    setPage(page: number): void
-}) => (
-    <Button
-        link
-        className={current ? styles.current : styles.number}
-        onClick={() => setPage(i + 1)}
-    >
-        {`${i + 1}`}
-    </Button>
-)
-
-const PrevNext = ({
-    currentPage,
-    prevPage,
-    setPage
-}: {
-    currentPage: number
-    prevPage?: number
-    setPage(page: number): void
-}) => (
-    <Button
-        link
-        onClick={
-            prevPage ? () => setPage(prevPage) : () => setPage(currentPage + 1)
-        }
-    >
-        {prevPage ? '←' : '→'}
-    </Button>
-)
-
-export default class Pagination extends PureComponent<{
-    currentPage: number
+interface PaginationProps {
     totalPages: number
-    prevPage?: number
-    setPage(page: number): void
-}> {
-    public render() {
-        const { currentPage, totalPages, prevPage, setPage } = this.props
-        const isFirst = currentPage === 1
-        const isLast = currentPage === totalPages
+    currentPage: number
+    handlePageClick(data: { selected: number }): Promise<any>
+}
 
-        return totalPages > 1 ? (
-            <div className={styles.pagination}>
-                <div>
-                    {!isFirst && (
-                        <PrevNext
-                            prevPage={prevPage}
-                            currentPage={currentPage}
-                            setPage={setPage}
-                        />
-                    )}
-                </div>
-                <div>
-                    {Array.from({ length: totalPages }, (_, i) => (
-                        <PageNumber
-                            key={`pagination-number${i + 1}`}
-                            i={i}
-                            current={currentPage === i + 1}
-                            setPage={setPage}
-                        />
-                    ))}
-                </div>
-                <div>
-                    {!isLast && (
-                        <PrevNext currentPage={currentPage} setPage={setPage} />
-                    )}
-                </div>
-            </div>
-        ) : null
+interface PaginationState {
+    smallViewport: boolean
+}
+
+export default class Pagination extends PureComponent<
+    PaginationProps,
+    PaginationState
+> {
+    public state = { smallViewport: true }
+    private mq = window.matchMedia && window.matchMedia('(min-width: 600px)')
+
+    public componentDidMount() {
+        if (window.matchMedia) {
+            this.mq.addListener(this.viewportChange)
+            this.viewportChange(this.mq)
+        }
+    }
+
+    public componentWillUnmount() {
+        if (window.matchMedia) {
+            this.mq.removeListener(this.viewportChange)
+        }
+    }
+
+    private viewportChange = (mq: { matches: boolean }) => {
+        if (mq.matches) {
+            this.setState({ smallViewport: false })
+        } else {
+            this.setState({ smallViewport: true })
+        }
+    }
+
+    public render() {
+        const { totalPages, currentPage, handlePageClick } = this.props
+        const { smallViewport } = this.state
+
+        return (
+            totalPages > 1 && (
+                <ReactPaginate
+                    pageCount={totalPages}
+                    // react-pagination starts counting at 0, we start at 1
+                    initialPage={currentPage - 1}
+                    // adapt based on media query match
+                    marginPagesDisplayed={smallViewport ? 0 : 1}
+                    pageRangeDisplayed={smallViewport ? 3 : 6}
+                    onPageChange={data => handlePageClick(data)}
+                    disableInitialCallback
+                    previousLabel={'←'}
+                    nextLabel={'→'}
+                    breakLabel={'...'}
+                    containerClassName={styles.pagination}
+                    pageLinkClassName={styles.number}
+                    activeLinkClassName={styles.current}
+                    previousLinkClassName={styles.prev}
+                    nextLinkClassName={styles.next}
+                    disabledClassName={styles.prevNextDisabled}
+                    breakLinkClassName={styles.break}
+                />
+            )
+        )
     }
 }

@@ -70,7 +70,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                 value: date
             }
         }
-        this.props.onChange!(event as any)
+        this.props.onChange!(event as any) // eslint-disable-line @typescript-eslint/no-non-null-assertion
     }
 
     public InputComponent = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ReactGA, { FieldsObject } from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
-import { analyticsId } from '../config/config'
+import { analyticsId } from '../config'
 
 const withTracker = <P extends RouteComponentProps>(
     WrappedComponent: any,
