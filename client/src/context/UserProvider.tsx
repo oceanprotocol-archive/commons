@@ -3,7 +3,7 @@ import Web3 from 'web3'
 import { Logger } from '@oceanprotocol/squid'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
-import { nodeHost, nodePort, nodeScheme } from '../config/config'
+import { nodeHost, nodePort, nodeScheme } from '../config'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
