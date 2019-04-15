@@ -73,6 +73,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     private handlePageClick = async (data: { selected: number }) => {
+        // react-pagination starts counting at 0, we start at 1
         let toPage = data.selected + 1
 
         this.props.history.push({
