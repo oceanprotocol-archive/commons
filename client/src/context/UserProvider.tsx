@@ -161,10 +161,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 // Get accounts
                 await this.fetchAccounts()
 
-                // Set proper network names now that we have Ocean
-                await this.fetchNetwork()
-
-                this.setState({ isLoading: false })
+                this.setState({ isLoading: false, message: '' })
             }
             // Non-dapp browsers
             else {
@@ -189,15 +186,13 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
             let accounts
 
             // Modern dapp browsers
-            if (window.ethereum) {
-                if (!isLogged && isNile) {
-                    // simply set to empty, and have user click a button somewhere
-                    // to initiate account unlocking
-                    accounts = []
+            if (window.ethereum && !isLogged && isNile) {
+                // simply set to empty, and have user click a button somewhere
+                // to initiate account unlocking
+                accounts = []
 
-                    // alternatively, automatically prompt for account unlocking
-                    // await this.unlockAccounts()
-                }
+                // alternatively, automatically prompt for account unlocking
+                // await this.unlockAccounts()
             }
 
             accounts = await ocean.accounts.list()
@@ -211,20 +206,20 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                         isLogged: true,
                         requestFromFaucet: () => requestFromFaucet(account)
                     })
-                }
 
-                const balance = await accounts[0].getBalance()
-
-                if (
-                    balance.eth !== this.state.balance.eth ||
-                    balance.ocn !== this.state.balance.ocn
-                ) {
-                    this.setState({ balance })
+                    await this.fetchBalance(accounts[0])
                 }
             } else {
-                isLogged !== false &&
-                    this.setState({ isLogged: false, account: '' })
+                !isLogged && this.setState({ isLogged: false, account: '' })
             }
+        }
+    }
+
+    private fetchBalance = async (account: any) => {
+        const balance = await account.getBalance()
+        const { eth, ocn } = balance
+        if (eth !== this.state.balance.eth || ocn !== this.state.balance.ocn) {
+            this.setState({ balance: { eth, ocn } })
         }
     }
 
