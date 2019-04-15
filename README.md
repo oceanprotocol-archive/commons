@@ -21,6 +21,7 @@
 If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
 
 - [🏄 Get Started](#-get-started)
+  - [🏖 Remote Ocean: Nile](#-remote-ocean-nile)
   - [🐳 Use with Barge](#-use-with-barge)
 - [👩‍🔬 Testing](#-testing)
 - [✨ Code Style](#-code-style)
@@ -29,12 +30,12 @@ If you're a developer and want to contribute to, or want to utilize this marketp
 - [🎁 Contributing](#-contributing)
 - [🏛 License](#-license)
 
+## 🏄 Get Started
+
 This repo contains a client and a server, both written in TypeScript:
 
 - **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 - **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking.
-
-## 🏄 Get Started
 
 To spin up both, the client and the server in a watch mode for local development, execute:
 
@@ -45,7 +46,15 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser. The page will reload if you make edits to files in either `./client` or `./server`.
 
-To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to [Ocean's Nile test network](https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet) remotely.
+### 🏖 Remote Ocean: Nile
+
+To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to Ocean components running within [Ocean's Nile test network](https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet) remotely.
+
+This means you need to connect with your MetaMask to the Nile network too. To do this:
+
+1. select Custom RPC in the network dropdown in MetaMask
+2. under New Network, enter `https://nile.dev-ocean.com` as the custom RPC URL
+3. Hit _Save_, and you’re now connected to Nile
 
 ### 🐳 Use with Barge
 
@@ -58,15 +67,23 @@ cd barge
 ./start_ocean.sh --latest --no-pleuston --local-spree-node
 ```
 
-Modify `./client/src/config/config.ts` to use those local connections.
+Modify `./client/src/config.ts` to use those local connections.
 
 ## 👩‍🔬 Testing
+
+Test suite is setup with [Jest](https://jestjs.io) and [react-testing-library](https://github.com/kentcdodds/react-testing-library).
+
+To run all tests, including all linting tests:
 
 ```bash
 npm test
 ```
 
-Launches the test runner in the interactive watch mode.
+For local development, you can start the test runner in interactive watch mode:
+
+```bash
+npm test:watch
+```
 
 ## ✨ Code Style
 
