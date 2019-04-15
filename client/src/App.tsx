@@ -12,8 +12,8 @@ import styles from './App.module.scss'
 export default class App extends Component {
     public render() {
         return (
-            <div className={styles.app}>
-                <UserProvider>
+            <UserProvider>
+                <div className={styles.app}>
                     <Router>
                         <>
                             <Header />
@@ -37,8 +37,8 @@ export default class App extends Component {
                             <Footer />
                         </>
                     </Router>
-                </UserProvider>
-            </div>
+                </div>
+            </UserProvider>
         )
     }
 }

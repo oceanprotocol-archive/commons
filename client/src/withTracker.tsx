@@ -7,11 +7,11 @@ interface TrackerProps {
     location: Location
 }
 
-ReactGA.initialize(analyticsId, {
-    testMode: process.env.NODE_ENV === 'test'
-})
-
 export default function withTracker(WrappedComponent: any, options: any = {}) {
+    ReactGA.initialize(analyticsId, {
+        testMode: process.env.NODE_ENV === 'test'
+    })
+
     const trackPage = (page: string) => {
         options.isWeb3 = window.web3 !== undefined
         ReactGA.set({

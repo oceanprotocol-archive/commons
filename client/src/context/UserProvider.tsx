@@ -98,30 +98,37 @@ export default class UserProvider extends Component<{}, UserProviderState> {
         this.initNetworkPoll()
     }
 
+    private getWeb3 = async () => {
+        // Modern dapp browsers
+        if (window.ethereum) {
+            window.web3 = new Web3(window.ethereum)
+            return window.web3
+        }
+        // Legacy dapp browsers
+        else if (window.web3) {
+            window.web3 = new Web3(window.web3.currentProvider)
+            return window.web3
+        }
+        // Non-dapp browsers
+        else {
+            return null
+        }
+    }
+
     private bootstrap = async () => {
         try {
             //
             // Start with Web3 detection only
             //
             this.setState({ message: 'Setting up Web3...' })
+            let web3 = await this.getWeb3()
 
-            // Modern dapp browsers
-            if (window.ethereum) {
-                window.web3 = new Web3(window.ethereum)
-                this.setState({ isWeb3: true })
-            }
-            // Legacy dapp browsers
-            else if (window.web3) {
-                window.web3 = new Web3(window.web3.currentProvider)
-                this.setState({ isWeb3: true })
-            }
-            // Non-dapp browsers
-            else {
-                this.setState({ isWeb3: false })
-            }
+            web3
+                ? this.setState({ isWeb3: true })
+                : this.setState({ isWeb3: false })
 
             // Modern & legacy dapp browsers
-            if (this.state.isWeb3) {
+            if (web3 && this.state.isWeb3) {
                 //
                 // Detecting network with window.web3
                 //
@@ -142,7 +149,7 @@ export default class UserProvider extends Component<{}, UserProviderState> {
                 })
 
                 if (!isNile) {
-                    window.web3 = this.state.web3
+                    web3 = this.state.web3 // eslint-disable-line
                 }
 
                 //
@@ -150,16 +157,15 @@ export default class UserProvider extends Component<{}, UserProviderState> {
                 //
                 this.setState({ message: 'Connecting to Ocean...' })
 
-                const { ocean } = await provideOcean(window.web3)
+                const { ocean } = await provideOcean(web3)
                 this.setState({ ocean })
-
-                // Set proper network names now that we have Ocean
-                await this.fetchNetwork()
 
                 // Get accounts
                 await this.fetchAccounts()
-
                 this.setState({ isLoading: false })
+
+                // Set proper network names now that we have Ocean
+                this.fetchNetwork()
             }
             // Non-dapp browsers
             else {
