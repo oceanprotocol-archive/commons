@@ -53,8 +53,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(compression())
 // routes
 app.use('/api/v1/urlcheck', UrlCheckRouter)
-app.use('/api/v1/updateDdo', UpdateRouter)
-app.use('/api/v1/retireDdo', RetireRouter)
+app.use('/api/v1/updateddo', UpdateRouter)
+app.use('/api/v1/retireddo', RetireRouter)
 
 /// catch 404
 app.use((req, res) => {
