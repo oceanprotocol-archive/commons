@@ -21,7 +21,7 @@ export class UpdateRouter {
         const providers = await getProviders()
         try {
             const userAccount = await providers.web3.eth.personal.ecRecover(
-                `You are retiring ${req.body.did}`,
+                `You are updating ${req.body.did}`,
                 req.body.signature
             )
             const events = await providers.ocean.keeper.didRegistry.contract.getPastEvents(
