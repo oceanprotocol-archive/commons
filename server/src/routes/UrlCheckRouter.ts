@@ -31,7 +31,7 @@ export class UrlCheckRouter {
 
                     if (response.headers['content-length']) {
                         result.contentLength =
-                            response.headers['content-length']
+                            parseInt(response.headers['content-length'])
                     }
 
                     if (response.headers['content-type']) {
