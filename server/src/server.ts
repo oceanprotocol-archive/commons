@@ -6,6 +6,8 @@ import bodyParser from 'body-parser'
 
 // routes
 import UrlCheckRouter from './routes/UrlCheckRouter'
+import UpdateRouter from './routes/UpdateRouter'
+import RetireRouter from './routes/RetireRouter'
 
 // config
 import config from './config/config'
@@ -51,9 +53,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(compression())
 // routes
 app.use('/api/v1/urlcheck', UrlCheckRouter)
+app.use('/api/v1/updateDdo', UpdateRouter)
+app.use('/api/v1/retireDdo', RetireRouter)
 
 /// catch 404
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(404).send()
 })
 
