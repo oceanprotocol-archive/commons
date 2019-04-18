@@ -55,13 +55,12 @@ Url Checker returns if file exists, size and additional information about reques
 
 Retires asset from Commons Marketplace. To verify owner, he needs to sign `You are retiring <asset did>` with crypto wallet and send in both signature and did.
 
-**Endpoint:** POST `/api/v1/retireddo`
+**Endpoint:** DELETE `/api/v1/ddo/<asset did>`
 
 **Input Parameters:**
 
 ```json
 {
-    "did": "did:op:1e69c2ae7cca4c0e852204443208c12c3aa58bfd67c7451cb1ee770df1dcae2b",
     "signature": "<signature of `You are retiring <asset did>`>"
 }
 ```
@@ -87,13 +86,12 @@ Retires asset from Commons Marketplace. To verify owner, he needs to sign `You a
 
 Updates asset on Commons Marketplace. To verify owner, he needs to sign `You are updating <asset did>` with crypto wallet and send in both signature and did.
 
-**Endpoint:** POST `/api/v1/updateddo`
+**Endpoint:** PUT `/api/v1/ddo/<asset did>`
 
 **Input Parameters:**
 
 ```json
 {
-    "did": "did:op:1e69c2ae7cca4c0e852204443208c12c3aa58bfd67c7451cb1ee770df1dcae2b",
     "metadata": "TBD",
     "signature": "<signature of `You are retiring <asset did>`>"
 }
