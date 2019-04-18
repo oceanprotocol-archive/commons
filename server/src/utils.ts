@@ -1,4 +1,4 @@
-import Web3 from 'web3'
+import * as Web3 from 'web3'
 import { Ocean } from '@oceanprotocol/squid'
 import config from './config/config'
 
