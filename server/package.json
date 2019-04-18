@@ -36,7 +36,6 @@
     "@types/morgan": "^1.7.35",
     "@types/node": "^11.13.4",
     "@types/request": "^2.48.1",
-    "@types/web3": "^1.0.18",
     "jasmine": "^3.4.0",
     "jest": "^24.7.1",
     "nodemon": "^1.18.11",
