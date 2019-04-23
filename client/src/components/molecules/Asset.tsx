@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Dotdotdot from 'react-dotdotdot'
-import Markdown from '../../components/atoms/Markdown'
 import styles from './Asset.module.scss'
 import CategoryImage from '../atoms/CategoryImage'
 

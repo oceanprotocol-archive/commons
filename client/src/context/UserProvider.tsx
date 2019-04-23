@@ -13,10 +13,7 @@ declare global {
         web3: Web3
         ethereum: {
             enable(): void
-            host: string
-            supportsSubscriptions(): boolean
-            send(method: string, parameters: any[]): Promise<any[]>
-            sendBatch(methods: any[], moduleInstance: any): Promise<any[]>
+            send(payload: any, callback: any): any
         }
     }
 }
