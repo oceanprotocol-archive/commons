@@ -93,3 +93,21 @@
         width: 70%;
     }
 }
+
+.metadataActions {
+    text-align: right;
+
+    button {
+        font-size: $font-size-small;
+        margin-left: $spacer;
+
+        &:not(:first-child) {
+            color: $brand-grey-light;
+
+            &:hover,
+            &:focus {
+                color: $brand-pink;
+            }
+        }
+    }
+}
