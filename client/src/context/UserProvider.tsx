@@ -8,15 +8,36 @@ import { nodeHost, nodePort, nodeScheme } from '../config'
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
 
+// taken from
+// https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/web3/providers.d.ts
+interface JsonRPCRequest {
+    jsonrpc: string
+    method: string
+    params: any[]
+    id: number
+}
+
+interface JsonRPCResponse {
+    jsonrpc: string
+    id: number
+    result?: any
+    error?: string
+}
+
+interface Callback<ResultType> {
+    (error: Error): void
+    (error: null, val: ResultType): void
+}
+
 declare global {
     interface Window {
         web3: Web3
         ethereum: {
             enable(): void
-            host: string
-            supportsSubscriptions(): boolean
-            send(method: string, parameters: any[]): Promise<any[]>
-            sendBatch(methods: any[], moduleInstance: any): Promise<any[]>
+            send(
+                payload: JsonRPCRequest,
+                callback: Callback<JsonRPCResponse>
+            ): any
         }
     }
 }

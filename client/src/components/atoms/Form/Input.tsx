@@ -168,34 +168,34 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         />
                     </div>
                 )
+            default:
+                return (
+                    <div className={wrapClass}>
+                        {group ? (
+                            <InputGroup>
+                                <input
+                                    id={name}
+                                    className={styles.input}
+                                    onFocus={this.toggleFocus}
+                                    onBlur={this.toggleFocus}
+                                    {...this.props}
+                                />
+                                {group}
+                            </InputGroup>
+                        ) : (
+                            <input
+                                id={name}
+                                className={styles.input}
+                                onFocus={this.toggleFocus}
+                                onBlur={this.toggleFocus}
+                                {...this.props}
+                            />
+                        )}
+
+                        {type === 'search' && <SearchIcon />}
+                    </div>
+                )
         }
-
-        return (
-            <div className={wrapClass}>
-                {group ? (
-                    <InputGroup>
-                        <input
-                            id={name}
-                            className={styles.input}
-                            onFocus={this.toggleFocus}
-                            onBlur={this.toggleFocus}
-                            {...this.props}
-                        />
-                        {group}
-                    </InputGroup>
-                ) : (
-                    <input
-                        id={name}
-                        className={styles.input}
-                        onFocus={this.toggleFocus}
-                        onBlur={this.toggleFocus}
-                        {...this.props}
-                    />
-                )}
-
-                {type === 'search' && <SearchIcon />}
-            </div>
-        )
     }
 
     public render() {
