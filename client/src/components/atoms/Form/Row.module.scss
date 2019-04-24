@@ -2,4 +2,8 @@
 
 .row {
     margin-bottom: $spacer;
+
+    &.small {
+        margin-bottom: $spacer / 2;
+    }
 }

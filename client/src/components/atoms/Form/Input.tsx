@@ -1,7 +1,7 @@
-import cx from 'classnames'
 import React, { PureComponent, FormEvent, ChangeEvent } from 'react'
 import slugify from 'slugify'
 import DatePicker from 'react-datepicker'
+import cx from 'classnames'
 import { ReactComponent as SearchIcon } from '../../../img/search.svg'
 import Help from './Help'
 import Label from './Label'
@@ -31,6 +31,7 @@ interface InputProps {
     group?: any
     multiple?: boolean
     disabled?: boolean
+    small?: boolean
 }
 
 interface InputState {
@@ -82,6 +83,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
             onChange,
             value,
             disabled
+            small
         } = this.props
 
         const wrapClass = this.inputWrapClasses()
@@ -92,7 +94,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     <div className={wrapClass}>
                         <select
                             id={name}
-                            className={styles.select}
+                            className={cx(styles.select, small && styles.small)}
                             name={name}
                             required={required}
                             onFocus={this.toggleFocus}
@@ -118,7 +120,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     <div className={wrapClass}>
                         <textarea
                             id={name}
-                            className={styles.input}
+                            className={cx(styles.input, small && styles.small)}
                             onFocus={this.toggleFocus}
                             onBlur={this.toggleFocus}
                             {...this.props}
@@ -162,7 +164,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         <DatePicker
                             selected={this.state.dateCreated}
                             onChange={this.handleDateChange}
-                            className={styles.input}
+                            className={cx(styles.input, small && styles.small)}
                             onFocus={this.toggleFocus}
                             onBlur={this.toggleFocus}
                             id={name}
@@ -179,7 +181,10 @@ export default class Input extends PureComponent<InputProps, InputState> {
                                 <input
                                     id={name}
                                     type={type || 'text'}
-                                    className={styles.input}
+                                    className={cx(
+                                        styles.input,
+                                        small && styles.small
+                                    )}
                                     onFocus={this.toggleFocus}
                                     onBlur={this.toggleFocus}
                                     {...this.props}
@@ -190,7 +195,10 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             <input
                                 id={name}
                                 type={type || 'text'}
-                                className={styles.input}
+                                className={cx(
+                                    styles.input,
+                                    small && styles.small
+                                )}
                                 onFocus={this.toggleFocus}
                                 onBlur={this.toggleFocus}
                                 {...this.props}
@@ -210,12 +218,13 @@ export default class Input extends PureComponent<InputProps, InputState> {
             required,
             help,
             additionalComponent,
-            multiple
+            multiple,
+            small
         } = this.props
 
         return (
-            <Row>
-                <Label htmlFor={name} required={required}>
+            <Row small={small}>
+                <Label htmlFor={name} required={required} small={small}>
                     {label}
                 </Label>
 

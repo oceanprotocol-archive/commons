@@ -18,6 +18,7 @@ class Styleguide extends Component {
                 type={value.type}
                 help={value.help}
                 options={value.options}
+                small={value.small}
             />
         ))
 

@@ -152,6 +152,7 @@ export default class AssetDetails extends PureComponent<
                 onChange={this.inputChange}
                 value={value}
                 disabled={this.state.isLoading}
+                small
             />
         ) : (
             <Moment date={value} format="L" interval={0} />
@@ -169,6 +170,7 @@ export default class AssetDetails extends PureComponent<
                 options={steps[1].fields.categories.options}
                 value={value}
                 disabled={this.state.isLoading}
+                small
             />
         ) : (
             // TODO: Make this link to search for respective category

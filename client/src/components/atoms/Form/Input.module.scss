@@ -39,7 +39,6 @@
 .input {
     font-size: $font-size-base;
     font-family: $font-family-base;
-    font-weight: $font-weight-bold;
     color: $brand-black;
     border: none;
     box-shadow: none;
@@ -62,7 +61,6 @@
         font-family: $font-family-base;
         font-size: $font-size-base;
         color: $brand-grey-light;
-        font-weight: $font-weight-base;
         transition: .2s ease-out;
         opacity: .7;
     }
@@ -86,6 +84,17 @@
     //     box-shadow: 0 0 0 1000px $brand-black inset;
     //     transition: background-color 5000s ease-in-out 0s;
     // }
+
+    // Size modifiers
+    &.small {
+        font-size: $font-size-small;
+        min-height: 33px;
+        padding: $spacer / 4;
+
+        &::placeholder {
+            font-size: $font-size-small;
+        }
+    }
 }
 
 .select {
@@ -113,6 +122,16 @@
     &:focus {
         outline: 0;
         font-family: $font-family-base;
+    }
+
+    &.small {
+        height: 32px;
+        padding-right: 2rem;
+
+        // custom arrow
+        background-position: calc(100% - 14px) 1rem, calc(100% - 9px) 1rem,
+            100% 0;
+        background-size: 5px 5px, 5px 5px, 2rem 3rem;
     }
 }
 
@@ -164,27 +183,4 @@
     padding-left: 2.5rem;
     display: flex;
     align-items: center;
-}
-
-// Size modifiers
-
-.inputSmall {
-    composes: input;
-    font-size: $font-size-small;
-    min-height: 32px;
-    padding: $spacer / 4;
-
-    &::placeholder {
-        font-size: $font-size-small;
-    }
-}
-
-.selectSmall {
-    composes: select;
-    height: 32px;
-    padding-right: 2rem;
-
-    // custom arrow
-    background-position: calc(100% - 14px) 1rem, calc(100% - 9px) 1rem, 100% 0;
-    background-size: 5px 5px, 5px 5px, 2rem 3rem;
 }

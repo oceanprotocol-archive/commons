@@ -44,6 +44,21 @@
       "placeholder": "e.g. 2019-08-12",
       "type": "date",
       "required": true
+    },
+    "name2": {
+      "label": "Your name",
+      "placeholder": "e.g. Jelly McJellyfish",
+      "type": "text",
+      "required": true,
+      "small": true,
+      "help": "Help me"
+    },
+    "industry2": {
+      "label": "Industry",
+      "type": "select",
+      "required": true,
+      "small": true,
+      "options": ["Automotive", "Technology"]
     }
   }
 }
