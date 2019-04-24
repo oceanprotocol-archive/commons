@@ -20,11 +20,11 @@ interface AssetDetailsProps {
 interface AssetDetailsState {
     isEditMode?: boolean
     isLoading?: boolean
+    feedback?: string
     dateCreated?: string
     description?: string
     copyrightHolder?: string
     categories?: string
-    feedback?: string
 }
 
 export default class AssetDetails extends PureComponent<
@@ -53,6 +53,18 @@ export default class AssetDetails extends PureComponent<
         this.setState({ isEditMode: !this.state.isEditMode })
     }
 
+    private cancelEditMode = () => {
+        // reset everything
+        this.setState({
+            isEditMode: false,
+            feedback: '',
+            dateCreated: this.props.metadata.base.dateCreated,
+            description: this.props.metadata.base.description,
+            copyrightHolder: this.props.metadata.base.copyrightHolder,
+            categories: this.props.metadata.base.categories
+        })
+    }
+
     private fetch = async (method: string, body: any) => {
         try {
             const response = await fetch(
@@ -66,13 +78,10 @@ export default class AssetDetails extends PureComponent<
                 }
             )
             const json = await response.json()
-
-            if (json && json.status === 'error') {
-                this.setState({ feedback: json.message })
-            }
+            return json
         } catch (error) {
             Logger.error(error)
-            this.setState({ feedback: error.message })
+            return error
         }
     }
 
@@ -95,21 +104,33 @@ export default class AssetDetails extends PureComponent<
                     categories
                 }
             },
+            // TODO: generate signature
             signature: ''
         }
 
-        await this.fetch('PUT', body)
-        this.setState({ isLoading: false })
+        const response = await this.fetch('PUT', body)
+
+        if (response.status !== 'success') {
+            this.setState({ feedback: response.message, isLoading: false })
+        } else {
+            this.setState({ isEditMode: false, isLoading: false })
+        }
     }
 
     private retireAsset = async () => {
         this.setState({ isLoading: true, feedback: 'Retiring asset...' })
 
         const body = {
+            // TODO: generate signature
             signature: ''
         }
 
-        await this.fetch('DELETE', body)
+        const response = await this.fetch('DELETE', body)
+
+        if (response.status !== 'success') {
+            this.setState({ feedback: response.message })
+        }
+
         this.setState({ isLoading: false })
     }
 
@@ -171,35 +192,48 @@ export default class AssetDetails extends PureComponent<
             <Markdown text={value} className={styles.description} />
         )
 
-    private MetadataActions = () => (
-        <div className={styles.metadataActions}>
-            {this.state.isEditMode ? (
-                this.state.isLoading ? (
-                    <Spinner message={this.state.feedback} />
+    private MetadataActions = () => {
+        // TODO: check for asset owner and return if no match
+        // const isOwner = IS OWNER
+        // if (!isOwner) { return }
+
+        return (
+            <div className={styles.metadataActions}>
+                {this.state.isEditMode ? (
+                    <div className={styles.metadataActionEdit}>
+                        {this.state.isLoading ? (
+                            <Spinner message={this.state.feedback} />
+                        ) : (
+                            <>
+                                <Button primary onClick={this.updateAsset}>
+                                    Save Changes
+                                </Button>
+                                <Button link onClick={this.cancelEditMode}>
+                                    Cancel
+                                </Button>
+                                {this.state.feedback !== '' && (
+                                    <div>{this.state.feedback}</div>
+                                )}
+                            </>
+                        )}
+                    </div>
                 ) : (
                     <>
-                        <Button primary onClick={this.updateAsset}>
-                            Save Changes
-                        </Button>
-
-                        {this.state.feedback !== '' && (
-                            <div>{this.state.feedback}</div>
-                        )}
+                        <div>You are the owner of this asset</div>
+                        <div>
+                            <Button link onClick={this.toggleEditMode}>
+                                Edit Metadata
+                            </Button>
+                            {/* TODO: Retire action needs loading/feedback */}
+                            <Button link onClick={this.retireAsset}>
+                                Retire Asset
+                            </Button>
+                        </div>
                     </>
-                )
-            ) : (
-                <>
-                    <Button link onClick={this.toggleEditMode}>
-                        Edit Metadata
-                    </Button>
-
-                    <Button link onClick={this.retireAsset}>
-                        Retire Asset
-                    </Button>
-                </>
-            )}
-        </div>
-    )
+                )}
+            </div>
+        )
+    }
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
     public render() {
