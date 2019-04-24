@@ -30,6 +30,7 @@ interface InputProps {
     rows?: number
     group?: any
     multiple?: boolean
+    disabled?: boolean
 }
 
 interface InputState {
@@ -79,7 +80,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
             name,
             required,
             onChange,
-            value
+            value,
+            disabled
         } = this.props
 
         const wrapClass = this.inputWrapClasses()
@@ -97,6 +99,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             onBlur={this.toggleFocus}
                             onChange={onChange}
                             value={value}
+                            disabled={disabled}
                         >
                             <option value="">---</option>
                             {options &&
@@ -139,6 +142,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                                         value={slugify(option, {
                                             lower: true
                                         })}
+                                        disabled={disabled}
                                     />
                                     <label
                                         className={styles.radioLabel}
@@ -163,6 +167,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             onBlur={this.toggleFocus}
                             id={name}
                             name={name}
+                            disabled={disabled}
                         />
                     </div>
                 )

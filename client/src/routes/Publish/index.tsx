@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
+import ReactGA from 'react-ga'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
 import AssetModel from '../../models/AssetModel'
@@ -7,7 +8,6 @@ import { User } from '../../context'
 import Web3message from '../../components/organisms/Web3message'
 import Step from './Step'
 import Progress from './Progress'
-import ReactGA from 'react-ga'
 
 import { steps } from '../../data/form-publish.json'
 

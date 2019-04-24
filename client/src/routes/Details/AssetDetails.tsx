@@ -1,12 +1,14 @@
 import React, { PureComponent, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
-import { DDO, MetaData, File } from '@oceanprotocol/squid'
+import { DDO, MetaData, File, Logger } from '@oceanprotocol/squid'
 import Input from '../../components/atoms/Form/Input'
 import Markdown from '../../components/atoms/Markdown'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 import Button from '../../components/atoms/Button'
+import Spinner from '../../components/atoms/Spinner'
+import { serviceHost, servicePort, serviceScheme } from '../../config'
 
 const { steps } = require('../../data/form-publish.json') // eslint-disable-line
 
@@ -22,6 +24,7 @@ interface AssetDetailsState {
     description?: string
     copyrightHolder?: string
     categories?: string
+    feedback?: string
 }
 
 export default class AssetDetails extends PureComponent<
@@ -30,7 +33,12 @@ export default class AssetDetails extends PureComponent<
 > {
     public state = {
         isEditMode: false,
-        isLoading: false
+        isLoading: false,
+        feedback: '',
+        dateCreated: this.props.metadata.base.dateCreated,
+        description: this.props.metadata.base.description,
+        copyrightHolder: this.props.metadata.base.copyrightHolder,
+        categories: this.props.metadata.base.categories
     }
 
     private inputChange = (
@@ -45,22 +53,153 @@ export default class AssetDetails extends PureComponent<
         this.setState({ isEditMode: !this.state.isEditMode })
     }
 
-    private updateAsset = () => {
-        this.setState({ isLoading: true })
-        // TODO: update asset metadata
+    private fetch = async (method: string, body: any) => {
+        try {
+            const response = await fetch(
+                `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/ddo/${
+                    this.props.ddo
+                }`,
+                {
+                    method,
+                    body: JSON.stringify({ body }),
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            )
+            const json = await response.json()
+
+            if (json && json.status === 'error') {
+                this.setState({ feedback: json.message })
+            }
+        } catch (error) {
+            Logger.error(error)
+            this.setState({ feedback: error.message })
+        }
     }
 
-    private retireAsset = () => {
-        this.setState({ isLoading: true })
-        // TODO: retire asset
+    private updateAsset = async () => {
+        this.setState({ isLoading: true, feedback: 'Updating asset...' })
+
+        const {
+            dateCreated,
+            description,
+            copyrightHolder,
+            categories
+        } = this.state
+
+        const body = {
+            metadata: {
+                base: {
+                    dateCreated,
+                    description,
+                    copyrightHolder,
+                    categories
+                }
+            },
+            signature: ''
+        }
+
+        await this.fetch('PUT', body)
+        this.setState({ isLoading: false })
     }
 
-export function datafilesLine(files: File[]) {
-    if (files.length === 1) {
-        return <span>{files.length} data file</span>
+    private retireAsset = async () => {
+        this.setState({ isLoading: true, feedback: 'Retiring asset...' })
+
+        const body = {
+            signature: ''
+        }
+
+        await this.fetch('DELETE', body)
+        this.setState({ isLoading: false })
     }
-    return <span>{files.length} data files</span>
-}
+
+    private renderDatafilesLine = (files: any) =>
+        files.length === 1 ? (
+            <span>{files.length} data file</span>
+        ) : (
+            <span>{files.length} data files</span>
+        )
+
+    private Date = ({ value }: { value: string }) =>
+        this.state.isEditMode ? (
+            <Input
+                name={'dateCreated'}
+                label={steps[1].fields.dateCreated.label}
+                placeholder={steps[1].fields.dateCreated.placeholder}
+                required={steps[1].fields.dateCreated.required}
+                type={steps[1].fields.dateCreated.type}
+                onChange={this.inputChange}
+                value={value}
+                disabled={this.state.isLoading}
+            />
+        ) : (
+            <Moment date={value} format="L" interval={0} />
+        )
+
+    private Category = ({ value }: { value: string }) =>
+        this.state.isEditMode ? (
+            <Input
+                name={'categories'}
+                label={steps[1].fields.categories.label}
+                placeholder={steps[1].fields.categories.placeholder}
+                required={steps[1].fields.categories.required}
+                type={steps[1].fields.categories.type}
+                onChange={this.inputChange}
+                options={steps[1].fields.categories.options}
+                value={value}
+                disabled={this.state.isLoading}
+            />
+        ) : (
+            // TODO: Make this link to search for respective category
+            <Link to={`/search?text=${value}`}>{value}</Link>
+        )
+
+    private Description = ({ value }: { value: string }) =>
+        this.state.isEditMode ? (
+            <Input
+                name={'description'}
+                label={steps[1].fields.description.label}
+                placeholder={steps[1].fields.description.placeholder}
+                required={steps[1].fields.description.required}
+                type={steps[1].fields.description.type}
+                onChange={this.inputChange}
+                rows={10}
+                value={value}
+                disabled={this.state.isLoading}
+            />
+        ) : (
+            <Markdown text={value} className={styles.description} />
+        )
+
+    private MetadataActions = () => (
+        <div className={styles.metadataActions}>
+            {this.state.isEditMode ? (
+                this.state.isLoading ? (
+                    <Spinner message={this.state.feedback} />
+                ) : (
+                    <>
+                        <Button primary onClick={this.updateAsset}>
+                            Save Changes
+                        </Button>
+
+                        {this.state.feedback !== '' && (
+                            <div>{this.state.feedback}</div>
+                        )}
+                    </>
+                )
+            ) : (
+                <>
+                    <Button link onClick={this.toggleEditMode}>
+                        Edit Metadata
+                    </Button>
+
+                    <Button link onClick={this.retireAsset}>
+                        Retire Asset
+                    </Button>
+                </>
+            )}
+        </div>
+    )
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
     public render() {
@@ -82,75 +221,20 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                                 base.datePublished
                             }`}
                         >
-                            <Moment
-                                date={base.dateCreated}
-                                format="L"
-                                interval={0}
-                            />
+                            <this.Date value={base.dateCreated} />
                         </span>
 
-                        {base.categories &&
-                            (this.state.isEditMode ? (
-                                <Input
-                                    name={Object.keys(steps[1].fields)[1]}
-                                    label={steps[1].fields.categories.label}
-                                    placeholder={
-                                        steps[1].fields.categories.placeholder
-                                    }
-                                    required={
-                                        steps[1].fields.categories.required
-                                    }
-                                    type={steps[1].fields.categories.type}
-                                    onChange={this.inputChange}
-                                    options={steps[1].fields.categories.options}
-                                    value={base.categories[0]}
-                                />
-                            ) : (
-                                // TODO: Make this link to search for respective category
-                                <Link to={`/search?text=${base.categories[0]}`}>
-                                    {base.categories[0]}
-                                </Link>
-                            ))}
+                        {base.categories && (
+                            <this.Category value={base.categories[0]} />
+                        )}
 
-                        {base.files && datafilesLine(base.files)}
+                        {base.files && this.renderDatafilesLine(base.files)}
                     </div>
                 </aside>
 
-                {this.state.isEditMode ? (
-                    <Input
-                        name={Object.keys(steps[1].fields)[0]}
-                        label={steps[1].fields.description.label}
-                        placeholder={steps[1].fields.description.placeholder}
-                        required={steps[1].fields.description.required}
-                        type={steps[1].fields.description.type}
-                        onChange={this.inputChange}
-                        rows={10}
-                        value={base.description}
-                    />
-                ) : (
-                    <Markdown
-                        text={base.description}
-                        className={styles.description}
-                    />
-                )}
+                <this.Description value={base.description} />
 
-                <div className={styles.metadataActions}>
-                    {this.state.isEditMode ? (
-                        <Button primary onClick={this.toggleEditMode}>
-                            Save Changes
-                        </Button>
-                    ) : (
-                        <>
-                            <Button link onClick={this.toggleEditMode}>
-                                Edit Metadata
-                            </Button>
-
-                            <Button link onClick={this.retireAsset}>
-                                Retire Asset
-                            </Button>
-                        </>
-                    )}
-                </div>
+                <this.MetadataActions />
 
                 <ul className={styles.meta}>
                     <li>
