@@ -259,7 +259,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         </span>
 
                         {base.categories && (
-                            <this.Category value={this.state.categories[0]} />
+                            <this.Category value={this.state.categories} />
                         )}
 
                         {base.files && this.renderDatafilesLine(base.files)}
