@@ -7,7 +7,6 @@ import Help from './Help'
 import Label from './Label'
 import Row from './Row'
 import InputGroup from './InputGroup'
-import 'react-datepicker/dist/react-datepicker-cssmodules.css'
 import styles from './Input.module.scss'
 
 interface InputProps {
