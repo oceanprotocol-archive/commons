@@ -255,18 +255,18 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                                 base.datePublished
                             }`}
                         >
-                            <this.Date value={base.dateCreated} />
+                            <this.Date value={this.state.dateCreated} />
                         </span>
 
                         {base.categories && (
-                            <this.Category value={base.categories[0]} />
+                            <this.Category value={this.state.categories[0]} />
                         )}
 
                         {base.files && this.renderDatafilesLine(base.files)}
                     </div>
                 </aside>
 
-                <this.Description value={base.description} />
+                <this.Description value={this.state.description} />
 
                 <this.MetadataActions />
 
