@@ -14,8 +14,9 @@ interface AssetFileProps {
 
 interface AssetFileState {
     isLoading: boolean
+    message: string
     error: string
-    step: number
+    step: number | null
 }
 
 export default class AssetFile extends PureComponent<
@@ -24,27 +25,39 @@ export default class AssetFile extends PureComponent<
 > {
     public state = {
         isLoading: false,
+        message: '',
         error: '',
-        step: 0
+        step: null
     }
 
-    private feedbackMessage = (step: number) => {
+    private feedbackMessage = (step: number | null) => {
+        // events from squid-js for `ocean.assets.order`:
+        // 0 Preparing
+        // 1 Prepared
+        // 2 SendingAgreement
+        // 3 AgreementInitialized
+        // 4 LockingPayment
+        // 5 LockedPayment
         switch (step) {
             case 0:
                 return '1/4<br />Asking for agreement signature...'
             case 1:
-                return '2/4<br />Sending agreement request...'
+                return '1/4<br />Confirmed agreement signature.'
             case 2:
-                return '3/4<br />Asking for payment confirmation...'
+                return '2/4<br />Sending agreement request...'
             case 3:
-                return '4/4<br />Consuming file...'
+                return '2/4<br />Agreement initialized.'
+            case 4:
+                return '3/4<br />Asking for two payment confirmations...'
+            case 5:
+                return '3/4<br />Payment confimed.'
             default:
-                return 'Decrypting file URL...'
+                return this.state.message
         }
     }
 
     private resetState = () =>
-        this.setState({ isLoading: true, error: '', step: 0 })
+        this.setState({ isLoading: true, message: '', error: '', step: null })
 
     private purchaseAsset = async (ddo: DDO, index: number) => {
         this.resetState()
@@ -63,6 +76,11 @@ export default class AssetFile extends PureComponent<
             const agreementId = await ocean.assets
                 .order(ddo.id, service.serviceDefinitionId, accounts[0])
                 .next((step: number) => this.setState({ step }))
+
+            this.setState({
+                step: null,
+                message: '4/4<br /> Consuming file...'
+            })
 
             const path = await ocean.assets.consume(
                 agreementId,
