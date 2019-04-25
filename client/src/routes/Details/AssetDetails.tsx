@@ -24,7 +24,7 @@ interface AssetDetailsState {
     dateCreated?: string
     description?: string
     copyrightHolder?: string
-    categories?: string
+    categories?: string[]
 }
 
 export default class AssetDetails extends PureComponent<
@@ -46,6 +46,14 @@ export default class AssetDetails extends PureComponent<
     ) => {
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value
+        })
+    }
+
+    private inputToArrayChange = (
+        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    ) => {
+        this.setState({
+            [event.currentTarget.name]: [event.currentTarget.value]
         })
     }
 
@@ -166,15 +174,15 @@ export default class AssetDetails extends PureComponent<
                 placeholder={steps[1].fields.categories.placeholder}
                 required={steps[1].fields.categories.required}
                 type={steps[1].fields.categories.type}
-                onChange={this.inputChange}
+                onChange={this.inputToArrayChange}
                 options={steps[1].fields.categories.options}
-                value={value}
+                value={value[0]}
                 disabled={this.state.isLoading}
                 small
             />
         ) : (
             // TODO: Make this link to search for respective category
-            <Link to={`/search?text=${value}`}>{value}</Link>
+            <Link to={`/search?text=${value[0]}`}>{value[0]}</Link>
         )
 
     private Description = ({ value }: { value: string }) =>
