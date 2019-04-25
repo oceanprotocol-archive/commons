@@ -50,7 +50,7 @@ export default class AssetFile extends PureComponent<
             case 4:
                 return '3/4<br />Asking for two payment confirmations...'
             case 5:
-                return '3/4<br />Payment confimed.'
+                return '3/4<br />Payment confirmed. Requesting access...'
             default:
                 return this.state.message
         }
@@ -79,7 +79,7 @@ export default class AssetFile extends PureComponent<
 
             this.setState({
                 step: null,
-                message: '4/4<br /> Consuming file...'
+                message: '4/4<br /> Access granted. Consuming file...'
             })
 
             const path = await ocean.assets.consume(
