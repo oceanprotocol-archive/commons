@@ -33,10 +33,9 @@ const Route = ({
                         className={
                             titleReverse ? styles.titleReverse : styles.title
                         }
-                        dangerouslySetInnerHTML={{
-                            __html: title
-                        }}
-                    />
+                    >
+                        {title}
+                    </h1>
                     {description && (
                         <p
                             className={styles.description}
