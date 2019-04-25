@@ -31,13 +31,13 @@ export default class AssetFile extends PureComponent<
     private feedbackMessage = (step: number) => {
         switch (step) {
             case 0:
-                return 'Asking for agreement signature...'
+                return '1/4<br />Asking for agreement signature...'
             case 1:
-                return 'Sending agreement request...'
+                return '2/4<br />Sending agreement request...'
             case 2:
-                return 'Asking for payment confirmation...'
+                return '3/4<br />Asking for payment confirmation...'
             case 3:
-                return 'Consuming file...'
+                return '4/4<br />Consuming file...'
             default:
                 return 'Decrypting file URL...'
         }
@@ -108,9 +108,7 @@ export default class AssetFile extends PureComponent<
                 </ul>
 
                 {isLoading ? (
-                    <>
-                        <Spinner message={this.feedbackMessage(step)} />
-                    </>
+                    <Spinner message={this.feedbackMessage(step)} />
                 ) : (
                     <Button
                         primary
