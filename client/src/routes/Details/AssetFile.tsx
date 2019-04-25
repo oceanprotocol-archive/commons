@@ -15,7 +15,7 @@ interface AssetFileProps {
 interface AssetFileState {
     isLoading: boolean
     error: string
-    message: string
+    step: number
 }
 
 export default class AssetFile extends PureComponent<
@@ -25,10 +25,26 @@ export default class AssetFile extends PureComponent<
     public state = {
         isLoading: false,
         error: '',
-        message: 'Decrypting file URL, please sign...'
+        step: 0
     }
 
-    private resetState = () => this.setState({ isLoading: true, error: '' })
+    private feedbackMessage = (step: number) => {
+        switch (step) {
+            case 0:
+                return 'Asking for agreement signature...'
+            case 1:
+                return 'Sending agreement request...'
+            case 2:
+                return 'Asking for payment confirmation...'
+            case 3:
+                return 'Consuming file...'
+            default:
+                return 'Decrypting file URL...'
+        }
+    }
+
+    private resetState = () =>
+        this.setState({ isLoading: true, error: '', step: 0 })
 
     private purchaseAsset = async (ddo: DDO, index: number) => {
         this.resetState()
@@ -43,11 +59,10 @@ export default class AssetFile extends PureComponent<
         try {
             const accounts = await ocean.accounts.list()
             const service = ddo.findServiceByType('Access')
-            const agreementId = await ocean.assets.order(
-                ddo.id,
-                service.serviceDefinitionId,
-                accounts[0]
-            )
+
+            const agreementId = await ocean.assets
+                .order(ddo.id, service.serviceDefinitionId, accounts[0])
+                .next((step: number) => this.setState({ step }))
 
             const path = await ocean.assets.consume(
                 agreementId,
@@ -75,7 +90,7 @@ export default class AssetFile extends PureComponent<
 
     public render() {
         const { ddo, file } = this.props
-        const { isLoading, message, error } = this.state
+        const { isLoading, message, error, step } = this.state
         const { isLogged, isOceanNetwork } = this.context
         const { index } = file
 
@@ -93,7 +108,9 @@ export default class AssetFile extends PureComponent<
                 </ul>
 
                 {isLoading ? (
-                    <Spinner message={message} />
+                    <>
+                        <Spinner message={this.feedbackMessage(step)} />
+                    </>
                 ) : (
                     <Button
                         primary
