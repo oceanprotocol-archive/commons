@@ -4,6 +4,7 @@ import Moment from 'react-moment'
 import { DDO, MetaData, File, Logger } from '@oceanprotocol/squid'
 import Input from '../../components/atoms/Form/Input'
 import Markdown from '../../components/atoms/Markdown'
+import { User } from '../../context'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 import Button from '../../components/atoms/Button'
@@ -96,6 +97,7 @@ export default class AssetDetails extends PureComponent<
     private updateAsset = async () => {
         this.setState({ isLoading: true, feedback: 'Updating asset...' })
 
+        const { id } = this.props.ddo
         const {
             dateCreated,
             description,
@@ -112,9 +114,9 @@ export default class AssetDetails extends PureComponent<
                     categories
                 }
             },
-            // TODO: generate signature
             signature: ''
         }
+        body.signature = await this.context.web3.eth.personal.sign('You are updating '+id, this.context.account)
 
         const response = await this.fetch('PUT', body)
 
@@ -128,10 +130,12 @@ export default class AssetDetails extends PureComponent<
     private retireAsset = async () => {
         this.setState({ isLoading: true, feedback: 'Retiring asset...' })
 
+        const { id } = this.props.ddo
+
         const body = {
-            // TODO: generate signature
             signature: ''
         }
+        body.signature = await this.context.web3.eth.personal.sign('You are retiring '+id, this.context.account)
 
         const response = await this.fetch('DELETE', body)
 
@@ -203,9 +207,8 @@ export default class AssetDetails extends PureComponent<
         )
 
     private MetadataActions = () => {
-        // TODO: check for asset owner and return if no match
-        // const isOwner = IS OWNER
-        // if (!isOwner) { return }
+        const isOwner = this.context.account === this.props.ddo.proof.creator
+        if (!isOwner) { return null }
 
         return (
             <div className={styles.metadataActions}>
@@ -311,3 +314,4 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
         )
     }
 }
+AssetDetails.contextType = User
