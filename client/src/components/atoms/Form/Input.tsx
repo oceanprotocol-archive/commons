@@ -67,7 +67,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
         const event = {
             currentTarget: {
                 name: 'dateCreated',
-                value: date
+                value: date.toISOString()
             }
         }
         this.props.onChange!(event as any) // eslint-disable-line @typescript-eslint/no-non-null-assertion
