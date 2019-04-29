@@ -16,8 +16,8 @@ describe('CategoryImage', () => {
     })
 
     it('renders all the category images', () => {
-        const { options } = formPublish.steps[1].fields
-            ? formPublish.steps[1].fields.categories
+        const { options } = formPublish.dataset.steps[1].fields
+            ? formPublish.dataset.steps[1].fields.categories
             : []
 
         options.map((category: string) => {

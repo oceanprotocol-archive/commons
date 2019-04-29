@@ -31,8 +31,9 @@ class Loader extends Component<LoaderProps, LoaderState> {
         isPublished: false,
         publishedDid: '',
         publishingError: '',
-        validationStatus: ((dataPublishForm as any)[this.props.loadType]).validation,
-        ...((dataPublishForm as any)[this.props.loadType]).defaults
+        validationStatus: (dataPublishForm as any)[this.props.loadType]
+            .validation,
+        ...(dataPublishForm as any)[this.props.loadType].defaults
     }
 
     private inputChange = (
@@ -57,7 +58,8 @@ class Loader extends Component<LoaderProps, LoaderState> {
 
     private next = () => {
         let { currentStep } = this.state
-        const totalSteps = ((dataPublishForm as any)[this.props.loadType]).steps.length
+        const totalSteps = (dataPublishForm as any)[this.props.loadType].steps
+            .length
 
         currentStep =
             currentStep >= totalSteps - 1 ? totalSteps : currentStep + 1
@@ -85,7 +87,7 @@ class Loader extends Component<LoaderProps, LoaderState> {
             isPublishing: false,
             isPublished: false,
             currentStep: 1,
-            ...((dataPublishForm as any)[this.props.loadType]).defaults
+            ...(dataPublishForm as any)[this.props.loadType].defaults
         })
     }
 
@@ -229,28 +231,37 @@ class Loader extends Component<LoaderProps, LoaderState> {
                     <Web3message />
                 )}
 
-                <Progress steps={((dataPublishForm as any)[this.props.loadType]).steps} currentStep={this.state.currentStep} />
+                <Progress
+                    steps={(dataPublishForm as any)[this.props.loadType].steps}
+                    currentStep={this.state.currentStep}
+                />
 
                 <Form onSubmit={this.submitAction}>
-                    {((dataPublishForm as any)[this.props.loadType]).steps.map((step: any, index: number) => (
-                        <Step
-                            key={index}
-                            index={index}
-                            title={step.title}
-                            description={step.description}
-                            currentStep={this.state.currentStep}
-                            fields={step.fields}
-                            inputChange={this.inputChange}
-                            inputToArrayChange={this.inputToArrayChange}
-                            state={this.state}
-                            next={this.next}
-                            prev={this.prev}
-                            totalSteps={((dataPublishForm as any)[this.props.loadType]).steps.length}
-                            tryAgain={this.tryAgain}
-                            toStart={this.toStart}
-                            content={step.content}
-                        />
-                    ))}
+                    {(dataPublishForm as any)[this.props.loadType].steps.map(
+                        (step: any, index: number) => (
+                            <Step
+                                key={index}
+                                index={index}
+                                title={step.title}
+                                description={step.description}
+                                currentStep={this.state.currentStep}
+                                fields={step.fields}
+                                inputChange={this.inputChange}
+                                inputToArrayChange={this.inputToArrayChange}
+                                state={this.state}
+                                next={this.next}
+                                prev={this.prev}
+                                totalSteps={
+                                    (dataPublishForm as any)[
+                                        this.props.loadType
+                                    ].steps.length
+                                }
+                                tryAgain={this.tryAgain}
+                                toStart={this.toStart}
+                                content={step.content}
+                            />
+                        )
+                    )}
                 </Form>
             </Route>
         )
