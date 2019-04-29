@@ -161,6 +161,25 @@ export default class AssetDetails extends PureComponent<
             <span>{files.length} data files</span>
         )
 
+    private CopyrightHolder = ({ value }: { value: string }) =>
+        this.state.isEditMode ? (
+            <Input
+                name={'copyrightHolder'}
+                label={steps[2].fields.copyrightHolder.label}
+                placeholder={steps[2].fields.copyrightHolder.placeholder}
+                required={steps[2].fields.copyrightHolder.required}
+                type={steps[2].fields.copyrightHolder.type}
+                onChange={this.inputChange}
+                value={value}
+                disabled={this.state.isLoading}
+                small
+            />
+        ) : (
+            <h2 className={styles.copyrightHolder} title="Copyright Holder">
+                {value}
+            </h2>
+        )
+
     private Date = ({ value }: { value: string }) =>
         this.state.isEditMode ? (
             <Input
@@ -266,12 +285,8 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
         return (
             <>
                 <aside className={styles.metaPrimary}>
-                    <h2
-                        className={styles.copyrightHolder}
-                        title="Copyright Holder"
-                    >
-                        {base.copyrightHolder}
-                    </h2>
+                    <this.CopyrightHolder value={this.state.copyrightHolder} />
+
                     <div className={styles.metaPrimaryData}>
                         <span
                             title={`Date created, published on ${
@@ -285,7 +300,9 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                             <this.Category value={this.state.categories} />
                         )}
 
-                        {base.files && this.renderDatafilesLine(base.files)}
+                        {base.files &&
+                            !this.state.isEditMode &&
+                            this.renderDatafilesLine(base.files)}
                     </div>
                 </aside>
 
