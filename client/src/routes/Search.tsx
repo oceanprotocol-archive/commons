@@ -102,13 +102,17 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         const { totalResults, totalPages, currentPage } = this.state
 
         return (
-            <Route
-                title={`${
-                    totalResults > 0 ? totalResults : ''
-                } Results for <span>${this.searchTerm}</span>`}
-                titleReverse
-                wide
-            >
+            <Route title="Search" wide>
+                {totalResults > 0 && (
+                    <h2
+                        className={styles.resultsTitle}
+                        dangerouslySetInnerHTML={{
+                            __html: `${totalResults} results for <span>${
+                                this.searchTerm
+                            }</span>`
+                        }}
+                    />
+                )}
                 {this.renderResults()}
 
                 <Pagination
