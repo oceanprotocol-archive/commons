@@ -18,12 +18,3 @@
     margin-top: $spacer / 2;
     font-size: $font-size-large;
 }
-
-.titleReverse {
-    composes: title;
-    color: $brand-grey-light;
-
-    span {
-        color: $brand-grey-dark;
-    }
-}
