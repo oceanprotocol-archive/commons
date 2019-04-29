@@ -22,7 +22,9 @@ export default class StepRegisterContent extends PureComponent<
     public errorState = () => (
         <div className={styles.message}>
             Something went wrong,{' '}
-            <a onClick={() => this.props.tryAgain()}>try again</a>
+            <Button link onClick={() => this.props.tryAgain()}>
+                try again
+            </Button>
         </div>
     )
 

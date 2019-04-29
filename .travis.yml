@@ -1,6 +1,8 @@
+dist: xenial
 language: node_js
-node_js: node:
-  - "10"
+
+node_js:
+  - '11'
 
 script:
   # - ./scripts/install.sh # runs automatically with npm ci

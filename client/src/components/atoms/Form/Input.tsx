@@ -7,7 +7,6 @@ import Help from './Help'
 import Label from './Label'
 import Row from './Row'
 import InputGroup from './InputGroup'
-import 'react-datepicker/dist/react-datepicker-cssmodules.css'
 import styles from './Input.module.scss'
 
 interface InputProps {
@@ -168,34 +167,34 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         />
                     </div>
                 )
+            default:
+                return (
+                    <div className={wrapClass}>
+                        {group ? (
+                            <InputGroup>
+                                <input
+                                    id={name}
+                                    className={styles.input}
+                                    onFocus={this.toggleFocus}
+                                    onBlur={this.toggleFocus}
+                                    {...this.props}
+                                />
+                                {group}
+                            </InputGroup>
+                        ) : (
+                            <input
+                                id={name}
+                                className={styles.input}
+                                onFocus={this.toggleFocus}
+                                onBlur={this.toggleFocus}
+                                {...this.props}
+                            />
+                        )}
+
+                        {type === 'search' && <SearchIcon />}
+                    </div>
+                )
         }
-
-        return (
-            <div className={wrapClass}>
-                {group ? (
-                    <InputGroup>
-                        <input
-                            id={name}
-                            className={styles.input}
-                            onFocus={this.toggleFocus}
-                            onBlur={this.toggleFocus}
-                            {...this.props}
-                        />
-                        {group}
-                    </InputGroup>
-                ) : (
-                    <input
-                        id={name}
-                        className={styles.input}
-                        onFocus={this.toggleFocus}
-                        onBlur={this.toggleFocus}
-                        {...this.props}
-                    />
-                )}
-
-                {type === 'search' && <SearchIcon />}
-            </div>
-        )
     }
 
     public render() {
