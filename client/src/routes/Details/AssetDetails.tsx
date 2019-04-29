@@ -97,6 +97,7 @@ export default class AssetDetails extends PureComponent<
     private updateAsset = async () => {
         this.setState({ isLoading: true, feedback: 'Updating asset...' })
 
+        const { web3, account } = this.context
         const { id } = this.props.ddo
         const {
             dateCreated,
@@ -104,6 +105,11 @@ export default class AssetDetails extends PureComponent<
             copyrightHolder,
             categories
         } = this.state
+
+        const signature = await web3.eth.personal.sign(
+            `You are updating ${id}`,
+            account
+        )
 
         const body = {
             metadata: {
@@ -114,9 +120,8 @@ export default class AssetDetails extends PureComponent<
                     categories
                 }
             },
-            signature: ''
+            signature
         }
-        body.signature = await this.context.web3.eth.personal.sign('You are updating '+id, this.context.account)
 
         const response = await this.fetch('PUT', body)
 
@@ -130,12 +135,15 @@ export default class AssetDetails extends PureComponent<
     private retireAsset = async () => {
         this.setState({ isLoading: true, feedback: 'Retiring asset...' })
 
+        const { web3, account } = this.context
         const { id } = this.props.ddo
 
-        const body = {
-            signature: ''
-        }
-        body.signature = await this.context.web3.eth.personal.sign('You are retiring '+id, this.context.account)
+        const signature = await web3.eth.personal.sign(
+            `You are retiring ${id}`,
+            account
+        )
+
+        const body = { signature }
 
         const response = await this.fetch('DELETE', body)
 
@@ -208,7 +216,9 @@ export default class AssetDetails extends PureComponent<
 
     private MetadataActions = () => {
         const isOwner = this.context.account === this.props.ddo.proof.creator
-        if (!isOwner) { return null }
+        if (!isOwner) {
+            return null
+        }
 
         return (
             <div className={styles.metadataActions}>
