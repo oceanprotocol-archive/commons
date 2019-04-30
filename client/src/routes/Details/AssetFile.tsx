@@ -32,25 +32,19 @@ export default class AssetFile extends PureComponent<
 
     private feedbackMessage = (step: number | null) => {
         // events from squid-js for `ocean.assets.order`:
-        // 0 Preparing
-        // 1 Prepared
-        // 2 SendingAgreement
-        // 3 AgreementInitialized
-        // 4 LockingPayment
-        // 5 LockedPayment
+        // 0 CreatingAgreement
+        // 1 AgreementInitialized
+        // 2 LockingPayment
+        // 3 LockedPayment
         switch (step) {
             case 0:
-                return '1/4<br />Asking for agreement signature...'
+                return '1/3<br />Asking for agreement signature...'
             case 1:
-                return '1/4<br />Confirmed agreement signature.'
+                return '1/3<br />Agreement initialized.'
             case 2:
-                return '2/4<br />Sending agreement request...'
+                return '2/3<br />Asking for two payment confirmations...'
             case 3:
-                return '2/4<br />Agreement initialized.'
-            case 4:
-                return '3/4<br />Asking for two payment confirmations...'
-            case 5:
-                return '3/4<br />Payment confirmed. Requesting access...'
+                return '2/3<br />Payment confirmed. Requesting access...'
             default:
                 return this.state.message
         }
@@ -79,7 +73,7 @@ export default class AssetFile extends PureComponent<
 
             this.setState({
                 step: null,
-                message: '4/4<br /> Access granted. Consuming file...'
+                message: '3/3<br /> Access granted. Consuming file...'
             })
 
             const path = await ocean.assets.consume(
