@@ -9,7 +9,8 @@
     "serve": "node dist/server.js",
     "build": "tsc",
     "test": "jest --coverage",
-    "test:watch": "jest --coverage --watch"
+    "test:watch": "jest --coverage --watch",
+    "coverage": "cat coverage/lcov.info | codacy-coverage --token 8801f827fe1144ffa85cd7da94f2bbf7"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
