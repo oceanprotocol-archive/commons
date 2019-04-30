@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import Dotdotdot from 'react-dotdotdot'
+import Account from '../atoms/Account'
 import Button from '../atoms/Button'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Web3message.module.scss'
@@ -13,21 +13,18 @@ export default class Web3message extends PureComponent {
         unlockAccounts?: () => any
     ) => (
         <div className={styles.message}>
-            <AccountStatus className={styles.status} />{' '}
             {account ? (
-                <Dotdotdot clamp={1}>
-                    {message}
-                    <code className={styles.account}>{account}</code>
-                </Dotdotdot>
+                <Account account={account} />
             ) : (
-                <>
+                <div className={styles.warnings}>
+                    <AccountStatus className={styles.status} />
                     <span dangerouslySetInnerHTML={{ __html: message }} />{' '}
                     {unlockAccounts && (
                         <Button onClick={() => unlockAccounts()} link>
                             Unlock Account
                         </Button>
                     )}
-                </>
+                </div>
             )}
         </div>
     )
