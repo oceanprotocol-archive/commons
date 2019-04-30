@@ -72,6 +72,6 @@ export async function requestFromFaucet(account: string) {
         })
         return response.json()
     } catch (error) {
-        Logger.log('requestFromFaucet', error)
+        Logger.error('requestFromFaucet', error)
     }
 }

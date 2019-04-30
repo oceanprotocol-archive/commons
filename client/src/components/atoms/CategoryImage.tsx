@@ -148,7 +148,6 @@ export default class CategoryImage extends PureComponent<{ category: string }> {
                 style={{
                     backgroundImage: `url(${image})`
                 }}
-                {...this.props}
             />
         )
     }

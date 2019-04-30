@@ -4,7 +4,7 @@ import { toDataUrl } from 'ethereum-blockies'
 import styles from './Account.module.scss'
 
 const Account = ({ account }: { account: string }) => {
-    const blockies = toDataUrl(account)
+    const blockies = account && toDataUrl(account)
 
     return account && blockies ? (
         <div className={styles.account}>

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Logger } from '@oceanprotocol/squid'
+import { Logger, DDO, File } from '@oceanprotocol/squid'
 import filesize from 'filesize'
 import Button from '../../components/atoms/Button'
 import Spinner from '../../components/atoms/Spinner'
@@ -8,8 +8,8 @@ import styles from './AssetFile.module.scss'
 import ReactGA from 'react-ga'
 
 interface AssetFileProps {
-    file: any
-    ddo: any
+    file: File
+    ddo: DDO
 }
 
 interface AssetFileState {
@@ -30,7 +30,7 @@ export default class AssetFile extends PureComponent<
 
     private resetState = () => this.setState({ isLoading: true, error: '' })
 
-    private purchaseAsset = async (ddo: any, index: number) => {
+    private purchaseAsset = async (ddo: DDO, index: number) => {
         this.resetState()
 
         ReactGA.event({
@@ -77,6 +77,7 @@ export default class AssetFile extends PureComponent<
         const { ddo, file } = this.props
         const { isLoading, message, error } = this.state
         const { isLogged, isNile } = this.context
+        const { index } = file
 
         return (
             <div className={styles.fileWrap}>
@@ -97,7 +98,7 @@ export default class AssetFile extends PureComponent<
                     <Button
                         primary
                         className={styles.buttonMain}
-                        onClick={() => this.purchaseAsset(ddo, file.index)}
+                        onClick={() => index && this.purchaseAsset(ddo, index)}
                         disabled={!isLogged || !isNile}
                     >
                         Get file

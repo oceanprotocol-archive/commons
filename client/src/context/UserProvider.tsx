@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import Web3 from 'web3'
-import { Logger } from '@oceanprotocol/squid'
+import { Logger, Ocean, Account } from '@oceanprotocol/squid'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
 import { nodeHost, nodePort, nodeScheme } from '../config'
@@ -54,7 +54,7 @@ interface UserProviderState {
     }
     network: string
     web3: Web3
-    ocean: any
+    ocean: Ocean
     requestFromFaucet(account: string): Promise<FaucetResponse>
     unlockAccounts(): Promise<any>
     message: string
@@ -117,7 +117,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         }
     }
 
-    private getWeb3 = async () => {
+    private getWeb3 = () => {
         // Modern dapp browsers
         if (window.ethereum) {
             window.web3 = new Web3(window.ethereum)
@@ -236,7 +236,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         }
     }
 
-    private fetchBalance = async (account: any) => {
+    private fetchBalance = async (account: Account) => {
         const balance = await account.getBalance()
         const { eth, ocn } = balance
         if (eth !== this.state.balance.eth || ocn !== this.state.balance.ocn) {

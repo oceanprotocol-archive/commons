@@ -1,31 +1,32 @@
 import React, { PureComponent } from 'react'
+import { DDO, File } from '@oceanprotocol/squid'
 import AssetFile from './AssetFile'
 import { User } from '../../context'
 import Web3message from '../../components/organisms/Web3message'
 import styles from './AssetFilesDetails.module.scss'
 
 export default class AssetFilesDetails extends PureComponent<{
-    files: any[]
-    ddo: any
+    files: File[]
+    ddo: DDO
 }> {
     public render() {
         const { files, ddo } = this.props
 
-        return files ? (
+        return files.length ? (
             <>
                 <div className={styles.files}>
                     {files.map(file => (
                         <AssetFile key={file.index} ddo={ddo} file={file} />
                     ))}
                 </div>
-                <User.Consumer>
-                    {states =>
-                        (!states.isNile || !states.isLogged) && <Web3message />
-                    }
-                </User.Consumer>
+                {(!this.context.isNile || !this.context.isLogged) && (
+                    <Web3message />
+                )}
             </>
         ) : (
             <div>No files attached.</div>
         )
     }
 }
+
+AssetFilesDetails.contextType = User

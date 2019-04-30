@@ -46,7 +46,7 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
                 trxHash
             })
         } catch (error) {
-            this.setState({ isLoading: false, error })
+            this.setState({ isLoading: false, error: error.message })
         }
     }
 

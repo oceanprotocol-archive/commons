@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-testing-library'
 import Pagination from './Pagination'
 
-describe('Button', () => {
+describe('Pagination', () => {
     it('renders without crashing', () => {
         const { container } = render(
             <Pagination

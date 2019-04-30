@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import queryString from 'query-string'
+import { History, Location } from 'history'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
 import Route from '../components/templates/Route'
@@ -10,7 +11,7 @@ import styles from './Search.module.scss'
 
 interface SearchProps {
     location: Location
-    history: any
+    history: History
 }
 
 interface SearchState {
@@ -53,6 +54,8 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     private searchAssets = async () => {
+        const { ocean } = this.context
+
         const searchQuery = {
             offset: this.state.offset,
             page: this.state.currentPage,
@@ -65,16 +68,18 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
             }
         }
 
-        const search = await this.context.ocean.aquarius.queryMetadata(
-            searchQuery
-        )
-        this.setState({
-            results: search.results,
-            totalResults: search.totalResults,
-            totalPages: search.totalPages,
-            isLoading: false
-        })
-        Logger.log(`Loaded ${this.state.results.length} assets`)
+        try {
+            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            this.setState({
+                results: search.results,
+                totalResults: search.totalResults,
+                totalPages: search.totalPages,
+                isLoading: false
+            })
+        } catch (error) {
+            Logger.error(error)
+            this.setState({ isLoading: false })
+        }
     }
 
     private handlePageClick = async (data: { selected: number }) => {
