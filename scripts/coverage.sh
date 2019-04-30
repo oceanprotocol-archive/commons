@@ -5,8 +5,8 @@ components="server client"
 
 for component in $components
 do
-    printf "\n\nInstalling dependencies: $component\n"
+    printf "\n\nReporting coverage: $component\n"
     cd $component
-    npm install
+    npm run coverage
     cd ..
 done
