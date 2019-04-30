@@ -54,9 +54,7 @@ class Home extends Component<HomeProps, HomeState> {
 
     private searchAssets = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        this.props.history.push(
-            `/search?text=${JSON.stringify(this.state.search)}`
-        )
+        this.props.history.push(`/search?text=${this.state.search}`)
     }
 }
 
