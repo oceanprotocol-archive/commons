@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Route from '../../components/templates/Route'
+import AreaButton from '../../components/atoms/AreaButton'
 import { User } from '../../context'
 import Loader from './loader'
+import styles from './index.module.scss'
 
 interface PublishState {
     type: string
@@ -17,11 +19,11 @@ class Publish extends Component<{}, PublishState> {
     public publishContainer = () => {
         this.setState({ type: 'container' })
     }
-    public publishAlgorithm = () => {
-        this.setState({ type: 'algorithm' })
-    }
     public publishWorkflow = () => {
         this.setState({ type: 'workflow' })
+    }
+    public publishAlgorithm = () => {
+        this.setState({ type: 'algorithm' })
     }
     public render() {
         return (
@@ -34,14 +36,12 @@ class Publish extends Component<{}, PublishState> {
                         title="Publish"
                         description="What do you want to publish?"
                     >
-                        <button onClick={this.publishDataset}>Dataset</button>
-                        <button onClick={this.publishContainer}>
-                            Container
-                        </button>
-                        <button onClick={this.publishWorkflow}>Workflow</button>
-                        <button onClick={this.publishAlgorithm}>
-                            Algorithm
-                        </button>
+                        <div className={styles.typeGrid}>
+                            <AreaButton title={'Dataset'} description={'Datasets are xxx'} action={this.publishDataset}/>
+                            <AreaButton title={'Container'} description={'Container are xxx'} action={this.publishContainer}/>
+                            <AreaButton title={'Workflow'} description={'Workflow are xxx'} action={this.publishWorkflow}/>
+                            <AreaButton title={'Algorithm'} description={'Algorithm are xxx'} action={this.publishAlgorithm}/>
+                        </div>
                     </Route>
                 )}
             </div>

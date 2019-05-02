@@ -1,0 +1,30 @@
+@import '../../styles/variables';
+
+.areaButton {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+
+    > a {
+        display: block;
+        height: 100%;
+        padding: $spacer;
+        border: 1px solid $brand-grey-lighter;
+        border-radius: $border-radius;
+        background: $brand-white;
+        color: inherit;
+        position: relative;
+
+        &:hover,
+        &:focus {
+            color: inherit;
+            border-color: $brand-pink;
+            transform: none;
+        }
+    }
+
+    h1 {
+        font-size: $font-size-large;
+        margin-top: 0;
+    }
+}
