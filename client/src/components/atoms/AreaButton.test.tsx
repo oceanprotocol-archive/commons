@@ -12,6 +12,6 @@ describe('AreaButton', () => {
             />
         )
         expect(container.firstChild).toBeInTheDocument()
-        container.firstChild && expect(container.firstChild.nodeName).toBe('UL')
+        container.firstChild && expect(container.firstChild.nodeName).toBe('DIV')
     })
 })
