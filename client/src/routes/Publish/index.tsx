@@ -40,10 +40,10 @@ class Publish extends Component<{}, PublishState> {
                         description="What do you want to publish?"
                     >
                         <div className={styles.typeGrid}>
-                            <AreaButton title={'Dataset'} description={'Datasets are xxx'} action={this.publishDataset}/>
-                            <AreaButton title={'Container'} description={'Container are xxx'} action={this.publishContainer}/>
-                            <AreaButton title={'Workflow'} description={'Workflow are xxx'} action={this.publishWorkflow}/>
-                            <AreaButton title={'Algorithm'} description={'Algorithm are xxx'} action={this.publishAlgorithm}/>
+                            <AreaButton title={'Dataset'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel, feugiat facilisis libero. Vestibulum eu elit sed lacus egestas laoreet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.'} action={this.publishDataset}/>
+                            <AreaButton title={'Container'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'} action={this.publishContainer}/>
+                            <AreaButton title={'Workflow'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'} action={this.publishWorkflow}/>
+                            <AreaButton title={'Algorithm'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'} action={this.publishAlgorithm}/>
                         </div>
                     </Route>
                 )}

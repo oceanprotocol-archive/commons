@@ -12,15 +12,26 @@
         border: 1px solid $brand-grey-lighter;
         border-radius: $border-radius;
         background: $brand-white;
-        color: inherit;
         position: relative;
         cursor: pointer;
+        font-size: .85rem;
+        color: #41474e;
 
         &:hover,
         &:focus {
             color: inherit;
             border-color: $brand-pink;
             transform: none;
+        }
+
+        img {
+            width: 110px;
+            padding-right: $spacer;
+            float: left;
+        }
+
+        > div {
+            display: inline;
         }
     }
 
