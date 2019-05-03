@@ -25,11 +25,14 @@ class Publish extends Component<{}, PublishState> {
     public publishAlgorithm = () => {
         this.setState({ type: 'algorithm' })
     }
+    public toSelect = () => {
+        this.setState({ type: 'start' })
+    }
     public render() {
         return (
             <div>
                 {this.state.type !== 'start' && (
-                    <Loader loadType={this.state.type} />
+                    <Loader loadType={this.state.type} toSelect={this.toSelect}/>
                 )}
                 {this.state.type === 'start' && (
                     <Route

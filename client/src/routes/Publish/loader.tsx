@@ -22,6 +22,7 @@ interface LoaderState {
 
 interface LoaderProps {
     loadType: string
+    toSelect: any
 }
 
 class Loader extends Component<LoaderProps, LoaderState> {
@@ -74,7 +75,7 @@ class Loader extends Component<LoaderProps, LoaderState> {
 
     private prev = () => {
         let { currentStep } = this.state
-        currentStep = currentStep <= 1 ? 1 : currentStep - 1
+        currentStep = currentStep <= 1 ? this.props.toSelect() : currentStep - 1
         this.setState({ currentStep })
     }
 

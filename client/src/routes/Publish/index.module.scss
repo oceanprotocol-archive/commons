@@ -1,23 +1,20 @@
 @import '../../styles/variables';
 
-/*
-
-.small{
-
-}
-*/
-
 .typeGrid {
     display: grid;
     grid-template-rows: 2fr 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     grid-gap: $spacer/4;
+}
 
-    @media (min-width: $break-point--small) {
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+@media (min-width: $break-point--small) {
+    .typeGrid > div:first-child {
+        grid-column: 1 / span 2;
     }
 }
 
-.typeGrid > article:first-child {
-    grid-column: 1 / span 2;
+@media (max-width: $break-point--small) {
+    .typeGrid > div {
+        grid-column: 1 / span 2;
+    }
 }

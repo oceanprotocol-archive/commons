@@ -46,16 +46,13 @@ interface StepProps {
 
 export default class Step extends PureComponent<StepProps, {}> {
     public previousButton() {
-        const { currentStep, prev } = this.props
+        const { prev } = this.props
 
-        if (currentStep !== 1) {
-            return (
-                <Button link onClick={prev}>
-                    ← Previous
-                </Button>
-            )
-        }
-        return null
+        return (
+            <Button link onClick={prev}>
+                ← Previous
+            </Button>
+        )
     }
 
     public nextButton() {
