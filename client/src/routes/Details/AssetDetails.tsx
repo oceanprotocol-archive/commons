@@ -1,7 +1,7 @@
 import React, { PureComponent, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
-import { DDO, MetaData, File, Logger } from '@oceanprotocol/squid'
+import { DDO, MetaData, Logger } from '@oceanprotocol/squid'
 import Input from '../../components/atoms/Form/Input'
 import Markdown from '../../components/atoms/Markdown'
 import { User } from '../../context'
@@ -197,7 +197,7 @@ export default class AssetDetails extends PureComponent<
             <Moment date={value} format="L" interval={0} />
         )
 
-    private Category = ({ value }: { value: string }) =>
+    private Category = ({ value }: { value: string[] }) =>
         this.state.isEditMode ? (
             <Input
                 name={'categories'}
@@ -277,15 +277,23 @@ export default class AssetDetails extends PureComponent<
         )
     }
 
-export default class AssetDetails extends PureComponent<AssetDetailsProps> {
     public render() {
         const { metadata, ddo } = this.props
         const { base } = metadata
+        const {
+            isEditMode,
+            copyrightHolder,
+            dateCreated,
+            categories,
+            description
+        } = this.state
 
         return (
             <>
                 <aside className={styles.metaPrimary}>
-                    <this.CopyrightHolder value={this.state.copyrightHolder} />
+                    {copyrightHolder && (
+                        <this.CopyrightHolder value={copyrightHolder} />
+                    )}
 
                     <div className={styles.metaPrimaryData}>
                         <span
@@ -293,20 +301,18 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                                 base.datePublished
                             }`}
                         >
-                            <this.Date value={this.state.dateCreated} />
+                            <this.Date value={dateCreated} />
                         </span>
 
-                        {base.categories && (
-                            <this.Category value={this.state.categories} />
-                        )}
+                        {categories && <this.Category value={categories} />}
 
                         {base.files &&
-                            !this.state.isEditMode &&
+                            !isEditMode &&
                             this.renderDatafilesLine(base.files)}
                     </div>
                 </aside>
 
-                <this.Description value={this.state.description} />
+                {description && <this.Description value={description} />}
 
                 <this.MetadataActions />
 
@@ -341,4 +347,5 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
         )
     }
 }
+
 AssetDetails.contextType = User

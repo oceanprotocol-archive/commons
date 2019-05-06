@@ -82,7 +82,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
             required,
             onChange,
             value,
-            disabled
+            disabled,
             small
         } = this.props
 
