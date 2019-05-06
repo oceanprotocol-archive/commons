@@ -81,7 +81,7 @@ export default class AssetFile extends PureComponent<
 
         return (
             <div className={styles.fileWrap}>
-                <ul key={file.index} className={styles.file}>
+                <ul key={index} className={styles.file}>
                     <li>
                         {file.contentType && file.contentType.split('/')[1]}
                     </li>
@@ -98,7 +98,10 @@ export default class AssetFile extends PureComponent<
                     <Button
                         primary
                         className={styles.buttonMain}
-                        onClick={() => index && this.purchaseAsset(ddo, index)}
+                        // TODO: remove the || 0 once hack
+                        // https://github.com/oceanprotocol/squid-js/pull/221
+                        // is released
+                        onClick={() => this.purchaseAsset(ddo, index || 0)}
                         disabled={!isLogged || !isNile}
                     >
                         Get file
