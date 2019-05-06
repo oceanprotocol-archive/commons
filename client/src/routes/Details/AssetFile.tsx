@@ -25,7 +25,7 @@ export default class AssetFile extends PureComponent<
 > {
     public state = {
         isLoading: false,
-        message: '',
+        message: '1/3 Decrypting file URL...',
         error: '',
         step: null
     }
@@ -51,7 +51,12 @@ export default class AssetFile extends PureComponent<
     }
 
     private resetState = () =>
-        this.setState({ isLoading: true, message: '', error: '', step: null })
+        this.setState({
+            isLoading: true,
+            message: '1/3 Decrypting file URL...',
+            error: '',
+            step: null
+        })
 
     private purchaseAsset = async (ddo: DDO, index: number) => {
         this.resetState()
