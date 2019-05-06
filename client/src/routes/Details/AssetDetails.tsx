@@ -1,23 +1,24 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
+import { DDO, MetaData, File } from '@oceanprotocol/squid'
 import Markdown from '../../components/atoms/Markdown'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 
 interface AssetDetailsProps {
-    metadata: any
-    ddo: any
+    metadata: MetaData
+    ddo: DDO
+}
+
+export function datafilesLine(files: File[]) {
+    if (files.length === 1) {
+        return <span>{files.length} data file</span>
+    }
+    return <span>{files.length} data files</span>
 }
 
 export default class AssetDetails extends PureComponent<AssetDetailsProps> {
-    private datafilesLine = (files: any) => {
-        if (files.length === 1) {
-            return <span>{files.length} data file</span>
-        }
-        return <span>{files.length} data files</span>
-    }
-
     public render() {
         const { metadata, ddo } = this.props
         const { base } = metadata
@@ -51,14 +52,16 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                             </Link>
                         )}
 
-                        {base.files && this.datafilesLine(base.files)}
+                        {base.files && datafilesLine(base.files)}
                     </div>
                 </aside>
 
-                <Markdown
-                    text={base.description}
-                    className={styles.description}
-                />
+                {base.description && (
+                    <Markdown
+                        text={base.description}
+                        className={styles.description}
+                    />
+                )}
 
                 <ul className={styles.meta}>
                     <li>

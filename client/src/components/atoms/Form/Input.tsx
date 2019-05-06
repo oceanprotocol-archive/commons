@@ -60,9 +60,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
     }
 
     private handleDateChange = (date: Date) => {
-        this.setState({
-            dateCreated: date
-        })
+        this.setState({ dateCreated: date })
+
         const event = {
             currentTarget: {
                 name: 'dateCreated',
@@ -80,7 +79,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
             name,
             required,
             onChange,
-            value
+            value,
+            rows
         } = this.props
 
         const wrapClass = this.inputWrapClasses()
@@ -119,7 +119,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             className={styles.input}
                             onFocus={this.toggleFocus}
                             onBlur={this.toggleFocus}
-                            {...this.props}
+                            rows={rows}
                         />
                     </div>
                 )
@@ -174,6 +174,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             <InputGroup>
                                 <input
                                     id={name}
+                                    type={type || 'text'}
                                     className={styles.input}
                                     onFocus={this.toggleFocus}
                                     onBlur={this.toggleFocus}
@@ -184,6 +185,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         ) : (
                             <input
                                 id={name}
+                                type={type || 'text'}
                                 className={styles.input}
                                 onFocus={this.toggleFocus}
                                 onBlur={this.toggleFocus}

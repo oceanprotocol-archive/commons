@@ -7,9 +7,10 @@ import AssetsUser from '../components/organisms/AssetsUser'
 import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'
+import { History } from 'history'
 
 interface HomeProps {
-    history: any
+    history: History
 }
 
 interface HomeState {

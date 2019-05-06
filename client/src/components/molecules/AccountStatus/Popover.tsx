@@ -9,6 +9,7 @@ export default class Popover extends PureComponent<{
 }> {
     public render() {
         const { account, balance, network, isWeb3, isNile } = this.context
+
         return (
             <div
                 className={styles.popover}

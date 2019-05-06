@@ -14,22 +14,17 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-    "color-js": "^1.0.5",
     "compression": "^1.7.4",
     "debug": "^4.1.1",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
-    "lusca": "^1.6.1",
     "morgan": "^1.9.1",
-    "multer": "^1.4.1",
-    "request": "^2.88.0",
-    "uuid": "^3.3.2"
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
     "@types/compression": "0.0.36",
     "@types/debug": "^4.1.4",
-    "@types/dotenv": "^6.1.1",
     "@types/express": "^4.16.1",
     "@types/jasmine": "^3.3.12",
     "@types/jest": "^24.0.11",
@@ -42,7 +37,7 @@
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.1.0",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.5"
   },
   "repository": {
     "type": "git",

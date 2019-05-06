@@ -1,16 +1,13 @@
 import React from 'react'
 import { render } from 'react-testing-library'
-import slugify from 'slugify'
 import CategoryImage from './CategoryImage'
 import formPublish from '../../data/form-publish.json'
 
 describe('CategoryImage', () => {
     it('renders fallback image', () => {
-        const { container, getByTestId } = render(
-            <CategoryImage data-testid="image" category={''} />
-        )
+        const { container } = render(<CategoryImage category={''} />)
         expect(container.firstChild).toBeInTheDocument()
-        expect(getByTestId('image').style.backgroundImage).toMatch(
+        expect(container.firstChild.style.backgroundImage).toMatch(
             /jellyfish-back/
         )
     })
@@ -21,13 +18,8 @@ describe('CategoryImage', () => {
             : []
 
         options.map((category: string) => {
-            const { getByTestId } = render(
-                <CategoryImage data-testid="image" category={category} />
-            )
-            expect(getByTestId('image')).toBeInTheDocument()
-            // expect(getByTestId('image').style.backgroundImage).toMatch(
-            //     slugify(category, { lower: true })
-            // )
+            const { container } = render(<CategoryImage category={category} />)
+            expect(container.firstChild).toBeInTheDocument()
         })
     })
 })
