@@ -35,42 +35,38 @@ const contextConnectedMock = {
 ReactGA.initialize('foo', { testMode: true })
 
 describe('AssetFile', () => {
+    const Component = <AssetFile file={file} ddo={ddo} />
+
     it('renders without crashing', () => {
-        const { container } = render(<AssetFile file={file} ddo={ddo} />)
+        const { container } = render(Component)
         expect(container.firstChild).toBeInTheDocument()
     })
 
     it('button to be disabled when not connected', () => {
-        const { container } = render(<AssetFile file={file} ddo={ddo} />)
+        const { container } = render(Component)
         expect(container.querySelector('button')).toHaveAttribute('disabled')
     })
 
     it('button to be enabled when connected', async () => {
         const { getByText } = render(
             <User.Provider value={contextConnectedMock}>
-                <AssetFile file={file} ddo={ddo} />
+                {Component}
             </User.Provider>
         )
         const button = getByText('Get file')
         expect(button).not.toHaveAttribute('disabled')
-
-        fireEvent.click(button)
     })
 
     it('renders loading state', async () => {
         const { container } = render(
-            <StateMock state={{ isLoading: true }}>
-                <AssetFile file={file} ddo={ddo} />
-            </StateMock>
+            <StateMock state={{ isLoading: true }}>{Component}</StateMock>
         )
         expect(container.querySelector('.spinner')).toBeInTheDocument()
     })
 
     it('renders error', async () => {
         const { container } = render(
-            <StateMock state={{ error: 'Hello Error' }}>
-                <AssetFile file={file} ddo={ddo} />
-            </StateMock>
+            <StateMock state={{ error: 'Hello Error' }}>{Component}</StateMock>
         )
         expect(container.querySelector('.error')).toBeInTheDocument()
         expect(container.querySelector('.error')).toHaveTextContent(

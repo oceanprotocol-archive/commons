@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-testing-library'
 import { DDO, MetaData } from '@oceanprotocol/squid'
 import { BrowserRouter as Router } from 'react-router-dom'
-import AssetDetails, { datafilesLine } from './AssetDetails'
+import AssetDetails, { renderDatafilesLine } from './AssetDetails'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 describe('AssetDetails', () => {
@@ -10,7 +10,7 @@ describe('AssetDetails', () => {
         const { container } = render(
             <AssetDetails
                 metadata={({ base: { name: '' } } as any) as MetaData}
-                ddo={({} as any) as DDO}
+                ddo={({ proof: { creator: '0xxxxx' } } as any) as DDO}
             />
         )
         expect(container.firstChild).toBeInTheDocument()
@@ -30,7 +30,7 @@ describe('AssetDetails', () => {
                             }
                         } as any) as MetaData
                     }
-                    ddo={({} as any) as DDO}
+                    ddo={({ proof: { creator: '0xxxxx' } } as any) as DDO}
                 />
             </Router>
         )
@@ -40,18 +40,18 @@ describe('AssetDetails', () => {
         expect(container.firstChild).toHaveTextContent('Category')
     })
 
-    it('datafilesLine renders correctly for one file', () => {
+    it('renderDatafilesLine renders correctly for one file', () => {
         const files = [
             {
                 index: 0,
                 url: 'https://hello.com'
             }
         ]
-        const { container } = render(datafilesLine(files))
+        const { container } = render(renderDatafilesLine(files))
         expect(container.firstChild).toHaveTextContent('1 data file')
     })
 
-    it('datafilesLine renders correctly for multiple files', () => {
+    it('renderDatafilesLine renders correctly for multiple files', () => {
         const files = [
             {
                 index: 0,
@@ -62,7 +62,7 @@ describe('AssetDetails', () => {
                 url: 'https://hello2.com'
             }
         ]
-        const { container } = render(datafilesLine(files))
+        const { container } = render(renderDatafilesLine(files))
         expect(container.firstChild).toHaveTextContent('2 data files')
     })
 })

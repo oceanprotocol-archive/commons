@@ -13,6 +13,13 @@ import { serviceHost, servicePort, serviceScheme } from '../../config'
 
 const { steps } = require('../../data/form-publish.json') // eslint-disable-line
 
+export const renderDatafilesLine = (files: any) =>
+    files.length === 1 ? (
+        <span>{files.length} data file</span>
+    ) : (
+        <span>{files.length} data files</span>
+    )
+
 interface AssetDetailsProps {
     metadata: MetaData
     ddo: DDO
@@ -153,13 +160,6 @@ export default class AssetDetails extends PureComponent<
 
         this.setState({ isLoading: false })
     }
-
-    private renderDatafilesLine = (files: any) =>
-        files.length === 1 ? (
-            <span>{files.length} data file</span>
-        ) : (
-            <span>{files.length} data files</span>
-        )
 
     private CopyrightHolder = ({ value }: { value: string }) =>
         this.state.isEditMode ? (
@@ -308,7 +308,7 @@ export default class AssetDetails extends PureComponent<
 
                         {base.files &&
                             !isEditMode &&
-                            this.renderDatafilesLine(base.files)}
+                            renderDatafilesLine(base.files)}
                     </div>
                 </aside>
 
