@@ -223,6 +223,7 @@ class Loader extends Component<LoaderProps, LoaderState> {
     }
 
     public render() {
+        const loadedType = (dataPublishForm as any)[this.props.loadType]
         return (
             <Route
                 title="Publish"
@@ -233,12 +234,12 @@ class Loader extends Component<LoaderProps, LoaderState> {
                 )}
 
                 <Progress
-                    steps={(dataPublishForm as any)[this.props.loadType].steps}
+                    steps={loadedType.steps}
                     currentStep={this.state.currentStep}
                 />
 
                 <Form onSubmit={this.submitAction}>
-                    {(dataPublishForm as any)[this.props.loadType].steps.map(
+                    {loadedType.steps.map(
                         (step: any, index: number) => (
                             <Step
                                 key={index}

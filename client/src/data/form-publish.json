@@ -158,7 +158,7 @@
       }
     ]
   },
-  "algorithm": {
+  "script": {
     "defaults": {
       "name": "",
       "dateCreated": "",
@@ -193,7 +193,7 @@
     "steps": [
       {
         "title": "Essentials",
-        "description": "Start by adding a title and URLs for your algorithm.",
+        "description": "Start by adding a title and URLs for your script.",
         "fields": {
           "name": {
             "label": "Title",

@@ -18,20 +18,11 @@ class Publish extends Component<{}, PublishState> {
     public state = {
         type: 'start'
     }
-    public publishDataset = () => {
-        this.setState({ type: 'dataset' })
-    }
-    public publishContainer = () => {
-        this.setState({ type: 'container' })
-    }
-    public publishWorkflow = () => {
-        this.setState({ type: 'workflow' })
-    }
-    public publishAlgorithm = () => {
-        this.setState({ type: 'script' })
+    public publishType = (type: string) => {
+        this.setState({ type })
     }
     public toSelect = () => {
-        this.setState({ type: 'start' })
+        this.publishType('start')
     }
     public render() {
         return (
@@ -47,26 +38,26 @@ class Publish extends Component<{}, PublishState> {
                         <div className={styles.typeGrid}>
                             <AreaButton
                                 title={'Dataset'}
-                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'}
-                                action={this.publishDataset}
+                                description={'Tabular, image, and other formatted data across various domains.'}
+                                action={() => this.publishType('dataset')}
                                 image={Dataset}
                             />
                             <AreaButton
                                 title={'Container'}
-                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'}
-                                action={this.publishContainer}
+                                description={'A pre-defined computation environment specifying libraries and resources.'}
+                                action={() => this.publishType('container')}
                                 image={Container}
                             />
                             <AreaButton
                                 title={'Workflow'}
-                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'}
-                                action={this.publishWorkflow}
+                                description={'A composite of data loading, transformation, machine learning scripts and other base assets in a directed acyclical graph.'}
+                                action={() => this.publishType('workflow')}
                                 image={Workflow}
                             />
                             <AreaButton
                                 title={'Script'}
-                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'}
-                                action={this.publishAlgorithm}
+                                description={'A single programming script (for example, a python notebook or file) to accomplish tasks such as transforming data or training a machine learning model.'}
+                                action={() => this.publishType('script')}
                                 image={Script}
                             />
                         </div>
