@@ -47,7 +47,7 @@ class Publish extends Component<{}, PublishState> {
                         <div className={styles.typeGrid}>
                             <AreaButton
                                 title={'Dataset'}
-                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel, feugiat facilisis libero. Vestibulum eu elit sed lacus egestas laoreet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.'}
+                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'}
                                 action={this.publishDataset}
                                 image={Dataset}
                             />
