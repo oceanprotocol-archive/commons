@@ -5,6 +5,11 @@ import { User } from '../../context'
 import Loader from './loader'
 import styles from './index.module.scss'
 
+import Container from './container.png';
+import Dataset from './dataset.png';
+import Script from './script.png';
+import Workflow from './workflow.png';
+
 interface PublishState {
     type: string
 }
@@ -23,7 +28,7 @@ class Publish extends Component<{}, PublishState> {
         this.setState({ type: 'workflow' })
     }
     public publishAlgorithm = () => {
-        this.setState({ type: 'algorithm' })
+        this.setState({ type: 'script' })
     }
     public toSelect = () => {
         this.setState({ type: 'start' })
@@ -40,10 +45,30 @@ class Publish extends Component<{}, PublishState> {
                         description="What do you want to publish?"
                     >
                         <div className={styles.typeGrid}>
-                            <AreaButton title={'Dataset'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel, feugiat facilisis libero. Vestibulum eu elit sed lacus egestas laoreet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.'} action={this.publishDataset}/>
-                            <AreaButton title={'Container'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'} action={this.publishContainer}/>
-                            <AreaButton title={'Workflow'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'} action={this.publishWorkflow}/>
-                            <AreaButton title={'Algorithm'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'} action={this.publishAlgorithm}/>
+                            <AreaButton
+                                title={'Dataset'}
+                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel, feugiat facilisis libero. Vestibulum eu elit sed lacus egestas laoreet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.'}
+                                action={this.publishDataset}
+                                image={Dataset}
+                            />
+                            <AreaButton
+                                title={'Container'}
+                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'}
+                                action={this.publishContainer}
+                                image={Container}
+                            />
+                            <AreaButton
+                                title={'Workflow'}
+                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'}
+                                action={this.publishWorkflow}
+                                image={Workflow}
+                            />
+                            <AreaButton
+                                title={'Script'}
+                                description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ipsum leo, posuere vitae sem vel.'}
+                                action={this.publishAlgorithm}
+                                image={Script}
+                            />
                         </div>
                     </Route>
                 )}
