@@ -8,7 +8,7 @@ const withTracker = <P extends RouteComponentProps>(
     options: FieldsObject = {}
 ) => {
     ReactGA.initialize(analyticsId, {
-        testMode: process.env.NODE_ENV === 'development',
+        testMode: process.env.NODE_ENV === 'test',
         debug: false
     })
 

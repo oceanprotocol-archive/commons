@@ -7,14 +7,12 @@ import meta from '../../data/meta.json'
 const Route = ({
     title,
     description,
-    titleReverse,
     wide,
     children,
     className
 }: {
     title: string
     description?: string
-    titleReverse?: boolean
     children: any
     wide?: boolean
     className?: string
@@ -29,13 +27,7 @@ const Route = ({
         <Content wide={wide}>
             <article>
                 <header className={styles.header}>
-                    <h1
-                        className={
-                            titleReverse ? styles.titleReverse : styles.title
-                        }
-                    >
-                        {title}
-                    </h1>
+                    <h1 className={styles.title}>{title}</h1>
                     {description && (
                         <p
                             className={styles.description}

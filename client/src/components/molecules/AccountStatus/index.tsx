@@ -19,7 +19,7 @@ export default class AccountStatus extends PureComponent<
         isPopoverOpen: false
     }
 
-    public togglePopover() {
+    private togglePopover() {
         this.setState(prevState => ({
             isPopoverOpen: !prevState.isPopoverOpen
         }))

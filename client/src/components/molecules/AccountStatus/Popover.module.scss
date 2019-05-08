@@ -45,14 +45,6 @@ $popoverWidth: 18rem;
     }
 }
 
-.address {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: $font-family-monospace;
-}
-
 .balance {
     font-size: $font-size-small;
     margin-left: $spacer / 2;

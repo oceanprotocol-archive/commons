@@ -7,7 +7,12 @@ import styles from './StepRegisterContent.module.scss'
 interface StepRegisterContentProps {
     tryAgain(): void
     toStart(): void
-    state: any
+    state: {
+        publishedDid: string
+        isPublishing: boolean
+        publishingError: string
+        isPublished: boolean
+    }
     content?: string
 }
 

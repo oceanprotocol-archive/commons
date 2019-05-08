@@ -1,5 +1,16 @@
 @import '../styles/variables';
 
+.resultsTitle {
+    color: $brand-grey-light;
+    font-size: $font-size-h3;
+    margin-top: -($spacer / 2);
+    margin-bottom: $spacer;
+
+    span {
+        color: $brand-grey-dark;
+    }
+}
+
 .results {
     display: grid;
     grid-template-columns: 1fr;

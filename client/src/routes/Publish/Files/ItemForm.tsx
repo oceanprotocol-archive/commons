@@ -25,7 +25,7 @@ export default class ItemForm extends PureComponent<
         noUrl: false
     }
 
-    public handleSubmit = (e: Event) => {
+    private handleSubmit = (e: Event) => {
         e.preventDefault()
 
         const { url } = this.state
@@ -45,14 +45,14 @@ export default class ItemForm extends PureComponent<
         this.props.addItem(url)
     }
 
-    public onChangeUrl = (e: React.FormEvent<HTMLInputElement>) => {
+    private onChangeUrl = (e: React.FormEvent<HTMLInputElement>) => {
         this.setState({ url: e.currentTarget.value })
         this.clearErrors()
     }
 
-    public clearErrors() {
+    private clearErrors() {
         if (this.state.hasError) this.setState({ hasError: false })
-        if (this.state.noUrl) this.setState({ noUrl: true })
+        if (this.state.noUrl) this.setState({ noUrl: false })
     }
 
     public render() {

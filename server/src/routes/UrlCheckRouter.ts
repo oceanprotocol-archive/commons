@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express'
+import { Router, Request, Response } from 'express'
 import request from 'request'
 
 export class UrlCheckRouter {
@@ -11,7 +11,7 @@ export class UrlCheckRouter {
         this.router = Router()
     }
 
-    public checkUrl(req: Request, res: Response, next: NextFunction) {
+    public checkUrl(req: Request, res: Response) {
         if (!req.body.url) {
             return res.send({ status: 'error', message: 'missing url' })
         }

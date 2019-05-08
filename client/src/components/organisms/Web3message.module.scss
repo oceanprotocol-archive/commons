@@ -3,27 +3,20 @@
 .message {
     margin-bottom: $spacer;
     color: $brand-grey;
-    padding-left: 2rem;
     position: relative;
     border-bottom: .1rem solid $brand-grey-lighter;
     border-top: .1rem solid $brand-grey-lighter;
     padding-top: $spacer / 2;
     padding-bottom: $spacer / 2;
     text-align: left;
-
-    > div {
-        display: inline-block;
-    }
 }
 
-.account {
-    display: inline-block;
-    margin-left: $spacer / 8;
-    background: none;
+.warnings {
+    padding-left: $spacer;
 }
 
 .status {
     margin-left: -($spacer);
-    margin-right: $spacer / 3;
+    margin-right: $spacer / 2;
     padding: 0;
 }

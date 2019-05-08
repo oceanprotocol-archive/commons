@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import queryString from 'query-string'
+import { History, Location } from 'history'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
 import Route from '../components/templates/Route'
@@ -10,7 +11,7 @@ import styles from './Search.module.scss'
 
 interface SearchProps {
     location: Location
-    history: any
+    history: History
 }
 
 interface SearchState {
@@ -20,6 +21,7 @@ interface SearchState {
     totalPages: number
     currentPage: number
     isLoading: boolean
+    searchTerm: string
 }
 
 export default class Search extends PureComponent<SearchProps, SearchState> {
@@ -29,18 +31,22 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         offset: 25,
         totalPages: 1,
         currentPage: 1,
-        isLoading: true
+        isLoading: true,
+        searchTerm: ''
     }
 
-    private readonly searchTerm = queryString.parse(this.props.location.search)
-        .text
-    private readonly searchPage = queryString.parse(this.props.location.search)
-        .page
-
     public async componentDidMount() {
+        const searchTerm = await queryString.parse(this.props.location.search)
+            .text
+        const searchPage = queryString.parse(this.props.location.search).page
+
+        await this.setState({
+            searchTerm: JSON.stringify(searchTerm)
+        })
+
         // switch to respective page if query string is present
-        if (this.searchPage) {
-            const currentPage = Number(this.searchPage)
+        if (searchPage) {
+            const currentPage = Number(searchPage)
             await this.setState({ currentPage })
         }
 
@@ -48,11 +54,13 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     private searchAssets = async () => {
+        const { ocean } = this.context
+
         const searchQuery = {
             offset: this.state.offset,
             page: this.state.currentPage,
             query: {
-                text: [this.searchTerm],
+                text: [this.state.searchTerm],
                 price: [-1, 1]
             },
             sort: {
@@ -60,16 +68,18 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
             }
         }
 
-        const search = await this.context.ocean.aquarius.queryMetadata(
-            searchQuery
-        )
-        this.setState({
-            results: search.results,
-            totalResults: search.totalResults,
-            totalPages: search.totalPages,
-            isLoading: false
-        })
-        Logger.log(`Loaded ${this.state.results.length} assets`)
+        try {
+            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            this.setState({
+                results: search.results,
+                totalResults: search.totalResults,
+                totalPages: search.totalPages,
+                isLoading: false
+            })
+        } catch (error) {
+            Logger.error(error)
+            this.setState({ isLoading: false })
+        }
     }
 
     private handlePageClick = async (data: { selected: number }) => {
@@ -78,7 +88,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
         this.props.history.push({
             pathname: this.props.location.pathname,
-            search: `?text=${this.searchTerm}&page=${toPage}`
+            search: `?text=${this.state.searchTerm}&page=${toPage}`
         })
 
         await this.setState({ currentPage: toPage, isLoading: true })
@@ -102,13 +112,17 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         const { totalResults, totalPages, currentPage } = this.state
 
         return (
-            <Route
-                title={`${
-                    totalResults > 0 ? totalResults : ''
-                } Results for <span>${this.searchTerm}</span>`}
-                titleReverse
-                wide
-            >
+            <Route title="Search" wide>
+                {totalResults > 0 && (
+                    <h2
+                        className={styles.resultsTitle}
+                        dangerouslySetInnerHTML={{
+                            __html: `${totalResults} results for <span>${
+                                this.state.searchTerm
+                            }</span>`
+                        }}
+                    />
+                )}
                 {this.renderResults()}
 
                 <Pagination
