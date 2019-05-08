@@ -1,11 +1,11 @@
 import React from 'react'
 import { render } from 'react-testing-library'
-import Publish from '.'
+import Loader from './loader'
 
 describe('Progress', () => {
     it('renders without crashing', () => {
-        const { container, getByText } = render(<Publish />)
+        const { container, getByText } = render(<Loader loadType={"dataset"} toSelect={()=>{}}/>)
         expect(container.firstChild).toBeInTheDocument()
-        expect(getByText('Publish'))
+        expect(getByText('Next →'))
     })
 })
