@@ -9,6 +9,7 @@ describe('AreaButton', () => {
                 title={"title"}
                 description={"description"}
                 action={() => Promise.resolve()}
+                image={""}
             />
         )
         expect(container.firstChild).toBeInTheDocument()
