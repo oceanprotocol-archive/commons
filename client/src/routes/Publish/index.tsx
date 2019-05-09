@@ -50,13 +50,13 @@ class Publish extends Component<{}, PublishState> {
                             />
                             <AreaButton
                                 title={'Workflow'}
-                                description={'A composite of data loading, transformation, machine learning scripts and other base assets in a directed acyclical graph.'}
+                                description={'A directed composite of dataset, container, and script assets.'}
                                 action={() => this.publishType('workflow')}
                                 image={Workflow}
                             />
                             <AreaButton
                                 title={'Script'}
-                                description={'A single programming script (for example, a python notebook or file) to accomplish tasks such as transforming data or training a machine learning model.'}
+                                description={'A single programming script or notebook to execute a data science task.'}
                                 action={() => this.publishType('script')}
                                 image={Script}
                             />

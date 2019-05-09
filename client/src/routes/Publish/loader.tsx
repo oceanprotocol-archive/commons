@@ -227,7 +227,7 @@ class Loader extends Component<LoaderProps, LoaderState> {
         return (
             <Route
                 title="Publish"
-                description="Publish a new data set into the Ocean Protocol Network."
+                description={`You are publishing a new ${this.props.loadType}.`}
             >
                 {(!this.context.isLogged || !this.context.isNile) && (
                     <Web3message />

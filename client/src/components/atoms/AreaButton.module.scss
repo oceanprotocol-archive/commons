@@ -5,7 +5,7 @@
     word-wrap: break-word;
 
     > div {
-        display: block;
+        display: flex;
         height: 100%;
         padding: $spacer;
         border: 1px solid $brand-grey-lighter;
@@ -26,11 +26,12 @@
         img {
             width: 100px;
             padding-right: $spacer;
-            float: left;
+            object-fit: contain;
+            align-self: flex-start;
         }
 
         > div {
-            display: inline;
+            flex: 1 1 auto;
         }
     }
 
