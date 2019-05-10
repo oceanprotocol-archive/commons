@@ -79,8 +79,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
             name,
             required,
             onChange,
-            value,
-            rows
+            value
         } = this.props
 
         const wrapClass = this.inputWrapClasses()
@@ -119,7 +118,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             className={styles.input}
                             onFocus={this.toggleFocus}
                             onBlur={this.toggleFocus}
-                            rows={rows}
+                            {...this.props}
                         />
                     </div>
                 )
