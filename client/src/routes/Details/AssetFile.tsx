@@ -25,7 +25,7 @@ export default class AssetFile extends PureComponent<
 > {
     public state = {
         isLoading: false,
-        message: '1/3 Decrypting file URL...',
+        message: 'Decrypting file URL...',
         error: '',
         step: null
     }
@@ -36,6 +36,7 @@ export default class AssetFile extends PureComponent<
         // 1 AgreementInitialized
         // 2 LockingPayment
         // 3 LockedPayment
+        // 4 (not from squid-js) before consume function is executed
         switch (step) {
             case 0:
                 return '1/3<br />Asking for agreement signature...'
@@ -45,6 +46,8 @@ export default class AssetFile extends PureComponent<
                 return '2/3<br />Asking for two payment confirmations...'
             case 3:
                 return '2/3<br />Payment confirmed. Requesting access...'
+            case 4:
+                return '3/3<br /> Access granted. Consuming file...'
             default:
                 return this.state.message
         }
@@ -53,7 +56,7 @@ export default class AssetFile extends PureComponent<
     private resetState = () =>
         this.setState({
             isLoading: true,
-            message: '1/3 Decrypting file URL...',
+            message: 'Decrypting file URL...',
             error: '',
             step: null
         })
@@ -76,10 +79,8 @@ export default class AssetFile extends PureComponent<
                 .order(ddo.id, service.serviceDefinitionId, accounts[0])
                 .next((step: number) => this.setState({ step }))
 
-            this.setState({
-                step: null,
-                message: '3/3<br /> Access granted. Consuming file...'
-            })
+            // manually add another step here for better UX
+            this.setState({ step: 4 })
 
             const path = await ocean.assets.consume(
                 agreementId,
