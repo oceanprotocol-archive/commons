@@ -7,6 +7,15 @@ import { User } from '../../context'
 import styles from './AssetFile.module.scss'
 import ReactGA from 'react-ga'
 
+export const messages = {
+    start: 'Decrypting file URL...',
+    0: '1/3<br />Asking for agreement signature...',
+    1: '1/3<br />Agreement initialized.',
+    2: '2/3<br />Asking for two payment confirmations...',
+    3: '2/3<br />Payment confirmed. Requesting access...',
+    4: '3/3<br /> Access granted. Consuming file...'
+}
+
 interface AssetFileProps {
     file: File
     ddo: DDO
@@ -14,7 +23,6 @@ interface AssetFileProps {
 
 interface AssetFileState {
     isLoading: boolean
-    message: string
     error: string
     step: number | null
 }
@@ -25,38 +33,13 @@ export default class AssetFile extends PureComponent<
 > {
     public state = {
         isLoading: false,
-        message: 'Decrypting file URL...',
         error: '',
         step: null
-    }
-
-    private feedbackMessage = (step: number | null) => {
-        // events from squid-js for `ocean.assets.order`:
-        // 0 CreatingAgreement
-        // 1 AgreementInitialized
-        // 2 LockingPayment
-        // 3 LockedPayment
-        // 4 (not from squid-js) before consume function is executed
-        switch (step) {
-            case 0:
-                return '1/3<br />Asking for agreement signature...'
-            case 1:
-                return '1/3<br />Agreement initialized.'
-            case 2:
-                return '2/3<br />Asking for two payment confirmations...'
-            case 3:
-                return '2/3<br />Payment confirmed. Requesting access...'
-            case 4:
-                return '3/3<br /> Access granted. Consuming file...'
-            default:
-                return this.state.message
-        }
     }
 
     private resetState = () =>
         this.setState({
             isLoading: true,
-            message: 'Decrypting file URL...',
             error: '',
             step: null
         })
@@ -97,7 +80,7 @@ export default class AssetFile extends PureComponent<
             })
             this.setState({ isLoading: false })
         } catch (error) {
-            Logger.log('error', error)
+            Logger.log('error', error.message)
             this.setState({ isLoading: false, error: error.message })
             ReactGA.event({
                 category: 'Purchase',
@@ -126,14 +109,16 @@ export default class AssetFile extends PureComponent<
                 </ul>
 
                 {isLoading ? (
-                    <Spinner message={this.feedbackMessage(step)} />
+                    <Spinner
+                        message={
+                            step === null ? messages.start : messages[step]
+                        }
+                    />
                 ) : (
                     <Button
                         primary
                         className={styles.buttonMain}
-                        // TODO: remove the || 0 once hack
-                        // https://github.com/oceanprotocol/squid-js/pull/221
-                        // is released
+                        // weird 0 hack so TypeScript is happy
                         onClick={() => this.purchaseAsset(ddo, index || 0)}
                         disabled={!isLogged || !isOceanNetwork}
                     >
