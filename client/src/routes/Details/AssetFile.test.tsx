@@ -20,7 +20,7 @@ const contextConnectedMock = {
     isLogged: true,
     isLoading: false,
     isWeb3: true,
-    isNile: true,
+    isCorrectNetwork: true,
     account: '',
     web3: {},
     ocean: {},
