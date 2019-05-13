@@ -258,7 +258,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         if (isWeb3) {
             const network = await ocean.keeper.getNetworkName()
             const isNile = network === 'Nile'
-            const isDuero = network === 'Duero'
+            const isDuero = network === 'Development'
             const isCorrectNetwork = isNile || isDuero
 
             network !== this.state.network &&
