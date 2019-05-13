@@ -36,7 +36,11 @@ describe('Popover', () => {
     it('renders with wrong network', () => {
         const { container } = render(
             <User.Provider
-                value={{ ...userMockConnected, isNile: false, network: '1' }}
+                value={{
+                    ...userMockConnected,
+                    isCorrectNetwork: false,
+                    network: '1'
+                }}
             >
                 <Popover forwardedRef={() => null} style={{}} />
             </User.Provider>

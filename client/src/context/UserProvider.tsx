@@ -46,7 +46,7 @@ interface UserProviderState {
     isLogged: boolean
     isLoading: boolean
     isWeb3: boolean
-    isNile: boolean
+    isCorrectNetwork: boolean
     account: string
     balance: {
         eth: number
@@ -74,7 +74,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         isLogged: false,
         isLoading: true,
         isWeb3: false,
-        isNile: false,
+        isCorrectNetwork: false,
         balance: {
             eth: 0,
             ocn: 0
@@ -151,23 +151,31 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 //
                 // Detecting network with window.web3
                 //
-                let isNile
+                let isCorrectNetwork
 
                 await window.web3.eth.net.getId((err, netId) => {
                     if (err) return
 
-                    isNile = netId === 8995
-                    const network = isNile ? 'Nile' : netId.toString()
+                    const isNile = netId === 8995
+                    const isDuero = netId === 2199
+
+                    isCorrectNetwork = isNile || isDuero
+
+                    const network = isNile
+                        ? 'Nile'
+                        : isDuero
+                        ? 'Duero'
+                        : netId.toString()
 
                     if (
-                        isNile !== this.state.isNile ||
+                        isCorrectNetwork !== this.state.isCorrectNetwork ||
                         network !== this.state.network
                     ) {
-                        this.setState({ isNile, network })
+                        this.setState({ isCorrectNetwork, network })
                     }
                 })
 
-                if (!isNile) {
+                if (!isCorrectNetwork) {
                     web3 = this.state.web3 // eslint-disable-line
                 }
 
@@ -201,13 +209,13 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private fetchAccounts = async () => {
-        const { ocean, isWeb3, isLogged, isNile } = this.state
+        const { ocean, isWeb3, isLogged, isCorrectNetwork } = this.state
 
         if (isWeb3) {
             let accounts
 
             // Modern dapp browsers
-            if (window.ethereum && !isLogged && isNile) {
+            if (window.ethereum && !isLogged && isCorrectNetwork) {
                 // simply set to empty, and have user click a button somewhere
                 // to initiate account unlocking
                 accounts = []
@@ -250,8 +258,11 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         if (isWeb3) {
             const network = await ocean.keeper.getNetworkName()
             const isNile = network === 'Nile'
+            const isDuero = network === 'Duero'
+            const isCorrectNetwork = isNile || isDuero
 
-            network !== this.state.network && this.setState({ isNile, network })
+            network !== this.state.network &&
+                this.setState({ isCorrectNetwork, network })
         }
     }
 

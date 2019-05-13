@@ -8,7 +8,13 @@ export default class Popover extends PureComponent<{
     style: React.CSSProperties
 }> {
     public render() {
-        const { account, balance, network, isWeb3, isNile } = this.context
+        const {
+            account,
+            balance,
+            network,
+            isWeb3,
+            isCorrectNetwork
+        } = this.context
 
         return (
             <div
@@ -47,7 +53,7 @@ export default class Popover extends PureComponent<{
                         )}
 
                         <div className={styles.popoverInfoline}>
-                            {network && !isNile
+                            {network && !isCorrectNetwork
                                 ? 'Please connect to Custom RPC\n https://nile.dev-ocean.com'
                                 : network && `Connected to ${network} network`}
                         </div>
