@@ -158,8 +158,9 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
                     const isNile = netId === 8995
                     const isDuero = netId === 2199
+                    const isSpree = netId === 8996
 
-                    isOceanNetwork = isNile || isDuero
+                    isOceanNetwork = isNile || isDuero || isSpree
 
                     const network = isNile
                         ? 'Nile'
@@ -259,7 +260,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
             const network = await ocean.keeper.getNetworkName()
             const isNile = network === 'Nile'
             const isDuero = network === 'Duero'
-            const isOceanNetwork = isNile || isDuero
+            const isSpree = network === 'Spree'
+            const isOceanNetwork = isNile || isDuero || isSpree
 
             network !== this.state.network &&
                 this.setState({ isOceanNetwork, network })
