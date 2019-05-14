@@ -204,7 +204,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         } catch (e) {
             // error in bootstrap process
             // show error connecting to ocean
-            Logger.log('web3 error', e)
+            Logger.error('web3 error', e.message)
             this.setState({ isLoading: false })
         }
     }
