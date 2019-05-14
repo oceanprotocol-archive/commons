@@ -91,7 +91,7 @@ export default class AssetFile extends PureComponent<
 
     public render() {
         const { ddo, file } = this.props
-        const { isLoading, message, error, step } = this.state
+        const { isLoading, error, step } = this.state
         const { isLogged, isOceanNetwork } = this.context
         const { index } = file
 
