@@ -76,7 +76,7 @@ export default class AssetFile extends PureComponent<
     public render() {
         const { ddo, file } = this.props
         const { isLoading, message, error } = this.state
-        const { isLogged, isCorrectNetwork } = this.context
+        const { isLogged, isOceanNetwork } = this.context
         const { index } = file
 
         return (
@@ -102,7 +102,7 @@ export default class AssetFile extends PureComponent<
                         // https://github.com/oceanprotocol/squid-js/pull/221
                         // is released
                         onClick={() => this.purchaseAsset(ddo, index || 0)}
-                        disabled={!isLogged || !isCorrectNetwork}
+                        disabled={!isLogged || !isOceanNetwork}
                     >
                         Get file
                     </Button>

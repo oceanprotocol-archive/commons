@@ -13,7 +13,7 @@ export default class Popover extends PureComponent<{
             balance,
             network,
             isWeb3,
-            isCorrectNetwork
+            isOceanNetwork
         } = this.context
 
         return (
@@ -53,7 +53,7 @@ export default class Popover extends PureComponent<{
                         )}
 
                         <div className={styles.popoverInfoline}>
-                            {network && !isCorrectNetwork
+                            {network && !isOceanNetwork
                                 ? 'Please connect to Custom RPC\n https://nile.dev-ocean.com'
                                 : network && `Connected to ${network} network`}
                         </div>

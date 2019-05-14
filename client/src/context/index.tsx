@@ -4,7 +4,7 @@ export const User = React.createContext({
     isLogged: false,
     isLoading: false,
     isWeb3: false,
-    isCorrectNetwork: false,
+    isOceanNetwork: false,
     account: '',
     web3: {},
     ocean: {},

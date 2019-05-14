@@ -28,7 +28,7 @@ describe('Web3message', () => {
     it('renders with noAccount message', () => {
         const { container } = render(
             <User.Provider
-                value={{ ...userMock, isWeb3: true, isCorrectNetwork: true }}
+                value={{ ...userMock, isWeb3: true, isOceanNetwork: true }}
             >
                 <Web3message />
             </User.Provider>
@@ -51,7 +51,7 @@ describe('Web3message', () => {
                 value={{
                     ...userMock,
                     isWeb3: true,
-                    isCorrectNetwork: true
+                    isOceanNetwork: true
                 }}
             >
                 <Web3message />

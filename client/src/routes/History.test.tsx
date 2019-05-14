@@ -14,7 +14,7 @@ describe('History', () => {
             isLogged: false,
             isLoading: false,
             isWeb3: false,
-            isCorrectNetwork: false,
+            isOceanNetwork: false,
             account: '',
             web3: {},
             ocean: {},

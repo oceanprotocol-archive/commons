@@ -19,7 +19,7 @@ export default class AssetFilesDetails extends PureComponent<{
                         <AssetFile key={file.index} ddo={ddo} file={file} />
                     ))}
                 </div>
-                {(!this.context.isCorrectNetwork || !this.context.isLogged) && (
+                {(!this.context.isOceanNetwork || !this.context.isLogged) && (
                     <Web3message />
                 )}
             </>
