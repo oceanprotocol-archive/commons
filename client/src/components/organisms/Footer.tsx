@@ -1,4 +1,5 @@
 import React from 'react'
+import { Market } from '../../context'
 import Content from '../atoms/Content'
 import styles from './Footer.module.scss'
 
@@ -6,6 +7,14 @@ import meta from '../../data/meta.json'
 
 const Footer = () => (
     <footer className={styles.footer}>
+        <Market.Consumer>
+            {state =>
+                state.totalAssets > 0 && (
+                    <Content wide>{state.totalAssets} total assets</Content>
+                )
+            }
+        </Market.Consumer>
+
         <Content wide>
             <small>
                 &copy; {new Date().getFullYear()}{' '}
