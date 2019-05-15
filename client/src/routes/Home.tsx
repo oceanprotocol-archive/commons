@@ -33,6 +33,7 @@ const categories =
         formPublish.steps[1].fields.categories &&
         formPublish.steps[1].fields.categories.options) ||
     []
+]
 
 class Home extends Component<HomeProps, HomeState> {
     public state = {
