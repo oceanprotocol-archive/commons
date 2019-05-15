@@ -8,7 +8,7 @@ export const servicePort = process.env.REACT_APP_SERVICE_PORT || 4000
 //
 // OCEAN REMOTE CONNECTIONS
 //
-/*
+
 export const nodeScheme = process.env.REACT_APP_NODE_SCHEME || 'https'
 export const nodeHost = process.env.REACT_APP_NODE_HOST || 'nile.dev-ocean.com'
 export const nodePort = process.env.REACT_APP_NODE_PORT || 443
@@ -41,11 +41,12 @@ export const faucetScheme = process.env.REACT_APP_FAUCET_SCHEME || 'https'
 export const faucetHost =
     process.env.REACT_APP_FAUCET_HOST || 'faucet.nile.dev-ocean.com'
 export const faucetPort = process.env.REACT_APP_FAUCET_PORT || 443
-*/
+
 //
 // OCEAN LOCAL CONNECTIONS
 // e.g. when running with barge
 //
+/*
 export const nodeScheme = 'http'
 export const nodeHost = 'localhost'
 export const nodePort = 8545
@@ -70,7 +71,7 @@ export const secretStorePort = 12001
 export const faucetScheme = 'http'
 export const faucetHost = 'localhost'
 export const faucetPort = 3001
-
+*/
 export const verbose = true
 
 //

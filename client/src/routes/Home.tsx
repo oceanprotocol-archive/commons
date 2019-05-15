@@ -1,9 +1,10 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
+import { User } from '../context'
+import { Logger } from '@oceanprotocol/squid'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
 import Route from '../components/templates/Route'
-import AssetsUser from '../components/organisms/AssetsUser'
 import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'
@@ -15,10 +16,47 @@ interface HomeProps {
 
 interface HomeState {
     search?: string
+    categoryAssets?: Array<any>
+    isLoading?: boolean
 }
 
 class Home extends Component<HomeProps, HomeState> {
-    public state = { search: '' }
+    public state = {
+        search: '',
+        categoryAssets: [],
+        isLoading: true
+    }
+
+    public async componentDidMount() {
+        this.getCategoryAssets()
+    }
+
+    private getCategoryAssets = async () => {
+        const { ocean } = this.context
+
+        const searchQuery = {
+            offset: 25,
+            page: 1,
+            query: {
+                categories: ["Economics & Finance"],
+                price: [-1, 1]
+            },
+            sort: {
+                datePublished: 1
+            }
+        }
+
+        try {
+            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            this.setState({
+                categoryAssets: search.results,
+                isLoading: false
+            })
+        } catch (error) {
+            Logger.error(error)
+            this.setState({ isLoading: false })
+        }
+    }
 
     public render() {
         return (
@@ -26,6 +64,7 @@ class Home extends Component<HomeProps, HomeState> {
                 title={meta.title}
                 description={meta.description}
                 className={styles.home}
+                wide
             >
                 <Form onSubmit={this.searchAssets} minimal>
                     <Input
@@ -42,7 +81,12 @@ class Home extends Component<HomeProps, HomeState> {
                         }
                     />
                 </Form>
-                <AssetsUser recent={5} list />
+                <div>
+                    {this.state.categoryAssets.map((asset: any) => (
+                        <div key={asset.id}>{asset.id}</div>
+                    ))}
+                </div>
+                category lists
             </Route>
         )
     }
@@ -59,4 +103,5 @@ class Home extends Component<HomeProps, HomeState> {
     }
 }
 
+Home.contextType = User
 export default Home
