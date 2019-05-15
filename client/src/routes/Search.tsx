@@ -96,7 +96,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                 isLoading: false
             })
         } catch (error) {
-            Logger.error(error)
+            Logger.error(error.message)
             this.setState({ isLoading: false })
         }
     }

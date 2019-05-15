@@ -65,7 +65,7 @@ class Home extends Component<HomeProps, HomeState> {
                 isLoading: false
             })
         } catch (error) {
-            Logger.error(error)
+            Logger.error(error.message)
             this.setState({ isLoading: false })
         }
     }
