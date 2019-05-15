@@ -46,8 +46,9 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         </span>
 
                         {base.categories && (
-                            // TODO: Make this link to search for respective category
-                            <Link to={`/search?text=${base.categories[0]}`}>
+                            <Link
+                                to={`/search?categories=${base.categories[0]}`}
+                            >
                                 {base.categories[0]}
                             </Link>
                         )}
