@@ -7,13 +7,25 @@ import meta from '../../data/meta.json'
 
 const Footer = () => (
     <footer className={styles.footer}>
-        <Market.Consumer>
-            {state =>
-                state.totalAssets > 0 && (
-                    <Content wide>{state.totalAssets} total assets</Content>
-                )
-            }
-        </Market.Consumer>
+        <aside className={styles.stats}>
+            <Content wide>
+                <p>
+                    Online since March 2019.
+                    <Market.Consumer>
+                        {state =>
+                            state.totalAssets > 0 &&
+                            ` With a total of ${
+                                state.totalAssets
+                            } registered assets.`
+                        }
+                    </Market.Consumer>
+                </p>
+                <p>
+                    Proud supporter of{' '}
+                    <a href="https://aicommons.com/">AI Commons</a>.
+                </p>
+            </Content>
+        </aside>
 
         <Content wide>
             <small>
