@@ -38,7 +38,7 @@ describe('Popover', () => {
             <User.Provider
                 value={{
                     ...userMockConnected,
-                    isCorrectNetwork: false,
+                    isOceanNetwork: false,
                     network: '1'
                 }}
             >

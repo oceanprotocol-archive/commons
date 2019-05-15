@@ -8,7 +8,7 @@ export default class History extends Component {
     public render() {
         return (
             <Route title="History">
-                {(!this.context.isLogged || !this.context.isCorrectNetwork) && (
+                {(!this.context.isLogged || !this.context.isOceanNetwork) && (
                     <Web3message />
                 )}
 

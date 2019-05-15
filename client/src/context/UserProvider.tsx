@@ -46,7 +46,7 @@ interface UserProviderState {
     isLogged: boolean
     isLoading: boolean
     isWeb3: boolean
-    isCorrectNetwork: boolean
+    isOceanNetwork: boolean
     account: string
     balance: {
         eth: number
@@ -74,7 +74,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         isLogged: false,
         isLoading: true,
         isWeb3: false,
-        isCorrectNetwork: false,
+        isOceanNetwork: false,
         balance: {
             eth: 0,
             ocn: 0
@@ -151,15 +151,16 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 //
                 // Detecting network with window.web3
                 //
-                let isCorrectNetwork
+                let isOceanNetwork
 
                 await window.web3.eth.net.getId((err, netId) => {
                     if (err) return
 
                     const isNile = netId === 8995
                     const isDuero = netId === 2199
+                    const isSpree = netId === 8996
 
-                    isCorrectNetwork = isNile || isDuero
+                    isOceanNetwork = isNile || isDuero || isSpree
 
                     const network = isNile
                         ? 'Nile'
@@ -168,14 +169,14 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                         : netId.toString()
 
                     if (
-                        isCorrectNetwork !== this.state.isCorrectNetwork ||
+                        isOceanNetwork !== this.state.isOceanNetwork ||
                         network !== this.state.network
                     ) {
-                        this.setState({ isCorrectNetwork, network })
+                        this.setState({ isOceanNetwork, network })
                     }
                 })
 
-                if (!isCorrectNetwork) {
+                if (!isOceanNetwork) {
                     web3 = this.state.web3 // eslint-disable-line
                 }
 
@@ -203,19 +204,19 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         } catch (e) {
             // error in bootstrap process
             // show error connecting to ocean
-            Logger.log('web3 error', e)
+            Logger.error('web3 error', e.message)
             this.setState({ isLoading: false })
         }
     }
 
     private fetchAccounts = async () => {
-        const { ocean, isWeb3, isLogged, isCorrectNetwork } = this.state
+        const { ocean, isWeb3, isLogged, isOceanNetwork } = this.state
 
         if (isWeb3) {
             let accounts
 
             // Modern dapp browsers
-            if (window.ethereum && !isLogged && isCorrectNetwork) {
+            if (window.ethereum && !isLogged && isOceanNetwork) {
                 // simply set to empty, and have user click a button somewhere
                 // to initiate account unlocking
                 accounts = []
@@ -258,11 +259,12 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         if (isWeb3) {
             const network = await ocean.keeper.getNetworkName()
             const isNile = network === 'Nile'
-            const isDuero = network === 'Development'
-            const isCorrectNetwork = isNile || isDuero
+            const isDuero = network === 'Duero'
+            const isSpree = network === 'Spree'
+            const isOceanNetwork = isNile || isDuero || isSpree
 
             network !== this.state.network &&
-                this.setState({ isCorrectNetwork, network })
+                this.setState({ isOceanNetwork, network })
         }
     }
 
