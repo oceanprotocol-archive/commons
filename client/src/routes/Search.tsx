@@ -39,24 +39,25 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     public async componentDidMount() {
-        const searchTerm = await queryString.parse(this.props.location.search)
-            .text
-        const searchPage = await queryString.parse(this.props.location.search)
-            .page
-        const searchCategories = await queryString.parse(
-            this.props.location.search
-        ).categories
+        const { search } = this.props.location
+        const { text, page, categories } = queryString.parse(search)
 
-        if (searchTerm || searchCategories) {
+        if (text) {
+            await this.setState({
+                searchTerm: `${text}`
+            })
+        }
+
+        if (categories) {
             await this.setState({
                 searchTerm: encodeURIComponent(`${searchTerm}`),
-                searchCategories: `${searchCategories}`
+                searchCategories: `${categories}`
             })
         }
 
         // switch to respective page if query string is present
-        if (searchPage) {
-            const currentPage = Number(searchPage)
+        if (page) {
+            const currentPage = Number(page)
             await this.setState({ currentPage })
         }
 
@@ -67,12 +68,18 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         const { ocean } = this.context
         const { offset, currentPage, searchTerm, searchCategories } = this.state
 
+        const queryValues =
+            searchCategories !== '' && searchTerm !== ''
+                ? { text: [searchTerm], categories: [searchCategories] }
+                : searchCategories !== '' && searchTerm === ''
+                ? { categories: [searchCategories] }
+                : { text: [searchTerm] }
+
         const searchQuery = {
             offset,
             page: currentPage,
             query: {
-                text: [decodeURIComponent(searchTerm)],
-                categories: [decodeURIComponent(searchCategories)],
+                ...queryValues,
                 price: [-1, 1]
             },
             sort: {
