@@ -12,4 +12,20 @@
         margin: 0;
         visibility: hidden;
     }
+
+    .results {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: $spacer;
+
+        @media (min-width: $break-point--small) {
+            grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        }
+    }
+
+    .categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+        grid-gap: $spacer;
+    }
 }
