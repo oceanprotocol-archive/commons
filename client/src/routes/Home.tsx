@@ -22,7 +22,7 @@ interface HomeProps {
 
 interface HomeState {
     search?: string
-    categoryAssets?: Array<any>
+    categoryAssets?: any[]
     isLoadingCategory?: boolean
     lastAssets?: any[]
     isLoadingLast?: boolean
@@ -33,7 +33,6 @@ const categories =
         formPublish.steps[1].fields.categories &&
         formPublish.steps[1].fields.categories.options) ||
     []
-]
 
 class Home extends Component<HomeProps, HomeState> {
     public state = {
@@ -109,7 +108,6 @@ class Home extends Component<HomeProps, HomeState> {
                 title={meta.title}
                 description={meta.description}
                 className={styles.home}
-                wide
             >
                 <Content>
                     <Form onSubmit={this.searchAssets} minimal>
