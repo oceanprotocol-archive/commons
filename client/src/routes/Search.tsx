@@ -40,16 +40,11 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
     public async componentDidMount() {
         const { search } = this.props.location
-            .text
-        const searchPage = await queryString.parse(this.props.location.search)
-            .page
         const { text, page, categories } = queryString.parse(search)
-            this.props.location.search
-        ).categories
 
         if (text) {
             await this.setState({
-                searchTerm: encodeURIComponent(`${text}`)
+                searchTerm: `${text}`
             })
         }
 
@@ -84,7 +79,6 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
             page: currentPage,
             query: {
                 ...queryValues,
-                categories: [decodeURIComponent(searchCategories)],
                 price: [-1, 1]
             },
             sort: {
