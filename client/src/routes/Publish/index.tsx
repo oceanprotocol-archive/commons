@@ -10,6 +10,7 @@ import Progress from './Progress'
 import ReactGA from 'react-ga'
 
 import { steps } from '../../data/form-publish.json'
+import Content from '../../components/atoms/Content'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -319,33 +320,37 @@ class Publish extends Component<{}, PublishState> {
                 title="Publish"
                 description="Publish a new data set into the Ocean Protocol Network."
             >
-                {(!this.context.isLogged || !this.context.isOceanNetwork) && (
-                    <Web3message />
-                )}
+                <Content>
+                    {(!this.context.isLogged ||
+                        !this.context.isOceanNetwork) && <Web3message />}
 
-                <Progress steps={steps} currentStep={this.state.currentStep} />
+                    <Progress
+                        steps={steps}
+                        currentStep={this.state.currentStep}
+                    />
 
-                <Form onSubmit={this.registerAsset}>
-                    {steps.map((step: any, index: number) => (
-                        <Step
-                            key={index}
-                            index={index}
-                            title={step.title}
-                            description={step.description}
-                            currentStep={this.state.currentStep}
-                            fields={step.fields}
-                            inputChange={this.inputChange}
-                            inputToArrayChange={this.inputToArrayChange}
-                            state={this.state}
-                            next={this.next}
-                            prev={this.prev}
-                            totalSteps={steps.length}
-                            tryAgain={this.tryAgain}
-                            toStart={this.toStart}
-                            content={step.content}
-                        />
-                    ))}
-                </Form>
+                    <Form onSubmit={this.registerAsset}>
+                        {steps.map((step: any, index: number) => (
+                            <Step
+                                key={index}
+                                index={index}
+                                title={step.title}
+                                description={step.description}
+                                currentStep={this.state.currentStep}
+                                fields={step.fields}
+                                inputChange={this.inputChange}
+                                inputToArrayChange={this.inputToArrayChange}
+                                state={this.state}
+                                next={this.next}
+                                prev={this.prev}
+                                totalSteps={steps.length}
+                                tryAgain={this.tryAgain}
+                                toStart={this.toStart}
+                                content={step.content}
+                            />
+                        ))}
+                    </Form>
+                </Content>
             </Route>
         )
     }

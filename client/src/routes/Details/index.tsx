@@ -5,6 +5,7 @@ import Spinner from '../../components/atoms/Spinner'
 import { User } from '../../context'
 import AssetDetails from './AssetDetails'
 import stylesApp from '../../App.module.scss'
+import Content from '../../components/atoms/Content'
 
 interface DetailsProps {
     location: Location
@@ -46,7 +47,9 @@ export default class Details extends Component<DetailsProps, DetailsState> {
 
         return metadata.base.name !== '' ? (
             <Route title={metadata.base.name}>
-                <AssetDetails metadata={metadata} ddo={ddo} />
+                <Content>
+                    <AssetDetails metadata={metadata} ddo={ddo} />
+                </Content>
             </Route>
         ) : (
             <div className={stylesApp.loader}>

@@ -24,9 +24,9 @@ const Route = ({
             {description && <meta name="description" content={description} />}
         </Helmet>
 
-        <Content wide={wide}>
-            <article>
-                <header className={styles.header}>
+        <article>
+            <header className={styles.header}>
+                <Content wide={wide}>
                     <h1 className={styles.title}>{title}</h1>
                     {description && (
                         <p
@@ -36,11 +36,11 @@ const Route = ({
                             }}
                         />
                     )}
-                </header>
+                </Content>
+            </header>
 
-                {children}
-            </article>
-        </Content>
+            {children}
+        </article>
     </div>
 )
 

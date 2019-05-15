@@ -1,4 +1,5 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { User } from '../context'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
@@ -11,7 +12,9 @@ import Route from '../components/templates/Route'
 import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'
+import formPublish from '../data/form-publish.json'
 import { History } from 'history'
+import Content from '../components/atoms/Content'
 
 interface HomeProps {
     history: History
@@ -19,46 +22,15 @@ interface HomeProps {
 
 interface HomeState {
     search?: string
-    categoryAssets?: Array<any>
+    categoryAssets?: any[]
     isLoading?: boolean
 }
 
-const categories = [
-    'AI For Good',
-    'Image Recognition',
-    'Dataset Of Datasets',
-    'Language',
-    'Performing Arts',
-    'Visual Arts & Design',
-    'Philosophy',
-    'History',
-    'Theology',
-    'Anthropology & Archeology',
-    'Sociology',
-    'Psychology',
-    'Politics',
-    'Interdisciplinary',
-    'Economics & Finance',
-    'Demography',
-    'Biology',
-    'Chemistry',
-    'Physics & Energy',
-    'Earth & Climate',
-    'Space & Astronomy',
-    'Mathematics',
-    'Computer Technology',
-    'Engineering',
-    'Agriculture & Bio Engineering',
-    'Transportation',
-    'Urban Planning',
-    'Medicine',
-    'Business & Management',
-    'Sports & Recreation',
-    'Communication & Journalism',
-    'Deep Learning',
-    'Law',
-    'Other'
-]
+const categories =
+    (formPublish.steps[1].fields &&
+        formPublish.steps[1].fields.categories &&
+        formPublish.steps[1].fields.categories.options) ||
+    []
 
 class Home extends Component<HomeProps, HomeState> {
     public state = {
@@ -78,7 +50,7 @@ class Home extends Component<HomeProps, HomeState> {
             offset: 25,
             page: 1,
             query: {
-                categories: ["Economics & Finance"],
+                categories: ['Engineering'],
                 price: [-1, 1]
             },
             sort: {
@@ -99,55 +71,59 @@ class Home extends Component<HomeProps, HomeState> {
     }
 
     public render() {
+        const { categoryAssets, isLoading, search } = this.state
         return (
             <Route
                 title={meta.title}
                 description={meta.description}
                 className={styles.home}
-                wide
             >
-                <Form onSubmit={this.searchAssets} minimal>
-                    <Input
-                        type="search"
-                        name="search"
-                        label="Search for data sets"
-                        placeholder="e.g. shapes of plants"
-                        value={this.state.search}
-                        onChange={this.inputChange}
-                        group={
-                            <Button primary disabled={!this.state.search}>
-                                Search
-                            </Button>
-                        }
-                    />
-                </Form>
-                <div>
+                <Content>
+                    <Form onSubmit={this.searchAssets} minimal>
+                        <Input
+                            type="search"
+                            name="search"
+                            label="Search for data sets"
+                            placeholder="e.g. shapes of plants"
+                            value={search}
+                            onChange={this.inputChange}
+                            group={
+                                <Button primary disabled={!search}>
+                                    Search
+                                </Button>
+                            }
+                        />
+                    </Form>
+                </Content>
+
+                <Content wide>
                     <h4>AI for Good</h4>
                     <div>
-                        {
-                            this.state.isLoading ? (
-                                <Spinner message="Loading..." />
-                            ) : this.state.categoryAssets && this.state.categoryAssets.length ? (
-                                <div className={styles.results}>
-                                    {this.state.categoryAssets.map((asset: any) => (
-                                        <Asset key={asset.id} asset={asset} />
-                                    ))}
-                                </div>
-                            ) : (
-                                <div>No data sets found.</div>
-                            )
-                        }
+                        {isLoading ? (
+                            <Spinner message="Loading..." />
+                        ) : categoryAssets && categoryAssets.length ? (
+                            <div className={styles.results}>
+                                {categoryAssets.map((asset: any) => (
+                                    <Asset key={asset.id} asset={asset} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div>No data sets found.</div>
+                        )}
                     </div>
                     <h4>Explore Categories</h4>
                     <div className={styles.categories}>
                         {categories.map((category: string) => (
-                            <div key={category}>
-                                <CategoryImage category={category}/>
+                            <Link
+                                to={`/search?categories=${category}`}
+                                key={category}
+                            >
+                                <CategoryImage category={category} />
                                 {category}
-                            </div>
+                            </Link>
                         ))}
                     </div>
-                </div>
+                </Content>
             </Route>
         )
     }

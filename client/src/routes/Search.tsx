@@ -8,6 +8,7 @@ import { User } from '../context'
 import Asset from '../components/molecules/Asset'
 import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
+import Content from '../components/atoms/Content'
 
 interface SearchProps {
     location: Location
@@ -22,6 +23,7 @@ interface SearchState {
     currentPage: number
     isLoading: boolean
     searchTerm: string
+    searchCategories: string
 }
 
 export default class Search extends PureComponent<SearchProps, SearchState> {
@@ -32,17 +34,25 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         totalPages: 1,
         currentPage: 1,
         isLoading: true,
-        searchTerm: ''
+        searchTerm: '',
+        searchCategories: ''
     }
 
     public async componentDidMount() {
         const searchTerm = await queryString.parse(this.props.location.search)
             .text
-        const searchPage = queryString.parse(this.props.location.search).page
+        const searchPage = await queryString.parse(this.props.location.search)
+            .page
+        const searchCategories = await queryString.parse(
+            this.props.location.search
+        ).categories
 
-        await this.setState({
-            searchTerm: encodeURIComponent(`${searchTerm}`)
-        })
+        if (searchTerm || searchCategories) {
+            await this.setState({
+                searchTerm: encodeURIComponent(`${searchTerm}`),
+                searchCategories: `${searchCategories}`
+            })
+        }
 
         // switch to respective page if query string is present
         if (searchPage) {
@@ -55,12 +65,14 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
     private searchAssets = async () => {
         const { ocean } = this.context
+        const { offset, currentPage, searchTerm, searchCategories } = this.state
 
         const searchQuery = {
-            offset: this.state.offset,
-            page: this.state.currentPage,
+            offset,
+            page: currentPage,
             query: {
-                text: [decodeURIComponent(this.state.searchTerm)],
+                text: [decodeURIComponent(searchTerm)],
+                categories: [decodeURIComponent(searchCategories)],
                 price: [-1, 1]
             },
             sort: {
@@ -113,6 +125,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
         return (
             <Route title="Search" wide>
+                <Content wide>
                 {totalResults > 0 && (
                     <h2
                         className={styles.resultsTitle}
@@ -120,16 +133,17 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                             __html: `${totalResults} results for <span>${decodeURIComponent(
                                 this.state.searchTerm
                             )}</span>`
-                        }}
-                    />
-                )}
-                {this.renderResults()}
+                            }}
+                        />
+                    )}
+                    {this.renderResults()}
 
-                <Pagination
-                    totalPages={totalPages}
-                    currentPage={currentPage}
-                    handlePageClick={this.handlePageClick}
-                />
+                    <Pagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        handlePageClick={this.handlePageClick}
+                    />
+                </Content>
             </Route>
         )
     }
