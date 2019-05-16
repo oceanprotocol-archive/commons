@@ -38,7 +38,7 @@ interface FilesStates {
     isFormShown: boolean
 }
 
-const getFileCompression = async (contentType: string) => {
+export const getFileCompression = async (contentType: string) => {
     // TODO: add all the possible archive & compression MIME types
     if (
         contentType === 'application/zip' ||
@@ -69,14 +69,21 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
         isFormShown: false
     }
 
-    public toggleForm = (e: Event) => {
+    private toggleForm = (e: Event) => {
         e.preventDefault()
 
         this.setState({ isFormShown: !this.state.isFormShown })
     }
 
-    public addItem = async (value: string) => {
-        let res: any
+    private addItem = async (value: string) => {
+        let res: {
+            result: {
+                contentLength: number
+                contentType: string
+                found: boolean
+            }
+        }
+
         let file: File = {
             url: value,
             found: false,
@@ -104,6 +111,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
         } catch (error) {
             // error
         }
+
         this.props.files.push(file)
         const event = {
             currentTarget: {
@@ -115,7 +123,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
         this.setState({ isFormShown: !this.state.isFormShown })
     }
 
-    public removeItem = (index: number) => {
+    private removeItem = (index: number) => {
         this.props.files.splice(index, 1)
         const event = {
             currentTarget: {

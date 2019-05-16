@@ -46,7 +46,7 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
                 trxHash
             })
         } catch (error) {
-            this.setState({ isLoading: false, error })
+            this.setState({ isLoading: false, error: error.message })
         }
     }
 
@@ -80,7 +80,9 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
             <Button
                 primary
                 onClick={() => this.getTokens(this.context.requestFromFaucet)}
-                disabled={!this.context.isLogged || !this.context.isNile}
+                disabled={
+                    !this.context.isLogged || !this.context.isOceanNetwork
+                }
             >
                 Request Ether
             </Button>

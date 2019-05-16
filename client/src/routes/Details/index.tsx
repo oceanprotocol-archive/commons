@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { DDO, MetaData, Logger } from '@oceanprotocol/squid'
 import Route from '../../components/templates/Route'
 import Spinner from '../../components/atoms/Spinner'
 import { User } from '../../context'
@@ -7,23 +8,37 @@ import stylesApp from '../../App.module.scss'
 
 interface DetailsProps {
     location: Location
-    match: any
+    match: {
+        params: {
+            did: string
+        }
+    }
 }
 
 interface DetailsState {
-    ddo: any
-    metadata: { base: { name: string } }
+    ddo: DDO
+    metadata: MetaData
 }
 
 export default class Details extends Component<DetailsProps, DetailsState> {
-    public state = { ddo: {}, metadata: { base: { name: '' } } }
+    public state = {
+        ddo: ({} as any) as DDO,
+        metadata: ({ base: { name: '' } } as any) as MetaData
+    }
 
     public async componentDidMount() {
-        const ddo = await this.context.ocean.assets.resolve(
-            this.props.match.params.did
-        )
-        const { metadata } = ddo.findServiceByType('Metadata')
-        this.setState({ ddo, metadata: { base: metadata.base } })
+        this.getData()
+    }
+
+    private async getData() {
+        try {
+            const { ocean } = this.context
+            const ddo = await ocean.assets.resolve(this.props.match.params.did)
+            const { metadata } = ddo.findServiceByType('Metadata')
+            this.setState({ ddo, metadata })
+        } catch (error) {
+            Logger.error(error.message)
+        }
     }
 
     public render() {

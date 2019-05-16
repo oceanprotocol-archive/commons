@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import Web3 from 'web3'
-import { Logger } from '@oceanprotocol/squid'
+import { Logger, Ocean, Account } from '@oceanprotocol/squid'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
 import { nodeHost, nodePort, nodeScheme } from '../config'
@@ -46,7 +46,7 @@ interface UserProviderState {
     isLogged: boolean
     isLoading: boolean
     isWeb3: boolean
-    isNile: boolean
+    isOceanNetwork: boolean
     account: string
     balance: {
         eth: number
@@ -54,7 +54,7 @@ interface UserProviderState {
     }
     network: string
     web3: Web3
-    ocean: any
+    ocean: Ocean
     requestFromFaucet(account: string): Promise<FaucetResponse>
     unlockAccounts(): Promise<any>
     message: string
@@ -74,7 +74,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         isLogged: false,
         isLoading: true,
         isWeb3: false,
-        isNile: false,
+        isOceanNetwork: false,
         balance: {
             eth: 0,
             ocn: 0
@@ -117,7 +117,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         }
     }
 
-    private getWeb3 = async () => {
+    private getWeb3 = () => {
         // Modern dapp browsers
         if (window.ethereum) {
             window.web3 = new Web3(window.ethereum)
@@ -151,23 +151,32 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 //
                 // Detecting network with window.web3
                 //
-                let isNile
+                let isOceanNetwork
 
                 await window.web3.eth.net.getId((err, netId) => {
                     if (err) return
 
-                    isNile = netId === 8995
-                    const network = isNile ? 'Nile' : netId.toString()
+                    const isNile = netId === 8995
+                    const isDuero = netId === 2199
+                    const isSpree = netId === 8996
+
+                    isOceanNetwork = isNile || isDuero || isSpree
+
+                    const network = isNile
+                        ? 'Nile'
+                        : isDuero
+                        ? 'Duero'
+                        : netId.toString()
 
                     if (
-                        isNile !== this.state.isNile ||
+                        isOceanNetwork !== this.state.isOceanNetwork ||
                         network !== this.state.network
                     ) {
-                        this.setState({ isNile, network })
+                        this.setState({ isOceanNetwork, network })
                     }
                 })
 
-                if (!isNile) {
+                if (!isOceanNetwork) {
                     web3 = this.state.web3 // eslint-disable-line
                 }
 
@@ -195,19 +204,19 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         } catch (e) {
             // error in bootstrap process
             // show error connecting to ocean
-            Logger.log('web3 error', e)
+            Logger.error('web3 error', e.message)
             this.setState({ isLoading: false })
         }
     }
 
     private fetchAccounts = async () => {
-        const { ocean, isWeb3, isLogged, isNile } = this.state
+        const { ocean, isWeb3, isLogged, isOceanNetwork } = this.state
 
         if (isWeb3) {
             let accounts
 
             // Modern dapp browsers
-            if (window.ethereum && !isLogged && isNile) {
+            if (window.ethereum && !isLogged && isOceanNetwork) {
                 // simply set to empty, and have user click a button somewhere
                 // to initiate account unlocking
                 accounts = []
@@ -236,7 +245,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         }
     }
 
-    private fetchBalance = async (account: any) => {
+    private fetchBalance = async (account: Account) => {
         const balance = await account.getBalance()
         const { eth, ocn } = balance
         if (eth !== this.state.balance.eth || ocn !== this.state.balance.ocn) {
@@ -250,8 +259,12 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         if (isWeb3) {
             const network = await ocean.keeper.getNetworkName()
             const isNile = network === 'Nile'
+            const isDuero = network === 'Duero'
+            const isSpree = network === 'Spree'
+            const isOceanNetwork = isNile || isDuero || isSpree
 
-            network !== this.state.network && this.setState({ isNile, network })
+            network !== this.state.network &&
+                this.setState({ isOceanNetwork, network })
         }
     }
 

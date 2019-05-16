@@ -319,7 +319,7 @@ class Publish extends Component<{}, PublishState> {
                 title="Publish"
                 description="Publish a new data set into the Ocean Protocol Network."
             >
-                {(!this.context.isLogged || !this.context.isNile) && (
+                {(!this.context.isLogged || !this.context.isOceanNetwork) && (
                     <Web3message />
                 )}
 

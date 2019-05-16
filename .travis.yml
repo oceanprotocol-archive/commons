@@ -3,9 +3,14 @@ language: node_js
 node_js:
   - '11'
 
+before_install:
+  - npm install -g npm
+  - npm install -g codacy-coverage
+
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
   - ./scripts/test.sh
+  - ./scripts/coverage.sh
   - ./scripts/build.sh
 
 notifications:
@@ -14,8 +19,6 @@ notifications:
 cache:
   directories:
     - node_modules
-    - client/node_modules
-    - server/node_modules
 
 deploy:
   - provider: script

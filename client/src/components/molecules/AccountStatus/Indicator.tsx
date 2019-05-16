@@ -22,7 +22,7 @@ const Indicator = ({
             {states =>
                 !states.isWeb3 ? (
                     <span className={styles.statusIndicator} />
-                ) : !states.isLogged || !states.isNile ? (
+                ) : !states.isLogged || !states.isOceanNetwork ? (
                     <span className={styles.statusIndicatorCloseEnough} />
                 ) : states.isLogged ? (
                     <span className={styles.statusIndicatorActive} />

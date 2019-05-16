@@ -3,15 +3,15 @@ import ReactGA, { FieldsObject } from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { analyticsId } from '../config'
 
+ReactGA.initialize(analyticsId, {
+    testMode: process.env.NODE_ENV === 'test',
+    debug: false
+})
+
 const withTracker = <P extends RouteComponentProps>(
     WrappedComponent: any,
     options: FieldsObject = {}
 ) => {
-    ReactGA.initialize(analyticsId, {
-        testMode: process.env.NODE_ENV === 'development',
-        debug: false
-    })
-
     const trackPage = (page: string) => {
         options.isWeb3 = window.web3 !== undefined
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 
-const Description = ({
+const Markdown = ({
     text,
     className
 }: {
@@ -15,4 +15,4 @@ const Description = ({
     return <ReactMarkdown source={textCleaned} className={className} />
 }
 
-export default Description
+export default Markdown

@@ -6,6 +6,8 @@
 > https://commons.oceanprotocol.com
 
 [![Build Status](https://travis-ci.com/oceanprotocol/commons.svg?branch=master)](https://travis-ci.com/oceanprotocol/commons)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a19987e62344b1c9c1d5bc9f315c733)](https://www.codacy.com/app/ocean-protocol/commons)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/6a19987e62344b1c9c1d5bc9f315c733)](https://www.codacy.com/app/ocean-protocol/commons)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-7b1173.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
 [![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)

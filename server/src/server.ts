@@ -50,6 +50,7 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(compression())
+
 // routes
 app.use('/api/v1/urlcheck', UrlCheckRouter)
 app.use('/api/v1/ddo', DdoRouter)

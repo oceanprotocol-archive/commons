@@ -1,7 +1,7 @@
 {
   "name": "commons",
   "description": "Ocean Protocol marketplace to explore, download, and publish open data sets.",
-  "version": "0.2.5",
+  "version": "0.2.11",
   "license": "Apache-2.0",
   "scripts": {
     "install": "./scripts/install.sh",
@@ -31,16 +31,16 @@
     "concurrently": "^4.1.0",
     "eslint": "^5.16.0",
     "eslint-config-oceanprotocol": "^1.3.0",
-    "eslint-config-prettier": "^4.1.0",
+    "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "prettier": "^1.16.4",
+    "prettier": "^1.17.0",
     "prettier-stylelint": "^0.4.2",
-    "release-it": "^10.4.3",
+    "release-it": "^11.0.2",
     "stylelint": "^10.0.1",
-    "stylelint-config-bigchaindb": "^1.2.1",
-    "stylelint-config-css-modules": "^1.3.0",
-    "stylelint-config-standard": "^18.2.0",
-    "typescript": "^3.4.4"
+    "stylelint-config-bigchaindb": "^1.2.2",
+    "stylelint-config-css-modules": "^1.4.0",
+    "stylelint-config-standard": "^18.3.0",
+    "typescript": "^3.4.5"
   },
   "repository": {
     "type": "git",

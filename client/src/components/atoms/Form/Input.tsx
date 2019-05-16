@@ -60,9 +60,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
     }
 
     private handleDateChange = (date: Date) => {
-        this.setState({
-            dateCreated: date
-        })
+        this.setState({ dateCreated: date })
+
         const event = {
             currentTarget: {
                 name: 'dateCreated',
@@ -174,6 +173,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             <InputGroup>
                                 <input
                                     id={name}
+                                    type={type || 'text'}
                                     className={styles.input}
                                     onFocus={this.toggleFocus}
                                     onBlur={this.toggleFocus}
@@ -184,6 +184,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         ) : (
                             <input
                                 id={name}
+                                type={type || 'text'}
                                 className={styles.input}
                                 onFocus={this.toggleFocus}
                                 onBlur={this.toggleFocus}
