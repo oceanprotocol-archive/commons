@@ -44,14 +44,13 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
         if (text) {
             await this.setState({
-                searchTerm: `${text}`
+                searchTerm: encodeURIComponent(`${text}`)
             })
         }
 
         if (categories) {
             await this.setState({
-                searchTerm: encodeURIComponent(`${searchTerm}`),
-                searchCategories: `${categories}`
+                searchCategories: encodeURIComponent(`${categories}`)
             })
         }
 
@@ -133,13 +132,13 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         return (
             <Route title="Search" wide>
                 <Content wide>
-                {totalResults > 0 && (
-                    <h2
-                        className={styles.resultsTitle}
-                        dangerouslySetInnerHTML={{
-                            __html: `${totalResults} results for <span>${decodeURIComponent(
-                                this.state.searchTerm
-                            )}</span>`
+                    {totalResults > 0 && (
+                        <h2
+                            className={styles.resultsTitle}
+                            dangerouslySetInnerHTML={{
+                                __html: `${totalResults} results for <span>${decodeURIComponent(
+                                    this.state.searchTerm
+                                )}</span>`
                             }}
                         />
                     )}
