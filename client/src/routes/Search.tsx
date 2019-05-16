@@ -41,7 +41,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         const searchPage = queryString.parse(this.props.location.search).page
 
         await this.setState({
-            searchTerm: JSON.stringify(searchTerm)
+            searchTerm: encodeURIComponent(`${searchTerm}`)
         })
 
         // switch to respective page if query string is present
@@ -60,7 +60,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
             offset: this.state.offset,
             page: this.state.currentPage,
             query: {
-                text: [this.state.searchTerm],
+                text: [decodeURIComponent(this.state.searchTerm)],
                 price: [-1, 1]
             },
             sort: {
@@ -117,9 +117,9 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                     <h2
                         className={styles.resultsTitle}
                         dangerouslySetInnerHTML={{
-                            __html: `${totalResults} results for <span>${
+                            __html: `${totalResults} results for <span>${decodeURIComponent(
                                 this.state.searchTerm
-                            }</span>`
+                            )}</span>`
                         }}
                     />
                 )}
