@@ -4,6 +4,7 @@ import React from 'react'
 import { render, fireEvent } from 'react-testing-library'
 import { DDO } from '@oceanprotocol/squid'
 import { StateMock } from '@react-mock/state'
+import ReactGA from 'react-ga'
 import { User } from '../../context'
 import AssetFile from './AssetFile'
 
@@ -30,6 +31,8 @@ const contextConnectedMock = {
     unlockAccounts: () => {},
     message: ''
 }
+
+ReactGA.initialize('foo', { testMode: true })
 
 describe('AssetFile', () => {
     it('renders without crashing', () => {
