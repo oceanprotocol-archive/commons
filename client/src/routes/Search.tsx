@@ -44,7 +44,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
         if (text) {
             await this.setState({
-                searchTerm: `${text}`
+                searchTerm: encodeURIComponent(`${text}`)
             })
         }
 
