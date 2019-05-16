@@ -23,7 +23,9 @@ interface HomeProps {
 interface HomeState {
     search?: string
     categoryAssets?: any[]
-    isLoading?: boolean
+    isLoadingCategory?: boolean
+    lastAssets?: any[]
+    isLoadingLast?: boolean
 }
 
 const categories =
@@ -36,11 +38,14 @@ class Home extends Component<HomeProps, HomeState> {
     public state = {
         search: '',
         categoryAssets: [],
-        isLoading: true
+        isLoadingCategory: true,
+        lastAssets: [],
+        isLoadingLast: true
     }
 
     public async componentDidMount() {
         this.getCategoryAssets()
+        this.getLastAssets()
     }
 
     private getCategoryAssets = async () => {
@@ -62,16 +67,49 @@ class Home extends Component<HomeProps, HomeState> {
             const search = await ocean.aquarius.queryMetadata(searchQuery)
             this.setState({
                 categoryAssets: search.results,
-                isLoading: false
+                isLoadingCategory: false
             })
         } catch (error) {
             Logger.error(error.message)
-            this.setState({ isLoading: false })
+            this.setState({ isLoadingCategory: false })
         }
     }
 
+    private getLastAssets = async () => {
+        const { ocean } = this.context
+        ocean.keeper.didRegistry.contract.getPastEvents(
+            'DIDAttributeRegistered',
+            {
+                filter: {},
+                fromBlock: 0,
+                toBlock: 'latest'
+            },
+            async (error: any, events: any) => {
+                if (error) {
+                    Logger.log('error retrieving', error)
+                    this.setState({ isLoadingLast: false })
+                } else {
+                    Logger.log('events retrieving', events)
+                    const lastAssets = []
+                    // this will tranverse all published assets from latest to first
+                    for (const event of events.reverse()) {
+                        const ddo = await ocean.assets.resolve(
+                            `did:op:${event.returnValues._did.substring(2)}`
+                        )
+                        // ddo not resolved jump to next ddo
+                        if (ddo === null) continue
+                        lastAssets.push(ddo)
+                        // stop tranversing all events when reaching certain number
+                        if (lastAssets.length >= 1) break
+                    }
+                    this.setState({ lastAssets, isLoadingLast: false })
+                }
+            }
+        )
+    }
+
     public render() {
-        const { categoryAssets, isLoading, search } = this.state
+        const { categoryAssets, isLoadingCategory, lastAssets, isLoadingLast, search } = this.state
         return (
             <Route
                 title={meta.title}
@@ -99,11 +137,25 @@ class Home extends Component<HomeProps, HomeState> {
                 <Content wide>
                     <h4>AI for Good</h4>
                     <div>
-                        {isLoading ? (
+                        {isLoadingCategory ? (
                             <Spinner message="Loading..." />
                         ) : categoryAssets && categoryAssets.length ? (
                             <div className={styles.results}>
                                 {categoryAssets.map((asset: any) => (
+                                    <Asset key={asset.id} asset={asset} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div>No data sets found.</div>
+                        )}
+                    </div>
+                    <h4>Latest assets</h4>
+                    <div>
+                        {isLoadingLast ? (
+                            <Spinner message="Loading..." />
+                        ) : lastAssets && lastAssets.length ? (
+                            <div className={styles.results}>
+                                {lastAssets.map((asset: any) => (
                                     <Asset key={asset.id} asset={asset} />
                                 ))}
                             </div>
