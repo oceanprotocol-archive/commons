@@ -5,6 +5,13 @@ afterAll(done => {
     server.close(done)
 })
 
+describe('GET /', () => {
+    it('responds with success', async () => {
+        const response = await request(server).get('/')
+        expect(response.statusCode).toBe(200)
+    })
+})
+
 describe('POST /api/v1/urlcheck', () => {
     it('responds with json', async () => {
         const response = await request(server).post('/api/v1/urlcheck')
