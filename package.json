@@ -8,7 +8,7 @@
     "start": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
     "build": "./scripts/build.sh",
     "test": "npm run lint && scripts/test.sh",
-    "test:e2e": "npm start & wait-on http://localhost:3000 & wait-on http://localhost:4000 && npm run cypress:run",
+    "test:e2e": "start-server-and-test start http-get://localhost:3000 cypress:run",
     "test:watch": "npm run lint && concurrently \"cd client && npm run test:watch\" \"cd server && npm run test:watch\"",
     "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
     "format:css": "prettier-stylelint --ignore-path .gitignore --write --quiet '**/*.{css,scss}'",
@@ -38,12 +38,12 @@
     "prettier": "^1.17.0",
     "prettier-stylelint": "^0.4.2",
     "release-it": "^11.0.2",
+    "start-server-and-test": "^1.9.0",
     "stylelint": "^10.0.1",
     "stylelint-config-bigchaindb": "^1.2.2",
     "stylelint-config-css-modules": "^1.4.0",
     "stylelint-config-standard": "^18.3.0",
     "typescript": "3.4.5"
-    "wait-on": "^3.2.0"
   },
   "repository": {
     "type": "git",
