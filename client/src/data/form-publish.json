@@ -38,7 +38,7 @@
           "type": "select",
           "required": true,
           "options": [
-            "AI for Good",
+            "AI For Good",
             "Image Recognition",
             "Dataset Of Datasets",
             "Language",
