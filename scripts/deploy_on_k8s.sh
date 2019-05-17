@@ -4,7 +4,7 @@ if [ -z "${TRAVIS_TAG}" ]; then
   echo "Variable \$TRAVIS_TAG not set or empty. Skiping deploying new version on k8s"
   exit 0
 fi
-if ! [[ "${TRAVIS_TAG}" =~ ^v[0-9]\.[0-9]\.[0-9]$ ]]; then
+if ! [[ "${TRAVIS_TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   echo "Variable \$TRAVIS_TAG does not match with vx.y.z format. Skiping deploying new version on k8s"
   exit 0
 fi
