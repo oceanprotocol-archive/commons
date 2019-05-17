@@ -20,6 +20,10 @@ const Footer = () => (
                         }
                     </Market.Consumer>
                 </p>
+                <p>
+                    Proud supporter of{' '}
+                    <a href="https://aicommons.com/">AI Commons</a>.
+                </p>
             </Content>
         </aside>
 
