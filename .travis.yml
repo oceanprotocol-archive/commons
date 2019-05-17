@@ -3,6 +3,12 @@ language: node_js
 node_js:
   - '11'
 
+addons:
+  apt:
+    packages:
+      # for Cypress
+      - libgconf-2-4
+
 before_install:
   - npm install -g npm
   - npm install -g codacy-coverage
@@ -16,7 +22,11 @@ script:
 notifications:
   email: false
 
-cache: npm
+cache:
+  npm: true
+  directories:
+    # cache folder with Cypress binary
+    - ~/.cache
 
 deploy:
   - provider: script
