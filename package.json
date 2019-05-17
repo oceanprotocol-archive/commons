@@ -6,10 +6,12 @@
   "scripts": {
     "install": "./scripts/install.sh",
     "start": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
+    "start:commons-and-ganache": "concurrently 'npm run start:ganache' 'npm run start'",
     "build": "./scripts/build.sh",
     "test": "npm run lint && scripts/test.sh",
-    "test:e2e": "start-server-and-test start http-get://localhost:3000 cypress:run",
+    "test:e2e": "start-test start:commons-and-ganache http-get://localhost:3000 cypress:run",
     "test:watch": "npm run lint && concurrently \"cd client && npm run test:watch\" \"cd server && npm run test:watch\"",
+    "start:ganache": "ganache-cli -m 'stamp polar cup smart ill agree human episode reform trigger text forget' -i 5777",
     "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
     "format:css": "prettier-stylelint --ignore-path .gitignore --write --quiet '**/*.{css,scss}'",
     "format": "npm run format:js && npm run format:css",
@@ -18,7 +20,7 @@
     "lint:fix": "eslint --fix --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint": "npm run lint:js && npm run lint:css",
     "release": "release-it --non-interactive",
-    "changelog": "auto-changelog -p"
+    "changelog": "auto-changelog -p",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open"
   },
@@ -43,7 +45,9 @@
     "stylelint-config-bigchaindb": "^1.2.2",
     "stylelint-config-css-modules": "^1.4.0",
     "stylelint-config-standard": "^18.3.0",
-    "typescript": "3.4.5"
+    "truffle-privatekey-provider": "^1.1.0",
+    "typescript": "3.4.5",
+    "web3": "^1.0.0-beta.55"
   },
   "repository": {
     "type": "git",

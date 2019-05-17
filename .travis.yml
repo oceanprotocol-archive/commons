@@ -11,10 +11,18 @@ addons:
 
 before_install:
   - npm install -g npm
-  - npm install -g codacy-coverage
+  - npm install -g codacy-coverage truffle ganache-cli
 
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
+  # run E2E tests against these values
+  - export REACT_APP_NODE_HOST="duero.dev-ocean.com"
+  - export REACT_APP_AQUARIUS_HOST="aquarius.duero.dev-ocean.com"
+  - export REACT_APP_BRIZO_HOST="brizo.duero.dev-ocean.com"
+  - export REACT_APP_SECRET_STORE_HOST="secret-store.duero.dev-ocean.com"
+  - export REACT_APP_FAUCET_HOST="faucet.duero.dev-ocean.com"
+  - export REACT_APP_PARITY_HOST=$REACT_APP_NODE_HOST
+  - export REACT_APP_BRIZO_ADDRESS="0x9d4ed58293f71122ad6a733c1603927a150735d0"
   - ./scripts/test.sh
   - ./scripts/coverage.sh
   - ./scripts/build.sh
