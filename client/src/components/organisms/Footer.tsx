@@ -1,6 +1,7 @@
 import React from 'react'
 import { Market } from '../../context'
 import Content from '../atoms/Content'
+import { ReactComponent as AiCommons } from '../../img/aicommons.svg'
 import styles from './Footer.module.scss'
 
 import meta from '../../data/meta.json'
@@ -19,6 +20,15 @@ const Footer = () => (
                             } registered assets.`
                         }
                     </Market.Consumer>
+                </p>
+                <p className={styles.aicommons}>
+                    Proud supporter of{' '}
+                    <a
+                        href="https://aicommons.com/?utm_source=commons.oceanprotocol.com"
+                        title="AI Commons"
+                    >
+                        <AiCommons />
+                    </a>
                 </p>
             </Content>
         </aside>

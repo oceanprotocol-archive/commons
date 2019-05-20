@@ -71,3 +71,23 @@
         margin-bottom: 0;
     }
 }
+
+.aicommons {
+    svg {
+        width: 100px;
+        height: auto;
+        vertical-align: middle;
+        margin-top: -.05rem;
+        margin-left: $spacer / 6;
+        fill: currentColor;
+    }
+
+    a {
+        &:hover,
+        &:focus {
+            svg {
+                fill: $brand-pink;
+            }
+        }
+    }
+}
