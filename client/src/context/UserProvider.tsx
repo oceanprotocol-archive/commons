@@ -4,6 +4,7 @@ import { Logger, Ocean, Account } from '@oceanprotocol/squid'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
 import { nodeHost, nodePort, nodeScheme } from '../config'
+import MarketProvider from './MarketProvider'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
@@ -271,7 +272,9 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     public render() {
         return (
             <User.Provider value={this.state}>
-                {this.props.children}
+                <MarketProvider ocean={this.state.ocean}>
+                    {this.props.children}
+                </MarketProvider>
             </User.Provider>
         )
     }
