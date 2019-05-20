@@ -29,6 +29,7 @@ If you're a developer and want to contribute to, or want to utilize this marketp
 - [✨ Code Style](#-code-style)
 - [🛳 Production](#-production)
 - [⬆️ Releases](#️-releases)
+- [Changelog](#changelog)
 - [🎁 Contributing](#-contributing)
 - [🏛 License](#-license)
 
@@ -121,11 +122,10 @@ Builds the client for production to the `./client/build` folder, and the server 
 
 ## ⬆️ Releases
 
-Running any release task does the following:
+From a clean `master` branch you can run any release task doing the following:
 
 - bumps the project version
 - creates a Git tag
-- updates CHANGELOG.md file with commit messages
 - commits and pushes everything
 - creates a GitHub release with commit messages as description
 
@@ -138,6 +138,24 @@ You can execute the script using {major|minor|patch} as first argument to bump t
 By creating the Git tag with these tasks, Travis will trigger a new Kubernetes deployment automatically aftr a successful tag build.
 
 For the GitHub releases steps a GitHub personal access token, exported as `GITHUB_TOKEN` is required. [Setup](https://github.com/release-it/release-it#github-releases)
+
+## Changelog
+
+See the [CHANGELOG.md](./CHANGELOG.md) file.
+
+This file is auto-generated from commit & PR messages upon running:
+
+```bash
+npm run changelog
+```
+
+This will update the CHANGELOG.md file with commit messages in a nice format. Doing a release will not automatically update that changelog file. So after every release this needs to done with the above command and simply committed back into `master`.
+
+For convenience, you can use this command which updates the CHANGELOG.md file, commits the result, and pushes changes to `master`:
+
+```bash
+npm run changelog:commit
+```
 
 ## 🎁 Contributing
 
