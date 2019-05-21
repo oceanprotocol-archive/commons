@@ -7,6 +7,15 @@ import { User } from '../../context'
 import styles from './AssetFile.module.scss'
 import ReactGA from 'react-ga'
 
+export const messages = {
+    start: 'Decrypting file URL...',
+    0: '1/3<br />Asking for agreement signature...',
+    1: '1/3<br />Agreement initialized.',
+    2: '2/3<br />Asking for two payment confirmations...',
+    3: '2/3<br />Payment confirmed. Requesting access...',
+    4: '3/3<br /> Access granted. Consuming file...'
+}
+
 interface AssetFileProps {
     file: File
     ddo: DDO
@@ -15,7 +24,7 @@ interface AssetFileProps {
 interface AssetFileState {
     isLoading: boolean
     error: string
-    message: string
+    step: number | null
 }
 
 export default class AssetFile extends PureComponent<
@@ -25,10 +34,15 @@ export default class AssetFile extends PureComponent<
     public state = {
         isLoading: false,
         error: '',
-        message: 'Decrypting file URL, please sign...'
+        step: null
     }
 
-    private resetState = () => this.setState({ isLoading: true, error: '' })
+    private resetState = () =>
+        this.setState({
+            isLoading: true,
+            error: '',
+            step: null
+        })
 
     private purchaseAsset = async (ddo: DDO, index: number) => {
         this.resetState()
@@ -43,11 +57,13 @@ export default class AssetFile extends PureComponent<
         try {
             const accounts = await ocean.accounts.list()
             const service = ddo.findServiceByType('Access')
-            const agreementId = await ocean.assets.order(
-                ddo.id,
-                service.serviceDefinitionId,
-                accounts[0]
-            )
+
+            const agreementId = await ocean.assets
+                .order(ddo.id, service.serviceDefinitionId, accounts[0])
+                .next((step: number) => this.setState({ step }))
+
+            // manually add another step here for better UX
+            this.setState({ step: 4 })
 
             const path = await ocean.assets.consume(
                 agreementId,
@@ -64,8 +80,11 @@ export default class AssetFile extends PureComponent<
             })
             this.setState({ isLoading: false })
         } catch (error) {
-            Logger.log('error', error)
-            this.setState({ isLoading: false, error: error.message })
+            Logger.log('error', error.message)
+            this.setState({
+                isLoading: false,
+                error: `${error.message}. Sorry about that, can you try again?`
+            })
             ReactGA.event({
                 category: 'Purchase',
                 action: 'purchaseAsset-error ' + error.message
@@ -75,7 +94,7 @@ export default class AssetFile extends PureComponent<
 
     public render() {
         const { ddo, file } = this.props
-        const { isLoading, message, error } = this.state
+        const { isLoading, error, step } = this.state
         const { isLogged, isOceanNetwork } = this.context
         const { index } = file
 
@@ -93,14 +112,16 @@ export default class AssetFile extends PureComponent<
                 </ul>
 
                 {isLoading ? (
-                    <Spinner message={message} />
+                    <Spinner
+                        message={
+                            step === null ? messages.start : messages[step]
+                        }
+                    />
                 ) : (
                     <Button
                         primary
                         className={styles.buttonMain}
-                        // TODO: remove the || 0 once hack
-                        // https://github.com/oceanprotocol/squid-js/pull/221
-                        // is released
+                        // weird 0 hack so TypeScript is happy
                         onClick={() => this.purchaseAsset(ddo, index || 0)}
                         disabled={!isLogged || !isOceanNetwork}
                     >

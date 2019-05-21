@@ -7,11 +7,11 @@
   "dependencies": [
     {
       "name": "keeper-contracts",
-      "version": "~0.9.1"
+      "version": "~0.9.7"
     },
     {
       "name": "brizo",
-      "version": "~0.3.5"
+      "version": "~0.3.6"
     },
     {
       "name": "aquarius",
@@ -19,7 +19,7 @@
     },
     {
       "name": "squid-js",
-      "version": "~0.5.10"
+      "version": "~0.5.11"
     },
     {
       "name": "faucet",

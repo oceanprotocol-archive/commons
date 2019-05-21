@@ -6,7 +6,7 @@ import { DDO } from '@oceanprotocol/squid'
 import { StateMock } from '@react-mock/state'
 import ReactGA from 'react-ga'
 import { User } from '../../context'
-import AssetFile from './AssetFile'
+import AssetFile, { messages } from './AssetFile'
 
 const file = {
     index: 0,
@@ -55,6 +55,72 @@ describe('AssetFile', () => {
         expect(button).not.toHaveAttribute('disabled')
 
         fireEvent.click(button)
+    })
+
+    it('renders feedback message: initial', async () => {
+        const { container } = render(
+            <StateMock state={{ isLoading: true, step: null }}>
+                <AssetFile file={file} ddo={ddo} />
+            </StateMock>
+        )
+        expect(container.querySelector('.spinner')).toHaveTextContent(
+            messages.start
+        )
+    })
+
+    it('renders feedback message: CreatingAgreement', async () => {
+        const { container } = render(
+            <StateMock state={{ isLoading: true, step: 0 }}>
+                <AssetFile file={file} ddo={ddo} />
+            </StateMock>
+        )
+        expect(container.querySelector('.spinner')).toHaveTextContent(
+            messages[0].replace(/<(?:.|\n)*?>/gm, '')
+        )
+    })
+
+    it('renders feedback message: AgreementInitialized', async () => {
+        const { container } = render(
+            <StateMock state={{ isLoading: true, step: 1 }}>
+                <AssetFile file={file} ddo={ddo} />
+            </StateMock>
+        )
+        expect(container.querySelector('.spinner')).toHaveTextContent(
+            messages[1].replace(/<(?:.|\n)*?>/gm, '')
+        )
+    })
+
+    it('renders feedback message: LockingPayment', async () => {
+        const { container } = render(
+            <StateMock state={{ isLoading: true, step: 2 }}>
+                <AssetFile file={file} ddo={ddo} />
+            </StateMock>
+        )
+        expect(container.querySelector('.spinner')).toHaveTextContent(
+            messages[2].replace(/<(?:.|\n)*?>/gm, '')
+        )
+    })
+
+    it('renders feedback message: LockedPayment', async () => {
+        const { container } = render(
+            <StateMock state={{ isLoading: true, step: 3 }}>
+                <AssetFile file={file} ddo={ddo} />
+            </StateMock>
+        )
+        expect(container.querySelector('.spinner')).toHaveTextContent(
+            messages[3].replace(/<(?:.|\n)*?>/gm, '')
+        )
+    })
+
+    it('renders feedback message: before consume', async () => {
+        const { container } = render(
+            <StateMock state={{ isLoading: true, step: 4 }}>
+                <AssetFile file={file} ddo={ddo} />
+            </StateMock>
+        )
+        expect(container.querySelector('.spinner')).toHaveTextContent(
+            messages[4].replace(/<(?:.|\n)*?>/gm, '')
+        )
     })
 
     it('renders loading state', async () => {
