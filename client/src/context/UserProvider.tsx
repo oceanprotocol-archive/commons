@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react'
 import Web3 from 'web3'
-import { Logger, Ocean, Account } from '@oceanprotocol/squid'
+import { Ocean, Account } from '@oceanprotocol/squid'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
 import { nodeUri } from '../config'
 import MarketProvider from './MarketProvider'
+import { MetamaskProvider } from './MetamaskProvider'
+import { ZeroWalletProvider } from './ZeroWalletProvider'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
@@ -58,23 +60,57 @@ interface UserProviderState {
     ocean: Ocean
     requestFromFaucet(account: string): Promise<FaucetResponse>
     unlockAccounts(): Promise<any>
+    loginMetamask(): Promise<any>
+    loginZeroWallet(): Promise<any>
     message: string
 }
 
 export default class UserProvider extends PureComponent<{}, UserProviderState> {
     private unlockAccounts = async () => {
         try {
-            await window.ethereum.enable()
+            window.ethereum.enable()
         } catch (error) {
             // User denied account access...
             return null
         }
     }
 
+    private loginMetamask = async () => {
+        const metamaskProvider = new MetamaskProvider()
+        await metamaskProvider.startLogin()
+        localStorage.setItem('logType', 'Metamask')
+        const web3 = metamaskProvider.getProvider()
+        this.setState(
+            {
+                isLogged: true,
+                web3
+            },
+            () => {
+                this.loadOcean()
+            }
+        )
+    }
+
+    private loginZeroWallet = async () => {
+        const zerowalletProvider = new ZeroWalletProvider()
+        await zerowalletProvider.createLogin()
+        localStorage.setItem('logType', 'ZeroWallet')
+        const web3 = zerowalletProvider.getProvider()
+        this.setState(
+            {
+                isLogged: true,
+                web3
+            },
+            () => {
+                this.loadOcean()
+            }
+        )
+    }
+
     public state = {
         isLogged: false,
         isLoading: true,
-        isWeb3: false,
+        isWeb3: true,
         isOceanNetwork: false,
         balance: {
             eth: 0,
@@ -86,6 +122,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         ocean: {} as any,
         requestFromFaucet: () => requestFromFaucet(''),
         unlockAccounts: () => this.unlockAccounts(),
+        loginMetamask: () => this.loginMetamask(),
+        loginZeroWallet: () => this.loginZeroWallet(),
         message: 'Connecting to Ocean...'
     }
 
@@ -94,9 +132,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     public async componentDidMount() {
         await this.bootstrap()
-
-        this.initAccountsPoll()
-        this.initNetworkPoll()
     }
 
     private initAccountsPoll() {
@@ -114,105 +149,66 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         }
     }
 
-    private getWeb3 = () => {
-        // Modern dapp browsers
-        if (window.ethereum) {
-            window.web3 = new Web3(window.ethereum)
-            return window.web3
-        }
-        // Legacy dapp browsers
-        else if (window.web3) {
-            window.web3 = new Web3(window.web3.currentProvider)
-            return window.web3
-        }
-        // Non-dapp browsers
-        else {
-            return null
-        }
+    private loadOcean = async () => {
+        const { ocean } = await provideOcean(this.state.web3)
+        this.setState({ ocean, isLoading: false }, () => {
+            this.initNetworkPoll()
+            this.initAccountsPoll()
+            this.fetchNetwork()
+            this.fetchAccounts()
+        })
     }
 
     private bootstrap = async () => {
-        try {
-            //
-            // Start with Web3 detection only
-            //
-            this.setState({ message: 'Setting up Web3...' })
-            let web3 = await this.getWeb3()
-
-            web3
-                ? this.setState({ isWeb3: true })
-                : this.setState({ isWeb3: false })
-
-            // Modern & legacy dapp browsers
-            if (web3 && this.state.isWeb3) {
-                //
-                // Detecting network with window.web3
-                //
-                let isOceanNetwork
-
-                await window.web3.eth.net.getId((err, netId) => {
-                    if (err) return
-
-                    const isPacific = netId === 0xcea11
-                    const isNile = netId === 8995
-                    const isDuero = netId === 2199
-                    const isSpree = netId === 8996
-
-                    isOceanNetwork = isPacific || isNile || isDuero || isSpree
-
-                    const network = isPacific
-                        ? 'Pacific'
-                        : isNile
-                        ? 'Nile'
-                        : isDuero
-                        ? 'Duero'
-                        : netId.toString()
-
-                    if (
-                        isOceanNetwork !== this.state.isOceanNetwork ||
-                        network !== this.state.network
-                    ) {
-                        this.setState({ isOceanNetwork, network })
-                    }
-                })
-
-                if (!isOceanNetwork) {
-                    web3 = this.state.web3 // eslint-disable-line
+        const logType = localStorage.getItem('logType')
+        switch (logType) {
+            case 'Metamask':
+                const metamaskProvider = new MetamaskProvider()
+                if (
+                    (await metamaskProvider.isAvaliable()) &&
+                    (await metamaskProvider.isLogged())
+                ) {
+                    const web3 = metamaskProvider.getProvider()
+                    this.setState(
+                        {
+                            isLogged: true,
+                            web3
+                        },
+                        () => {
+                            this.loadOcean()
+                        }
+                    )
+                } else {
+                    this.loadOcean()
                 }
-
-                //
-                // Provide the Ocean
-                //
-                this.setState({ message: 'Connecting to Ocean...' })
-
-                const { ocean } = await provideOcean(web3)
-                this.setState({ ocean, message: 'Getting accounts...' })
-
-                // Get accounts
-                await this.fetchAccounts()
-
-                this.setState({ isLoading: false, message: '' })
-            }
-            // Non-dapp browsers
-            else {
-                this.setState({ message: 'Connecting to Ocean...' })
-                const { ocean } = await provideOcean(this.state.web3)
-                this.setState({ ocean, isLoading: false })
-
-                this.fetchNetwork()
-            }
-        } catch (e) {
-            // error in bootstrap process
-            // show error connecting to ocean
-            Logger.error('web3 error', e.message)
-            this.setState({ isLoading: false })
+                break
+            case 'ZeroWallet':
+                const zerowalletProvider = new ZeroWalletProvider()
+                if (await zerowalletProvider.isLogged()) {
+                    await zerowalletProvider.restoreStoredLogin()
+                    this.setState(
+                        {
+                            isLogged: true,
+                            web3: zerowalletProvider.getProvider()
+                        },
+                        () => {
+                            this.loadOcean()
+                        }
+                    )
+                } else {
+                    this.loadOcean()
+                }
+                break
+            default:
+                this.loadOcean()
+                break
         }
     }
 
     private fetchAccounts = async () => {
-        const { ocean, isWeb3, isLogged, isOceanNetwork } = this.state
+        const { ocean, isLogged, isOceanNetwork } = this.state
 
-        if (isWeb3) {
+        if (isLogged) {
             let accounts
 
             // Modern dapp browsers

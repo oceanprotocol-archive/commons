@@ -19,6 +19,12 @@ export const User = React.createContext({
     unlockAccounts: () => {
         /* empty */
     },
+    loginMetamask: () => {
+        /* empty */
+    },
+    loginZeroWallet: () => {
+        /* empty */
+    },
     message: ''
 })
 

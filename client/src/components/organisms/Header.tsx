@@ -33,6 +33,8 @@ export default class Header extends PureComponent {
                         {menu.map(item => (
                             <MenuItem key={item.title} item={item} />
                         ))}
+                        <button onClick={this.context.loginMetamask}>login Metamask</button>
+                        <button onClick={this.context.loginZeroWallet}>login ZWallet</button>
                         <AccountStatus className={styles.accountStatus} />
                     </nav>
                 </div>

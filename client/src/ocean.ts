@@ -22,7 +22,11 @@ export async function provideOcean(web3provider: Web3) {
         verbose
     }
 
-    const ocean: Ocean = await Ocean.getInstance(config)
+    console.log('accs web3:', (await web3provider.eth.getAccounts())[0])
+
+    const ocean: any = await Ocean.getInstance(config)
+
+    console.log('accs ocean:', (await ocean.accounts.list())[0].id)
 
     return { ocean }
 }
