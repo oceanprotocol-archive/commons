@@ -10,6 +10,7 @@ import Publish from './routes/Publish/'
 import Search from './routes/Search'
 import Faucet from './routes/Faucet'
 import History from './routes/History'
+import Channel from './routes/Channel'
 import Styleguide from './routes/Styleguide'
 
 const Routes = () => (
@@ -22,6 +23,7 @@ const Routes = () => (
         <Route component={withTracker(Details)} path="/asset/:did" />
         <Route component={withTracker(Faucet)} path="/faucet" />
         <Route component={withTracker(History)} path="/history" />
+        <Route component={withTracker(Channel)} path="/channel/:channel" />
         <Route component={withTracker(NotFound)} />
     </Switch>
 )

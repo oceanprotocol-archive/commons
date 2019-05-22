@@ -77,35 +77,28 @@ class Home extends Component<HomeProps, HomeState> {
 
     private getLastAssets = async () => {
         const { ocean } = this.context
-        ocean.keeper.didRegistry.contract.getPastEvents(
-            'DIDAttributeRegistered',
-            {
-                filter: {},
-                fromBlock: 0,
-                toBlock: 'latest'
+
+        const searchQuery = {
+            offset: 3,
+            page: 1,
+            query: {
+                price: [-1, 1]
             },
-            async (error: any, events: any) => {
-                if (error) {
-                    Logger.log('error retrieving', error)
-                    this.setState({ isLoadingLast: false })
-                } else {
-                    Logger.log('events retrieving', events)
-                    const lastAssets = []
-                    // this will tranverse all published assets from latest to first
-                    for (const event of events.reverse()) {
-                        const ddo = await ocean.assets.resolve(
-                            `did:op:${event.returnValues._did.substring(2)}`
-                        )
-                        // ddo not resolved jump to next ddo
-                        if (ddo === null) continue
-                        lastAssets.push(ddo)
-                        // stop tranversing all events when reaching certain number
-                        if (lastAssets.length >= 1) break
-                    }
-                    this.setState({ lastAssets, isLoadingLast: false })
-                }
+            sort: {
+                created: -1
             }
-        )
+        }
+
+        try {
+            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            this.setState({
+                lastAssets: search.results,
+                isLoadingLast: false
+            })
+        } catch (error) {
+            Logger.error(error.message)
+            this.setState({ isLoadingLast: false })
+        }
     }
 
     public render() {
@@ -135,7 +128,7 @@ class Home extends Component<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
-                    <h4>AI for Good</h4>
+                    <h4 onClick={() => this.openChannel('AI for Good')}>AI for Good</h4>
                     <div>
                         {isLoadingCategory ? (
                             <Spinner message="Loading..." />
@@ -189,6 +182,10 @@ class Home extends Component<HomeProps, HomeState> {
     private searchAssets = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         this.props.history.push(`/search?text=${this.state.search}`)
+    }
+
+    private openChannel = (channel: string) => {
+        this.props.history.push(`/channel/${channel}`)
     }
 }
 
