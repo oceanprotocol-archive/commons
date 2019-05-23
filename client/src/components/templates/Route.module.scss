@@ -12,6 +12,10 @@
     @media (min-width: $break-point--small) {
         font-size: $font-size-h1;
     }
+
+    + div:not(.description) {
+        margin-bottom: $spacer;
+    }
 }
 
 .description {

@@ -33,12 +33,6 @@
 }
 
 .category {
-    // category image
-    > div {
-        opacity: .7;
-        transition: .2s ease-out;
-    }
-
     h3 {
         font-size: $font-size-base;
         color: $brand-grey;

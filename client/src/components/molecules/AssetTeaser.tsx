@@ -38,7 +38,7 @@ const AssetTeaser = ({
         >
             <Link to={`/asset/${asset.id}`}>
                 {base.categories && !minimal && (
-                    <CategoryImage category={base.categories[0]} />
+                    <CategoryImage dimmed category={base.categories[0]} />
                 )}
                 <h1>{base.name}</h1>
 

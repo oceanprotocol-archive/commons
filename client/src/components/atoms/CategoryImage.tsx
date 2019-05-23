@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import cx from 'classnames'
 import styles from './CategoryImage.module.scss'
 
 import agriculture from '../../img/categories/agriculture.jpg'
@@ -141,18 +142,19 @@ const categoryImageFile = (category: string) => {
 export default class CategoryImage extends PureComponent<{
     category: string
     header?: boolean
+    dimmed?: boolean
 }> {
     public render() {
         const image = categoryImageFile(this.props.category)
+        const classNames = cx(styles.categoryImage, {
+            [styles.header]: this.props.header,
+            [styles.dimmed]: this.props.dimmed
+        })
 
         return (
             <div
-                className={
-                    this.props.header ? styles.header : styles.categoryImage
-                }
-                style={{
-                    backgroundImage: `url(${image})`
-                }}
+                className={classNames}
+                style={{ backgroundImage: `url(${image})` }}
             />
         )
     }

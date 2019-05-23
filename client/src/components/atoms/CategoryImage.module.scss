@@ -8,13 +8,18 @@
     background-color: $body-background;
     border-radius: $border-radius;
     overflow: hidden;
-    opacity: .8;
+    opacity: .85;
     transition: .2s ease-out;
+    border: 1px solid $brand-grey-lighter;
 }
 
 .header {
     composes: categoryImage;
     height: 8rem;
     margin-top: $spacer;
-    opacity: .5;
+}
+
+.dimmed {
+    composes: categoryImage;
+    opacity: .6;
 }

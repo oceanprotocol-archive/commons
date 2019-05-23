@@ -6,6 +6,7 @@ import Spinner from '../atoms/Spinner'
 import AssetTeaser from '../molecules/AssetTeaser'
 import styles from './ChannelTeaser.module.scss'
 import channels from '../../data/channels.json'
+import CategoryImage from '../atoms/CategoryImage'
 
 interface ChannelTeaserProps {
     channel: string
@@ -72,12 +73,13 @@ export default class ChannelTeaser extends Component<
         return (
             <div className={styles.channel}>
                 <div>
-                    <div>
-                        <h2 className={styles.channelTitle}>
-                            <Link to={`/channels/${slug}`}>{title} →</Link>
-                        </h2>
+                    <header className={styles.channelHeader}>
+                        <Link to={`/channels/${slug}`}>
+                            <h2 className={styles.channelTitle}>{title} →</h2>
+                            <CategoryImage category={title} />
+                        </Link>
                         <p>{teaser}</p>
-                    </div>
+                    </header>
                 </div>
                 <div>
                     {isLoadingChannel ? (

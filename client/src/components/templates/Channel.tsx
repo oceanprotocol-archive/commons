@@ -9,6 +9,7 @@ import Pagination from '../../components/molecules/Pagination'
 import styles from './Channel.module.scss'
 import Content from '../../components/atoms/Content'
 import channels from '../../data/channels.json'
+import CategoryImage from '../atoms/CategoryImage'
 
 interface ChannelProps {
     history: History
@@ -112,7 +113,11 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         const { title, description, totalPages, currentPage } = this.state
 
         return (
-            <Route title={title} description={description}>
+            <Route
+                title={title}
+                description={description}
+                image={<CategoryImage header category={title} />}
+            >
                 <Content wide>
                     {this.renderResults()}
 

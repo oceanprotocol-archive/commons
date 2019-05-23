@@ -31,7 +31,9 @@ const Route = ({
             <header className={styles.header}>
                 <Content wide={wide}>
                     <h1 className={styles.title}>{title}</h1>
+
                     {image && image}
+
                     {description && (
                         <Markdown
                             text={description}

@@ -53,6 +53,7 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                     metadata.base.categories && (
                         <CategoryImage
                             header
+                            dimmed
                             category={metadata.base.categories[0]}
                         />
                     )
