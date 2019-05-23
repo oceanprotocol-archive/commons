@@ -18,7 +18,7 @@ const AssetModel = {
         links: [],
         inLanguage: null,
         tags: [],
-        price: null
+        price: ''
     },
     curation: {
         rating: null,

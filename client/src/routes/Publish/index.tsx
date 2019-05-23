@@ -19,7 +19,7 @@ interface PublishState {
     dateCreated?: string
     description?: string
     files?: string[]
-    price?: number
+    price?: string
     author?: string
     type?: AssetType
     license?: string
@@ -44,7 +44,7 @@ export default class Publish extends Component<{}, PublishState> {
         dateCreated: new Date().toISOString(),
         description: '',
         files: [],
-        price: 0,
+        price: '0',
         author: '',
         type: 'dataset' as AssetType,
         license: '',
@@ -122,7 +122,7 @@ export default class Publish extends Component<{}, PublishState> {
             dateCreated: new Date().toISOString(),
             description: '',
             files: [],
-            price: 0,
+            price: '0',
             author: '',
             type: 'dataset' as AssetType,
             license: '',
