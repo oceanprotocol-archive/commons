@@ -84,7 +84,9 @@ export default class Home extends Component<HomeProps, HomeState> {
                                     .sort((a, b) => a.localeCompare(b)) // sort alphabetically
                                     .map((category: string) => (
                                         <Link
-                                            to={`/search?categories=${category}`}
+                                            to={`/search?categories=${encodeURIComponent(
+                                                category
+                                            )}`}
                                             key={category}
                                             className={styles.category}
                                         >

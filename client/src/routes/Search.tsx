@@ -44,13 +44,13 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
         if (text) {
             await this.setState({
-                searchTerm: encodeURIComponent(`${text}`)
+                searchTerm: decodeURIComponent(`${text}`)
             })
         }
 
         if (categories) {
             await this.setState({
-                searchCategories: encodeURIComponent(`${categories}`)
+                searchCategories: decodeURIComponent(`${categories}`)
             })
         }
 
