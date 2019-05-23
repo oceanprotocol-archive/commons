@@ -11,3 +11,10 @@
     opacity: .8;
     transition: .2s ease-out;
 }
+
+.header {
+    composes: categoryImage;
+    height: 8rem;
+    margin-top: $spacer;
+    opacity: .5;
+}

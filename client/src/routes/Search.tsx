@@ -5,7 +5,7 @@ import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
 import Route from '../components/templates/Route'
 import { User } from '../context'
-import Asset from '../components/molecules/Asset'
+import AssetTeaser from '../components/molecules/AssetTeaser'
 import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
 import Content from '../components/atoms/Content'
@@ -119,7 +119,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         ) : this.state.results && this.state.results.length ? (
             <div className={styles.results}>
                 {this.state.results.map((asset: any) => (
-                    <Asset key={asset.id} asset={asset} />
+                    <AssetTeaser key={asset.id} asset={asset} />
                 ))}
             </div>
         ) : (

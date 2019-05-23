@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { User } from '../../context'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../atoms/Spinner'
-import Asset from '../molecules/Asset'
+import AssetTeaser from '../molecules/AssetTeaser'
 import styles from './ChannelTeaser.module.scss'
 import channels from '../../data/channels.json'
 
@@ -85,7 +85,7 @@ export default class ChannelTeaser extends Component<
                     ) : channelAssets && channelAssets.length ? (
                         <div className={styles.channelResults}>
                             {channelAssets.map((asset: any) => (
-                                <Asset key={asset.id} asset={asset} />
+                                <AssetTeaser key={asset.id} asset={asset} />
                             ))}
                         </div>
                     ) : (

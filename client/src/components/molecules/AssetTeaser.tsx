@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Dotdotdot from 'react-dotdotdot'
 import cx from 'classnames'
-import styles from './Asset.module.scss'
+import styles from './AssetTeaser.module.scss'
 import CategoryImage from '../atoms/CategoryImage'
 
-const Asset = ({
+const AssetTeaser = ({
     asset,
     list,
     minimal
@@ -55,4 +55,4 @@ const Asset = ({
     )
 }
 
-export default Asset
+export default AssetTeaser

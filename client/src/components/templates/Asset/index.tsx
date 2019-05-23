@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { DDO, MetaData, Logger } from '@oceanprotocol/squid'
-import Route from '../../components/templates/Route'
-import Spinner from '../../components/atoms/Spinner'
-import { User } from '../../context'
+import Route from '../Route'
+import Spinner from '../../atoms/Spinner'
+import { User } from '../../../context'
 import AssetDetails from './AssetDetails'
-import stylesApp from '../../App.module.scss'
-import Content from '../../components/atoms/Content'
+import stylesApp from '../../../App.module.scss'
+import Content from '../../atoms/Content'
+import CategoryImage from '../../atoms/CategoryImage'
 
 interface DetailsProps {
     location: Location
@@ -46,7 +47,17 @@ export default class Details extends Component<DetailsProps, DetailsState> {
         const { metadata, ddo } = this.state
 
         return metadata.base.name !== '' ? (
-            <Route title={metadata.base.name}>
+            <Route
+                title={metadata.base.name}
+                image={
+                    metadata.base.categories && (
+                        <CategoryImage
+                            header
+                            category={metadata.base.categories[0]}
+                        />
+                    )
+                }
+            >
                 <Content>
                     <AssetDetails metadata={metadata} ddo={ddo} />
                 </Content>

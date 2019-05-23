@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
 import { DDO, MetaData, File } from '@oceanprotocol/squid'
-import Markdown from '../../components/atoms/Markdown'
+import Markdown from '../../atoms/Markdown'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 

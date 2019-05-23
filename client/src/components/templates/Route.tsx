@@ -8,12 +8,14 @@ import Markdown from '../atoms/Markdown'
 const Route = ({
     title,
     description,
+    image,
     wide,
     children,
     className
 }: {
     title: string
     description?: string
+    image?: any
     children: any
     wide?: boolean
     className?: string
@@ -29,6 +31,7 @@ const Route = ({
             <header className={styles.header}>
                 <Content wide={wide}>
                     <h1 className={styles.title}>{title}</h1>
+                    {image && image}
                     {description && (
                         <Markdown
                             text={description}

@@ -5,7 +5,7 @@ import { render, fireEvent } from 'react-testing-library'
 import { DDO } from '@oceanprotocol/squid'
 import { StateMock } from '@react-mock/state'
 import ReactGA from 'react-ga'
-import { User } from '../../context'
+import { User } from '../../../context'
 import AssetFile, { messages } from './AssetFile'
 
 const file = {

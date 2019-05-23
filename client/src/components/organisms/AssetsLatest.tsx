@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
 import { User } from '../../context'
 import Spinner from '../atoms/Spinner'
-import Asset from '../molecules/Asset'
+import AssetTeaser from '../molecules/AssetTeaser'
 import styles from './AssetsLatest.module.scss'
 
 interface AssetsLatestState {
@@ -62,7 +62,11 @@ export default class AssetsLatest extends PureComponent<{}, AssetsLatestState> {
                     ) : latestAssets && latestAssets.length ? (
                         <div className={styles.latestAssets}>
                             {latestAssets.map((asset: any) => (
-                                <Asset key={asset.id} asset={asset} minimal />
+                                <AssetTeaser
+                                    key={asset.id}
+                                    asset={asset}
+                                    minimal
+                                />
                             ))}
                         </div>
                     ) : (

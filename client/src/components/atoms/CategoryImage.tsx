@@ -138,13 +138,18 @@ const categoryImageFile = (category: string) => {
     }
 }
 
-export default class CategoryImage extends PureComponent<{ category: string }> {
+export default class CategoryImage extends PureComponent<{
+    category: string
+    header?: boolean
+}> {
     public render() {
         const image = categoryImageFile(this.props.category)
 
         return (
             <div
-                className={styles.categoryImage}
+                className={
+                    this.props.header ? styles.header : styles.categoryImage
+                }
                 style={{
                     backgroundImage: `url(${image})`
                 }}
