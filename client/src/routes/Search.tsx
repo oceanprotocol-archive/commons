@@ -137,7 +137,8 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                             className={styles.resultsTitle}
                             dangerouslySetInnerHTML={{
                                 __html: `${totalResults} results for <span>${decodeURIComponent(
-                                    this.state.searchTerm
+                                    this.state.searchTerm ||
+                                        this.state.searchCategories
                                 )}</span>`
                             }}
                         />
