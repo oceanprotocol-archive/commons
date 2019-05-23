@@ -62,7 +62,7 @@ export default class AssetsLatest extends PureComponent<{}, AssetsLatestState> {
                     ) : latestAssets && latestAssets.length ? (
                         <div className={styles.latestAssets}>
                             {latestAssets.map((asset: any) => (
-                                <Asset key={asset.id} asset={asset} />
+                                <Asset key={asset.id} asset={asset} minimal />
                             ))}
                         </div>
                     ) : (

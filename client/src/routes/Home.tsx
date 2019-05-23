@@ -143,7 +143,7 @@ export default class Home extends Component<HomeProps, HomeState> {
                     <AssetsLatest />
                 </Content>
 
-                <Content>
+                <Content wide>
                     <h2 className={styles.title}>Explore Categories</h2>
                     <div className={styles.categories}>
                         <Market.Consumer>

@@ -35,6 +35,12 @@
     }
 }
 
+.minimal {
+    h1 {
+        margin-bottom: 0;
+    }
+}
+
 .assetList {
     > a {
         color: $brand-grey-dark;
