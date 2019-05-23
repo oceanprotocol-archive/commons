@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
+import slugify from '@sindresorhus/slugify'
 import { User } from '../context'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
@@ -15,6 +16,10 @@ import meta from '../data/meta.json'
 import formPublish from '../data/form-publish.json'
 import { History } from 'history'
 import Content from '../components/atoms/Content'
+import channels from '../data/channels.json'
+import AssetsLatest from '../components/organisms/AssetsLatest'
+
+const { title, description } = channels[0]
 
 interface HomeProps {
     history: History
@@ -47,7 +52,6 @@ export default class Home extends Component<HomeProps, HomeState> {
 
     public async componentDidMount() {
         this.getCategoryAssets()
-        this.getLatestAssets()
     }
 
     private getCategoryAssets = async () => {
@@ -77,32 +81,6 @@ export default class Home extends Component<HomeProps, HomeState> {
         }
     }
 
-    private getLatestAssets = async () => {
-        const { ocean } = this.context
-
-        const searchQuery = {
-            offset: 3,
-            page: 1,
-            query: {
-                price: [-1, 1]
-            },
-            sort: {
-                created: -1
-            }
-        }
-
-        try {
-            const search = await ocean.aquarius.queryMetadata(searchQuery)
-            this.setState({
-                latestAssets: search.results,
-                isLoadingLatest: false
-            })
-        } catch (error) {
-            Logger.error(error.message)
-            this.setState({ isLoadingLatest: false })
-        }
-    }
-
     private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -115,13 +93,7 @@ export default class Home extends Component<HomeProps, HomeState> {
     }
 
     public render() {
-        const {
-            categoryAssets,
-            isLoadingCategory,
-            latestAssets,
-            isLoadingLatest,
-            search
-        } = this.state
+        const { categoryAssets, isLoadingCategory, search } = this.state
 
         return (
             <Route
@@ -149,7 +121,7 @@ export default class Home extends Component<HomeProps, HomeState> {
 
                 <Content wide>
                     <h2 className={styles.title}>
-                        <Link to="/channels/ai-for-good">AI for Good</Link>
+                        <Link to={`/channels/${slugify(title)}`}>{title}</Link>
                     </h2>
                     <div>
                         {isLoadingCategory ? (
@@ -165,20 +137,7 @@ export default class Home extends Component<HomeProps, HomeState> {
                         )}
                     </div>
 
-                    <h2 className={styles.title}>Latest published assets</h2>
-                    <div>
-                        {isLoadingLatest ? (
-                            <Spinner message="Loading..." />
-                        ) : latestAssets && latestAssets.length ? (
-                            <div className={styles.results}>
-                                {latestAssets.map((asset: any) => (
-                                    <Asset key={asset.id} asset={asset} />
-                                ))}
-                            </div>
-                        ) : (
-                            <div>No data sets found.</div>
-                        )}
-                    </div>
+                    <AssetsLatest />
                 </Content>
 
                 <Content>

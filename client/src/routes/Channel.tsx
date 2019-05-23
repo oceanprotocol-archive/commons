@@ -9,6 +9,9 @@ import Asset from '../components/molecules/Asset'
 import Pagination from '../components/molecules/Pagination'
 import styles from './Channel.module.scss'
 import Content from '../components/atoms/Content'
+import channels from '../data/channels.json'
+
+const { title, description } = channels[0]
 
 interface ChannelProps {
     location: Location
@@ -27,10 +30,6 @@ interface ChannelState {
     isLoading: boolean
     searchTerm: string
     searchCategories: string
-    channel: {
-        title: string
-        description: string
-    }
 }
 
 export default class Channel extends PureComponent<ChannelProps, ChannelState> {
@@ -42,12 +41,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         currentPage: 1,
         isLoading: true,
         searchTerm: '',
-        searchCategories: '',
-        channel: {
-            title: 'AI for Good',
-            description:
-                'AI 4 Good is an initiative to promote the use of artificial intelligence for good causes, such as fighting poverty, climate change, improving healthcare, safer transportation, and so on. The AI for Good Global Summit is THE leading United Nations platform for global and inclusive dialogue on AI. The Summit is hosted each year in Geneva by the ITU in partnership wutg UN Suster agencies, XPRIZE Foundtation and ACM.'
-        }
+        searchCategories: ''
     }
 
     public async componentDidMount() {
@@ -138,23 +132,11 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         )
 
     public render() {
-        const { totalResults, totalPages, currentPage, channel } = this.state
-        const { match } = this.props
+        const { totalPages, currentPage } = this.state
 
         return (
-            <Route title={channel.title} wide>
+            <Route title={title} description={description}>
                 <Content wide>
-                    <div>{channel.description}</div>
-                    {totalResults > 0 && (
-                        <h2
-                            className={styles.resultsTitle}
-                            dangerouslySetInnerHTML={{
-                                __html: `${totalResults} results for <span>${decodeURIComponent(
-                                    '' // this.state.channelName
-                                )}</span>`
-                            }}
-                        />
-                    )}
                     {this.renderResults()}
 
                     <Pagination
