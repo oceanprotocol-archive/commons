@@ -1,12 +1,17 @@
-[
-  {
-    "title": "AI for Good",
-    "slug": "ai-for-good",
-    "description": "AI for Good is an initiative to promote the use of artificial intelligence for good causes, such as fighting poverty, climate change, improving healthcare, safer transportation, and so on. The AI for Good Global Summit is THE leading United Nations platform for global and inclusive dialogue on AI. The Summit is hosted each year in Geneva by the ITU in partnership wutg UN Suster agencies, XPRIZE Foundtation and ACM."
-  },
-  {
-    "title": "Test Channel",
-    "slug": "test-channel",
-    "description": "Hello description."
-  }
-]
+{
+  "title": "Channels",
+  "description": "Channels are... You can do this with them... They're cool because...",
+  "items": [
+    {
+      "title": "AI for Good",
+      "slug": "ai-for-good",
+      "teaser": "AI for Good is an initiative to promote the use of artificial intelligence for good causes.",
+      "description": "AI for Good is an initiative to promote the use of artificial intelligence for good causes, such as fighting poverty, climate change, improving healthcare, safer transportation, and so on. The [AI for Good Global Summit](https://aiforgood.itu.int) is the leading United Nations platform for global and inclusive dialogue on AI. The Summit is hosted each year in Geneva by the ITU in partnership with UN Sister agencies, XPRIZE Foundation and ACM."
+    },
+    {
+      "title": "Test Channel",
+      "slug": "test-channel",
+      "description": "Hello description."
+    }
+  ]
+}

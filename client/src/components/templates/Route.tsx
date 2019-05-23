@@ -3,6 +3,7 @@ import Helmet from 'react-helmet'
 import Content from '../atoms/Content'
 import styles from './Route.module.scss'
 import meta from '../../data/meta.json'
+import Markdown from '../atoms/Markdown'
 
 const Route = ({
     title,
@@ -29,11 +30,9 @@ const Route = ({
                 <Content wide={wide}>
                     <h1 className={styles.title}>{title}</h1>
                     {description && (
-                        <p
+                        <Markdown
+                            text={description}
                             className={styles.description}
-                            dangerouslySetInnerHTML={{
-                                __html: description
-                            }}
                         />
                     )}
                 </Content>

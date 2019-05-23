@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { User } from '../context'
+import { User, Market } from '../context'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
 import Asset from '../components/molecules/Asset'
@@ -12,14 +12,16 @@ import Route from '../components/templates/Route'
 import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'
-import formPublish from '../data/form-publish.json'
 import { History } from 'history'
 import Content from '../components/atoms/Content'
 import channels from '../data/channels.json'
 import AssetsLatest from '../components/organisms/AssetsLatest'
 
 // AI for Good channel
-const { title, slug } = channels[0]
+const channel = channels.items
+    .filter(({ slug }) => slug === 'ai-for-good')
+    .map(channel => channel)[0]
+const { title, slug, teaser } = channel
 
 interface HomeProps {
     history: History
@@ -27,40 +29,32 @@ interface HomeProps {
 
 interface HomeState {
     search?: string
-    categoryAssets?: any[]
-    isLoadingCategory?: boolean
-    latestAssets?: any[]
-    isLoadingLatest?: boolean
+    channelAssets?: any[]
+    isLoadingChannel?: boolean
 }
-
-const categories =
-    (formPublish.steps[1].fields &&
-        formPublish.steps[1].fields.categories &&
-        formPublish.steps[1].fields.categories.options) ||
-    []
 
 export default class Home extends Component<HomeProps, HomeState> {
     public static contextType = User
 
     public state = {
         search: '',
-        categoryAssets: [],
-        isLoadingCategory: true,
-        latestAssets: [],
-        isLoadingLatest: true
+        channelAssets: [],
+        isLoadingChannel: true
     }
 
     public async componentDidMount() {
-        this.getCategoryAssets()
+        this.getChannelAssets()
     }
 
-    private getCategoryAssets = async () => {
+    private getChannelAssets = async () => {
         const { ocean } = this.context
 
         const searchQuery = {
-            offset: 25,
+            offset: 4,
             page: 1,
             query: {
+                // TODO: remove dummy category
+                // categories: [title],
                 categories: ['Engineering'],
                 price: [-1, 1]
             },
@@ -72,12 +66,12 @@ export default class Home extends Component<HomeProps, HomeState> {
         try {
             const search = await ocean.aquarius.queryMetadata(searchQuery)
             this.setState({
-                categoryAssets: search.results,
-                isLoadingCategory: false
+                channelAssets: search.results,
+                isLoadingChannel: false
             })
         } catch (error) {
             Logger.error(error.message)
-            this.setState({ isLoadingCategory: false })
+            this.setState({ isLoadingChannel: false })
         }
     }
 
@@ -93,7 +87,7 @@ export default class Home extends Component<HomeProps, HomeState> {
     }
 
     public render() {
-        const { categoryAssets, isLoadingCategory, search } = this.state
+        const { channelAssets, isLoadingChannel, search } = this.state
 
         return (
             <Route
@@ -120,21 +114,30 @@ export default class Home extends Component<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
-                    <h2 className={styles.title}>
-                        <Link to={`/channels/${slug}`}>{title}</Link>
-                    </h2>
-                    <div>
-                        {isLoadingCategory ? (
-                            <Spinner message="Loading..." />
-                        ) : categoryAssets && categoryAssets.length ? (
-                            <div className={styles.results}>
-                                {categoryAssets.map((asset: any) => (
-                                    <Asset key={asset.id} asset={asset} />
-                                ))}
+                    <div className={styles.channel}>
+                        <div>
+                            <div>
+                                <h2 className={styles.channelTitle}>
+                                    <Link to={`/channels/${slug}`}>
+                                        {title} →
+                                    </Link>
+                                </h2>
+                                <p>{teaser}</p>
                             </div>
-                        ) : (
-                            <div>No data sets found.</div>
-                        )}
+                        </div>
+                        <div>
+                            {isLoadingChannel ? (
+                                <Spinner message="Loading..." />
+                            ) : channelAssets && channelAssets.length ? (
+                                <div className={styles.channelResults}>
+                                    {channelAssets.map((asset: any) => (
+                                        <Asset key={asset.id} asset={asset} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div>No data sets found.</div>
+                            )}
+                        </div>
                     </div>
 
                     <AssetsLatest />
@@ -143,19 +146,27 @@ export default class Home extends Component<HomeProps, HomeState> {
                 <Content>
                     <h2 className={styles.title}>Explore Categories</h2>
                     <div className={styles.categories}>
-                        {categories
-                            .filter(category => category !== 'AI For Good')
-                            .sort((a, b) => a.localeCompare(b))
-                            .map((category: string) => (
-                                <Link
-                                    to={`/search?categories=${category}`}
-                                    key={category}
-                                    className={styles.category}
-                                >
-                                    <CategoryImage category={category} />
-                                    <h3>{category}</h3>
-                                </Link>
-                            ))}
+                        <Market.Consumer>
+                            {({ categories }) =>
+                                categories
+                                    .filter(
+                                        category => category !== 'AI For Good'
+                                    )
+                                    .sort((a, b) => a.localeCompare(b)) // sort alphabetically
+                                    .map((category: string) => (
+                                        <Link
+                                            to={`/search?categories=${category}`}
+                                            key={category}
+                                            className={styles.category}
+                                        >
+                                            <CategoryImage
+                                                category={category}
+                                            />
+                                            <h3>{category}</h3>
+                                        </Link>
+                                    ))
+                            }
+                        </Market.Consumer>
                     </div>
                 </Content>
             </Route>

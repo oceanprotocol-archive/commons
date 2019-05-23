@@ -31,6 +31,11 @@ interface ChannelState {
 }
 
 export default class Channel extends PureComponent<ChannelProps, ChannelState> {
+    // get content data based on received channel param
+    public channel = channels.items
+        .filter(({ slug }) => slug === this.props.match.params.channel)
+        .map(channel => channel)[0]
+
     public state = {
         results: [],
         totalResults: 0,
@@ -38,13 +43,8 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         totalPages: 1,
         currentPage: 1,
         isLoading: true,
-        // get content data based on received channel param
-        title: channels
-            .filter(({ slug }) => slug === this.props.match.params.channel)
-            .map(channel => channel)[0].title,
-        description: channels
-            .filter(({ slug }) => slug === this.props.match.params.channel)
-            .map(channel => channel)[0].description
+        title: this.channel.title,
+        description: this.channel.description
     }
 
     public async componentDidMount() {

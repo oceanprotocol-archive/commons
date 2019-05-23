@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom'
 class Channels extends Component {
     public render() {
         return (
-            <Route title="Channels" description="All the Channels.">
+            <Route title={channels.title} description={channels.description}>
                 <Content>
                     <ul>
-                        {channels.map(channel => (
+                        {channels.items.map(channel => (
                             <li key={channel.title}>
                                 <Link to={`/channels/${channel.slug}`}>
                                     {channel.title}
