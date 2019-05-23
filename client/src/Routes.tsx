@@ -23,7 +23,7 @@ const Routes = () => (
         <Route component={withTracker(Details)} path="/asset/:did" />
         <Route component={withTracker(Faucet)} path="/faucet" />
         <Route component={withTracker(History)} path="/history" />
-        <Route component={withTracker(Channel)} path="/channel/:channel" />
+        <Route component={withTracker(Channel)} path="/channels/:channel" />
         <Route component={withTracker(NotFound)} />
     </Switch>
 )

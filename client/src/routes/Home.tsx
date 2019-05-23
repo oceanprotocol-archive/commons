@@ -24,8 +24,8 @@ interface HomeState {
     search?: string
     categoryAssets?: any[]
     isLoadingCategory?: boolean
-    lastAssets?: any[]
-    isLoadingLast?: boolean
+    latestAssets?: any[]
+    isLoadingLatest?: boolean
 }
 
 const categories =
@@ -34,18 +34,20 @@ const categories =
         formPublish.steps[1].fields.categories.options) ||
     []
 
-class Home extends Component<HomeProps, HomeState> {
+export default class Home extends Component<HomeProps, HomeState> {
+    public static contextType = User
+
     public state = {
         search: '',
         categoryAssets: [],
         isLoadingCategory: true,
-        lastAssets: [],
-        isLoadingLast: true
+        latestAssets: [],
+        isLoadingLatest: true
     }
 
     public async componentDidMount() {
         this.getCategoryAssets()
-        this.getLastAssets()
+        this.getLatestAssets()
     }
 
     private getCategoryAssets = async () => {
@@ -75,7 +77,7 @@ class Home extends Component<HomeProps, HomeState> {
         }
     }
 
-    private getLastAssets = async () => {
+    private getLatestAssets = async () => {
         const { ocean } = this.context
 
         const searchQuery = {
@@ -92,17 +94,35 @@ class Home extends Component<HomeProps, HomeState> {
         try {
             const search = await ocean.aquarius.queryMetadata(searchQuery)
             this.setState({
-                lastAssets: search.results,
-                isLoadingLast: false
+                latestAssets: search.results,
+                isLoadingLatest: false
             })
         } catch (error) {
             Logger.error(error.message)
-            this.setState({ isLoadingLast: false })
+            this.setState({ isLoadingLatest: false })
         }
     }
 
+    private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    private searchAssets = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        this.props.history.push(`/search?text=${this.state.search}`)
+    }
+
     public render() {
-        const { categoryAssets, isLoadingCategory, lastAssets, isLoadingLast, search } = this.state
+        const {
+            categoryAssets,
+            isLoadingCategory,
+            latestAssets,
+            isLoadingLatest,
+            search
+        } = this.state
+
         return (
             <Route
                 title={meta.title}
@@ -128,7 +148,9 @@ class Home extends Component<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
-                    <h4 onClick={() => this.openChannel('AI for Good')}>AI for Good</h4>
+                    <h2 className={styles.title}>
+                        <Link to="/channels/ai-for-good">AI for Good</Link>
+                    </h2>
                     <div>
                         {isLoadingCategory ? (
                             <Spinner message="Loading..." />
@@ -142,13 +164,14 @@ class Home extends Component<HomeProps, HomeState> {
                             <div>No data sets found.</div>
                         )}
                     </div>
-                    <h4>Latest assets</h4>
+
+                    <h2 className={styles.title}>Latest published assets</h2>
                     <div>
-                        {isLoadingLast ? (
+                        {isLoadingLatest ? (
                             <Spinner message="Loading..." />
-                        ) : lastAssets && lastAssets.length ? (
+                        ) : latestAssets && latestAssets.length ? (
                             <div className={styles.results}>
-                                {lastAssets.map((asset: any) => (
+                                {latestAssets.map((asset: any) => (
                                     <Asset key={asset.id} asset={asset} />
                                 ))}
                             </div>
@@ -156,38 +179,27 @@ class Home extends Component<HomeProps, HomeState> {
                             <div>No data sets found.</div>
                         )}
                     </div>
-                    <h4>Explore Categories</h4>
+                </Content>
+
+                <Content>
+                    <h2 className={styles.title}>Explore Categories</h2>
                     <div className={styles.categories}>
-                        {categories.map((category: string) => (
-                            <Link
-                                to={`/search?categories=${category}`}
-                                key={category}
-                            >
-                                <CategoryImage category={category} />
-                                {category}
-                            </Link>
-                        ))}
+                        {categories
+                            .filter(category => category !== 'AI For Good')
+                            .sort((a, b) => a.localeCompare(b))
+                            .map((category: string) => (
+                                <Link
+                                    to={`/search?categories=${category}`}
+                                    key={category}
+                                    className={styles.category}
+                                >
+                                    <CategoryImage category={category} />
+                                    <h3>{category}</h3>
+                                </Link>
+                            ))}
                     </div>
                 </Content>
             </Route>
         )
     }
-
-    private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-    }
-
-    private searchAssets = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        this.props.history.push(`/search?text=${this.state.search}`)
-    }
-
-    private openChannel = (channel: string) => {
-        this.props.history.push(`/channel/${channel}`)
-    }
 }
-
-Home.contextType = User
-export default Home

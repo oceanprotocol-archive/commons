@@ -8,7 +8,6 @@ export const servicePort = process.env.REACT_APP_SERVICE_PORT || 4000
 //
 // OCEAN REMOTE CONNECTIONS
 //
-
 export const nodeScheme = process.env.REACT_APP_NODE_SCHEME || 'https'
 export const nodeHost = process.env.REACT_APP_NODE_HOST || 'nile.dev-ocean.com'
 export const nodePort = process.env.REACT_APP_NODE_PORT || 443

@@ -2,8 +2,12 @@
 
 .categoryImage {
     height: 4rem;
-    background-size: cover;
+    background-size: 100%;
     background-position: center;
     margin-bottom: $spacer / $line-height;
     background-color: $body-background;
+    border-radius: $border-radius;
+    overflow: hidden;
+    opacity: .8;
+    transition: .2s ease-out;
 }

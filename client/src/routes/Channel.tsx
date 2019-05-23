@@ -45,12 +45,13 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         searchCategories: '',
         channel: {
             title: 'AI for Good',
-            description: 'AI 4 Good is an initiative to promote the use of artificial intelligence for good causes, such as fighting poverty, climate change, improving healthcare, safer transportation, and so on. The AI for Good Global Summit is THE leading United Nations platform for global and inclusive dialogue on AI. The Summit is hosted each year in Geneva by the ITU in partnership wutg UN Suster agencies, XPRIZE Foundtation and ACM.'
+            description:
+                'AI 4 Good is an initiative to promote the use of artificial intelligence for good causes, such as fighting poverty, climate change, improving healthcare, safer transportation, and so on. The AI for Good Global Summit is THE leading United Nations platform for global and inclusive dialogue on AI. The Summit is hosted each year in Geneva by the ITU in partnership wutg UN Suster agencies, XPRIZE Foundtation and ACM.'
         }
     }
 
     public async componentDidMount() {
-        const { match } = this.props;
+        const { match } = this.props
 
         // TODO: use next line to use channel name
         // const category = match.params.channel
@@ -138,7 +139,8 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
 
     public render() {
         const { totalResults, totalPages, currentPage, channel } = this.state
-        const { match } = this.props;
+        const { match } = this.props
+
         return (
             <Route title={channel.title} wide>
                 <Content wide>

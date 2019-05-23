@@ -20,6 +20,12 @@
             color: inherit;
             border-color: $brand-pink;
             transform: none;
+
+            // category image
+            > div:first-child {
+                opacity: 1;
+                background-size: 105%;
+            }
         }
     }
 
