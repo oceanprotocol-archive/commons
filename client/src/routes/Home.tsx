@@ -1,9 +1,6 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { User, Market } from '../context'
-import { Logger } from '@oceanprotocol/squid'
-import Spinner from '../components/atoms/Spinner'
-import Asset from '../components/molecules/Asset'
 import CategoryImage from '../components/atoms/CategoryImage'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
@@ -14,14 +11,8 @@ import styles from './Home.module.scss'
 import meta from '../data/meta.json'
 import { History } from 'history'
 import Content from '../components/atoms/Content'
-import channels from '../data/channels.json'
 import AssetsLatest from '../components/organisms/AssetsLatest'
-
-// AI for Good channel
-const channel = channels.items
-    .filter(({ slug }) => slug === 'ai-for-good')
-    .map(channel => channel)[0]
-const { title, slug, teaser } = channel
+import ChannelTeaser from '../components/organisms/ChannelTeaser'
 
 interface HomeProps {
     history: History
@@ -29,50 +20,13 @@ interface HomeProps {
 
 interface HomeState {
     search?: string
-    channelAssets?: any[]
-    isLoadingChannel?: boolean
 }
 
 export default class Home extends Component<HomeProps, HomeState> {
     public static contextType = User
 
     public state = {
-        search: '',
-        channelAssets: [],
-        isLoadingChannel: true
-    }
-
-    public async componentDidMount() {
-        this.getChannelAssets()
-    }
-
-    private getChannelAssets = async () => {
-        const { ocean } = this.context
-
-        const searchQuery = {
-            offset: 4,
-            page: 1,
-            query: {
-                // TODO: remove dummy category
-                // categories: [title],
-                categories: ['Engineering'],
-                price: [-1, 1]
-            },
-            sort: {
-                datePublished: 1
-            }
-        }
-
-        try {
-            const search = await ocean.aquarius.queryMetadata(searchQuery)
-            this.setState({
-                channelAssets: search.results,
-                isLoadingChannel: false
-            })
-        } catch (error) {
-            Logger.error(error.message)
-            this.setState({ isLoadingChannel: false })
-        }
+        search: ''
     }
 
     private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +41,7 @@ export default class Home extends Component<HomeProps, HomeState> {
     }
 
     public render() {
-        const { channelAssets, isLoadingChannel, search } = this.state
+        const { search } = this.state
 
         return (
             <Route
@@ -114,32 +68,7 @@ export default class Home extends Component<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
-                    <div className={styles.channel}>
-                        <div>
-                            <div>
-                                <h2 className={styles.channelTitle}>
-                                    <Link to={`/channels/${slug}`}>
-                                        {title} →
-                                    </Link>
-                                </h2>
-                                <p>{teaser}</p>
-                            </div>
-                        </div>
-                        <div>
-                            {isLoadingChannel ? (
-                                <Spinner message="Loading..." />
-                            ) : channelAssets && channelAssets.length ? (
-                                <div className={styles.channelResults}>
-                                    {channelAssets.map((asset: any) => (
-                                        <Asset key={asset.id} asset={asset} />
-                                    ))}
-                                </div>
-                            ) : (
-                                <div>No data sets found.</div>
-                            )}
-                        </div>
-                    </div>
-
+                    <ChannelTeaser channel="ai-for-good" />
                     <AssetsLatest />
                 </Content>
 

@@ -1,0 +1,56 @@
+@import '../../styles/variables';
+
+.channel {
+    width: 100%;
+    padding-top: $spacer * 2;
+
+    @media (min-width: $break-point--medium) {
+        display: flex;
+    }
+
+    > div {
+        &:first-child {
+            margin-right: $spacer;
+            margin-bottom: $spacer;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (min-width: $break-point--medium) {
+            flex: 1;
+
+            &:first-child {
+                flex: 0 0 24.5rem;
+            }
+        }
+    }
+
+    h3 {
+        font-size: $font-size-h4;
+    }
+
+    + .channel {
+        border-top: 1px solid $brand-grey-lighter;
+        margin-top: $spacer * 2;
+    }
+}
+
+.channelTitle {
+    margin-top: $spacer * 2;
+}
+
+.channelResults {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: $spacer;
+
+    @media (min-width: $break-point--small) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    > article {
+        min-width: calc(18rem + #{$spacer * 2.3});
+    }
+}

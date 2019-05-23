@@ -6,7 +6,7 @@ import cx from 'classnames'
 import styles from './Asset.module.scss'
 import CategoryImage from '../atoms/CategoryImage'
 
-const AssetLink = ({
+const Asset = ({
     asset,
     list,
     minimal
@@ -55,4 +55,4 @@ const AssetLink = ({
     )
 }
 
-export default AssetLink
+export default Asset
