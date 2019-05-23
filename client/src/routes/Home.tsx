@@ -1,6 +1,5 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import slugify from '@sindresorhus/slugify'
 import { User } from '../context'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
@@ -19,7 +18,8 @@ import Content from '../components/atoms/Content'
 import channels from '../data/channels.json'
 import AssetsLatest from '../components/organisms/AssetsLatest'
 
-const { title, description } = channels[0]
+// AI for Good channel
+const { title, slug } = channels[0]
 
 interface HomeProps {
     history: History
@@ -121,7 +121,7 @@ export default class Home extends Component<HomeProps, HomeState> {
 
                 <Content wide>
                     <h2 className={styles.title}>
-                        <Link to={`/channels/${slugify(title)}`}>{title}</Link>
+                        <Link to={`/channels/${slug}`}>{title}</Link>
                     </h2>
                     <div>
                         {isLoadingCategory ? (

@@ -1,23 +1,21 @@
 import React, { PureComponent } from 'react'
-import queryString from 'query-string'
-import { History, Location } from 'history'
 import { Logger } from '@oceanprotocol/squid'
-import Spinner from '../components/atoms/Spinner'
-import Route from '../components/templates/Route'
-import { User } from '../context'
-import Asset from '../components/molecules/Asset'
-import Pagination from '../components/molecules/Pagination'
+import { History } from 'history'
+import Spinner from '../../components/atoms/Spinner'
+import Route from '../../components/templates/Route'
+import { User } from '../../context'
+import Asset from '../../components/molecules/Asset'
+import Pagination from '../../components/molecules/Pagination'
 import styles from './Channel.module.scss'
-import Content from '../components/atoms/Content'
-import channels from '../data/channels.json'
-
-const { title, description } = channels[0]
+import Content from '../../components/atoms/Content'
+import channels from '../../data/channels.json'
 
 interface ChannelProps {
-    location: Location
     history: History
     match: {
-        params: any
+        params: {
+            channel: string
+        }
     }
 }
 
@@ -28,8 +26,8 @@ interface ChannelState {
     totalPages: number
     currentPage: number
     isLoading: boolean
-    searchTerm: string
-    searchCategories: string
+    title: string
+    description: string
 }
 
 export default class Channel extends PureComponent<ChannelProps, ChannelState> {
@@ -40,50 +38,30 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         totalPages: 1,
         currentPage: 1,
         isLoading: true,
-        searchTerm: '',
-        searchCategories: ''
+        // get content data based on received channel param
+        title: channels
+            .filter(({ slug }) => slug === this.props.match.params.channel)
+            .map(channel => channel)[0].title,
+        description: channels
+            .filter(({ slug }) => slug === this.props.match.params.channel)
+            .map(channel => channel)[0].description
     }
 
     public async componentDidMount() {
-        const { match } = this.props
-
-        // TODO: use next line to use channel name
-        // const category = match.params.channel
-        const category = 'Engineering'
-
-        const { page } = queryString.parse(this.props.location.search)
-
-        if (category) {
-            await this.setState({
-                searchCategories: encodeURIComponent(`${category}`)
-            })
-        }
-
-        // switch to respective page if query string is present
-        if (page) {
-            const currentPage = Number(page)
-            await this.setState({ currentPage })
-        }
-
         this.getChannelAssets()
     }
 
     private getChannelAssets = async () => {
         const { ocean } = this.context
-        const { offset, currentPage, searchTerm, searchCategories } = this.state
-
-        const queryValues =
-            searchCategories !== '' && searchTerm !== ''
-                ? { text: [searchTerm], categories: [searchCategories] }
-                : searchCategories !== '' && searchTerm === ''
-                ? { categories: [searchCategories] }
-                : { text: [searchTerm] }
+        const { offset, currentPage } = this.state
 
         const searchQuery = {
             offset,
             page: currentPage,
             query: {
-                ...queryValues,
+                // TODO: replace dummy category
+                // categories: [this.state.title],
+                categories: ['Engineering'],
                 price: [-1, 1]
             },
             sort: {
@@ -110,8 +88,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         let toPage = data.selected + 1
 
         this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: `?text=${this.state.searchTerm}&page=${toPage}`
+            search: `?page=${toPage}`
         })
 
         await this.setState({ currentPage: toPage, isLoading: true })
@@ -132,7 +109,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         )
 
     public render() {
-        const { totalPages, currentPage } = this.state
+        const { title, description, totalPages, currentPage } = this.state
 
         return (
             <Route title={title} description={description}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-testing-library'
 import Channel from './Channel'
-import { User } from '../context'
+import { User } from '../../context'
 import { createMemoryHistory } from 'history'
 
 describe('Channel', () => {
@@ -36,11 +36,8 @@ describe('Channel', () => {
                 }}
             >
                 <Channel
-                    location={{
-                        search: '',
-                        pathname: '/channel/AI for Good',
-                        state: '',
-                        hash: ''
+                    match={{
+                        params: { channel: 'ai-for-good' }
                     }}
                     history={history}
                 />
