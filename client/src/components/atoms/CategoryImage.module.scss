@@ -16,7 +16,7 @@
 .header {
     composes: categoryImage;
     height: 8rem;
-    margin-top: $spacer;
+    margin-top: $spacer / $line-height;
 }
 
 .dimmed {
