@@ -28,10 +28,11 @@
 }
 
 .title {
-    font-size: $font-size-h3;
-    margin-top: $spacer * 2;
+    font-size: $font-size-h4;
+    margin-top: $spacer * 3;
     text-align: center;
     margin-bottom: $spacer;
+    color: $brand-grey-light;
 
     @media (min-width: $break-point--small) {
         text-align: left;

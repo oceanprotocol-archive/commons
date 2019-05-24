@@ -2,16 +2,19 @@
 
 .channel {
     width: 100%;
-    padding-top: $spacer * 2;
 
     @media (min-width: $break-point--medium) {
+        padding-top: $spacer * 2;
         display: flex;
     }
 
     > div {
         &:first-child {
-            margin-right: $spacer;
             margin-bottom: $spacer;
+
+            @media (min-width: $break-point--medium) {
+                margin-right: $spacer;
+            }
 
             p {
                 margin-bottom: 0;
@@ -27,10 +30,6 @@
         }
     }
 
-    h3 {
-        font-size: $font-size-h4;
-    }
-
     + .channel {
         border-top: 1px solid $brand-grey-lighter;
         margin-top: $spacer * 2;
@@ -39,13 +38,20 @@
 
 .channelTitle {
     margin-top: $spacer * 4;
+    margin-bottom: $spacer / 4;
 
     @media (min-width: $break-point--medium) {
-        margin-top: -($spacer / 1.5);
+        margin-top: -($spacer / 4);
     }
 }
 
 .channelHeader {
+    text-align: center;
+
+    @media (min-width: $break-point--small) {
+        text-align: left;
+    }
+
     a {
         display: block;
 
@@ -70,9 +76,9 @@
 
     @media (min-width: $break-point--small) {
         grid-template-columns: repeat(2, 1fr);
-    }
 
-    > article {
-        min-width: calc(18rem + #{$spacer * 2.3});
+        > article {
+            min-width: calc(18rem + #{$spacer * 2.3});
+        }
     }
 }
