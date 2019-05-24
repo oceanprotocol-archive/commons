@@ -41,6 +41,25 @@
 .description {
     // respect line breaks from textarea
     white-space: pre-line;
+
+    // handle assets where heading are used extensively in the description
+    h1 {
+        font-size: $font-size-h3;
+    }
+
+    h2 {
+        font-size: $font-size-h4;
+    }
+
+    h3 {
+        font-size: $font-size-h5;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-size: $font-size-base;
+    }
 }
 
 .meta {
