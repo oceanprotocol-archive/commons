@@ -68,6 +68,7 @@ export default class Home extends Component<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
+                    <h2 className={styles.title}>Featured Channel</h2>
                     <ChannelTeaser channel="ai-for-good" />
                     <AssetsLatest />
                 </Content>

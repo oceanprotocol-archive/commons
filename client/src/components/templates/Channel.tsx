@@ -34,7 +34,7 @@ interface ChannelState {
 export default class Channel extends PureComponent<ChannelProps, ChannelState> {
     // get content data based on received channel param
     public channel = channels.items
-        .filter(({ slug }) => slug === this.props.match.params.channel)
+        .filter(({ tag }) => tag === this.props.match.params.channel)
         .map(channel => channel)[0]
 
     public state = {
@@ -60,9 +60,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
             offset,
             page: currentPage,
             query: {
-                // TODO: replace dummy category
-                // categories: [this.state.title],
-                categories: ['Engineering'],
+                tags: [this.channel.tag],
                 price: [-1, 1]
             },
             sort: {
@@ -88,9 +86,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         // react-pagination starts counting at 0, we start at 1
         let toPage = data.selected + 1
 
-        this.props.history.push({
-            search: `?page=${toPage}`
-        })
+        this.props.history.push({ search: `?page=${toPage}` })
 
         await this.setState({ currentPage: toPage, isLoading: true })
         await this.getChannelAssets()

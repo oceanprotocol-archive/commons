@@ -25,7 +25,7 @@ export default class ChannelTeaser extends Component<
 
     // Get channel content
     public channel = channels.items
-        .filter(({ slug }) => slug === this.props.channel)
+        .filter(({ tag }) => tag === this.props.channel)
         .map(channel => channel)[0]
 
     public state = {
@@ -44,9 +44,7 @@ export default class ChannelTeaser extends Component<
             offset: 4,
             page: 1,
             query: {
-                // TODO: replace dummy category
-                // categories: [this.channel.title],
-                categories: ['Engineering'],
+                tags: [this.channel.tag],
                 price: [-1, 1]
             },
             sort: {
@@ -57,7 +55,8 @@ export default class ChannelTeaser extends Component<
         try {
             const search = await ocean.aquarius.queryMetadata(searchQuery)
             this.setState({
-                channelAssets: search.results,
+                // TODO: remove hacky way of getting the latest 2 assets
+                channelAssets: search.results.splice(2, 2, ''),
                 isLoadingChannel: false
             })
         } catch (error) {
@@ -68,13 +67,13 @@ export default class ChannelTeaser extends Component<
 
     public render() {
         const { channelAssets, isLoadingChannel } = this.state
-        const { title, slug, teaser } = this.channel
+        const { title, tag, teaser } = this.channel
 
         return (
             <div className={styles.channel}>
                 <div>
                     <header className={styles.channelHeader}>
-                        <Link to={`/channels/${slug}`}>
+                        <Link to={`/channels/${tag}`}>
                             <h2 className={styles.channelTitle}>{title}</h2>
                             <CategoryImage category={title} />
 

@@ -12,7 +12,7 @@ class Channels extends Component {
                     {channels.items.map(channel => (
                         <ChannelTeaser
                             key={channel.title}
-                            channel={channel.slug}
+                            channel={channel.tag}
                         />
                     ))}
                 </Content>
