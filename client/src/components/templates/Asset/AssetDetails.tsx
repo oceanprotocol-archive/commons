@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
-import { Link } from 'react-router-dom'
 import Moment from 'react-moment'
 import { DDO, MetaData, File } from '@oceanprotocol/squid'
 import Markdown from '../../atoms/Markdown'
+import CategoryLink from '../../atoms/CategoryLink'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 
@@ -46,13 +46,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                         </span>
 
                         {base.categories && (
-                            <Link
-                                to={`/search?categories=${encodeURIComponent(
-                                    base.categories[0]
-                                )}`}
-                            >
-                                {base.categories[0]}
-                            </Link>
+                            <CategoryLink category={base.categories[0]} />
                         )}
 
                         {base.files && datafilesLine(base.files)}

@@ -1,7 +1,8 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { History } from 'history'
 import { User, Market } from '../context'
 import CategoryImage from '../components/atoms/CategoryImage'
+import CategoryLink from '../components/atoms/CategoryLink'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
@@ -9,7 +10,6 @@ import Route from '../components/templates/Route'
 import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'
-import { History } from 'history'
 import Content from '../components/atoms/Content'
 import AssetsLatest from '../components/organisms/AssetsLatest'
 import ChannelTeaser from '../components/organisms/ChannelTeaser'
@@ -83,10 +83,8 @@ export default class Home extends Component<HomeProps, HomeState> {
                                     )
                                     .sort((a, b) => a.localeCompare(b)) // sort alphabetically
                                     .map((category: string) => (
-                                        <Link
-                                            to={`/search?categories=${encodeURIComponent(
-                                                category
-                                            )}`}
+                                        <CategoryLink
+                                            category={category}
                                             key={category}
                                             className={styles.category}
                                         >
@@ -94,7 +92,7 @@ export default class Home extends Component<HomeProps, HomeState> {
                                                 category={category}
                                             />
                                             <h3>{category}</h3>
-                                        </Link>
+                                        </CategoryLink>
                                     ))
                             }
                         </Market.Consumer>
