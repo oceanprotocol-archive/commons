@@ -23,7 +23,7 @@
     }
 
     > article {
-        min-width: calc(18rem + #{$spacer * 2.3});
+        min-width: calc(18rem + #{$spacer});
     }
 }
 

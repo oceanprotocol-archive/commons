@@ -25,7 +25,7 @@
             flex: 1;
 
             &:first-child {
-                flex: 0 0 24.5rem;
+                flex: 0 0 calc(18rem + #{$spacer * 2});
             }
         }
     }
@@ -75,10 +75,6 @@
     grid-gap: $spacer;
 
     @media (min-width: $break-point--small) {
-        grid-template-columns: repeat(2, 1fr);
-
-        > article {
-            min-width: calc(18rem + #{$spacer * 2.3});
-        }
+        grid-template-columns: 1fr 1fr;
     }
 }
