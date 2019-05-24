@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import { History, Location } from 'history'
 import { Logger } from '@oceanprotocol/squid'
@@ -123,7 +124,10 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                 ))}
             </div>
         ) : (
-            <div>No data sets found.</div>
+            <div className={styles.empty}>
+                <p>No Data Sets Found.</p>
+                <Link to="/publish">+ Publish A Data Set</Link>
+            </div>
         )
 
     public render() {
@@ -132,16 +136,16 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         return (
             <Route title="Search" wide>
                 <Content wide>
-                    {totalResults > 0 && (
-                        <h2
-                            className={styles.resultsTitle}
-                            dangerouslySetInnerHTML={{
-                                __html: `${totalResults} results for <span>${decodeURIComponent(
+                    {!this.state.isLoading && (
+                        <h2 className={styles.resultsTitle}>
+                            {totalResults} results for{' '}
+                            <span>
+                                {decodeURIComponent(
                                     this.state.searchTerm ||
                                         this.state.searchCategories
-                                )}</span>`
-                            }}
-                        />
+                                )}
+                            </span>
+                        </h2>
                     )}
                     {this.renderResults()}
 

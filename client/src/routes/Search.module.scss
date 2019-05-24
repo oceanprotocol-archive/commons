@@ -24,3 +24,9 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+.empty {
+    text-align: center;
+    margin-top: $spacer * 4;
+    color: $brand-grey-light;
+}
