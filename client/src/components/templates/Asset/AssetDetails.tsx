@@ -47,7 +47,9 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
 
                         {base.categories && (
                             <Link
-                                to={`/search?categories=${base.categories[0]}`}
+                                to={`/search?categories=${encodeURIComponent(
+                                    base.categories[0]
+                                )}`}
                             >
                                 {base.categories[0]}
                             </Link>
