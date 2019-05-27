@@ -60,8 +60,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
             offset,
             page: currentPage,
             query: {
-                tags: [this.channel.tag],
-                price: [-1, 1]
+                tags: [this.channel.tag]
             },
             sort: {
                 datePublished: 1

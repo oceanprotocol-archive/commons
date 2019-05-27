@@ -44,8 +44,7 @@ export default class ChannelTeaser extends Component<
             offset: 4,
             page: 1,
             query: {
-                tags: [this.channel.tag],
-                price: [-1, 1]
+                tags: [this.channel.tag]
             },
             sort: {
                 datePublished: 1

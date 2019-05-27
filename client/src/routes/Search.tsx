@@ -79,8 +79,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
             offset,
             page: currentPage,
             query: {
-                ...queryValues,
-                price: [-1, 1]
+                ...queryValues
             },
             sort: {
                 datePublished: 1
