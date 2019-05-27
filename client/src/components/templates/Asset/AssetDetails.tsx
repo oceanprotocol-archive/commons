@@ -60,28 +60,40 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     />
                 )}
 
-                <ul className={styles.meta}>
-                    <li>
-                        <span className={styles.metaLabel}>
-                            <strong>Author</strong>
-                        </span>
-                        <span className={styles.metaValue}>{base.author}</span>
-                    </li>
-                    <li>
-                        <span className={styles.metaLabel}>
-                            <strong>License</strong>
-                        </span>
-                        <span className={styles.metaValue}>{base.license}</span>
-                    </li>
-                    <li>
-                        <span className={styles.metaLabel}>
-                            <strong>DID</strong>
-                        </span>
-                        <span className={styles.metaValue}>
-                            <code>{ddo.id}</code>
-                        </span>
-                    </li>
-                </ul>
+                <div className={styles.metaFixed}>
+                    <h2
+                        className={styles.metaFixedTitle}
+                        title="This metadata can not be changed because it is used to generate the checksums for the DDO, and to encrypt the file urls."
+                    >
+                        Fixed Metadata
+                    </h2>
+                    <ul>
+                        <li>
+                            <span className={styles.metaLabel}>
+                                <strong>Author</strong>
+                            </span>
+                            <span className={styles.metaValue}>
+                                {base.author}
+                            </span>
+                        </li>
+                        <li>
+                            <span className={styles.metaLabel}>
+                                <strong>License</strong>
+                            </span>
+                            <span className={styles.metaValue}>
+                                {base.license}
+                            </span>
+                        </li>
+                        <li>
+                            <span className={styles.metaLabel}>
+                                <strong>DID</strong>
+                            </span>
+                            <span className={styles.metaValue}>
+                                <code>{ddo.id}</code>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
 
                 <AssetFilesDetails
                     files={base.files ? base.files : []}
