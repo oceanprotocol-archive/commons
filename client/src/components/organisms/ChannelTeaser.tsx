@@ -41,21 +41,20 @@ export default class ChannelTeaser extends Component<
         const { ocean } = this.context
 
         const searchQuery = {
-            offset: 4,
+            offset: 2,
             page: 1,
             query: {
                 tags: [this.channel.tag]
             },
             sort: {
-                datePublished: 1
+                created: -1
             }
         }
 
         try {
             const search = await ocean.aquarius.queryMetadata(searchQuery)
             this.setState({
-                // TODO: remove hacky way of getting the latest 2 assets
-                channelAssets: search.results.splice(2, 2, ''),
+                channelAssets: search.results,
                 isLoadingChannel: false
             })
         } catch (error) {

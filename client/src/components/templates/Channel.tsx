@@ -63,7 +63,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
                 tags: [this.channel.tag]
             },
             sort: {
-                datePublished: 1
+                created: -1
             }
         }
 

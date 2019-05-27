@@ -82,7 +82,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                 ...queryValues
             },
             sort: {
-                datePublished: 1
+                created: -1
             }
         }
 
