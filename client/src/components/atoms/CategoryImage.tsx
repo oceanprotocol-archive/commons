@@ -97,6 +97,8 @@ const categoryImageFile = (category: string) => {
         case 'mathematics':
             return mathematics
         case 'Medicine':
+        case 'Health & Medicine':
+        case 'Health':
         case 'medicine':
             return medicine
         case 'Other':
