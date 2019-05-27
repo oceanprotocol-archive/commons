@@ -34,6 +34,7 @@ import theology from '../../img/categories/theology.jpg'
 import transport from '../../img/categories/transport.jpg'
 import urbanplanning from '../../img/categories/urbanplanning.jpg'
 import visualart from '../../img/categories/visualart.jpg'
+import aiforgood from '../../img/aiforgood.jpg'
 import fallback from '@oceanprotocol/art/jellyfish/jellyfish-back.svg'
 
 const categoryImageFile = (category: string) => {
@@ -134,6 +135,8 @@ const categoryImageFile = (category: string) => {
         case 'Visual Arts & Design':
         case 'visualart':
             return visualart
+        case 'AI For Good':
+            return aiforgood
         default:
             return fallback
     }
