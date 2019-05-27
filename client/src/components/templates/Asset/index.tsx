@@ -7,8 +7,9 @@ import AssetDetails from './AssetDetails'
 import stylesApp from '../../../App.module.scss'
 import Content from '../../atoms/Content'
 import CategoryImage from '../../atoms/CategoryImage'
+import styles from './index.module.scss'
 
-interface DetailsProps {
+interface AssetProps {
     location: Location
     match: {
         params: {
@@ -17,15 +18,17 @@ interface DetailsProps {
     }
 }
 
-interface DetailsState {
+interface AssetState {
     ddo: DDO
     metadata: MetaData
+    error: string
 }
 
-export default class Details extends Component<DetailsProps, DetailsState> {
+export default class Asset extends Component<AssetProps, AssetState> {
     public state = {
         ddo: ({} as any) as DDO,
-        metadata: ({ base: { name: '' } } as any) as MetaData
+        metadata: ({ base: { name: '' } } as any) as MetaData,
+        error: ''
     }
 
     public async componentDidMount() {
@@ -40,11 +43,14 @@ export default class Details extends Component<DetailsProps, DetailsState> {
             this.setState({ ddo, metadata })
         } catch (error) {
             Logger.error(error.message)
+            this.setState({
+                error: `We encountered an error: ${error.message}.`
+            })
         }
     }
 
     public render() {
-        const { metadata, ddo } = this.state
+        const { metadata, ddo, error } = this.state
 
         return metadata.base.name !== '' ? (
             <Route
@@ -63,6 +69,8 @@ export default class Details extends Component<DetailsProps, DetailsState> {
                     <AssetDetails metadata={metadata} ddo={ddo} />
                 </Content>
             </Route>
+        ) : error !== '' ? (
+            <div className={styles.error}>{error}</div>
         ) : (
             <div className={stylesApp.loader}>
                 <Spinner message={'Loading asset...'} />
@@ -71,4 +79,4 @@ export default class Details extends Component<DetailsProps, DetailsState> {
     }
 }
 
-Details.contextType = User
+Asset.contextType = User
