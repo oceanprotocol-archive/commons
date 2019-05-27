@@ -135,6 +135,8 @@ const categoryImageFile = (category: string) => {
         case 'Visual Arts & Design':
         case 'visualart':
             return visualart
+        // technically no category
+        // but corresponding to title of a channel
         case 'AI For Good':
             return aiforgood
         default:

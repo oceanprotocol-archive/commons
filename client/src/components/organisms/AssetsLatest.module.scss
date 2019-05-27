@@ -34,7 +34,7 @@
     border-bottom: 1px solid $brand-grey-lighter;
     padding-bottom: $spacer / 3;
     margin-top: $spacer * 3;
-    margin-bottom: $spacer;
+    margin-bottom: $spacer / 2;
 
     @media (min-width: $break-point--small) {
         text-align: left;
