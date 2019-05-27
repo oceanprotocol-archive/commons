@@ -24,7 +24,8 @@ export class UrlCheckRouter {
             (error, response) => {
                 if (
                     response &&
-                    response.statusCode.toString().startsWith('2')
+                    (response.statusCode.toString().startsWith('2') ||
+                    response.statusCode.toString().startsWith('416'))
                 ) {
                     const result: any = {}
                     result.found = true
