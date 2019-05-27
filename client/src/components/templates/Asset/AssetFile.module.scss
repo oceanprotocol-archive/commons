@@ -54,6 +54,12 @@
         }
     }
 
+    .empty {
+        font-size: $font-size-mini;
+        font-weight: $font-weight-base;
+        opacity: .75;
+    }
+
     // move spinner a bit up
     + div {
         margin-top: $spacer / 2;
