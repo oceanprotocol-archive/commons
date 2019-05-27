@@ -79,9 +79,6 @@ export default class Home extends Component<HomeProps, HomeState> {
                         <Market.Consumer>
                             {({ categories }) =>
                                 categories
-                                    .filter(
-                                        category => category !== 'AI For Good'
-                                    )
                                     .sort((a, b) => a.localeCompare(b)) // sort alphabetically
                                     .map((category: string) => (
                                         <CategoryLink

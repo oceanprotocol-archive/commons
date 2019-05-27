@@ -1,18 +1,12 @@
 {
   "title": "Channels",
-  "description": "Channels are... You can do this with them... They're cool because...",
+  "description": "Channels are curated collections of existing data sets from multiple categories, showing them in one prominent view. Interested in your own channel? Let us know [@oceanprotocol](https://twitter.com/intent/tweet?text=%40oceanprotocol%20Hey%2C%20I%20am%20interested%20in%20creating%20a%20Commons%20Channel&url=https://commons.oceanprotocol.com/channels/).",
   "items": [
     {
       "title": "AI For Good",
       "tag": "ai-for-good",
       "teaser": "AI for Good is an initiative to promote the use of artificial intelligence for good causes.",
       "description": "[AI for Good](https://ai4good.org) is an initiative to promote the use of artificial intelligence for taking action on the UN SDGs such as fighting poverty, climate change, improving healthcare, etc. The AI for Good Commons channel is aimed at helping scale AI for Good by enabling open datasets to be published and shared and connecting AI problem owners with problem solvers."
-    },
-    {
-      "title": "Test Channel",
-      "tag": "test-channel",
-      "teaser": "Hello teaser.",
-      "description": "Hello description."
     }
   ]
 }
