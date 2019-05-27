@@ -133,8 +133,6 @@ const categoryImageFile = (category: string) => {
         case 'Visual Arts & Design':
         case 'visualart':
             return visualart
-        case 'AI For Good':
-            return dataofdata
         default:
             return fallback
     }
