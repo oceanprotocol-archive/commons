@@ -11,7 +11,7 @@ import AssetFile, { messages } from './AssetFile'
 const file = {
     index: 0,
     url: 'https://hello.com',
-    contentType: 'zip',
+    contentType: 'application/x-zip',
     contentLength: 100
 }
 

@@ -2,6 +2,8 @@ const cleanupContentType = (contentType: string) => {
     // strip away the 'application/' part
     const contentTypeSplit = contentType.split('/')[1]
 
+    if (!contentTypeSplit) return contentType
+
     let contentTypeCleaned
 
     // TODO: add all the possible archive & compression MIME types

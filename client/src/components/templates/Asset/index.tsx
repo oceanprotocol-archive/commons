@@ -51,8 +51,15 @@ export default class Asset extends Component<AssetProps, AssetState> {
 
     public render() {
         const { metadata, ddo, error } = this.state
+        const isLoading = metadata.base.name === ''
 
-        return metadata.base.name !== '' ? (
+        return isLoading ? (
+            <div className={stylesApp.loader}>
+                <Spinner message={'Loading asset...'} />
+            </div>
+        ) : error !== '' ? (
+            <div className={styles.error}>{error}</div>
+        ) : (
             <Route
                 title={metadata.base.name}
                 image={
@@ -69,12 +76,6 @@ export default class Asset extends Component<AssetProps, AssetState> {
                     <AssetDetails metadata={metadata} ddo={ddo} />
                 </Content>
             </Route>
-        ) : error !== '' ? (
-            <div className={styles.error}>{error}</div>
-        ) : (
-            <div className={stylesApp.loader}>
-                <Spinner message={'Loading asset...'} />
-            </div>
         )
     }
 }
