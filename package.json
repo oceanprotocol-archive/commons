@@ -21,6 +21,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@release-it/bumper": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "auto-changelog": "^1.13.0",
@@ -47,6 +48,15 @@
       "beforeStart": "npm test",
       "beforeStage": "npm run changelog",
       "afterRelease": "echo Successfully released ${name} v${version} to ${repo.repository}."
+    },
+    "plugins": {
+      "@release-it/bumper": {
+        "out": [
+          "package.json",
+          "client/package.json",
+          "server/package.json"
+        ]
+      }
     },
     "git": {
       "tagName": "v${version}"
