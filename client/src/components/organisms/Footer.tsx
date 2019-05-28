@@ -5,33 +5,7 @@ import { ReactComponent as AiCommons } from '../../img/aicommons.svg'
 import styles from './Footer.module.scss'
 
 import meta from '../../data/meta.json'
-import { version } from '../../../package.json'
-import { version as versionSquid } from '@oceanprotocol/squid/package.json'
-
-const VersionNumber = () => {
-    const versionOutput =
-        process.env.NODE_ENV === 'production'
-            ? `v${version}`
-            : `v${version}-dev`
-
-    return (
-        <p className={styles.version}>
-            <a
-                title="See commons release on GitHub"
-                href={`https://github.com/oceanprotocol/commons/releases/tag/v${version}`}
-            >
-                {versionOutput}
-            </a>{' '}
-            &mdash;{' '}
-            <a
-                title="See squid-js release on GitHub"
-                href={`https://github.com/oceanprotocol/squid-js/releases/tag/v${versionSquid}`}
-            >
-                squid-js v{versionSquid}
-            </a>
-        </p>
-    )
-}
+import VersionNumbers from '../atoms/VersionNumbers'
 
 const Footer = () => (
     <footer className={styles.footer}>
@@ -57,7 +31,7 @@ const Footer = () => (
                         <AiCommons />
                     </a>
                 </p>
-                <VersionNumber />
+                <VersionNumbers />
             </Content>
         </aside>
 
