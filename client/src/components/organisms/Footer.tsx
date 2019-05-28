@@ -5,6 +5,7 @@ import { ReactComponent as AiCommons } from '../../img/aicommons.svg'
 import styles from './Footer.module.scss'
 
 import meta from '../../data/meta.json'
+import VersionNumbers from '../atoms/VersionNumbers'
 
 const Footer = () => (
     <footer className={styles.footer}>
@@ -30,6 +31,7 @@ const Footer = () => (
                         <AiCommons />
                     </a>
                 </p>
+                <VersionNumbers />
             </Content>
         </aside>
 

@@ -16,15 +16,12 @@
     "lint:js": "eslint --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint": "npm run lint:js && npm run lint:css",
-    "release": "./node_modules/release-it/bin/release-it.js --git.tagName='v${version}' --github.release --non-interactive --no-npm.publish",
-    "release-minor": "./node_modules/release-it/bin/release-it.js minor --git.tagName='v${version}' --github.release --non-interactive --no-npm.publish",
-    "release-major": "./node_modules/release-it/bin/release-it.js major --git.tagName='v${version}' --github.release --non-interactive --no-npm.publish",
-    "changelog": "auto-changelog",
-    "changelog:commit": "npm run changelog && git add CHANGELOG.md && git commit -m 'update changelog' && git push",
-    "beforeStage": "npm run changelog"
+    "release": "release-it --non-interactive",
+    "changelog": "auto-changelog -p"
   },
   "dependencies": {},
   "devDependencies": {
+    "@release-it/bumper": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "auto-changelog": "^1.13.0",
@@ -45,5 +42,30 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/oceanprotocol/commons"
+  },
+  "release-it": {
+    "scripts": {
+      "beforeStart": "npm test",
+      "beforeStage": "npm run changelog",
+      "afterRelease": "echo Successfully released ${name} v${version} to ${repo.repository}."
+    },
+    "plugins": {
+      "@release-it/bumper": {
+        "out": [
+          "package.json",
+          "client/package.json",
+          "server/package.json"
+        ]
+      }
+    },
+    "git": {
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": false
+    }
   }
 }
