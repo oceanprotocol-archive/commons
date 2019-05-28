@@ -124,7 +124,7 @@ Builds the client for production to the `./client/build` folder, and the server 
 
 From a clean `master` branch you can run any release task doing the following:
 
-- bumps the project version
+- bumps the project version in `package.json`, `client/package.json`, `server/package.json`
 - auto-generates and updates the CHANGELOG.md file from commit messages
 - creates a Git tag
 - commits and pushes everything
