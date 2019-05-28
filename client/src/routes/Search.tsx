@@ -1,13 +1,15 @@
 import React, { PureComponent } from 'react'
+import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import { History, Location } from 'history'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
 import Route from '../components/templates/Route'
 import { User } from '../context'
-import Asset from '../components/molecules/Asset'
+import AssetTeaser from '../components/molecules/AssetTeaser'
 import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
+import Content from '../components/atoms/Content'
 
 interface SearchProps {
     location: Location
@@ -22,6 +24,7 @@ interface SearchState {
     currentPage: number
     isLoading: boolean
     searchTerm: string
+    searchCategories: string
 }
 
 export default class Search extends PureComponent<SearchProps, SearchState> {
@@ -32,21 +35,29 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         totalPages: 1,
         currentPage: 1,
         isLoading: true,
-        searchTerm: ''
+        searchTerm: '',
+        searchCategories: ''
     }
 
     public async componentDidMount() {
-        const searchTerm = await queryString.parse(this.props.location.search)
-            .text
-        const searchPage = queryString.parse(this.props.location.search).page
+        const { search } = this.props.location
+        const { text, page, categories } = queryString.parse(search)
 
-        await this.setState({
-            searchTerm: encodeURIComponent(`${searchTerm}`)
-        })
+        if (text) {
+            await this.setState({
+                searchTerm: decodeURIComponent(`${text}`)
+            })
+        }
+
+        if (categories) {
+            await this.setState({
+                searchCategories: decodeURIComponent(`${categories}`)
+            })
+        }
 
         // switch to respective page if query string is present
-        if (searchPage) {
-            const currentPage = Number(searchPage)
+        if (page) {
+            const currentPage = Number(page)
             await this.setState({ currentPage })
         }
 
@@ -55,16 +66,23 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
     private searchAssets = async () => {
         const { ocean } = this.context
+        const { offset, currentPage, searchTerm, searchCategories } = this.state
+
+        const queryValues =
+            searchCategories !== '' && searchTerm !== ''
+                ? { text: [searchTerm], categories: [searchCategories] }
+                : searchCategories !== '' && searchTerm === ''
+                ? { categories: [searchCategories] }
+                : { text: [searchTerm] }
 
         const searchQuery = {
-            offset: this.state.offset,
-            page: this.state.currentPage,
+            offset,
+            page: currentPage,
             query: {
-                text: [decodeURIComponent(this.state.searchTerm)],
-                price: [-1, 1]
+                ...queryValues
             },
             sort: {
-                datePublished: 1
+                created: -1
             }
         }
 
@@ -77,7 +95,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                 isLoading: false
             })
         } catch (error) {
-            Logger.error(error)
+            Logger.error(error.message)
             this.setState({ isLoading: false })
         }
     }
@@ -101,11 +119,14 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         ) : this.state.results && this.state.results.length ? (
             <div className={styles.results}>
                 {this.state.results.map((asset: any) => (
-                    <Asset key={asset.id} asset={asset} />
+                    <AssetTeaser key={asset.id} asset={asset} />
                 ))}
             </div>
         ) : (
-            <div>No data sets found.</div>
+            <div className={styles.empty}>
+                <p>No Data Sets Found.</p>
+                <Link to="/publish">+ Publish A Data Set</Link>
+            </div>
         )
 
     public render() {
@@ -113,23 +134,26 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
 
         return (
             <Route title="Search" wide>
-                {totalResults > 0 && (
-                    <h2
-                        className={styles.resultsTitle}
-                        dangerouslySetInnerHTML={{
-                            __html: `${totalResults} results for <span>${decodeURIComponent(
-                                this.state.searchTerm
-                            )}</span>`
-                        }}
-                    />
-                )}
-                {this.renderResults()}
+                <Content wide>
+                    {!this.state.isLoading && (
+                        <h2 className={styles.resultsTitle}>
+                            {totalResults} results for{' '}
+                            <span>
+                                {decodeURIComponent(
+                                    this.state.searchTerm ||
+                                        this.state.searchCategories
+                                )}
+                            </span>
+                        </h2>
+                    )}
+                    {this.renderResults()}
 
-                <Pagination
-                    totalPages={totalPages}
-                    currentPage={currentPage}
-                    handlePageClick={this.handlePageClick}
-                />
+                    <Pagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        handlePageClick={this.handlePageClick}
+                    />
+                </Content>
             </Route>
         )
     }

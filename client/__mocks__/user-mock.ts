@@ -5,7 +5,11 @@ const userMock = {
     isOceanNetwork: false,
     account: '',
     web3: {},
-    ocean: {},
+    ocean: {
+        aquarius: {
+            queryMetadata: jest.fn()
+        }
+    },
     balance: { eth: 0, ocn: 0 },
     network: '',
     requestFromFaucet: jest.fn(),
@@ -20,7 +24,11 @@ const userMockConnected = {
     isOceanNetwork: true,
     account: '0xxxxxx',
     web3: {},
-    ocean: {},
+    ocean: {
+        aquarius: {
+            queryMetadata: jest.fn()
+        }
+    },
     balance: { eth: 0, ocn: 0 },
     network: '',
     requestFromFaucet: jest.fn(),

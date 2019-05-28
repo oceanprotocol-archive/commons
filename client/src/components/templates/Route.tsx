@@ -3,16 +3,19 @@ import Helmet from 'react-helmet'
 import Content from '../atoms/Content'
 import styles from './Route.module.scss'
 import meta from '../../data/meta.json'
+import Markdown from '../atoms/Markdown'
 
 const Route = ({
     title,
     description,
+    image,
     wide,
     children,
     className
 }: {
     title: string
     description?: string
+    image?: any
     children: any
     wide?: boolean
     className?: string
@@ -24,23 +27,24 @@ const Route = ({
             {description && <meta name="description" content={description} />}
         </Helmet>
 
-        <Content wide={wide}>
-            <article>
-                <header className={styles.header}>
+        <article>
+            <header className={styles.header}>
+                <Content wide={wide}>
                     <h1 className={styles.title}>{title}</h1>
+
+                    {image && image}
+
                     {description && (
-                        <p
+                        <Markdown
+                            text={description}
                             className={styles.description}
-                            dangerouslySetInnerHTML={{
-                                __html: description
-                            }}
                         />
                     )}
-                </header>
+                </Content>
+            </header>
 
-                {children}
-            </article>
-        </Content>
+            {children}
+        </article>
     </div>
 )
 

@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .buttonMain {
     margin: auto;
@@ -25,13 +25,16 @@
 
 .file {
     display: inline-block;
-    background: $brand-grey;
+    background: $brand-grey-dark
+        url('../../../../node_modules/@oceanprotocol/art/jellyfish/jellyfish-grid.svg')
+        no-repeat -1rem 4.5rem;
+    background-size: 100%;
     padding: $spacer $spacer / 2;
     margin-bottom: $spacer / 2;
     text-align: left;
     position: relative;
-    height: 8rem;
-    width: 6rem;
+    height: 8.5rem;
+    width: 6.5rem;
 
     &:before {
         content: '';
@@ -52,6 +55,12 @@
         &:before {
             display: none;
         }
+    }
+
+    .empty {
+        font-size: $font-size-mini;
+        font-weight: $font-weight-base;
+        opacity: .75;
     }
 
     // move spinner a bit up

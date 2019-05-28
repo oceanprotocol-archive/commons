@@ -1,13 +1,18 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
+import { History } from 'history'
+import { User, Market } from '../context'
+import CategoryImage from '../components/atoms/CategoryImage'
+import CategoryLink from '../components/atoms/CategoryLink'
 import Button from '../components/atoms/Button'
 import Form from '../components/atoms/Form/Form'
 import Input from '../components/atoms/Form/Input'
 import Route from '../components/templates/Route'
-import AssetsUser from '../components/organisms/AssetsUser'
 import styles from './Home.module.scss'
 
 import meta from '../data/meta.json'
-import { History } from 'history'
+import Content from '../components/atoms/Content'
+import AssetsLatest from '../components/organisms/AssetsLatest'
+import ChannelTeaser from '../components/organisms/ChannelTeaser'
 
 interface HomeProps {
     history: History
@@ -17,34 +22,11 @@ interface HomeState {
     search?: string
 }
 
-class Home extends Component<HomeProps, HomeState> {
-    public state = { search: '' }
+export default class Home extends Component<HomeProps, HomeState> {
+    public static contextType = User
 
-    public render() {
-        return (
-            <Route
-                title={meta.title}
-                description={meta.description}
-                className={styles.home}
-            >
-                <Form onSubmit={this.searchAssets} minimal>
-                    <Input
-                        type="search"
-                        name="search"
-                        label="Search for data sets"
-                        placeholder="e.g. shapes of plants"
-                        value={this.state.search}
-                        onChange={this.inputChange}
-                        group={
-                            <Button primary disabled={!this.state.search}>
-                                Search
-                            </Button>
-                        }
-                    />
-                </Form>
-                <AssetsUser recent={5} list />
-            </Route>
-        )
+    public state = {
+        search: ''
     }
 
     private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +39,64 @@ class Home extends Component<HomeProps, HomeState> {
         event.preventDefault()
         this.props.history.push(`/search?text=${this.state.search}`)
     }
-}
 
-export default Home
+    public render() {
+        const { search } = this.state
+
+        return (
+            <Route
+                title={meta.title}
+                description={meta.description}
+                className={styles.home}
+            >
+                <Content>
+                    <Form onSubmit={this.searchAssets} minimal>
+                        <Input
+                            type="search"
+                            name="search"
+                            label="Search for data sets"
+                            placeholder="e.g. shapes of plants"
+                            value={search}
+                            onChange={this.inputChange}
+                            group={
+                                <Button primary disabled={!search}>
+                                    Search
+                                </Button>
+                            }
+                        />
+                    </Form>
+                </Content>
+
+                <Content wide>
+                    <h2 className={styles.title}>Featured Channel</h2>
+                    <ChannelTeaser channel="ai-for-good" />
+                    <AssetsLatest />
+                </Content>
+
+                <Content wide>
+                    <h2 className={styles.title}>Explore Categories</h2>
+                    <div className={styles.categories}>
+                        <Market.Consumer>
+                            {({ categories }) =>
+                                categories
+                                    .sort((a, b) => a.localeCompare(b)) // sort alphabetically
+                                    .map((category: string) => (
+                                        <CategoryLink
+                                            category={category}
+                                            key={category}
+                                            className={styles.category}
+                                        >
+                                            <CategoryImage
+                                                category={category}
+                                            />
+                                            <h3>{category}</h3>
+                                        </CategoryLink>
+                                    ))
+                            }
+                        </Market.Consumer>
+                    </div>
+                </Content>
+            </Route>
+        )
+    }
+}

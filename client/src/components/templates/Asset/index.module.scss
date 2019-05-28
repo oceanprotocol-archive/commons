@@ -1,0 +1,12 @@
+@import '../../../styles/variables';
+
+.error {
+    text-align: center;
+    margin: 20vh auto 0 auto;
+    background: $red;
+    border-radius: $border-radius;
+    padding: $spacer / 2;
+    width: fit-content;
+    color: $brand-white;
+    font-weight: $font-weight-bold;
+}

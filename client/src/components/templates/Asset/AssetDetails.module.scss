@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .metaPrimary {
     margin-bottom: $spacer;
@@ -41,18 +41,41 @@
 .description {
     // respect line breaks from textarea
     white-space: pre-line;
+
+    // handle assets where heading are used extensively in the description
+    h1 {
+        font-size: $font-size-h3;
+    }
+
+    h2 {
+        font-size: $font-size-h4;
+    }
+
+    h3 {
+        font-size: $font-size-h5;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-size: $font-size-base;
+    }
 }
 
-.meta {
-    border-top: 1px solid $brand-grey-lighter;
-    border-bottom: 1px solid $brand-grey-lighter;
-    padding-top: $spacer;
-    padding-bottom: $spacer;
+.metaFixed {
+    border: 1px solid $brand-grey-lighter;
+    padding: $spacer;
+    border-radius: $border-radius;
     margin-top: $spacer;
-    margin-bottom: $spacer;
-    list-style: none;
-    padding-left: 0;
+    margin-bottom: $spacer * $line-height;
     font-size: $font-size-small;
+    position: relative;
+
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
 
     li {
         width: 100%;
@@ -60,13 +83,24 @@
 
         @media (min-width: $break-point--small) {
             display: flex;
-            margin-bottom: 0;
+            margin-bottom: $spacer / 3;
         }
 
         &:before {
             display: none;
         }
     }
+}
+
+.metaFixedTitle {
+    font-size: $font-size-small;
+    margin: 0;
+    font-family: $font-family-base;
+    font-weight: $font-weight-base;
+    color: $brand-grey-light;
+    position: absolute;
+    bottom: $spacer / 4;
+    right: $spacer / 4;
 }
 
 .metaLabel {
@@ -85,9 +119,14 @@
         overflow-wrap: break-word;
     }
 
+    /* stylelint-disable declaration-no-important */
     code {
-        display: inline;
+        display: block;
+        padding: 0 !important;
+        background: none !important;
     }
+
+    /* stylelint-enable declaration-no-important */
 
     @media (min-width: $break-point--small) {
         width: 70%;

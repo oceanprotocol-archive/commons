@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react'
 import { Logger, DDO, File } from '@oceanprotocol/squid'
 import filesize from 'filesize'
-import Button from '../../components/atoms/Button'
-import Spinner from '../../components/atoms/Spinner'
-import { User } from '../../context'
+import Button from '../../atoms/Button'
+import Spinner from '../../atoms/Spinner'
+import { User } from '../../../context'
 import styles from './AssetFile.module.scss'
 import ReactGA from 'react-ga'
+import cleanupContentType from '../../../utils/cleanupContentType'
 
 export const messages = {
     start: 'Decrypting file URL...',
@@ -96,19 +97,27 @@ export default class AssetFile extends PureComponent<
         const { ddo, file } = this.props
         const { isLoading, error, step } = this.state
         const { isLogged, isOceanNetwork } = this.context
-        const { index } = file
+        const { index, contentType, contentLength } = file
 
         return (
             <div className={styles.fileWrap}>
                 <ul key={index} className={styles.file}>
-                    <li>
-                        {file.contentType && file.contentType.split('/')[1]}
-                    </li>
-                    <li>
-                        {file.contentLength && filesize(file.contentLength)}
-                    </li>
-                    {/* <li>{file.encoding}</li> */}
-                    {/* <li>{file.compression}</li> */}
+                    {contentType || contentLength ? (
+                        <>
+                            <li>
+                                {contentType && cleanupContentType(contentType)}
+                            </li>
+                            <li>
+                                {contentLength && contentLength > 0
+                                    ? filesize(contentLength)
+                                    : ''}
+                            </li>
+                            {/* <li>{encoding}</li> */}
+                            {/* <li>{compression}</li> */}
+                        </>
+                    ) : (
+                        <li className={styles.empty}>No file info available</li>
+                    )}
                 </ul>
 
                 {isLoading ? (

@@ -20,12 +20,24 @@
             color: inherit;
             border-color: $brand-pink;
             transform: none;
+
+            // category image
+            > div:first-child {
+                opacity: 1;
+                background-size: 105%;
+            }
         }
     }
 
     h1 {
         font-size: $font-size-large;
         margin-top: 0;
+    }
+}
+
+.minimal {
+    h1 {
+        margin-bottom: 0;
     }
 }
 

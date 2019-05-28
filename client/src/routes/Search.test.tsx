@@ -3,6 +3,7 @@ import { render } from 'react-testing-library'
 import Search from './Search'
 import { User } from '../context'
 import { createMemoryHistory } from 'history'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 describe('Search', () => {
     it('renders without crashing', () => {
@@ -35,15 +36,17 @@ describe('Search', () => {
                     message: ''
                 }}
             >
-                <Search
-                    location={{
-                        search: '?text=Hello&page=1',
-                        pathname: '/search',
-                        state: '',
-                        hash: ''
-                    }}
-                    history={history}
-                />
+                <Router>
+                    <Search
+                        location={{
+                            search: '?text=Hello&page=1',
+                            pathname: '/search',
+                            state: '',
+                            hash: ''
+                        }}
+                        history={history}
+                    />
+                </Router>
             </User.Provider>
         )
         expect(container.firstChild).toBeInTheDocument()

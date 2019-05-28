@@ -1,6 +1,13 @@
 import React, { PureComponent } from 'react'
 import { Logger, Ocean } from '@oceanprotocol/squid'
 import { Market } from '.'
+import formPublish from '../data/form-publish.json'
+
+const categories =
+    (formPublish.steps[1].fields &&
+        formPublish.steps[1].fields.categories &&
+        formPublish.steps[1].fields.categories.options) ||
+    []
 
 interface MarketProviderProps {
     ocean: Ocean
@@ -8,6 +15,7 @@ interface MarketProviderProps {
 
 interface MarketProviderState {
     totalAssets: number
+    categories: string[]
 }
 
 export default class MarketProvider extends PureComponent<
@@ -15,7 +23,8 @@ export default class MarketProvider extends PureComponent<
     MarketProviderState
 > {
     public state = {
-        totalAssets: 0
+        totalAssets: 0,
+        categories
     }
 
     public async componentDidMount() {}
@@ -32,9 +41,7 @@ export default class MarketProvider extends PureComponent<
         const searchQuery = {
             offset: 1,
             page: 1,
-            query: {
-                price: [-1, 1]
-            },
+            query: {},
             sort: {
                 value: 1
             }

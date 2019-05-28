@@ -6,6 +6,7 @@ import Spinner from '../components/atoms/Spinner'
 import { User } from '../context'
 import Web3message from '../components/organisms/Web3message'
 import styles from './Faucet.module.scss'
+import Content from '../components/atoms/Content'
 
 interface FaucetState {
     isLoading: boolean
@@ -101,19 +102,21 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
                 title="Faucet"
                 description="Shower yourself with some Ether for Ocean's Nile test network."
             >
-                <Web3message />
+                <Content>
+                    <Web3message />
 
-                <div className={styles.action}>
-                    {isLoading ? (
-                        <Spinner message="Getting Ether..." />
-                    ) : error ? (
-                        <this.Error />
-                    ) : success ? (
-                        <this.Success />
-                    ) : (
-                        isWeb3 && <this.Action />
-                    )}
-                </div>
+                    <div className={styles.action}>
+                        {isLoading ? (
+                            <Spinner message="Getting Ether..." />
+                        ) : error ? (
+                            <this.Error />
+                        ) : success ? (
+                            <this.Success />
+                        ) : (
+                            isWeb3 && <this.Action />
+                        )}
+                    </div>
+                </Content>
             </Route>
         )
     }

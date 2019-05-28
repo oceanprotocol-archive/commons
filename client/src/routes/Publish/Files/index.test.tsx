@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, fireEvent, waitForElement } from 'react-testing-library'
-import Files, { getFileCompression } from '.'
+import Files from '.'
 
 const onChange = jest.fn()
 
@@ -69,22 +69,5 @@ describe('Files', () => {
             target: { value: 'https://hello.com' }
         })
         fireEvent.click(getByText('Add File'))
-    })
-})
-
-describe('getFileCompression', () => {
-    it('outputs known compression', async () => {
-        const compression = await getFileCompression('application/zip')
-        expect(compression).toBe('zip')
-    })
-
-    it('outputs known x- compression', async () => {
-        const compression = await getFileCompression('application/x-gtar')
-        expect(compression).toBe('gtar')
-    })
-
-    it('outputs unknown compression', async () => {
-        const compression = await getFileCompression('blabla')
-        expect(compression).toBe('none')
     })
 })

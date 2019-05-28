@@ -12,9 +12,15 @@
     @media (min-width: $break-point--small) {
         font-size: $font-size-h1;
     }
+
+    // category image
+    + div:not(.description) {
+        margin-bottom: $spacer;
+    }
 }
 
 .description {
     margin-top: $spacer / 2;
     font-size: $font-size-large;
+    color: $brand-grey;
 }

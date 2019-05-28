@@ -12,7 +12,11 @@ describe('Details', () => {
                     state: '',
                     hash: ''
                 }}
-                match={{ params: { did: '' } }}
+                match={{
+                    params: {
+                        did: ''
+                    }
+                }}
             />
         )
         expect(container.firstChild).toBeInTheDocument()
