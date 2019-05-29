@@ -59,9 +59,17 @@ export default class AssetFile extends PureComponent<
             const accounts = await ocean.accounts.list()
             const service = ddo.findServiceByType('Access')
 
-            const agreementId = await ocean.assets
+            const agreements = await ocean.keeper.conditions.accessSecretStoreCondition.getGrantedDidByConsumer(accounts[0].id)
+            const agreement = agreements.find((element: any) => {return element.did === ddo.id})
+
+            let agreementId
+            if (agreement) {
+                agreementId = agreement.agreementId
+            } else {
+                agreementId = await ocean.assets
                 .order(ddo.id, service.serviceDefinitionId, accounts[0])
                 .next((step: number) => this.setState({ step }))
+            }
 
             // manually add another step here for better UX
             this.setState({ step: 4 })
