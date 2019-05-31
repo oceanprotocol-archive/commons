@@ -1,14 +1,18 @@
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import { render } from 'react-testing-library'
 import AssetsLatest from './AssetsLatest'
-import { BrowserRouter } from 'react-router-dom'
+import { User } from '../../context'
+import { userMockConnected } from '../../../__mocks__/user-mock'
 
 describe('AssetsLatest', () => {
     it('renders without crashing', () => {
         const { container } = render(
-            <BrowserRouter>
-                <AssetsLatest />
-            </BrowserRouter>
+            <User.Provider value={userMockConnected}>
+                <BrowserRouter>
+                    <AssetsLatest />
+                </BrowserRouter>
+            </User.Provider>
         )
         expect(container.firstChild).toBeInTheDocument()
     })

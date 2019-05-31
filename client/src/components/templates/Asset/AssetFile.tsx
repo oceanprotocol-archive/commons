@@ -59,16 +59,21 @@ export default class AssetFile extends PureComponent<
             const accounts = await ocean.accounts.list()
             const service = ddo.findServiceByType('Access')
 
-            const agreements = await ocean.keeper.conditions.accessSecretStoreCondition.getGrantedDidByConsumer(accounts[0].id)
-            const agreement = agreements.find((element: any) => {return element.did === ddo.id})
+            const agreements = await ocean.keeper.conditions.accessSecretStoreCondition.getGrantedDidByConsumer(
+                accounts[0].id
+            )
+            const agreement = agreements.find((element: any) => {
+                return element.did === ddo.id
+            })
 
             let agreementId
+
             if (agreement) {
-                agreementId = agreement.agreementId
+                ;({ agreementId } = agreement)
             } else {
                 agreementId = await ocean.assets
-                .order(ddo.id, service.serviceDefinitionId, accounts[0])
-                .next((step: number) => this.setState({ step }))
+                    .order(ddo.id, service.serviceDefinitionId, accounts[0])
+                    .next((step: number) => this.setState({ step }))
             }
 
             // manually add another step here for better UX
@@ -89,7 +94,7 @@ export default class AssetFile extends PureComponent<
             })
             this.setState({ isLoading: false })
         } catch (error) {
-            Logger.log('error', error.message)
+            Logger.error('error', error.message)
             this.setState({
                 isLoading: false,
                 error: `${error.message}. Sorry about that, can you try again?`
