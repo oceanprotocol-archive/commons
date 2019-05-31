@@ -16,7 +16,12 @@ const file = {
     contentLength: 100
 }
 
-const ddo = ({ id: 'xxx', findServiceByType: jest.fn() } as any) as DDO
+const ddo = ({
+    id: 'xxx',
+    findServiceByType: () => {
+        return { serviceDefinitionId: 'xxx' }
+    }
+} as any) as DDO
 
 ReactGA.initialize('foo', { testMode: true })
 
