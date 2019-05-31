@@ -1,7 +1,7 @@
 {
   "name": "commons-server",
   "description": "Ocean Protocol marketplace backend.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "license": "Apache-2.0",
   "main": "dist/server.js",
   "scripts": {
