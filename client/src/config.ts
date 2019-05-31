@@ -23,7 +23,7 @@ export const brizoHost =
 export const brizoPort = process.env.REACT_APP_BRIZO_PORT || 443
 export const brizoAddress =
     process.env.REACT_APP_BRIZO_ADDRESS ||
-    '0x376817c638d2a04f475a73af37f7b51a2862d567'
+    '0x4aaab179035dc57b35e2ce066919048686f82972'
 
 export const parityScheme = process.env.REACT_APP_PARITY_SCHEME || 'https'
 export const parityHost =
