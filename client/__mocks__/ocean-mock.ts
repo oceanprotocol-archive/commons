@@ -12,10 +12,23 @@ const oceanMock = {
                 }
             }
         },
+        assets: {
+            resolve: jest.fn(),
+            order: () => {
+                return {
+                    next: jest.fn()
+                }
+            },
+            consume: jest.fn()
+        },
         keeper: {
             conditions: {
                 accessSecretStoreCondition: {
-                    getGrantedDidByConsumer: jest.fn()
+                    getGrantedDidByConsumer: () => {
+                        return {
+                            find: jest.fn()
+                        }
+                    }
                 }
             }
         }

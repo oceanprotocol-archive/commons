@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from 'react'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import { DDO } from '@oceanprotocol/squid'
 import AssetFilesDetails from './AssetFilesDetails'
 import { User } from '../../../context'

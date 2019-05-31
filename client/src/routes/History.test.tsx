@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import { User } from '../context'
 import History from './History'
 

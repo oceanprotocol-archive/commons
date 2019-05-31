@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import AssetsLatest from './AssetsLatest'
 import { User } from '../../context'
 import { userMockConnected } from '../../../__mocks__/user-mock'

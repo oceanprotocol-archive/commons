@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from 'react'
-import { render, fireEvent } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
 import { DDO } from '@oceanprotocol/squid'
 import { StateMock } from '@react-mock/state'
 import ReactGA from 'react-ga'
@@ -16,7 +16,12 @@ const file = {
     contentLength: 100
 }
 
-const ddo = ({ id: 'xxx', findServiceByType: jest.fn() } as any) as DDO
+const ddo = ({
+    id: 'xxx',
+    findServiceByType: () => {
+        return { serviceDefinitionId: 'xxx' }
+    }
+} as any) as DDO
 
 ReactGA.initialize('foo', { testMode: true })
 

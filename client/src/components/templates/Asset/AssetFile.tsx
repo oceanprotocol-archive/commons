@@ -25,7 +25,7 @@ interface AssetFileProps {
 interface AssetFileState {
     isLoading: boolean
     error: string
-    step: number | null
+    step: number | string | null
 }
 
 export default class AssetFile extends PureComponent<

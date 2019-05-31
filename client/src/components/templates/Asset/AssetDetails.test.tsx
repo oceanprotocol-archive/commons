@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import { DDO, MetaData } from '@oceanprotocol/squid'
 import { BrowserRouter as Router } from 'react-router-dom'
 import AssetDetails, { datafilesLine } from './AssetDetails'
