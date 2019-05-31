@@ -1,4 +1,6 @@
 import React, { PureComponent } from 'react'
+import { Logger } from '@oceanprotocol/squid'
+import axios from 'axios'
 import { version } from '../../../package.json'
 import { version as versionSquid } from '@oceanprotocol/squid/package.json'
 import styles from './VersionNumbers.module.scss'
@@ -9,60 +11,95 @@ import {
     aquariusScheme,
     brizoHost,
     brizoPort,
-    brizoScheme
+    brizoScheme,
+    faucetHost,
+    faucetPort,
+    faucetScheme
 } from '../../config'
-import { Logger } from '@oceanprotocol/squid'
 
 const commonsVersion =
     process.env.NODE_ENV === 'production' ? `v${version}` : `v${version}-dev`
 
-export default class VersionNumbers extends PureComponent {
+interface VersionNumbersState {
+    commons: string
+    squidJs: string
+    aquarius: string
+    brizo: string
+    faucet: string
+}
+
+export default class VersionNumbers extends PureComponent<
+    {},
+    VersionNumbersState
+> {
     public state = {
         commons: commonsVersion,
         squidJs: `v${versionSquid}`,
         aquarius: 'v0.0.0',
-        brizo: 'v0.0.0'
+        brizo: 'v0.0.0',
+        faucet: 'v0.0.0'
     }
 
-    public async componentDidMount() {
-        try {
-            const {
-                versionAquarius,
-                versionBrizo
-            } = await this.getComponentVersions()
+    // for canceling axios requests
+    public signal = axios.CancelToken.source()
 
-            this.setState({
-                aquarius: `v${versionAquarius}`,
-                brizo: `v${versionBrizo}`
-            })
+    public componentWillMount() {
+        this.setComponentVersions()
+    }
+
+    public componentWillUnmount() {
+        this.signal.cancel()
+    }
+
+    private async setComponentVersions() {
+        try {
+            const versionAquarius = await this.getVersion(
+                aquariusScheme,
+                aquariusHost,
+                aquariusPort
+            )
+            this.setState({ aquarius: `v${versionAquarius}` })
+
+            const versionBrizo = await this.getVersion(
+                brizoScheme,
+                brizoHost,
+                brizoPort
+            )
+            this.setState({ brizo: `v${versionBrizo}` })
+
+            const versionFaucet = await this.getVersion(
+                faucetScheme,
+                faucetHost,
+                faucetPort
+            )
+            this.setState({ faucet: `v${versionFaucet}` })
         } catch (error) {
-            Logger.error(error.message)
+            !axios.isCancel(error) && Logger.error(error.message)
         }
     }
 
-    private async getComponentVersions() {
-        const responseAquarius = await fetch(
-            `${aquariusScheme}://${aquariusHost}:${aquariusPort}`
-        )
-        const jsonAquarius = await responseAquarius.json()
-        const versionAquarius = jsonAquarius.version
-
-        const responseBrizo = await fetch(
-            `${brizoScheme}://${brizoHost}:${brizoPort}`
-        )
-        const jsonBrizo = await responseBrizo.json()
-        const versionBrizo = jsonBrizo.version
-
-        return { versionAquarius, versionBrizo }
+    private async getVersion(
+        scheme: string,
+        host: string,
+        port: number | string
+    ) {
+        const { data } = await axios.get(`${scheme}://${host}:${port}`, {
+            headers: { Accept: 'application/json' },
+            cancelToken: this.signal.token
+        })
+        const { version } = data
+        return version
     }
 
     public render() {
-        const { commons, squidJs, brizo, aquarius } = this.state
+        const { commons, squidJs, brizo, aquarius, faucet } = this.state
+
+        const componentsOutput = `Squid-js ${squidJs}  \nBrizo ${brizo} \nAquarius ${aquarius} \nFaucet ${faucet}`
 
         return (
             <p className={styles.version}>
                 <a
-                    title={`Squid-js ${squidJs} - Brizo ${brizo} - Aquarius ${aquarius}`}
+                    title={componentsOutput}
                     href={`https://github.com/oceanprotocol/commons/releases/tag/${commons}`}
                 >
                     {commons}
