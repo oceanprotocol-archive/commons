@@ -1,3 +1,5 @@
+import oceanMock from './ocean-mock'
+
 const userMock = {
     isLogged: false,
     isLoading: false,
@@ -5,11 +7,7 @@ const userMock = {
     isOceanNetwork: false,
     account: '',
     web3: {},
-    ocean: {
-        aquarius: {
-            queryMetadata: jest.fn()
-        }
-    },
+    ...oceanMock,
     balance: { eth: 0, ocn: 0 },
     network: '',
     requestFromFaucet: jest.fn(),
@@ -24,11 +22,7 @@ const userMockConnected = {
     isOceanNetwork: true,
     account: '0xxxxxx',
     web3: {},
-    ocean: {
-        aquarius: {
-            queryMetadata: jest.fn()
-        }
-    },
+    ...oceanMock,
     balance: { eth: 0, ocn: 0 },
     network: '',
     requestFromFaucet: jest.fn(),

@@ -7,6 +7,7 @@ import { StateMock } from '@react-mock/state'
 import ReactGA from 'react-ga'
 import { User } from '../../../context'
 import AssetFile, { messages } from './AssetFile'
+import { userMockConnected } from '../../../../__mocks__/user-mock'
 
 const file = {
     index: 0,
@@ -15,22 +16,7 @@ const file = {
     contentLength: 100
 }
 
-const ddo = ({ id: 'xxx' } as any) as DDO
-
-const contextConnectedMock = {
-    isLogged: true,
-    isLoading: false,
-    isWeb3: true,
-    isOceanNetwork: true,
-    account: '',
-    web3: {},
-    ocean: {},
-    balance: { eth: 0, ocn: 0 },
-    network: '',
-    requestFromFaucet: () => {},
-    unlockAccounts: () => {},
-    message: ''
-}
+const ddo = ({ id: 'xxx', findServiceByType: jest.fn() } as any) as DDO
 
 ReactGA.initialize('foo', { testMode: true })
 
@@ -47,7 +33,7 @@ describe('AssetFile', () => {
 
     it('button to be enabled when connected', async () => {
         const { getByText } = render(
-            <User.Provider value={contextConnectedMock}>
+            <User.Provider value={userMockConnected}>
                 <AssetFile file={file} ddo={ddo} />
             </User.Provider>
         )
