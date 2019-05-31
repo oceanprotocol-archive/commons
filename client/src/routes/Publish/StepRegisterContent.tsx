@@ -4,6 +4,17 @@ import Spinner from '../../components/atoms/Spinner'
 import Button from '../../components/atoms/Button'
 import styles from './StepRegisterContent.module.scss'
 
+export const messages: any = {
+    0: '1/4<br />Encrypting files...',
+    1: '1/4<br />Successfully encrypted files.',
+    2: '2/4<br />Generating proof...',
+    3: '2/4<br />Successfully generated proof.',
+    4: '3/4<br /> Registering DID...',
+    5: '3/4<br /> Successfully registered DID.',
+    6: '4/4<br /> Storing DDO...',
+    7: '4/4<br /> Successfully stored DDO.'
+}
+
 interface StepRegisterContentProps {
     tryAgain(): void
     toStart(): void
@@ -12,6 +23,7 @@ interface StepRegisterContentProps {
         isPublishing: boolean
         publishingError: string
         isPublished: boolean
+        publishingStep: number
     }
     content?: string
 }
@@ -20,9 +32,13 @@ export default class StepRegisterContent extends PureComponent<
     StepRegisterContentProps,
     {}
 > {
-    public publishingState = () => (
-        <Spinner message={'Please sign with your crypto wallet'} />
-    )
+    public publishingState = () => {
+        const { publishingStep } = this.props.state
+
+        const message = messages[publishingStep]
+
+        return <Spinner message={message} />
+    }
 
     public errorState = () => (
         <div className={styles.message}>

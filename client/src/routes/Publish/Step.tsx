@@ -154,7 +154,13 @@ export default class Step extends PureComponent<StepProps, {}> {
                     {this.nextButton()}
 
                     {lastStep && (
-                        <Button disabled={!this.context.isLogged} primary>
+                        <Button
+                            disabled={
+                                !this.context.isLogged ||
+                                this.props.state.isPublishing
+                            }
+                            primary
+                        >
                             Register asset
                         </Button>
                     )}

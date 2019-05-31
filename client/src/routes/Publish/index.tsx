@@ -30,11 +30,14 @@ interface PublishState {
     isPublished?: boolean
     publishedDid?: string
     publishingError?: string
+    publishingStep?: number
     currentStep?: number
     validationStatus?: any
 }
 
-class Publish extends Component<{}, PublishState> {
+export default class Publish extends Component<{}, PublishState> {
+    public static contextType = User
+
     public state = {
         currentStep: 1,
         name: '',
@@ -51,6 +54,7 @@ class Publish extends Component<{}, PublishState> {
         isPublished: false,
         publishedDid: '',
         publishingError: '',
+        publishingStep: 0,
         validationStatus: {
             1: { name: false, files: false, allFieldsValid: false },
             2: {
@@ -126,6 +130,7 @@ class Publish extends Component<{}, PublishState> {
             categories: '',
             isPublishing: false,
             isPublished: false,
+            publishingStep: 0,
             currentStep: 1
         })
     }
@@ -251,14 +256,15 @@ class Publish extends Component<{}, PublishState> {
 
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        ReactGA.event({
-            category: 'Publish',
-            action: 'registerAsset-start'
-        })
+
+        ReactGA.event({ category: 'Publish', action: 'registerAsset-start' })
+
         this.setState({
             publishingError: '',
-            isPublishing: true
+            isPublishing: true,
+            publishingStep: 0
         })
+
         const { ocean } = this.context
         const account = await ocean.accounts.list()
         const newAsset = {
@@ -286,32 +292,33 @@ class Publish extends Component<{}, PublishState> {
         }
 
         try {
-            const asset = await this.context.ocean.assets.create(
-                newAsset,
-                account[0]
-            )
+            const asset = await this.context.ocean.assets
+                .create(newAsset, account[0])
+                .next((publishingStep: number) =>
+                    this.setState({ publishingStep })
+                )
+
             this.setState({
                 publishedDid: asset.id,
                 isPublished: true
             })
+
             ReactGA.event({
                 category: 'Publish',
-                action: 'registerAsset-end' + asset.id
+                action: `registerAsset-end ${asset.id}`
             })
-        } catch (e) {
+        } catch (error) {
             // make readable errors
-            Logger.log('error:', e)
-            this.setState({
-                publishingError: e.message
-            })
+            Logger.error('error:', error.message)
+            this.setState({ publishingError: error.message })
+
             ReactGA.event({
                 category: 'Publish',
-                action: 'registerAsset-error' + e.message
+                action: `registerAsset-error ${error.message}`
             })
         }
-        this.setState({
-            isPublishing: false
-        })
+
+        this.setState({ isPublishing: false })
     }
 
     public render() {
@@ -355,6 +362,3 @@ class Publish extends Component<{}, PublishState> {
         )
     }
 }
-
-Publish.contextType = User
-export default Publish
