@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import Channels from './Channels'
 import { User } from '../context'
 import { userMockConnected } from '../../__mocks__/user-mock'

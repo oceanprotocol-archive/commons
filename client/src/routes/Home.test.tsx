@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router } from 'react-router'
 import { createBrowserHistory } from 'history'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import Home from './Home'
 import { userMock } from '../../__mocks__/user-mock'
 import { User } from '../context'

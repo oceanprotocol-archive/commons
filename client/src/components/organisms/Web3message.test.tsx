@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
 import Web3message from './Web3message'
 import { User } from '../../context'
 import { userMock, userMockConnected } from '../../../__mocks__/user-mock'

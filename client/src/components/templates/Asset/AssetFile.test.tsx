@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from 'react'
-import { render, fireEvent } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
 import { DDO } from '@oceanprotocol/squid'
 import { StateMock } from '@react-mock/state'
 import ReactGA from 'react-ga'

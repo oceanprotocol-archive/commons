@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
 import Faucet from './Faucet'
 import { User } from '../context'
 import { userMockConnected } from '../../__mocks__/user-mock'
