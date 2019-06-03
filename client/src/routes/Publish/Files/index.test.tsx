@@ -6,7 +6,6 @@ const onChange = jest.fn()
 
 const files = [
     {
-        found: true,
         url: 'https://hello.com',
         checksum: 'cccccc',
         checksumType: 'MD5',
@@ -14,7 +13,8 @@ const files = [
         contentType: 'application/zip',
         resourceId: 'xxx',
         encoding: 'UTF-8',
-        compression: 'zip'
+        compression: 'zip',
+        found: true
     }
 ]
 

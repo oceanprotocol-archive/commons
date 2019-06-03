@@ -11,27 +11,28 @@ import ReactGA from 'react-ga'
 
 import { steps } from '../../data/form-publish.json'
 import Content from '../../components/atoms/Content'
+import { File } from './Files'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
 interface PublishState {
     name?: string
     dateCreated?: string
-    description?: string
-    files?: string[]
     price?: string
     author?: string
-    type?: AssetType
     license?: string
+    description?: string
+    files?: File[]
+    type?: AssetType
     copyrightHolder?: string
-    categories?: string
-    tags?: string[]
+    categories?: string[]
+
+    currentStep?: number
+    publishingStep?: number
     isPublishing?: boolean
     isPublished?: boolean
     publishedDid?: string
     publishingError?: string
-    publishingStep?: number
-    currentStep?: number
     validationStatus?: any
 }
 
@@ -39,7 +40,6 @@ export default class Publish extends Component<{}, PublishState> {
     public static contextType = User
 
     public state = {
-        currentStep: 1,
         name: '',
         dateCreated: new Date().toISOString(),
         description: '',
@@ -49,7 +49,9 @@ export default class Publish extends Component<{}, PublishState> {
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: '',
+        categories: [],
+
+        currentStep: 1,
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
@@ -127,7 +129,7 @@ export default class Publish extends Component<{}, PublishState> {
             type: 'dataset' as AssetType,
             license: '',
             copyrightHolder: '',
-            categories: '',
+            categories: [],
             isPublishing: false,
             isPublished: false,
             publishingStep: 0,
@@ -267,6 +269,14 @@ export default class Publish extends Component<{}, PublishState> {
 
         const { ocean } = this.context
         const account = await ocean.accounts.list()
+
+        // remove `found` attribute from all objects
+        // and use new array for hidden input
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // const filesStandard = this.state.files.map(
+        //     ({ found, ...keepAttrs }) => keepAttrs // eslint-disable-line
+        // )
+
         const newAsset = {
             // OEP-08 Attributes
             // https://github.com/oceanprotocol/OEPs/tree/master/8
@@ -280,10 +290,7 @@ export default class Publish extends Component<{}, PublishState> {
                 files: this.state.files,
                 price: this.state.price,
                 type: this.state.type,
-                categories: [this.state.categories],
-                workExample: undefined,
-                inLanguage: undefined,
-                tags: ''
+                categories: [this.state.categories]
             }),
             curation: Object.assign(AssetModel.curation),
             additionalInformation: Object.assign(
