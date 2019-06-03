@@ -12,11 +12,11 @@ const AssetModel = {
         type: '',
         license: null,
         copyrightHolder: null,
-        workExample: null,
+        workExample: '',
         files: [],
         categories: [],
         links: [],
-        inLanguage: null,
+        inLanguage: '',
         tags: [],
         price: ''
     },
