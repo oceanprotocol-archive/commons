@@ -9,7 +9,7 @@ const Account = ({ account }: { account: string }) => {
     return account && blockies ? (
         <div className={styles.account}>
             <img className={styles.blockies} src={blockies} alt="Blockies" />
-            <Dotdotdot clamp={1}>{account}</Dotdotdot>
+            <Dotdotdot clamp={2}>{account}</Dotdotdot>
         </div>
     ) : (
         <em>No account selected</em>
