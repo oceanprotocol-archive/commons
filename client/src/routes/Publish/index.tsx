@@ -83,16 +83,6 @@ export default class Publish extends Component<{}, PublishState> {
         })
     }
 
-    private inputToArrayChange = (
-        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-    ) => {
-        this.validateInputs(event.currentTarget.name, event.currentTarget.value)
-
-        this.setState({
-            [event.currentTarget.name]: [event.currentTarget.value]
-        })
-    }
-
     private next = () => {
         let { currentStep } = this.state
         const totalSteps = steps.length
@@ -353,7 +343,6 @@ export default class Publish extends Component<{}, PublishState> {
                                 currentStep={this.state.currentStep}
                                 fields={step.fields}
                                 inputChange={this.inputChange}
-                                inputToArrayChange={this.inputToArrayChange}
                                 state={this.state}
                                 next={this.next}
                                 prev={this.prev}

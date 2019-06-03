@@ -115,6 +115,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                     name={name}
                     value={JSON.stringify(files)}
                     onChange={onChange}
+                    data-testid="files"
                 />
 
                 <div className={styles.newItems}>
