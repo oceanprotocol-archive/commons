@@ -270,12 +270,12 @@ export default class Publish extends Component<{}, PublishState> {
         const { ocean } = this.context
         const account = await ocean.accounts.list()
 
-        // remove `found` attribute from all objects
-        // and use new array for hidden input
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        // const filesStandard = this.state.files.map(
-        //     ({ found, ...keepAttrs }) => keepAttrs // eslint-disable-line
-        // )
+        // remove `found` attribute from all File objects
+        // in a new array
+        const files = this.state.files.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ found, ...keepAttrs }: { found: boolean }) => keepAttrs
+        )
 
         const newAsset = {
             // OEP-08 Attributes
@@ -287,15 +287,15 @@ export default class Publish extends Component<{}, PublishState> {
                 author: this.state.author,
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
-                files: this.state.files,
+                files,
                 price: this.state.price,
                 type: this.state.type,
                 categories: [this.state.categories]
-            }),
-            curation: Object.assign(AssetModel.curation),
-            additionalInformation: Object.assign(
-                AssetModel.additionalInformation
-            )
+            })
+            // curation: Object.assign(AssetModel.curation),
+            // additionalInformation: Object.assign(
+            //     AssetModel.additionalInformation
+            // )
         }
 
         try {
