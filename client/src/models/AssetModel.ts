@@ -19,15 +19,6 @@ const AssetModel = {
         inLanguage: '',
         tags: [],
         price: ''
-    },
-    curation: {
-        rating: null,
-        numVotes: null,
-        schema: null
-    },
-    additionalInformation: {
-        updateFrequency: null,
-        structuredMarkup: []
     }
 }
 

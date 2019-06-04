@@ -285,10 +285,6 @@ export default class Publish extends Component<{}, PublishState> {
                 type: this.state.type,
                 categories: [this.state.categories]
             })
-            // curation: Object.assign(AssetModel.curation),
-            // additionalInformation: Object.assign(
-            //     AssetModel.additionalInformation
-            // )
         }
 
         try {
