@@ -13,5 +13,5 @@
     },
     "types": ["node", "jest"]
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*"]
 }
