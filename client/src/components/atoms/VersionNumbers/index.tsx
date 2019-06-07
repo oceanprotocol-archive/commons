@@ -20,7 +20,7 @@ import {
 import VersionTable from './VersionTable'
 
 const commonsVersion =
-    process.env.NODE_ENV === 'production' ? `v${version}` : `v${version}-dev`
+    process.env.NODE_ENV === 'production' ? version : `${version}-dev`
 
 interface VersionNumbersProps {
     minimal?: boolean
@@ -66,7 +66,7 @@ export default class VersionNumbers extends PureComponent<
         commons: { software: 'Commons', version: commonsVersion },
         squidJs: {
             software: 'Squid-js',
-            version: `v${versionSquid}`
+            version: versionSquid
         },
         aquarius: { software: 'Aquarius', version: '0.0.0' },
         brizo: {
@@ -112,7 +112,7 @@ export default class VersionNumbers extends PureComponent<
                     brizo,
                     keeperContracts: {
                         ...this.state.keeperContracts,
-                        version: brizo['keeper-version'],
+                        version: brizo['keeper-version'].replace('v', ''),
                         contracts: brizo.contracts
                     }
                 })
@@ -141,7 +141,7 @@ export default class VersionNumbers extends PureComponent<
         const { minimal } = this.props
         const { commons, squidJs, brizo, aquarius, faucet } = this.state
 
-        const mimimalOutput = `${squidJs.software} ${squidJs.version}  \n${
+        const mimimalOutput = `${squidJs.software} v${squidJs.version}  \n${
             brizo.software
         } v${brizo.version} \n${aquarius.software} v${
             aquarius.version
@@ -152,7 +152,7 @@ export default class VersionNumbers extends PureComponent<
         return minimal ? (
             <p className={styles.versionsMinimal}>
                 <a title={mimimalOutput} href={'/about'}>
-                    {commons.version} ({brizo.network})
+                    v{commons.version} ({brizo.network})
                 </a>
             </p>
         ) : (

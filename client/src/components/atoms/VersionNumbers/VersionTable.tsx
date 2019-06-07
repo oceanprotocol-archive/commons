@@ -50,7 +50,7 @@ const VersionTable = ({ data }: { data: VersionTableProps }) => (
                                 </a>
                             </td>
                             <td>
-                                <code>{value.version}</code>
+                                <code>v{value.version}</code>
                             </td>
                         </tr>
                         {key === 'keeperContracts' && (
