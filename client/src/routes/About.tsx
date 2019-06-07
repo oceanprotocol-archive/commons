@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
+import VersionNumbers from '../components/atoms/VersionNumbers'
 
 class About extends Component {
     public render() {
@@ -33,6 +34,10 @@ class About extends Component {
                             </a>
                         </li>
                     </ul>
+                </Content>
+
+                <Content>
+                    <VersionNumbers />
                 </Content>
             </Route>
         )

@@ -31,7 +31,7 @@ const Footer = () => (
                         <AiCommons />
                     </a>
                 </p>
-                <VersionNumbers />
+                <VersionNumbers minimal />
             </Content>
         </aside>
 
