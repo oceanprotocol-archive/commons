@@ -18,8 +18,9 @@ import {
 } from '../../../config'
 
 import VersionTable from './VersionTable'
+import { isJsonString } from './utils'
 
-const commonsVersion =
+export const commonsVersion =
     process.env.NODE_ENV === 'production' ? version : `${version}-dev`
 
 interface VersionNumbersProps {
@@ -120,7 +121,8 @@ export default class VersionNumbers extends PureComponent<
             aquariusHost,
             aquariusPort
         )
-        aquarius.version !== undefined &&
+        aquarius &&
+            aquarius.version !== undefined &&
             this.setState({ aquarius: { isLoading: false, ...aquarius } })
     }
 
@@ -133,7 +135,8 @@ export default class VersionNumbers extends PureComponent<
             brizo['keeper-url'] &&
             new URL(brizo['keeper-url']).hostname.split('.')[0]
 
-        brizo.version !== undefined &&
+        brizo &&
+            brizo.version !== undefined &&
             this.setState({
                 brizo: {
                     isLoading: false,
@@ -153,22 +156,14 @@ export default class VersionNumbers extends PureComponent<
         const faucet = await this.getData(faucetScheme, faucetHost, faucetPort)
 
         // backwards compatibility
-        function IsJsonString(str: string) {
-            try {
-                JSON.parse(str)
-            } catch (e) {
-                return false
-            }
-            return true
-        }
-
-        IsJsonString(faucet) === false &&
+        isJsonString(faucet) === false &&
             this.setState({
                 faucet: { ...this.state.faucet, isLoading: false }
             })
 
         // the new thing
-        faucet.version !== undefined &&
+        faucet &&
+            faucet.version !== undefined &&
             this.setState({ faucet: { isLoading: false, ...faucet } })
     }
 
@@ -179,10 +174,8 @@ export default class VersionNumbers extends PureComponent<
                 cancelToken: this.signal.token
             })
 
-            if (response.status !== 200) {
-                Logger.error(response.statusText)
-                return
-            }
+            // fail silently
+            if (response.status !== 200) return
 
             return response.data
         } catch (error) {
