@@ -29,6 +29,20 @@
     padding-top: $spacer / 4;
 }
 
+.small {
+    composes: spinner;
+    margin: 0;
+    display: inline-block;
+
+    &:before {
+        width: $font-size-small;
+        height: $font-size-small;
+        margin-top: -($font-size-small);
+        margin-left: -($font-size-small / 2);
+        border-width: .1rem;
+    }
+}
+
 @keyframes spinner {
     to {
         transform: rotate(360deg);

@@ -52,3 +52,8 @@
         }
     }
 }
+
+.spinner {
+    composes: spinner, small from '../Spinner.module.scss';
+    margin-right: $spacer;
+}
