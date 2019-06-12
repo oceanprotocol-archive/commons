@@ -118,11 +118,4 @@ describe('VersionNumbers', () => {
             'Could not get version'
         )
     })
-
-    it('minimal component versions in link title, prefixed with `v`', async () => {
-        const { getByTitle } = render(<VersionNumbers minimal />)
-        mockAxios.mockResponse(mockResponse)
-        expect(mockAxios.get).toHaveBeenCalled()
-        await waitForElement(() => getByTitle(/v6.6.6/))
-    })
 })
