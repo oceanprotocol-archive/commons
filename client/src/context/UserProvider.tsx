@@ -3,7 +3,7 @@ import Web3 from 'web3'
 import { Logger, Ocean, Account } from '@oceanprotocol/squid'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
-import { nodeHost, nodePort, nodeScheme } from '../config'
+import { nodeUri } from '../config'
 import MarketProvider from './MarketProvider'
 
 const POLL_ACCOUNTS = 1000 // every 1s
@@ -81,11 +81,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
             ocn: 0
         },
         network: '',
-        web3: new Web3(
-            new Web3.providers.HttpProvider(
-                `${nodeScheme}://${nodeHost}:${nodePort}`
-            )
-        ),
+        web3: new Web3(new Web3.providers.HttpProvider(nodeUri)),
         account: '',
         ocean: {} as any,
         requestFromFaucet: () => requestFromFaucet(''),

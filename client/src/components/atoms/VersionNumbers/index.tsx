@@ -5,17 +5,7 @@ import { version } from '../../../../package.json'
 import { version as versionSquid } from '@oceanprotocol/squid/package.json'
 import styles from './index.module.scss'
 
-import {
-    aquariusHost,
-    aquariusPort,
-    aquariusScheme,
-    brizoHost,
-    brizoPort,
-    brizoScheme,
-    faucetHost,
-    faucetPort,
-    faucetScheme
-} from '../../../config'
+import { aquariusUri, brizoUri, faucetUri } from '../../../config'
 
 import VersionTable from './VersionTable'
 import { isJsonString } from './utils'
@@ -116,18 +106,14 @@ export default class VersionNumbers extends PureComponent<
     }
 
     private async setAquarius() {
-        const aquarius = await this.getData(
-            aquariusScheme,
-            aquariusHost,
-            aquariusPort
-        )
+        const aquarius = await this.getData(aquariusUri)
         aquarius &&
             aquarius.version !== undefined &&
             this.setState({ aquarius: { isLoading: false, ...aquarius } })
     }
 
     private async setBrizoAndKeeper() {
-        const brizo = await this.getData(brizoScheme, brizoHost, brizoPort)
+        const brizo = await this.getData(brizoUri)
 
         const keeperVersion =
             brizo['keeper-version'] && brizo['keeper-version'].replace('v', '')
@@ -153,7 +139,7 @@ export default class VersionNumbers extends PureComponent<
     }
 
     private async setFaucet() {
-        const faucet = await this.getData(faucetScheme, faucetHost, faucetPort)
+        const faucet = await this.getData(faucetUri)
 
         // backwards compatibility
         isJsonString(faucet) === false &&
@@ -167,9 +153,9 @@ export default class VersionNumbers extends PureComponent<
             this.setState({ faucet: { isLoading: false, ...faucet } })
     }
 
-    private async getData(scheme: string, host: string, port: number | string) {
+    private async getData(uri: string) {
         try {
-            const response = await axios.get(`${scheme}://${host}:${port}`, {
+            const response = await axios.get(uri, {
                 headers: { Accept: 'application/json' },
                 cancelToken: this.signal.token
             })

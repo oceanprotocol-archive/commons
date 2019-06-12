@@ -25,6 +25,7 @@ If you're a developer and want to contribute to, or want to utilize this marketp
 - [🏄 Get Started](#-get-started)
   - [🏖 Remote Ocean: Nile](#-remote-ocean-nile)
   - [🐳 Use with Barge](#-use-with-barge)
+  - [⛵️ Environment Variables](#️-environment-variables)
 - [👩‍🔬 Testing](#-testing)
 - [✨ Code Style](#-code-style)
 - [🛳 Production](#-production)
@@ -70,7 +71,22 @@ cd barge
 ./start_ocean.sh --latest --no-pleuston --local-spree-node
 ```
 
-Modify `./client/src/config.ts` to use those local connections.
+Modify `./client/src/config.ts` or set environment variables to use those local connections.
+
+### ⛵️ Environment Variables
+
+The `./client/src/config.ts` file is setup to prioritize environment variables for setting each Ocean component endpoint.
+
+By setting environment variables, you can easily switch between Ocean networks the commons client connects to, without directly modifying `./client/src/config.ts`. This is helpful e.g. for local development so you don't accidentially commit changes to the config file.
+
+For local development, you can use a `.env.local` file. There's an example file with the most common network configurations preconfigured:
+
+```bash
+cp client/.env.local.example client/.env.local
+
+# uncomment the config you need
+vi client/.env.local
+```
 
 ## 👩‍🔬 Testing
 
