@@ -18,8 +18,9 @@ import {
 } from '../../../config'
 
 import VersionTable from './VersionTable'
+import { isJsonString } from './utils'
 
-const commonsVersion =
+export const commonsVersion =
     process.env.NODE_ENV === 'production' ? version : `${version}-dev`
 
 interface VersionNumbersProps {
@@ -36,10 +37,12 @@ export interface VersionNumbersState {
         version: string
     }
     aquarius: {
+        isLoading: boolean
         software: string
         version: string
     }
     brizo: {
+        isLoading: boolean
         software: string
         version: string
         network: string
@@ -48,13 +51,16 @@ export interface VersionNumbersState {
         contracts: any
     }
     keeperContracts: {
+        isLoading: boolean
         software: string
         version: string
+        network: string
         contracts: any
     }
     faucet: {
-        software: string
-        version: string
+        isLoading: boolean
+        software?: string
+        version?: string
     }
 }
 
@@ -68,73 +74,113 @@ export default class VersionNumbers extends PureComponent<
             software: 'Squid-js',
             version: versionSquid
         },
-        aquarius: { software: 'Aquarius', version: '0.0.0' },
+        aquarius: {
+            isLoading: true,
+            software: 'Aquarius',
+            version: ''
+        },
         brizo: {
+            isLoading: true,
             software: 'Brizo',
-            version: '0.0.0',
+            version: '',
             contracts: {} as any,
             network: '',
             'keeper-version': '0.0.0',
             'keeper-url': ''
         },
         keeperContracts: {
+            isLoading: true,
             software: 'Keeper Contracts',
-            version: '0.0.0',
+            version: '',
             contracts: {} as any,
             network: ''
         },
-        faucet: { software: 'Faucet', version: '0.0.0' }
+        faucet: {
+            isLoading: true,
+            software: 'Faucet',
+            version: ''
+        }
     }
 
     // for canceling axios requests
     public signal = axios.CancelToken.source()
 
     public componentWillMount() {
-        this.setComponentVersions()
+        this.setAquarius()
+        this.setBrizoAndKeeper()
+        this.setFaucet()
     }
 
     public componentWillUnmount() {
         this.signal.cancel()
     }
 
-    private async setComponentVersions() {
-        try {
-            const aquarius = await this.getData(
-                aquariusScheme,
-                aquariusHost,
-                aquariusPort
-            )
-            aquarius.version !== undefined && this.setState({ aquarius })
+    private async setAquarius() {
+        const aquarius = await this.getData(
+            aquariusScheme,
+            aquariusHost,
+            aquariusPort
+        )
+        aquarius &&
+            aquarius.version !== undefined &&
+            this.setState({ aquarius: { isLoading: false, ...aquarius } })
+    }
 
-            const brizo = await this.getData(brizoScheme, brizoHost, brizoPort)
+    private async setBrizoAndKeeper() {
+        const brizo = await this.getData(brizoScheme, brizoHost, brizoPort)
+
+        const keeperVersion =
+            brizo['keeper-version'] && brizo['keeper-version'].replace('v', '')
+        const keeperNetwork =
+            brizo['keeper-url'] &&
+            new URL(brizo['keeper-url']).hostname.split('.')[0]
+
+        brizo &&
             brizo.version !== undefined &&
-                this.setState({
-                    brizo,
-                    keeperContracts: {
-                        ...this.state.keeperContracts,
-                        version: brizo['keeper-version'].replace('v', ''),
-                        contracts: brizo.contracts
-                    }
-                })
+            this.setState({
+                brizo: {
+                    isLoading: false,
+                    ...brizo
+                },
+                keeperContracts: {
+                    ...this.state.keeperContracts,
+                    isLoading: false,
+                    version: keeperVersion,
+                    contracts: brizo.contracts,
+                    network: keeperNetwork
+                }
+            })
+    }
 
-            const faucet = await this.getData(
-                faucetScheme,
-                faucetHost,
-                faucetPort
-            )
+    private async setFaucet() {
+        const faucet = await this.getData(faucetScheme, faucetHost, faucetPort)
 
-            faucet.version !== undefined && this.setState({ faucet })
-        } catch (error) {
-            !axios.isCancel(error) && Logger.error(error.message)
-        }
+        // backwards compatibility
+        isJsonString(faucet) === false &&
+            this.setState({
+                faucet: { ...this.state.faucet, isLoading: false }
+            })
+
+        // the new thing
+        faucet &&
+            faucet.version !== undefined &&
+            this.setState({ faucet: { isLoading: false, ...faucet } })
     }
 
     private async getData(scheme: string, host: string, port: number | string) {
-        const { data } = await axios.get(`${scheme}://${host}:${port}`, {
-            headers: { Accept: 'application/json' },
-            cancelToken: this.signal.token
-        })
-        return data
+        try {
+            const response = await axios.get(`${scheme}://${host}:${port}`, {
+                headers: { Accept: 'application/json' },
+                cancelToken: this.signal.token
+            })
+
+            // fail silently
+            if (response.status !== 200) return
+
+            return response.data
+        } catch (error) {
+            !axios.isCancel(error) && Logger.error(error.message)
+        }
     }
 
     public render() {
@@ -152,7 +198,7 @@ export default class VersionNumbers extends PureComponent<
         return minimal ? (
             <p className={styles.versionsMinimal}>
                 <a title={mimimalOutput} href={'/about'}>
-                    v{commons.version} ({brizo.network})
+                    v{commons.version} {brizo.network && `(${brizo.network})`}
                 </a>
             </p>
         ) : (

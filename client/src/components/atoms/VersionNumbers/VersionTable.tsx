@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { VersionNumbersState as VersionTableProps } from '.'
 import styles from './VersionTable.module.scss'
 import slugify from '@sindresorhus/slugify'
+import Spinner from '../Spinner'
 
 const VersionTableContracts = ({
     contracts,
@@ -12,23 +13,24 @@ const VersionTableContracts = ({
 }) => (
     <table>
         <tbody>
-            {Object.keys(contracts).map(key => (
-                <tr key={key}>
-                    <td>
-                        <span className={styles.label}>{key}</span>
-                    </td>
-                    <td>
-                        <a
-                            href={`https://submarine${network === 'duero' &&
-                                '.duero'}.dev-ocean.com/address/${
-                                contracts[key]
-                            }`}
-                        >
-                            <code>{contracts[key]}</code>
-                        </a>
-                    </td>
-                </tr>
-            ))}
+            {contracts &&
+                Object.keys(contracts).map(key => (
+                    <tr key={key}>
+                        <td>
+                            <span className={styles.label}>{key}</span>
+                        </td>
+                        <td>
+                            <a
+                                href={`https://submarine${network === 'duero' &&
+                                    '.duero'}.dev-ocean.com/address/${
+                                    contracts[key]
+                                }`}
+                            >
+                                <code>{contracts[key]}</code>
+                            </a>
+                        </td>
+                    </tr>
+                ))}
         </tbody>
     </table>
 )
@@ -42,18 +44,30 @@ const VersionTable = ({ data }: { data: VersionTableProps }) => (
                         <tr key={key}>
                             <td>
                                 <a
-                                    href={`https://github.com/oceanprotocol/${slugify(
-                                        value.software
-                                    )}`}
+                                    href={
+                                        value.software &&
+                                        `https://github.com/oceanprotocol/${slugify(
+                                            value.software
+                                        )}`
+                                    }
                                 >
                                     <strong>{value.software}</strong>
                                 </a>
                             </td>
                             <td>
-                                <code>v{value.version}</code>
+                                {value.isLoading ? (
+                                    <Spinner small className={styles.spinner} />
+                                ) : value.version ? (
+                                    <>
+                                        <code>v{value.version}</code>
+                                        {value.network && `(${value.network})`}
+                                    </>
+                                ) : (
+                                    'Could not get version'
+                                )}
                             </td>
                         </tr>
-                        {key === 'keeperContracts' && (
+                        {key === 'keeperContracts' && data.brizo.contracts && (
                             <tr>
                                 <td colSpan={2}>
                                     <VersionTableContracts
