@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, fireEvent, waitForElement } from '@testing-library/react'
 import { FetchMock } from '@react-mock/fetch'
-import { serviceHost, servicePort, serviceScheme } from '../../../config'
+import { serviceUri } from '../../../config'
 import Files from '.'
 
 const onChange = jest.fn()
@@ -25,7 +25,7 @@ const renderComponent = () =>
         <FetchMock
             mocks={[
                 {
-                    matcher: `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/urlcheck`,
+                    matcher: `${serviceUri}/api/v1/urlcheck`,
                     method: 'POST',
                     response: {
                         result: {
