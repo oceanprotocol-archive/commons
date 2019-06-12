@@ -1,12 +1,13 @@
 import React from 'react'
 import { render, fireEvent, waitForElement } from '@testing-library/react'
+import { FetchMock } from '@react-mock/fetch'
+import { serviceUri } from '../../../config'
 import Files from '.'
 
 const onChange = jest.fn()
 
 const files = [
     {
-        found: true,
         url: 'https://hello.com',
         checksum: 'cccccc',
         checksumType: 'MD5',
@@ -14,33 +15,48 @@ const files = [
         contentType: 'application/zip',
         resourceId: 'xxx',
         encoding: 'UTF-8',
-        compression: 'zip'
+        compression: 'zip',
+        found: true
     }
 ]
 
-const setup = () => {
-    const utils = render(
-        <Files
-            files={files}
-            placeholder={'Hello'}
-            name={'Hello'}
-            onChange={onChange}
-        />
+const renderComponent = () =>
+    render(
+        <FetchMock
+            mocks={[
+                {
+                    matcher: `${serviceUri}/api/v1/urlcheck`,
+                    method: 'POST',
+                    response: {
+                        result: {
+                            url: 'https://demo.com',
+                            contentType: 'application/zip',
+                            contentLength: 237347827,
+                            found: true
+                        }
+                    }
+                }
+            ]}
+        >
+            <Files
+                files={files}
+                placeholder={'Hello'}
+                name={'Hello'}
+                onChange={onChange}
+            />
+        </FetchMock>
     )
-    const { container } = utils
-    return { container, ...utils }
-}
 
 describe('Files', () => {
-    it('renders without crashing', () => {
-        const { container } = setup()
+    it('renders without crashing', async () => {
+        const { container } = renderComponent()
 
         expect(container.firstChild).toBeInTheDocument()
         expect(container.querySelector('.itemForm')).not.toBeInTheDocument()
     })
 
     it('new file form can be opened and closed', async () => {
-        const { container, getByText } = setup()
+        const { container, getByText } = renderComponent()
 
         // open
         fireEvent.click(getByText('+ Add a file'))
@@ -54,14 +70,14 @@ describe('Files', () => {
     })
 
     it('item can be removed', async () => {
-        const { getByTitle } = setup()
+        const { getByTitle } = renderComponent()
 
         fireEvent.click(getByTitle('Remove item'))
         expect(files.length).toBe(0)
     })
 
     it('item can be added', async () => {
-        const { getByText, getByPlaceholderText } = setup()
+        const { getByText, getByPlaceholderText } = renderComponent()
 
         fireEvent.click(getByText('+ Add a file'))
         await waitForElement(() => getByText('- Cancel'))

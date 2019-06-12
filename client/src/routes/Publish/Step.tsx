@@ -28,9 +28,6 @@ interface StepProps {
             | ChangeEvent<HTMLSelectElement>
             | ChangeEvent<HTMLTextAreaElement>
     ): void
-    inputToArrayChange(
-        event: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
-    ): void
     fields?: Fields
     state: any
     title: string

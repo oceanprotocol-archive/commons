@@ -11,11 +11,11 @@
     },
     {
       "name": "brizo",
-      "version": "~0.3.9"
+      "version": "~0.3.10"
     },
     {
       "name": "aquarius",
-      "version": "~0.2.6"
+      "version": "~0.2.9"
     },
     {
       "name": "squid-js",

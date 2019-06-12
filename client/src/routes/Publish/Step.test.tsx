@@ -12,7 +12,6 @@ const stateMock = {
 
 const propsMock = {
     inputChange: () => null,
-    inputToArrayChange: () => null,
     state: stateMock,
     title: 'Hello',
     description: 'description',

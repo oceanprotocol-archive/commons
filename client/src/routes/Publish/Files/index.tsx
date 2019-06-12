@@ -8,17 +8,18 @@ import styles from './index.module.scss'
 
 import { serviceUri } from '../../../config'
 import cleanupContentType from '../../../utils/cleanupContentType'
+import { Logger } from '@oceanprotocol/squid'
 
-interface File {
+export interface File {
     url: string
-    found: boolean
+    contentType: string
     checksum?: string
     checksumType?: string
     contentLength?: number
-    contentType?: string
     resourceId?: string
     encoding?: string
     compression?: string
+    found: boolean // non-standard
 }
 
 interface FilesProps {
@@ -51,20 +52,10 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     private addItem = async (value: string) => {
-        let res: {
-            result: {
-                contentLength: number
-                contentType: string
-                found: boolean
-            }
-        }
-
         let file: File = {
             url: value,
-            found: false,
-            contentLength: 0,
             contentType: '',
-            compression: ''
+            found: false // non-standard
         }
 
         try {
@@ -75,13 +66,16 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                     'Content-Type': 'application/json'
                 }
             })
-            res = await response.json()
-            file.contentLength = res.result.contentLength
-            file.contentType = res.result.contentType
-            file.compression = await cleanupContentType(res.result.contentType)
-            file.found = res.result.found
+
+            const json = await response.json()
+            const { contentLength, contentType, found } = json.result
+
+            file.contentLength = contentLength
+            file.contentType = contentType
+            file.compression = await cleanupContentType(contentType)
+            file.found = found
         } catch (error) {
-            // error
+            Logger.error(error.message)
         }
 
         this.props.files.push(file)
@@ -121,6 +115,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                     name={name}
                     value={JSON.stringify(files)}
                     onChange={onChange}
+                    data-testid="files"
                 />
 
                 <div className={styles.newItems}>

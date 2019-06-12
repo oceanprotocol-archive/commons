@@ -12,22 +12,13 @@ const AssetModel = {
         type: '',
         license: null,
         copyrightHolder: null,
-        workExample: null,
+        workExample: '',
         files: [],
         categories: [],
         links: [],
-        inLanguage: null,
+        inLanguage: '',
         tags: [],
-        price: null
-    },
-    curation: {
-        rating: null,
-        numVotes: null,
-        schema: null
-    },
-    additionalInformation: {
-        updateFrequency: null,
-        structuredMarkup: []
+        price: ''
     }
 }
 

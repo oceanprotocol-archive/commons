@@ -11,27 +11,28 @@ import ReactGA from 'react-ga'
 
 import { steps } from '../../data/form-publish.json'
 import Content from '../../components/atoms/Content'
+import { File } from './Files'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
 interface PublishState {
     name?: string
     dateCreated?: string
-    description?: string
-    files?: string[]
-    price?: number
+    price?: string
     author?: string
-    type?: AssetType
     license?: string
+    description?: string
+    files?: File[]
+    type?: AssetType
     copyrightHolder?: string
-    categories?: string
-    tags?: string[]
+    categories?: string[]
+
+    currentStep?: number
+    publishingStep?: number
     isPublishing?: boolean
     isPublished?: boolean
     publishedDid?: string
     publishingError?: string
-    publishingStep?: number
-    currentStep?: number
     validationStatus?: any
 }
 
@@ -39,17 +40,18 @@ export default class Publish extends Component<{}, PublishState> {
     public static contextType = User
 
     public state = {
-        currentStep: 1,
         name: '',
         dateCreated: new Date().toISOString(),
         description: '',
         files: [],
-        price: 0,
+        price: '0',
         author: '',
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: '',
+        categories: [],
+
+        currentStep: 1,
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
@@ -78,16 +80,6 @@ export default class Publish extends Component<{}, PublishState> {
 
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value
-        })
-    }
-
-    private inputToArrayChange = (
-        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-    ) => {
-        this.validateInputs(event.currentTarget.name, event.currentTarget.value)
-
-        this.setState({
-            [event.currentTarget.name]: [event.currentTarget.value]
         })
     }
 
@@ -122,12 +114,12 @@ export default class Publish extends Component<{}, PublishState> {
             dateCreated: new Date().toISOString(),
             description: '',
             files: [],
-            price: 0,
+            price: '0',
             author: '',
             type: 'dataset' as AssetType,
             license: '',
             copyrightHolder: '',
-            categories: '',
+            categories: [],
             isPublishing: false,
             isPublished: false,
             publishingStep: 0,
@@ -267,28 +259,32 @@ export default class Publish extends Component<{}, PublishState> {
 
         const { ocean } = this.context
         const account = await ocean.accounts.list()
+
+        // remove `found` attribute from all File objects
+        // in a new array
+        const files = this.state.files.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ found, ...keepAttrs }: { found: boolean }) => keepAttrs
+        )
+
         const newAsset = {
             // OEP-08 Attributes
             // https://github.com/oceanprotocol/OEPs/tree/master/8
             base: Object.assign(AssetModel.base, {
                 name: this.state.name,
                 description: this.state.description,
-                dateCreated: new Date(this.state.dateCreated).toISOString(),
+                dateCreated:
+                    new Date(this.state.dateCreated)
+                        .toISOString()
+                        .split('.')[0] + 'Z', // remove milliseconds
                 author: this.state.author,
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
-                files: this.state.files,
+                files,
                 price: this.state.price,
                 type: this.state.type,
-                categories: [this.state.categories],
-                workExample: undefined,
-                inLanguage: undefined,
-                tags: ''
-            }),
-            curation: Object.assign(AssetModel.curation),
-            additionalInformation: Object.assign(
-                AssetModel.additionalInformation
-            )
+                categories: [this.state.categories]
+            })
         }
 
         try {
@@ -346,7 +342,6 @@ export default class Publish extends Component<{}, PublishState> {
                                 currentStep={this.state.currentStep}
                                 fields={step.fields}
                                 inputChange={this.inputChange}
-                                inputToArrayChange={this.inputToArrayChange}
                                 state={this.state}
                                 next={this.next}
                                 prev={this.prev}
