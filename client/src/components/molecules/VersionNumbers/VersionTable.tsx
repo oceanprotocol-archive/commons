@@ -21,10 +21,9 @@ const VersionTableContracts = ({
                         </td>
                         <td>
                             <a
-                                href={`https://submarine${network === 'duero' &&
-                                    '.duero'}.dev-ocean.com/address/${
-                                    contracts[key]
-                                }`}
+                                href={`https://submarine${
+                                    network === 'duero' ? '.duero' : ''
+                                }.dev-ocean.com/address/${contracts[key]}`}
                             >
                                 <code>{contracts[key]}</code>
                             </a>
