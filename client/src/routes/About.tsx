@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
-import VersionNumbers from '../components/atoms/VersionNumbers'
+import VersionNumbers from '../components/molecules/VersionNumbers'
 
 class About extends Component {
     public render() {

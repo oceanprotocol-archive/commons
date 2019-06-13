@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { VersionNumbersState as VersionTableProps } from '.'
 import styles from './VersionTable.module.scss'
 import slugify from '@sindresorhus/slugify'
-import Spinner from '../Spinner'
+import Spinner from '../../atoms/Spinner'
 
 const VersionTableContracts = ({
     contracts,
