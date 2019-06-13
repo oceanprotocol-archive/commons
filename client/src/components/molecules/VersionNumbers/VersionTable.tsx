@@ -14,22 +14,28 @@ const VersionTableContracts = ({
     <table>
         <tbody>
             {contracts &&
-                Object.keys(contracts).map(key => (
-                    <tr key={key}>
-                        <td>
-                            <span className={styles.label}>{key}</span>
-                        </td>
-                        <td>
-                            <a
-                                href={`https://submarine${
-                                    network === 'duero' ? '.duero' : ''
-                                }.dev-ocean.com/address/${contracts[key]}`}
-                            >
-                                <code>{contracts[key]}</code>
-                            </a>
-                        </td>
-                    </tr>
-                ))}
+                Object.keys(contracts).map(key => {
+                    const submarineLink = `https://submarine${
+                        network === 'duero'
+                            ? '.duero'
+                            : network === 'pacific'
+                            ? '.pacific'
+                            : ''
+                    }.dev-ocean.com/address/${contracts[key]}`
+
+                    return (
+                        <tr key={key}>
+                            <td>
+                                <span className={styles.label}>{key}</span>
+                            </td>
+                            <td>
+                                <a href={submarineLink}>
+                                    <code>{contracts[key]}</code>
+                                </a>
+                            </td>
+                        </tr>
+                    )
+                })}
         </tbody>
     </table>
 )
