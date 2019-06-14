@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { VersionNumbersState as VersionTableProps } from '.'
 import styles from './VersionTable.module.scss'
 import slugify from '@sindresorhus/slugify'
-import Spinner from '../Spinner'
+import Spinner from '../../atoms/Spinner'
 
 const VersionTableContracts = ({
     contracts,
@@ -14,26 +14,59 @@ const VersionTableContracts = ({
     <table>
         <tbody>
             {contracts &&
-                Object.keys(contracts).map(key => (
-                    <tr key={key}>
-                        <td>
-                            <span className={styles.label}>{key}</span>
-                        </td>
-                        <td>
-                            <a
-                                href={`https://submarine${network === 'duero' &&
-                                    '.duero'}.dev-ocean.com/address/${
-                                    contracts[key]
-                                }`}
-                            >
-                                <code>{contracts[key]}</code>
-                            </a>
-                        </td>
-                    </tr>
-                ))}
+                Object.keys(contracts).map(key => {
+                    const submarineLink = `https://submarine${
+                        network === 'duero'
+                            ? '.duero'
+                            : network === 'pacific'
+                            ? '.pacific'
+                            : ''
+                    }.dev-ocean.com/address/${contracts[key]}`
+
+                    return (
+                        <tr key={key}>
+                            <td>
+                                <span className={styles.label}>{key}</span>
+                            </td>
+                            <td>
+                                <a href={submarineLink}>
+                                    <code>{contracts[key]}</code>
+                                </a>
+                            </td>
+                        </tr>
+                    )
+                })}
         </tbody>
     </table>
 )
+
+const VersionNumber = ({
+    isLoading,
+    software,
+    version,
+    network
+}: {
+    isLoading: boolean
+    software: string
+    version: string
+    network: string
+}) =>
+    isLoading ? (
+        <Spinner small className={styles.spinner} />
+    ) : version ? (
+        <>
+            <a
+                href={`https://github.com/oceanprotocol/${slugify(
+                    software
+                )}/releases/tag/v${version}`}
+            >
+                <code>v{version}</code>
+            </a>
+            {network && `(${network})`}
+        </>
+    ) : (
+        <span>Could not get version</span>
+    )
 
 const VersionTable = ({ data }: { data: VersionTableProps }) => (
     <div className={styles.tableWrap}>
@@ -55,16 +88,12 @@ const VersionTable = ({ data }: { data: VersionTableProps }) => (
                                 </a>
                             </td>
                             <td>
-                                {value.isLoading ? (
-                                    <Spinner small className={styles.spinner} />
-                                ) : value.version ? (
-                                    <>
-                                        <code>v{value.version}</code>
-                                        {value.network && `(${value.network})`}
-                                    </>
-                                ) : (
-                                    'Could not get version'
-                                )}
+                                <VersionNumber
+                                    isLoading={value.isLoading}
+                                    software={value.software}
+                                    version={value.version}
+                                    network={value.network}
+                                />
                             </td>
                         </tr>
                         {key === 'keeperContracts' && data.brizo.contracts && (

@@ -25,6 +25,13 @@
         overflow-wrap: break-word;
         display: inline;
     }
+
+    a:hover,
+    a:focus {
+        code {
+            color: inherit;
+        }
+    }
 }
 
 .error {

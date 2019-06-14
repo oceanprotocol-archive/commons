@@ -54,6 +54,6 @@
 }
 
 .spinner {
-    composes: spinner, small from '../Spinner.module.scss';
+    composes: spinner, small from '../../atoms/Spinner.module.scss';
     margin-right: $spacer;
 }
