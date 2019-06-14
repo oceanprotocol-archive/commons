@@ -40,6 +40,34 @@ const VersionTableContracts = ({
     </table>
 )
 
+const VersionNumber = ({
+    isLoading,
+    software,
+    version,
+    network
+}: {
+    isLoading: boolean
+    software: string
+    version: string
+    network: string
+}) =>
+    isLoading ? (
+        <Spinner small className={styles.spinner} />
+    ) : version ? (
+        <>
+            <a
+                href={`https://github.com/oceanprotocol/${slugify(
+                    software
+                )}/releases/tag/v${version}`}
+            >
+                <code>v{version}</code>
+            </a>
+            {network && `(${network})`}
+        </>
+    ) : (
+        <span>Could not get version</span>
+    )
+
 const VersionTable = ({ data }: { data: VersionTableProps }) => (
     <div className={styles.tableWrap}>
         <table className={styles.table}>
@@ -60,16 +88,12 @@ const VersionTable = ({ data }: { data: VersionTableProps }) => (
                                 </a>
                             </td>
                             <td>
-                                {value.isLoading ? (
-                                    <Spinner small className={styles.spinner} />
-                                ) : value.version ? (
-                                    <>
-                                        <code>v{value.version}</code>
-                                        {value.network && `(${value.network})`}
-                                    </>
-                                ) : (
-                                    'Could not get version'
-                                )}
+                                <VersionNumber
+                                    isLoading={value.isLoading}
+                                    software={value.software}
+                                    version={value.version}
+                                    network={value.network}
+                                />
                             </td>
                         </tr>
                         {key === 'keeperContracts' && data.brizo.contracts && (
