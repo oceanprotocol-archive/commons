@@ -24,7 +24,10 @@
     "cypress:run": "cypress run",
     "cypress:open": "cypress open"
   },
-  "dependencies": {},
+  "dependencies": {
+    "web3": "1.0.0-beta.37",
+    "truffle-hdwallet-provider": "^1.0.10"
+  },
   "devDependencies": {
     "@release-it/bumper": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
@@ -45,9 +48,7 @@
     "stylelint-config-bigchaindb": "^1.2.2",
     "stylelint-config-css-modules": "^1.4.0",
     "stylelint-config-standard": "^18.3.0",
-    "truffle-privatekey-provider": "^1.1.0",
-    "typescript": "3.4.5",
-    "web3": "^1.0.0-beta.55"
+    "typescript": "3.4.5"
   },
   "repository": {
     "type": "git",
