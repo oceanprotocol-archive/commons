@@ -1,14 +1,16 @@
 import React, { Fragment } from 'react'
-import { VersionNumbersState as VersionTableProps } from '.'
+import { OceanPlatformTechStatus } from '@oceanprotocol/squid'
+import { VersionNumbersState } from '.'
 import styles from './VersionTable.module.scss'
 import slugify from '@sindresorhus/slugify'
-import Spinner from '../../atoms/Spinner'
 
 const VersionTableContracts = ({
     contracts,
     network
 }: {
-    contracts: any
+    contracts: {
+        [contractName: string]: string
+    }
     network: string
 }) => (
     <table>
@@ -41,23 +43,21 @@ const VersionTableContracts = ({
 )
 
 const VersionNumber = ({
-    isLoading,
-    software,
+    name,
     version,
-    network
+    network,
+    status
 }: {
-    isLoading: boolean
-    software: string
-    version: string
-    network: string
+    name: string
+    version?: string
+    network?: string
+    status: OceanPlatformTechStatus
 }) =>
-    isLoading ? (
-        <Spinner small className={styles.spinner} />
-    ) : version ? (
+    version ? (
         <>
             <a
                 href={`https://github.com/oceanprotocol/${slugify(
-                    software
+                    name
                 )}/releases/tag/v${version}`}
             >
                 <code>v{version}</code>
@@ -65,47 +65,47 @@ const VersionNumber = ({
             {network && `(${network})`}
         </>
     ) : (
-        <span>Could not get version</span>
+        <span>{status || 'Could not get version'}</span>
     )
 
-const VersionTable = ({ data }: { data: VersionTableProps }) => (
+const VersionTable = ({ data }: { data: VersionNumbersState }) => (
     <div className={styles.tableWrap}>
         <table className={styles.table}>
             <tbody>
                 {Object.entries(data).map(([key, value]) => (
                     <Fragment key={key}>
-                        <tr key={key}>
+                        <tr>
                             <td>
                                 <a
                                     href={
-                                        value.software &&
+                                        value.name &&
                                         `https://github.com/oceanprotocol/${slugify(
-                                            value.software
+                                            value.name
                                         )}`
                                     }
                                 >
-                                    <strong>{value.software}</strong>
+                                    <strong>{value.name}</strong>
                                 </a>
                             </td>
                             <td>
                                 <VersionNumber
-                                    isLoading={value.isLoading}
-                                    software={value.software}
+                                    name={value.name}
                                     version={value.version}
-                                    network={value.network}
+                                    status={value.status}
+                                    // network={value.network}
                                 />
                             </td>
                         </tr>
-                        {key === 'keeperContracts' && data.brizo.contracts && (
+                        {/* {value.contracts && (
                             <tr>
                                 <td colSpan={2}>
                                     <VersionTableContracts
-                                        contracts={data.brizo.contracts}
-                                        network={data.brizo.network}
+                                        contracts={value.contracts}
+                                        network={value.network || ''}
                                     />
                                 </td>
                             </tr>
-                        )}
+                        )} */}
                     </Fragment>
                 ))}
             </tbody>
