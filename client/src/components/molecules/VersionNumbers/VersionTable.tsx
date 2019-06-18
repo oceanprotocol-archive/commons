@@ -1,8 +1,9 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { OceanPlatformTechStatus } from '@oceanprotocol/squid'
+import slugify from '@sindresorhus/slugify'
+import useCollapse from 'react-collapsed'
 import { VersionNumbersState } from '.'
 import styles from './VersionTable.module.scss'
-import slugify from '@sindresorhus/slugify'
 
 const VersionTableContracts = ({
     contracts,
@@ -71,48 +72,78 @@ const VersionNumber = ({
         <span>{status || 'Could not get version'}</span>
     )
 
-const VersionTable = ({ data }: { data: VersionNumbersState }) => (
-    <div className={styles.tableWrap}>
-        <table className={styles.table}>
-            <tbody>
-                {Object.entries(data)
-                    .filter(([key, value]) => key !== 'status')
-                    .map(([key, value]) => (
-                        <Fragment key={key}>
-                            <tr>
-                                <td>
-                                    <a
-                                        href={`https://github.com/oceanprotocol/${slugify(
-                                            value.name || value.software
-                                        )}`}
-                                    >
-                                        <strong>{value.name}</strong>
-                                    </a>
-                                </td>
-                                <td>
-                                    <VersionNumber
-                                        name={value.name || value.software}
-                                        version={value.version}
-                                        status={value.status}
-                                        network={value.network}
-                                    />
-                                </td>
-                            </tr>
-                            {value.contracts && (
-                                <tr>
-                                    <td colSpan={2}>
-                                        <VersionTableContracts
-                                            contracts={value.contracts}
-                                            network={value.network || ''}
-                                        />
-                                    </td>
-                                </tr>
+const VersionRow = ({ value }: { value: any }) => {
+    const collapseStyles = {
+        transitionDuration: '0.1s'
+    }
+
+    const expandStyles = {
+        transitionDuration: '0.1s'
+    }
+
+    const { getCollapseProps, getToggleProps, isOpen } = useCollapse({
+        collapseStyles,
+        expandStyles
+    })
+
+    return (
+        <>
+            <tr>
+                <td>
+                    {value.contracts && (
+                        <button className={styles.handle} {...getToggleProps()}>
+                            {isOpen ? (
+                                <span>&#9660;</span>
+                            ) : (
+                                <span>&#9658;</span>
                             )}
-                        </Fragment>
-                    ))}
-            </tbody>
-        </table>
-    </div>
-)
+                        </button>
+                    )}
+                    <a
+                        href={`https://github.com/oceanprotocol/${slugify(
+                            value.name || value.software
+                        )}`}
+                    >
+                        <strong>{value.name}</strong>
+                    </a>
+                </td>
+                <td>
+                    <VersionNumber
+                        name={value.name || value.software}
+                        version={value.version}
+                        status={value.status}
+                        network={value.network}
+                    />
+                </td>
+            </tr>
+            {value.contracts && (
+                <tr {...getCollapseProps()}>
+                    <td colSpan={2}>
+                        <VersionTableContracts
+                            contracts={value.contracts}
+                            network={value.network || ''}
+                        />
+                    </td>
+                </tr>
+            )}
+        </>
+    )
+}
+
+const VersionTable = ({ data }: { data: VersionNumbersState }) => {
+    return (
+        <div className={styles.tableWrap}>
+            <table className={styles.table}>
+                <tbody>
+                    {Object.entries(data)
+                        .filter(([key, value]) => key !== 'status')
+                        .map(([key, value]) => (
+                            <VersionRow key={key} value={value} />
+                        ))}
+                </tbody>
+            </table>
+        </div>
+    )
+}
 
 export default VersionTable

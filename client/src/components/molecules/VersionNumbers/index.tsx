@@ -120,20 +120,28 @@ export default class VersionNumbers extends PureComponent<
         }
     }
 
-    public render() {
-        const { minimal } = this.props
+    private MinimalOutput = () => {
         const { commons, squid, brizo, aquarius } = this.state
 
-        const mimimalOutput = `${squid.name} v${squid.version}\n${
-            brizo.name
-        } v${brizo.version}\n${aquarius.name} v${aquarius.version}`
-
-        return minimal ? (
+        return (
             <p className={styles.versionsMinimal}>
-                <a title={mimimalOutput} href={'/about'}>
-                    v{commons.version} {brizo.network && `(${brizo.network})`}
+                <a
+                    title={`${squid.name} v${squid.version}\n${brizo.name} v${
+                        brizo.version
+                    }\n${aquarius.name} v${aquarius.version}`}
+                    href={'/about'}
+                >
+                    v{commons.version} {squid.network && `(${squid.network})`}
                 </a>
             </p>
+        )
+    }
+
+    public render() {
+        const { minimal } = this.props
+
+        return minimal ? (
+            <this.MinimalOutput />
         ) : (
             <div className={styles.versions} id="#oceanversions">
                 <h2 className={styles.versionsTitle}>

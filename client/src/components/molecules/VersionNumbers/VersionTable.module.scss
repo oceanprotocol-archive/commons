@@ -10,6 +10,10 @@
     display: table;
     border-top: 1px solid $brand-grey-lighter;
 
+    tr {
+        position: relative;
+    }
+
     table {
         display: table;
         margin-left: $spacer;
@@ -56,4 +60,17 @@
 .spinner {
     composes: spinner, small from '../../atoms/Spinner.module.scss';
     margin-right: $spacer;
+}
+
+.handle {
+    display: inline-block;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    margin-left: -1rem;
+    padding-right: .5rem;
+    cursor: pointer;
+    color: $brand-grey-light;
 }
