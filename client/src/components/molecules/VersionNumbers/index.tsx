@@ -12,6 +12,7 @@ import { faucetUri } from '../../../config'
 import { User } from '../../../context'
 
 import VersionTable from './VersionTable'
+import VersionStatus from './VersionStatus'
 
 export const commonsVersion =
     process.env.NODE_ENV === 'production' ? version : `${version}-dev`
@@ -63,15 +64,15 @@ export default class VersionNumbers extends PureComponent<
         },
         status: {
             ok: false,
-            contracts: false,
-            network: false
+            network: false,
+            contracts: false
         }
     }
 
     // for canceling axios requests
     public signal = axios.CancelToken.source()
 
-    public componentDidMount() {
+    public async componentDidMount() {
         this.getOceanVersions()
         this.getFaucetVersion()
     }
@@ -145,8 +146,9 @@ export default class VersionNumbers extends PureComponent<
         ) : (
             <div className={styles.versions} id="#oceanversions">
                 <h2 className={styles.versionsTitle}>
-                    Ocean Components in use
+                    Ocean Components Status
                 </h2>
+                <VersionStatus status={this.state.status} />
                 <VersionTable data={this.state} />
             </div>
         )
