@@ -8,7 +8,7 @@ import axios from 'axios'
 import { version } from '../../../../package.json'
 import styles from './index.module.scss'
 
-// import { faucetUri } from '../../../config'
+import { faucetUri } from '../../../config'
 import { User } from '../../../context'
 
 import VersionTable from './VersionTable'
@@ -73,6 +73,7 @@ export default class VersionNumbers extends PureComponent<
 
     public componentDidMount() {
         this.getOceanVersions()
+        this.getFaucetVersion()
     }
 
     public componentWillUnmount() {
@@ -81,28 +82,24 @@ export default class VersionNumbers extends PureComponent<
 
     private async getOceanVersions() {
         const { ocean } = this.context
-
         // wait until ocean object is properly populated
         if (ocean.versions === undefined) return
 
         const response = await ocean.versions.get()
         const { squid, brizo, aquarius, status } = response
 
-        // const faucet = await this.getData(faucetUri)
-
         this.setState({
-            commons: { ...this.state.commons },
+            ...this.state,
             squid,
             brizo,
             aquarius,
             status
-            // faucet
         })
     }
 
-    private async getData(uri: string) {
+    private async getFaucetVersion() {
         try {
-            const response = await axios.get(uri, {
+            const response = await axios.get(faucetUri, {
                 headers: { Accept: 'application/json' },
                 cancelToken: this.signal.token
             })
@@ -110,7 +107,14 @@ export default class VersionNumbers extends PureComponent<
             // fail silently
             if (response.status !== 200) return
 
-            return response.data
+            this.setState({
+                ...this.state,
+                faucet: {
+                    ...this.state.faucet,
+                    version: response.data.version,
+                    status: OceanPlatformTechStatus.Working
+                }
+            })
         } catch (error) {
             !axios.isCancel(error) && Logger.error(error.message)
         }

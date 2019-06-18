@@ -82,19 +82,16 @@ const VersionTable = ({ data }: { data: VersionNumbersState }) => (
                             <tr>
                                 <td>
                                     <a
-                                        href={
-                                            value.name &&
-                                            `https://github.com/oceanprotocol/${slugify(
-                                                value.name
-                                            )}`
-                                        }
+                                        href={`https://github.com/oceanprotocol/${slugify(
+                                            value.name || value.software
+                                        )}`}
                                     >
                                         <strong>{value.name}</strong>
                                     </a>
                                 </td>
                                 <td>
                                     <VersionNumber
-                                        name={value.name}
+                                        name={value.name || value.software}
                                         version={value.version}
                                         status={value.status}
                                         network={value.network}
