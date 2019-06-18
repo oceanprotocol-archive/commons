@@ -16,28 +16,31 @@ const VersionTableContracts = ({
     <table>
         <tbody>
             {contracts &&
-                Object.keys(contracts).map(key => {
-                    const submarineLink = `https://submarine${
-                        network === 'duero'
-                            ? '.duero'
-                            : network === 'pacific'
-                            ? '.pacific'
-                            : ''
-                    }.dev-ocean.com/address/${contracts[key]}`
+                Object.keys(contracts)
+                    // sort alphabetically
+                    .sort((a, b) => a.localeCompare(b))
+                    .map(key => {
+                        const submarineLink = `https://submarine${
+                            network === 'duero'
+                                ? '.duero'
+                                : network === 'pacific'
+                                ? '.pacific'
+                                : ''
+                        }.dev-ocean.com/address/${contracts[key]}`
 
-                    return (
-                        <tr key={key}>
-                            <td>
-                                <span className={styles.label}>{key}</span>
-                            </td>
-                            <td>
-                                <a href={submarineLink}>
-                                    <code>{contracts[key]}</code>
-                                </a>
-                            </td>
-                        </tr>
-                    )
-                })}
+                        return (
+                            <tr key={key}>
+                                <td>
+                                    <span className={styles.label}>{key}</span>
+                                </td>
+                                <td>
+                                    <a href={submarineLink}>
+                                        <code>{contracts[key]}</code>
+                                    </a>
+                                </td>
+                            </tr>
+                        )
+                    })}
         </tbody>
     </table>
 )
@@ -72,42 +75,44 @@ const VersionTable = ({ data }: { data: VersionNumbersState }) => (
     <div className={styles.tableWrap}>
         <table className={styles.table}>
             <tbody>
-                {Object.entries(data).map(([key, value]) => (
-                    <Fragment key={key}>
-                        <tr>
-                            <td>
-                                <a
-                                    href={
-                                        value.name &&
-                                        `https://github.com/oceanprotocol/${slugify(
-                                            value.name
-                                        )}`
-                                    }
-                                >
-                                    <strong>{value.name}</strong>
-                                </a>
-                            </td>
-                            <td>
-                                <VersionNumber
-                                    name={value.name}
-                                    version={value.version}
-                                    status={value.status}
-                                    // network={value.network}
-                                />
-                            </td>
-                        </tr>
-                        {/* {value.contracts && (
+                {Object.entries(data)
+                    .filter(([key, value]) => key !== 'status')
+                    .map(([key, value]) => (
+                        <Fragment key={key}>
                             <tr>
-                                <td colSpan={2}>
-                                    <VersionTableContracts
-                                        contracts={value.contracts}
-                                        network={value.network || ''}
+                                <td>
+                                    <a
+                                        href={
+                                            value.name &&
+                                            `https://github.com/oceanprotocol/${slugify(
+                                                value.name
+                                            )}`
+                                        }
+                                    >
+                                        <strong>{value.name}</strong>
+                                    </a>
+                                </td>
+                                <td>
+                                    <VersionNumber
+                                        name={value.name}
+                                        version={value.version}
+                                        status={value.status}
+                                        network={value.network}
                                     />
                                 </td>
                             </tr>
-                        )} */}
-                    </Fragment>
-                ))}
+                            {value.contracts && (
+                                <tr>
+                                    <td colSpan={2}>
+                                        <VersionTableContracts
+                                            contracts={value.contracts}
+                                            network={value.network || ''}
+                                        />
+                                    </td>
+                                </tr>
+                            )}
+                        </Fragment>
+                    ))}
             </tbody>
         </table>
     </div>

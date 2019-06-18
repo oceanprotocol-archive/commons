@@ -8,7 +8,7 @@ import axios from 'axios'
 import { version } from '../../../../package.json'
 import styles from './index.module.scss'
 
-import { faucetUri } from '../../../config'
+// import { faucetUri } from '../../../config'
 import { User } from '../../../context'
 
 import VersionTable from './VersionTable'
@@ -43,11 +43,6 @@ export default class VersionNumbers extends PureComponent<
             name: 'Commons',
             version: commonsVersion
         },
-        faucet: {
-            name: 'Faucet',
-            version: '',
-            status: OceanPlatformTechStatus.Loading
-        },
         squid: {
             name: 'Squid-js',
             status: OceanPlatformTechStatus.Loading
@@ -58,7 +53,18 @@ export default class VersionNumbers extends PureComponent<
         },
         brizo: {
             name: 'Brizo',
+            network: 'Nile',
             status: OceanPlatformTechStatus.Loading
+        },
+        faucet: {
+            name: 'Faucet',
+            version: '',
+            status: OceanPlatformTechStatus.Loading
+        },
+        status: {
+            ok: false,
+            contracts: false,
+            network: false
         }
     }
 
@@ -75,10 +81,12 @@ export default class VersionNumbers extends PureComponent<
 
     private async getOceanVersions() {
         const { ocean } = this.context
-        const { versions } = ocean
-        const componentVersions = versions && (await versions.get())
-        const { squid, brizo, aquarius } = componentVersions
-        console.log(componentVersions)
+
+        // wait until ocean object is properly populated
+        if (ocean.versions === undefined) return
+
+        const response = await ocean.versions.get()
+        const { squid, brizo, aquarius, status } = response
 
         // const faucet = await this.getData(faucetUri)
 
@@ -86,10 +94,10 @@ export default class VersionNumbers extends PureComponent<
             commons: { ...this.state.commons },
             squid,
             brizo,
-            aquarius
+            aquarius,
+            status
             // faucet
         })
-        console.log(this.state)
     }
 
     private async getData(uri: string) {
