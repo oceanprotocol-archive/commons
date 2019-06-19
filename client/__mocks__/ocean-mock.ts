@@ -31,6 +31,34 @@ const oceanMock = {
                     }
                 }
             }
+        },
+        versions: {
+            get: jest.fn(() =>
+                Promise.resolve({
+                    squid: {
+                        name: 'Squid-js',
+                        status: 'Working'
+                    },
+                    aquarius: {
+                        name: 'Aquarius',
+                        status: 'Working'
+                    },
+                    brizo: {
+                        name: 'Brizo',
+                        network: 'Nile',
+                        status: 'Working',
+                        contracts: {
+                            hello: 'hello',
+                            hello2: 'hello2'
+                        }
+                    },
+                    status: {
+                        ok: true,
+                        network: true,
+                        contracts: true
+                    }
+                })
+            )
         }
     }
 }

@@ -1,56 +1,40 @@
 import React, { PureComponent } from 'react'
-import { Logger } from '@oceanprotocol/squid'
+import {
+    OceanPlatformVersions,
+    OceanPlatformTechStatus,
+    Logger
+} from '@oceanprotocol/squid'
 import axios from 'axios'
 import { version } from '../../../../package.json'
-import { version as versionSquid } from '@oceanprotocol/squid/package.json'
 import styles from './index.module.scss'
 
-import { aquariusUri, brizoUri, faucetUri } from '../../../config'
+import { nodeUri, faucetUri } from '../../../config'
+import { User } from '../../../context'
 
 import VersionTable from './VersionTable'
-import { isJsonString } from './utils'
+import VersionStatus from './VersionStatus'
 
+// construct values which are not part of any response
 export const commonsVersion =
     process.env.NODE_ENV === 'production' ? version : `${version}-dev`
+const commonsNetwork = new URL(nodeUri).hostname.split('.')[0]
+const faucetNetwork = new URL(faucetUri).hostname.split('.')[1]
 
 interface VersionNumbersProps {
     minimal?: boolean
 }
 
-export interface VersionNumbersState {
+export interface VersionNumbersState extends OceanPlatformVersions {
     commons: {
-        software: string
-        version: string
-    }
-    squidJs: {
-        software: string
-        version: string
-    }
-    aquarius: {
-        isLoading: boolean
-        software: string
-        version: string
-    }
-    brizo: {
-        isLoading: boolean
-        software: string
+        name: string
         version: string
         network: string
-        'keeper-version': string
-        'keeper-url': string
-        contracts: any
-    }
-    keeperContracts: {
-        isLoading: boolean
-        software: string
-        version: string
-        network: string
-        contracts: any
     }
     faucet: {
-        isLoading: boolean
-        software?: string
-        version?: string
+        name: string
+        version: string
+        network: string
+        status: OceanPlatformTechStatus
     }
 }
 
@@ -58,104 +42,72 @@ export default class VersionNumbers extends PureComponent<
     VersionNumbersProps,
     VersionNumbersState
 > {
-    public state = {
-        commons: { software: 'Commons', version: commonsVersion },
-        squidJs: {
-            software: 'Squid-js',
-            version: versionSquid
+    public static contextType = User
+
+    // define a minimal default state to fill UI
+    public state: VersionNumbersState = {
+        commons: {
+            name: 'Commons',
+            network: commonsNetwork,
+            version: commonsVersion
+        },
+        squid: {
+            name: 'Squid-js',
+            status: OceanPlatformTechStatus.Loading
         },
         aquarius: {
-            isLoading: true,
-            software: 'Aquarius',
-            version: ''
+            name: 'Aquarius',
+            status: OceanPlatformTechStatus.Loading
         },
         brizo: {
-            isLoading: true,
-            software: 'Brizo',
-            version: '',
-            contracts: {} as any,
-            network: '',
-            'keeper-version': '0.0.0',
-            'keeper-url': ''
-        },
-        keeperContracts: {
-            isLoading: true,
-            software: 'Keeper Contracts',
-            version: '',
-            contracts: {} as any,
-            network: ''
+            name: 'Brizo',
+            status: OceanPlatformTechStatus.Loading
         },
         faucet: {
-            isLoading: true,
-            software: 'Faucet',
-            version: ''
+            name: 'Faucet',
+            version: '',
+            network: faucetNetwork,
+            status: OceanPlatformTechStatus.Loading
+        },
+        status: {
+            ok: false,
+            network: false,
+            contracts: false
         }
     }
 
     // for canceling axios requests
     public signal = axios.CancelToken.source()
 
-    public componentWillMount() {
-        this.setAquarius()
-        this.setBrizoAndKeeper()
-        this.setFaucet()
+    public async componentDidMount() {
+        this.getOceanVersions()
+        this.getFaucetVersion()
     }
 
     public componentWillUnmount() {
         this.signal.cancel()
     }
 
-    private async setAquarius() {
-        const aquarius = await this.getData(aquariusUri)
-        aquarius &&
-            aquarius.version !== undefined &&
-            this.setState({ aquarius: { isLoading: false, ...aquarius } })
+    private async getOceanVersions() {
+        const { ocean } = this.context
+        // wait until ocean object is properly populated
+        if (ocean.versions === undefined) return
+
+        const response = await ocean.versions.get()
+        const { squid, brizo, aquarius, status } = response
+
+        this.setState({
+            ...this.state,
+            squid,
+            brizo,
+            aquarius,
+            status
+        })
     }
 
-    private async setBrizoAndKeeper() {
-        const brizo = await this.getData(brizoUri)
-
-        const keeperVersion =
-            brizo['keeper-version'] && brizo['keeper-version'].replace('v', '')
-        const keeperNetwork =
-            brizo['keeper-url'] &&
-            new URL(brizo['keeper-url']).hostname.split('.')[0]
-
-        brizo &&
-            brizo.version !== undefined &&
-            this.setState({
-                brizo: {
-                    isLoading: false,
-                    ...brizo
-                },
-                keeperContracts: {
-                    ...this.state.keeperContracts,
-                    isLoading: false,
-                    version: keeperVersion,
-                    contracts: brizo.contracts,
-                    network: keeperNetwork
-                }
-            })
-    }
-
-    private async setFaucet() {
-        const faucet = await this.getData(faucetUri)
-
-        // backwards compatibility
-        isJsonString(faucet) === false &&
-            this.setState({
-                faucet: { ...this.state.faucet, isLoading: false }
-            })
-
-        // the new thing
-        faucet &&
-            faucet.version !== undefined &&
-            this.setState({ faucet: { isLoading: false, ...faucet } })
-    }
-
-    private async getData(uri: string) {
+    private async getFaucetVersion() {
         try {
-            const response = await axios.get(uri, {
+            const response = await axios.get(faucetUri, {
                 headers: { Accept: 'application/json' },
                 cancelToken: this.signal.token
             })
@@ -163,35 +115,47 @@ export default class VersionNumbers extends PureComponent<
             // fail silently
             if (response.status !== 200) return
 
-            return response.data
+            this.setState({
+                ...this.state,
+                faucet: {
+                    ...this.state.faucet,
+                    version: response.data.version,
+                    status: OceanPlatformTechStatus.Working
+                }
+            })
         } catch (error) {
             !axios.isCancel(error) && Logger.error(error.message)
         }
     }
 
-    public render() {
-        const { minimal } = this.props
-        const { commons, squidJs, brizo, aquarius, faucet } = this.state
+    private MinimalOutput = () => {
+        const { commons, squid, brizo, aquarius } = this.state
 
-        const mimimalOutput = `${squidJs.software} v${squidJs.version}  \n${
-            brizo.software
-        } v${brizo.version} \n${aquarius.software} v${
-            aquarius.version
-        } \nKeeper Contracts ${brizo['keeper-version']} \n${faucet.software} v${
-            faucet.version
-        }`
-
-        return minimal ? (
+        return (
             <p className={styles.versionsMinimal}>
-                <a title={mimimalOutput} href={'/about'}>
-                    v{commons.version} {brizo.network && `(${brizo.network})`}
+                <a
+                    title={`${squid.name} v${squid.version}\n${brizo.name} v${
+                        brizo.version
+                    }\n${aquarius.name} v${aquarius.version}`}
+                    href={'/about'}
+                >
+                    v{commons.version} {squid.network && `(${squid.network})`}
                 </a>
             </p>
+        )
+    }
+
+    public render() {
+        const { minimal } = this.props
+
+        return minimal ? (
+            <this.MinimalOutput />
         ) : (
             <div className={styles.versions} id="#oceanversions">
                 <h2 className={styles.versionsTitle}>
-                    Ocean Components in use
+                    Ocean Components Status
                 </h2>
+                <VersionStatus status={this.state.status} />
                 <VersionTable data={this.state} />
             </div>
         )

@@ -1,90 +1,52 @@
 import React from 'react'
-import { render, waitForElement } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import mockAxios from 'jest-mock-axios'
 import { StateMock } from '@react-mock/state'
-import { version as versionSquid } from '@oceanprotocol/squid/package.json'
-import VersionNumbers, { commonsVersion } from '.'
+import VersionNumbers from '.'
+
+import { User } from '../../../context'
+import { userMockConnected } from '../../../../__mocks__/user-mock'
 
 afterEach(() => {
     mockAxios.reset()
 })
 
-const stateMock = {
-    commons: { software: 'Commons', version: commonsVersion },
-    squidJs: {
-        software: 'Squid-js',
-        version: versionSquid
-    },
-    aquarius: {
-        isLoading: false,
-        software: 'Aquarius',
-        version: ''
-    },
-    brizo: {
-        isLoading: false,
-        software: 'Brizo',
-        version: '',
-        contracts: {},
-        network: '',
-        'keeper-version': '0.0.0',
-        'keeper-url': ''
-    },
-    keeperContracts: {
-        isLoading: false,
-        software: 'Keeper Contracts',
-        version: '',
-        contracts: {},
-        network: ''
-    },
-    faucet: {
-        isLoading: false,
-        software: 'Faucet',
-        version: ''
-    }
-}
-
 const stateMockIncomplete = {
-    commons: { software: 'Commons', version: commonsVersion },
-    squidJs: {
-        software: 'Squid-js',
-        version: versionSquid
+    commons: {
+        name: 'Commons',
+        version: undefined
+    },
+    squid: {
+        name: 'Squid-js',
+        version: undefined
     },
     aquarius: {
-        isLoading: false,
-        software: 'Aquarius',
+        name: 'Aquarius',
         version: undefined
     },
     brizo: {
-        isLoading: false,
-        software: 'Brizo',
+        name: 'Brizo',
         version: undefined,
         contracts: undefined,
         network: undefined,
-        'keeper-version': undefined,
-        'keeper-url': undefined
-    },
-    keeperContracts: {
-        isLoading: false,
-        software: 'Keeper Contracts',
-        version: undefined,
-        contracts: undefined,
-        network: undefined
+        keeperVersion: undefined,
+        keeperUrl: undefined
     },
     faucet: {
-        isLoading: false,
-        software: 'Faucet',
+        name: 'Faucet',
         version: undefined
+    },
+    status: {
+        ok: false,
+        network: false,
+        contracts: false
     }
 }
 
 const mockResponse = {
     data: {
-        software: 'Brizo',
-        version: '6.6.6',
-        contracts: { Hello: 'Hello', Another: 'Hello' },
-        network: 'hello',
-        'keeper-url': 'https://squid.com',
-        'keeper-version': '6.6.6'
+        software: 'Faucet',
+        version: '6.6.6'
     }
 }
 
@@ -97,9 +59,9 @@ const mockResponseFaulty = {
 describe('VersionNumbers', () => {
     it('renders without crashing', () => {
         const { container } = render(
-            <StateMock state={stateMock}>
+            <User.Provider value={userMockConnected}>
                 <VersionNumbers />
-            </StateMock>
+            </User.Provider>
         )
         mockAxios.mockResponse(mockResponse)
         expect(mockAxios.get).toHaveBeenCalled()
@@ -108,9 +70,11 @@ describe('VersionNumbers', () => {
 
     it('renders without proper component response', () => {
         const { container } = render(
-            <StateMock state={stateMockIncomplete}>
-                <VersionNumbers />
-            </StateMock>
+            <User.Provider value={userMockConnected}>
+                <StateMock state={stateMockIncomplete}>
+                    <VersionNumbers />
+                </StateMock>
+            </User.Provider>
         )
         mockAxios.mockResponse(mockResponseFaulty)
         expect(mockAxios.get).toHaveBeenCalled()
