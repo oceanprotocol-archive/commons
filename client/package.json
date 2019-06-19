@@ -40,7 +40,6 @@
     "web3": "1.0.0-beta.37"
   },
   "devDependencies": {
-    "@react-mock/fetch": "^0.3.0",
     "@react-mock/state": "^0.1.8",
     "@testing-library/react": "^8.0.1",
     "@types/classnames": "^2.2.7",
