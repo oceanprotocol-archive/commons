@@ -12,8 +12,3 @@
     cursor: pointer;
     color: $brand-grey-light;
 }
-
-.spinner {
-    composes: spinner, small from '../../atoms/Spinner.module.scss';
-    margin-right: $spacer;
-}

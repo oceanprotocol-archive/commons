@@ -1,42 +1,9 @@
 import React from 'react'
 import useCollapse from 'react-collapsed'
-import { OceanPlatformTechStatus } from '@oceanprotocol/squid'
 import slugify from '@sindresorhus/slugify'
-import Spinner from '../../atoms/Spinner'
 import styles from './VersionTableRow.module.scss'
 import { VersionTableContracts } from './VersionTable'
-
-const VersionNumber = ({
-    name,
-    version,
-    network,
-    status
-}: {
-    name: string
-    version?: string
-    network?: string
-    status: OceanPlatformTechStatus
-}) =>
-    version ? (
-        <>
-            <a
-                href={`https://github.com/oceanprotocol/${slugify(
-                    name
-                )}/releases/tag/v${version}`}
-            >
-                <code>v{version}</code>
-            </a>
-            {network && `(${network})`}
-        </>
-    ) : (
-        <span>
-            {status === OceanPlatformTechStatus.Loading ? (
-                <Spinner className={styles.spinner} small />
-            ) : (
-                status || 'Could not get version'
-            )}
-        </span>
-    )
+import VersionNumber from './VersionNumber'
 
 const VersionTableRow = ({ value }: { value: any }) => {
     const collapseStyles = {
@@ -79,6 +46,7 @@ const VersionTableRow = ({ value }: { value: any }) => {
                         version={value.version}
                         status={value.status}
                         network={value.network}
+                        commit={value.commit}
                     />
                 </td>
             </tr>
@@ -88,6 +56,7 @@ const VersionTableRow = ({ value }: { value: any }) => {
                         <VersionTableContracts
                             contracts={value.contracts}
                             network={value.network || ''}
+                            keeperVersion={value.keeperVersion}
                         />
                     </td>
                 </tr>

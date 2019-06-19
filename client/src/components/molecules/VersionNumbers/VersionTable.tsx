@@ -2,18 +2,32 @@ import React from 'react'
 import { VersionNumbersState } from '.'
 import VersionTableRow from './VersionTableRow'
 import styles from './VersionTable.module.scss'
+import VersionNumber from './VersionNumber'
 
 export const VersionTableContracts = ({
     contracts,
-    network
+    network,
+    keeperVersion
 }: {
     contracts: {
         [contractName: string]: string
     }
     network: string
+    keeperVersion?: string
 }) => (
     <table>
         <tbody>
+            <tr>
+                <td>
+                    <strong>Keeper Contracts</strong>
+                </td>
+                <td>
+                    <VersionNumber
+                        name={'Keeper Contracts'}
+                        version={keeperVersion}
+                    />
+                </td>
+            </tr>
             {contracts &&
                 Object.keys(contracts)
                     // sort alphabetically

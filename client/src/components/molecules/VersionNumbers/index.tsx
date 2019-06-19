@@ -8,14 +8,17 @@ import axios from 'axios'
 import { version } from '../../../../package.json'
 import styles from './index.module.scss'
 
-import { faucetUri } from '../../../config'
+import { nodeUri, faucetUri } from '../../../config'
 import { User } from '../../../context'
 
 import VersionTable from './VersionTable'
 import VersionStatus from './VersionStatus'
 
+// construct values which are not part of any response
 export const commonsVersion =
     process.env.NODE_ENV === 'production' ? version : `${version}-dev`
+const commonsNetwork = new URL(nodeUri).hostname.split('.')[0]
+const faucetNetwork = new URL(faucetUri).hostname.split('.')[1]
 
 interface VersionNumbersProps {
     minimal?: boolean
@@ -25,10 +28,12 @@ export interface VersionNumbersState extends OceanPlatformVersions {
     commons: {
         name: string
         version: string
+        network: string
     }
     faucet: {
         name: string
         version: string
+        network: string
         status: OceanPlatformTechStatus
     }
 }
@@ -39,9 +44,11 @@ export default class VersionNumbers extends PureComponent<
 > {
     public static contextType = User
 
+    // define a minimal default state to fill UI
     public state: VersionNumbersState = {
         commons: {
             name: 'Commons',
+            network: commonsNetwork,
             version: commonsVersion
         },
         squid: {
@@ -54,12 +61,12 @@ export default class VersionNumbers extends PureComponent<
         },
         brizo: {
             name: 'Brizo',
-            network: 'Nile',
             status: OceanPlatformTechStatus.Loading
         },
         faucet: {
             name: 'Faucet',
             version: '',
+            network: faucetNetwork,
             status: OceanPlatformTechStatus.Loading
         },
         status: {

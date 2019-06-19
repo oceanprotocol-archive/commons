@@ -19,7 +19,9 @@ const VersionStatus = ({
                     >
                         {value}
                     </span>
-                    <span className={styles.indicatorLabel}>{key}</span>
+                    <span className={styles.indicatorLabel}>
+                        {key === 'ok' ? 'components' : key}
+                    </span>
                 </div>
             ))}
         </div>
