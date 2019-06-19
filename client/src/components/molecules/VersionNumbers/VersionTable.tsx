@@ -64,7 +64,7 @@ export const VersionTableContracts = ({
                         return (
                             <tr key={key}>
                                 <td>
-                                    <span className={styles.label}>{key}</span>
+                                    <code className={styles.label}>{key}</code>
                                 </td>
                                 <td>
                                     <a href={submarineLink}>
@@ -84,7 +84,7 @@ export const VersionTableCommons = () => (
             {Object.entries(commonsConfig).map(([key, value]) => (
                 <tr key={key}>
                     <td>
-                        <strong>{key}</strong>
+                        <code className={styles.label}>{key}</code>
                     </td>
                     <td>
                         <code>{value}</code>

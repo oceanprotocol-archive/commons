@@ -7,11 +7,12 @@ import VersionNumber from './VersionNumber'
 
 const VersionTableRow = ({ value }: { value: any }) => {
     const collapseStyles = {
-        transition: '0.01s'
+        transitionDuration: '0.01s'
     }
 
     const expandStyles = {
-        transition: '0.01s'
+        transitionDuration: '0.01s',
+        transitionTimingFunction: 'ease-out'
     }
 
     const { getCollapseProps, getToggleProps, isOpen } = useCollapse({

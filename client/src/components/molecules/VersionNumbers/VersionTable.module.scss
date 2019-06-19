@@ -7,15 +7,9 @@
 }
 
 .table {
-    display: table;
     border-top: 1px solid $brand-grey-lighter;
 
-    tr {
-        position: relative;
-    }
-
     table {
-        display: table;
         margin-left: $spacer;
         width: calc(100% - #{$spacer});
         margin-bottom: -1px;
@@ -33,6 +27,7 @@
 
     td {
         padding: $spacer / 4 $spacer / 2;
+        vertical-align: top;
 
         &:last-child {
             text-align: right;
@@ -55,4 +50,8 @@
             }
         }
     }
+}
+
+.label {
+    min-width: 15rem;
 }
