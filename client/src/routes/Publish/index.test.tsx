@@ -1,4 +1,5 @@
 import React from 'react'
+import { MemoryRouter } from 'react-router'
 import { render, fireEvent } from '@testing-library/react'
 import Publish from '.'
 import { User } from '../../context'
@@ -8,7 +9,9 @@ describe('Publish', () => {
     it('renders without crashing', () => {
         const { container, getByText } = render(
             <User.Provider value={userMockConnected}>
-                <Publish />
+                <MemoryRouter>
+                    <Publish />
+                </MemoryRouter>
             </User.Provider>
         )
         expect(container.firstChild).toBeInTheDocument()
@@ -18,7 +21,9 @@ describe('Publish', () => {
     it('next button works', () => {
         const { getByText, getByLabelText, getByTestId } = render(
             <User.Provider value={userMockConnected}>
-                <Publish />
+                <MemoryRouter>
+                    <Publish />
+                </MemoryRouter>
             </User.Provider>
         )
 
