@@ -2,7 +2,7 @@ import React from 'react'
 import useCollapse from 'react-collapsed'
 import slugify from '@sindresorhus/slugify'
 import styles from './VersionTableRow.module.scss'
-import { VersionTableContracts } from './VersionTable'
+import { VersionTableContracts, VersionTableCommons } from './VersionTable'
 import VersionNumber from './VersionNumber'
 
 const VersionTableRow = ({ value }: { value: any }) => {
@@ -23,7 +23,7 @@ const VersionTableRow = ({ value }: { value: any }) => {
         <>
             <tr>
                 <td>
-                    {value.contracts && (
+                    {(value.name === 'Commons' || value.contracts) && (
                         <button className={styles.handle} {...getToggleProps()}>
                             {isOpen ? (
                                 <span>&#9660;</span>
@@ -50,6 +50,13 @@ const VersionTableRow = ({ value }: { value: any }) => {
                     />
                 </td>
             </tr>
+            {value.name === 'Commons' && (
+                <tr {...getCollapseProps()}>
+                    <td colSpan={2}>
+                        <VersionTableCommons />
+                    </td>
+                </tr>
+            )}
             {value.contracts && (
                 <tr {...getCollapseProps()}>
                     <td colSpan={2}>

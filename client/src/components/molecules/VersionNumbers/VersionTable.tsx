@@ -4,6 +4,26 @@ import VersionTableRow from './VersionTableRow'
 import styles from './VersionTable.module.scss'
 import VersionNumber from './VersionNumber'
 
+import {
+    serviceUri,
+    nodeUri,
+    aquariusUri,
+    brizoUri,
+    brizoAddress,
+    secretStoreUri,
+    faucetUri
+} from '../../../config'
+
+const commonsConfig = {
+    serviceUri,
+    nodeUri,
+    aquariusUri,
+    brizoUri,
+    brizoAddress,
+    secretStoreUri,
+    faucetUri
+}
+
 export const VersionTableContracts = ({
     contracts,
     network,
@@ -54,6 +74,23 @@ export const VersionTableContracts = ({
                             </tr>
                         )
                     })}
+        </tbody>
+    </table>
+)
+
+export const VersionTableCommons = () => (
+    <table>
+        <tbody>
+            {Object.entries(commonsConfig).map(([key, value]) => (
+                <tr key={key}>
+                    <td>
+                        <strong>{key}</strong>
+                    </td>
+                    <td>
+                        <code>{value}</code>
+                    </td>
+                </tr>
+            ))}
         </tbody>
     </table>
 )
