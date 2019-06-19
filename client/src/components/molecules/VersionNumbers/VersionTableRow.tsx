@@ -38,7 +38,7 @@ const VersionTableRow = ({ value }: { value: any }) => {
                             value.name || value.software
                         )}`}
                     >
-                        <strong>{value.name}</strong>
+                        <strong>{value.name || value.software}</strong>
                     </a>
                 </td>
                 <td>

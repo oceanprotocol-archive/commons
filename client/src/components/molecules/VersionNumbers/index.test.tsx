@@ -1,48 +1,20 @@
 import React from 'react'
-import { render, waitForElement } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import mockAxios from 'jest-mock-axios'
 import { StateMock } from '@react-mock/state'
-import { version as versionSquid } from '@oceanprotocol/squid/package.json'
-import VersionNumbers, { commonsVersion } from '.'
+import VersionNumbers from '.'
+
+import { User } from '../../../context'
+import { userMockConnected } from '../../../../__mocks__/user-mock'
 
 afterEach(() => {
     mockAxios.reset()
 })
 
-const stateMock = {
-    commons: {
-        name: 'Commons',
-        version: commonsVersion
-    },
-    squid: {
-        name: 'Squid-js',
-        status: 'Loading'
-    },
-    aquarius: {
-        name: 'Aquarius',
-        status: 'Loading'
-    },
-    brizo: {
-        name: 'Brizo',
-        network: 'Nile',
-        status: 'Loading'
-    },
-    faucet: {
-        name: 'Faucet',
-        version: '',
-        status: 'Loading'
-    },
-    status: {
-        ok: false,
-        network: false,
-        contracts: false
-    }
-}
-
 const stateMockIncomplete = {
     commons: {
         name: 'Commons',
-        version: commonsVersion
+        version: undefined
     },
     squid: {
         name: 'Squid-js',
@@ -87,9 +59,9 @@ const mockResponseFaulty = {
 describe('VersionNumbers', () => {
     it('renders without crashing', () => {
         const { container } = render(
-            <StateMock state={stateMock}>
+            <User.Provider value={userMockConnected}>
                 <VersionNumbers />
-            </StateMock>
+            </User.Provider>
         )
         mockAxios.mockResponse(mockResponse)
         expect(mockAxios.get).toHaveBeenCalled()
@@ -98,9 +70,11 @@ describe('VersionNumbers', () => {
 
     it('renders without proper component response', () => {
         const { container } = render(
-            <StateMock state={stateMockIncomplete}>
-                <VersionNumbers />
-            </StateMock>
+            <User.Provider value={userMockConnected}>
+                <StateMock state={stateMockIncomplete}>
+                    <VersionNumbers />
+                </StateMock>
+            </User.Provider>
         )
         mockAxios.mockResponse(mockResponseFaulty)
         expect(mockAxios.get).toHaveBeenCalled()
