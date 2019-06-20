@@ -28,7 +28,7 @@ context('Consume', () => {
         // Click consume button
         cy.get('button').click()
         // Wait consume process to end
-        cy.get('button', { timeout: 60000 }).should('contain', 'Get file')
+        cy.get('button', { timeout: 120000 }).should('contain', 'Get file')
         // check if there is no error
         cy.get('article>div').should(
             'not.contain',

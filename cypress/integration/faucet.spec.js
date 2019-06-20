@@ -7,7 +7,7 @@ context('Faucet', () => {
         cy.on('window:before:load', win => {
             const provider = new HDWalletProvider(
                 'taxi music thumb unique chat sand crew more leg another off lamp',
-                'http://localhost:8545'
+                'https://nile.dev-ocean.com'
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3
@@ -16,6 +16,12 @@ context('Faucet', () => {
         cy.visit('http://localhost:3000/faucet')
         // Wait for end of loading
         cy.get('button', { timeout: 20000 }).should('have.length', 1)
+    })
+
+    it('Faucet button is clickable when user is connected.', () => {
+        cy.get('button')
+            .contains('Request Ether')
+            .should('not.be.disabled')
     })
 
     it('Execute faucet call', () => {
