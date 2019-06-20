@@ -7,7 +7,7 @@ context('Search', () => {
         cy.on('window:before:load', win => {
             const provider = new HDWalletProvider(
                 'taxi music thumb unique chat sand crew more leg another off lamp',
-                'http://localhost:8545'
+                'https://nile.dev-ocean.com'
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3
