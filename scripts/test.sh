@@ -12,5 +12,5 @@ do
 done
 
 echo "Running End-to-End tests"
-df -h
+
 npm run test:e2e
