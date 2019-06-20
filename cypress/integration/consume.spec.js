@@ -7,14 +7,14 @@ context('Consume', () => {
         cy.on('window:before:load', win => {
             const provider = new HDWalletProvider(
                 'taxi music thumb unique chat sand crew more leg another off lamp',
-                'https://nile.dev-ocean.com'
+                'https://duero.dev-ocean.com'
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3
         })
 
         cy.visit(
-            'http://localhost:3000/asset/did:op:04ac33b152ca4532b184d6bd040e9535b572e1f2888e4f85b47035dd638772bb'
+            'http://localhost:3000/asset/did:op:5ba8350bc43e43399d507cf3d168a48c34f085a2442f446e9400ad0f46fc5824'
         )
         // Wait for end of loading
         cy.get('button', { timeout: 60000 }).should('have.length', 1)
