@@ -15,7 +15,7 @@ context('Publish', () => {
 
         cy.visit('http://localhost:3000/publish')
 
-        cy.get('article>div', { timeout: 20000 }).should(
+        cy.get('article>div', { timeout: 60000 }).should(
             'contain',
             'Essentials'
         )
@@ -74,7 +74,7 @@ context('Publish', () => {
             .click()
         // Wait for finish
         cy.contains('Your asset is published!', {
-            timeout: 60000
+            timeout: 12000
         }).should('be.visible')
     })
 })

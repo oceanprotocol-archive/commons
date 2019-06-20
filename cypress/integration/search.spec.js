@@ -15,7 +15,7 @@ context('Search', () => {
 
         cy.visit('http://localhost:3000')
         // Wait for end of loading
-        cy.get('button', { timeout: 20000 }).should('have.length', 1)
+        cy.get('button', { timeout: 60000 }).should('have.length', 1)
     })
 
     it('Search for assets from homepage', () => {
@@ -26,7 +26,7 @@ context('Search', () => {
             .contains('Search')
             .click()
         // Verify there are results
-        cy.get('article > a', { timeout: 10000 }).should(
+        cy.get('article > a', { timeout: 60000 }).should(
             'have.length.greaterThan',
             0
         )

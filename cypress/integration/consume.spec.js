@@ -17,7 +17,7 @@ context('Consume', () => {
             'http://localhost:3000/asset/did:op:04ac33b152ca4532b184d6bd040e9535b572e1f2888e4f85b47035dd638772bb'
         )
         // Wait for end of loading
-        cy.get('button', { timeout: 20000 }).should('have.length', 1)
+        cy.get('button', { timeout: 60000 }).should('have.length', 1)
     })
 
     it('Download button is clickable when user is connected.', () => {
