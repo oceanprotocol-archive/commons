@@ -21,7 +21,7 @@
     "lint": "npm run lint:js && npm run lint:css",
     "release": "release-it --non-interactive",
     "changelog": "auto-changelog -p",
-    "cypress:run": "cypress run --max_old_space_size=4096",
+    "cypress:run": "cypress run",
     "cypress:open": "cypress open"
   },
   "dependencies": {
