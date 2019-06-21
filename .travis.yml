@@ -24,7 +24,7 @@ script:
   - export REACT_APP_BRIZO_ADDRESS="0x008c25ed3594e094db4592f4115d5fa74c4f41ea"
   - export CYPRESS_NODE_URI=REACT_APP_NODE_URI
   - export CYPRESS_SEEDPHRASE="taxi music thumb unique chat sand crew more leg another off lamp"
-  - export CYPRESS_CONSUME_ASSET="http://localhost:3000/asset/did:op:d64dd31f8d2a4fc0987fedc7a2e4a07be049b9b814434b61989ab0e3a1a443e1"
+  - export CYPRESS_CONSUME_ASSET="http://localhost:3000/asset/did:op:f5530ed7f4e3413db2dc223ab20e802c119ca24ac26d471497a4ac317fb6e667"
   - ./scripts/test.sh
   - ./scripts/coverage.sh
   - ./scripts/build.sh

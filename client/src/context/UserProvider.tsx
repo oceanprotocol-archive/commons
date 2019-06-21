@@ -151,13 +151,15 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 let isOceanNetwork
 
                 await window.web3.eth.net.getId((err, netId) => {
+                    console.log(netId)
                     if (err) return
 
                     const isNile = netId === 8995
                     const isDuero = netId === 2199
                     const isSpree = netId === 8996
+                    const isPacific = netId === 846353
 
-                    isOceanNetwork = isNile || isDuero || isSpree
+                    isOceanNetwork = isNile || isDuero || isSpree || isPacific
 
                     const network = isNile
                         ? 'Nile'
