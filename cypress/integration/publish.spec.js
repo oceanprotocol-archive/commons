@@ -6,8 +6,8 @@ context('Publish', () => {
     before(() => {
         cy.on('window:before:load', win => {
             const provider = new HDWalletProvider(
-                'taxi music thumb unique chat sand crew more leg another off lamp',
-                'https://duero.dev-ocean.com'
+                process.env.CYPRESS_SEEDPHRASE,
+                process.env.REACT_APP_NODE_URI
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3

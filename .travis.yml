@@ -16,13 +16,14 @@ before_install:
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
   # run E2E tests against these values
-  - export REACT_APP_NODE_HOST="duero.dev-ocean.com"
-  - export REACT_APP_AQUARIUS_HOST="aquarius.duero.dev-ocean.com"
-  - export REACT_APP_BRIZO_HOST="brizo.duero.dev-ocean.com"
-  - export REACT_APP_SECRET_STORE_HOST="secret-store.duero.dev-ocean.com"
-  - export REACT_APP_FAUCET_HOST="faucet.duero.dev-ocean.com"
-  - export REACT_APP_PARITY_HOST=$REACT_APP_NODE_HOST
-  - export REACT_APP_BRIZO_ADDRESS="0x9d4ed58293f71122ad6a733c1603927a150735d0"
+  - export REACT_APP_NODE_URI="https://pacific.oceanprotocol.com"
+  - export REACT_APP_AQUARIUS_URI="https://aquarius.pacific.dev-ocean.com"
+  - export REACT_APP_BRIZO_URI="https://brizo.pacific.dev-ocean.com"
+  - export REACT_APP_SECRET_STORE_URI="https://secret-store.pacific.oceanprotocol.com"
+  - export REACT_APP_FAUCET_URI="https://faucet.pacific.dev-ocean.com"
+  - export REACT_APP_BRIZO_ADDRESS="0x008c25ed3594e094db4592f4115d5fa74c4f41ea"
+  - export CYPRESS_SEEDPHRASE="taxi music thumb unique chat sand crew more leg another off lamp"
+  - export CYPRESS_CONSUME_ASSET="http://localhost:3000/asset/did:op:d64dd31f8d2a4fc0987fedc7a2e4a07be049b9b814434b61989ab0e3a1a443e1"
   - ./scripts/test.sh
   - ./scripts/coverage.sh
   - ./scripts/build.sh

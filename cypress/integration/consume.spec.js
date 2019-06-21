@@ -6,16 +6,15 @@ context('Consume', () => {
     before(() => {
         cy.on('window:before:load', win => {
             const provider = new HDWalletProvider(
-                'taxi music thumb unique chat sand crew more leg another off lamp',
-                'https://duero.dev-ocean.com'
+                process.env.CYPRESS_SEEDPHRASE,
+                process.env.REACT_APP_NODE_URI
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3
         })
 
-        cy.visit(
-            'http://localhost:3000/asset/did:op:5ba8350bc43e43399d507cf3d168a48c34f085a2442f446e9400ad0f46fc5824'
-        )
+        cy.visit(process.env.CYPRESS_CONSUME_ASSET)
+
         // Wait for end of loading
         cy.get('button', { timeout: 60000 }).should('have.length', 1)
     })
