@@ -6,14 +6,14 @@ context('Consume', () => {
     before(() => {
         cy.on('window:before:load', win => {
             const provider = new HDWalletProvider(
-                process.env.CYPRESS_SEEDPHRASE,
-                process.env.REACT_APP_NODE_URI
+                Cypress.env('SEEDPHRASE'),
+                Cypress.env('NODE_URI')
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3
         })
 
-        cy.visit(process.env.CYPRESS_CONSUME_ASSET)
+        cy.visit(Cypress.env('CONSUME_ASSET'))
 
         // Wait for end of loading
         cy.get('button', { timeout: 60000 }).should('have.length', 1)
