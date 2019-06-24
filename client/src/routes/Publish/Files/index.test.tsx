@@ -1,10 +1,14 @@
 import React from 'react'
 import { render, fireEvent, waitForElement } from '@testing-library/react'
-import { FetchMock } from '@react-mock/fetch'
+import mockAxios from 'jest-mock-axios'
 import { serviceUri } from '../../../config'
 import Files from '.'
 
 const onChange = jest.fn()
+
+afterEach(() => {
+    mockAxios.reset()
+})
 
 const files = [
     {
@@ -20,31 +24,25 @@ const files = [
     }
 ]
 
+const mockResponse = {
+    data: {
+        result: {
+            url: 'https://demo.com',
+            contentType: 'application/zip',
+            contentLength: 237347827,
+            found: true
+        }
+    }
+}
+
 const renderComponent = () =>
     render(
-        <FetchMock
-            mocks={[
-                {
-                    matcher: `${serviceUri}/api/v1/urlcheck`,
-                    method: 'POST',
-                    response: {
-                        result: {
-                            url: 'https://demo.com',
-                            contentType: 'application/zip',
-                            contentLength: 237347827,
-                            found: true
-                        }
-                    }
-                }
-            ]}
-        >
-            <Files
-                files={files}
-                placeholder={'Hello'}
-                name={'Hello'}
-                onChange={onChange}
-            />
-        </FetchMock>
+        <Files
+            files={files}
+            placeholder={'Hello'}
+            name={'Hello'}
+            onChange={onChange}
+        />
     )
 
 describe('Files', () => {
@@ -85,5 +83,7 @@ describe('Files', () => {
             target: { value: 'https://hello.com' }
         })
         fireEvent.click(getByText('Add File'))
+        mockAxios.mockResponse(mockResponse)
+        expect(mockAxios).toHaveBeenCalled()
     })
 })
