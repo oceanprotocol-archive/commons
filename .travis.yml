@@ -3,12 +3,28 @@ language: node_js
 node_js:
   - '11'
 
+addons:
+  apt:
+    packages:
+      # for Cypress
+      - libgconf-2-4
+
 before_install:
   - npm install -g npm
-  - npm install -g codacy-coverage
+  - npm install -g codacy-coverage truffle ganache-cli
 
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
+  # run E2E tests against these values
+  - export REACT_APP_NODE_URI="https://nile.dev-ocean.com"
+  - export REACT_APP_AQUARIUS_URI="https://aquarius.marketplace.dev-ocean.com"
+  - export REACT_APP_BRIZO_URI="https://brizo.marketplace.dev-ocean.com"
+  - export REACT_APP_SECRET_STORE_URI="https://secret-store.marketplace.dev-ocean.com"
+  - export REACT_APP_FAUCET_URI="https://faucet.nile.dev-ocean.com"
+  - export REACT_APP_BRIZO_ADDRESS="0x4aaab179035dc57b35e2ce066919048686f82972"
+  - export CYPRESS_NODE_URI=$REACT_APP_NODE_URI
+  - export CYPRESS_SEEDPHRASE="taxi music thumb unique chat sand crew more leg another off lamp"
+  - export CYPRESS_CONSUME_ASSET="http://localhost:3000/asset/did:op:8014d305dcb44b42a5355791a2f016a654a61184456a4d178dc6e5913deb3a5c"
   - ./scripts/test.sh
   - ./scripts/coverage.sh
   - ./scripts/build.sh
@@ -16,7 +32,11 @@ script:
 notifications:
   email: false
 
-cache: npm
+cache:
+  npm: true
+  directories:
+    # cache folder with Cypress binary
+    - ~/.cache
 
 deploy:
   - provider: script
