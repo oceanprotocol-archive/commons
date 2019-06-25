@@ -166,8 +166,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                         ? 'Nile'
                         : isDuero
                         ? 'Duero'
-                        : isPacific
-                        ? 'Pacific'
                         : netId.toString()
 
                     if (
