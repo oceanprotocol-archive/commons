@@ -11,7 +11,7 @@ context('Publish', () => {
                     : 'taxi music thumb unique chat sand crew more leg another off lamp',
                 Cypress.env('NODE_URI')
                     ? Cypress.env('NODE_URI')
-                    : 'https://pacific.oceanprotocol.com'
+                    : 'https://nile.dev-ocean.com'
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3

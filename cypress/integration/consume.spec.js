@@ -11,7 +11,7 @@ context('Consume', () => {
                     : 'taxi music thumb unique chat sand crew more leg another off lamp',
                 Cypress.env('NODE_URI')
                     ? Cypress.env('NODE_URI')
-                    : 'https://pacific.oceanprotocol.com'
+                    : 'https://nile.dev-ocean.com'
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3
@@ -20,7 +20,7 @@ context('Consume', () => {
         cy.visit(
             Cypress.env('CONSUME_ASSET')
                 ? Cypress.env('CONSUME_ASSET')
-                : 'http://localhost:3000/asset/did:op:66c9d023cd444999916570b5174d0f9037d8f85d24ba4c129e7f127f7c21aafa'
+                : 'http://localhost:3000/asset/did:op:8014d305dcb44b42a5355791a2f016a654a61184456a4d178dc6e5913deb3a5c'
         )
 
         // Wait for end of loading
