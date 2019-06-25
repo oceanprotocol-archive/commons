@@ -8,13 +8,13 @@ class About extends Component {
         return (
             <Route
                 title="About"
-                description="A marketplace to find and publish open data sets in the Ocean Network."
+                description="A marketplace to find and publish open data sets in the Ocean Pacific Network."
             >
                 <Content>
                     <p>
                         Commons is built on top of the Ocean{' '}
-                        <a href="https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet">
-                            Nile test network
+                        <a href="https://docs.oceanprotocol.com/concepts/pacific-network/">
+                            Pacific network
                         </a>{' '}
                         and is targeted at enthusiastic data scientists with
                         some crypto experience. It can be used with any

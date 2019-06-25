@@ -23,7 +23,7 @@
 If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
 
 - [🏄 Get Started](#-Get-Started)
-  - [🏖 Remote Ocean: Nile](#-Remote-Ocean-Nile)
+  - [🏖 Remote Ocean: Pacific](#-Remote-Ocean-Pacific)
   - [🐳 Use with Barge](#-Use-with-Barge)
   - [⛵️ Environment Variables](#️-Environment-Variables)
 - [👩‍🔬 Testing](#-Testing)
@@ -52,15 +52,17 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser. The page will reload if you make edits to files in either `./client` or `./server`.
 
-### 🏖 Remote Ocean: Nile
+### 🏖 Remote Ocean: Pacific
 
-To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to Ocean components running within [Ocean's Nile test network](https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet) remotely.
+To make use of all the functionality, you need to connect to an Ocean network.
 
-This means you need to connect with your MetaMask to the Nile network too. To do this:
+By default, the client will connect to Ocean components running within [Ocean's Pacific network](https://docs.oceanprotocol.com/concepts/pacific-network/) remotely.
+
+With your MetaMask, connect to the Pacific network. To do this:
 
 1. select Custom RPC in the network dropdown in MetaMask
-2. under New Network, enter `https://nile.dev-ocean.com` as the custom RPC URL
-3. Hit _Save_, and you’re now connected to Nile
+2. under New Network, enter `https://pacific.oceanprotocol.com` as the custom RPC URL
+3. Hit _Save_, and you’re now connected to Pacific
 
 ### 🐳 Use with Barge
 
