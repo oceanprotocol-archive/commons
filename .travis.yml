@@ -21,7 +21,7 @@ script:
   - export REACT_APP_BRIZO_URI="https://brizo.marketplace.dev-ocean.com"
   - export REACT_APP_SECRET_STORE_URI="https://secret-store.marketplace.dev-ocean.com"
   - export REACT_APP_FAUCET_URI="https://faucet.nile.dev-ocean.com"
-  - export REACT_APP_BRIZO_ADDRESS="0x008c25ed3594e094db4592f4115d5fa74c4f41ea"
+  - export REACT_APP_BRIZO_ADDRESS="0x4aaab179035dc57b35e2ce066919048686f82972"
   - export CYPRESS_NODE_URI=REACT_APP_NODE_URI
   - export CYPRESS_SEEDPHRASE="taxi music thumb unique chat sand crew more leg another off lamp"
   - export CYPRESS_CONSUME_ASSET="http://localhost:3000/asset/did:op:8014d305dcb44b42a5355791a2f016a654a61184456a4d178dc6e5913deb3a5c"
