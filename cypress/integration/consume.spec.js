@@ -6,14 +6,22 @@ context('Consume', () => {
     before(() => {
         cy.on('window:before:load', win => {
             const provider = new HDWalletProvider(
-                Cypress.env('SEEDPHRASE'),
+                Cypress.env('SEEDPHRASE')
+                    ? Cypress.env('SEEDPHRASE')
+                    : 'taxi music thumb unique chat sand crew more leg another off lamp',
                 Cypress.env('NODE_URI')
+                    ? Cypress.env('NODE_URI')
+                    : 'https://pacific.oceanprotocol.com'
             )
             win.web3 = new Web3(provider)
             win.ethereum = win.web3
         })
 
-        cy.visit(Cypress.env('CONSUME_ASSET'))
+        cy.visit(
+            Cypress.env('CONSUME_ASSET')
+                ? Cypress.env('CONSUME_ASSET')
+                : 'http://localhost:3000/asset/did:op:66c9d023cd444999916570b5174d0f9037d8f85d24ba4c129e7f127f7c21aafa'
+        )
 
         // Wait for end of loading
         cy.get('button', { timeout: 60000 }).should('have.length', 1)
