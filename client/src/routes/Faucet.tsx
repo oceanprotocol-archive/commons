@@ -16,6 +16,8 @@ interface FaucetState {
 }
 
 export default class Faucet extends PureComponent<{}, FaucetState> {
+    public static contextType = User
+
     public state = {
         isLoading: false,
         success: undefined,
@@ -59,15 +61,31 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
         })
     }
 
-    private Success = () => (
-        <div className={styles.success}>
-            <strong>{this.state.success}</strong>
-            <p>
-                <strong>Your Transaction Hash</strong>
-                <code>{this.state.trxHash}</code>
-            </p>
-        </div>
-    )
+    private Success = () => {
+        const { network } = this.context
+        const { trxHash } = this.state
+
+        const submarineLink = `https://submarine${
+            network === 'Duero'
+                ? '.duero'
+                : network === 'Pacific'
+                ? '.pacific'
+                : ''
+        }.dev-ocean.com/tx/${trxHash}`
+
+        return (
+            <div className={styles.success}>
+                <strong>{this.state.success}</strong>
+                <p>
+                    <strong>Your Transaction Hash</strong>
+
+                    <a href={submarineLink}>
+                        <code>{trxHash}</code>
+                    </a>
+                </p>
+            </div>
+        )
+    }
 
     private Error = () => (
         <div className={styles.error}>

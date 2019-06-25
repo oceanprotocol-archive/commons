@@ -1,5 +1,6 @@
 import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import axios from 'axios'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
 import ItemForm from './ItemForm'
@@ -45,6 +46,13 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
         isFormShown: false
     }
 
+    // for canceling axios requests
+    public signal = axios.CancelToken.source()
+
+    public componentWillUnmount() {
+        this.signal.cancel()
+    }
+
     private toggleForm = (e: Event) => {
         e.preventDefault()
 
@@ -59,23 +67,21 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
         }
 
         try {
-            const response = await fetch(`${serviceUri}/api/v1/urlcheck`, {
+            const response = await axios({
                 method: 'POST',
-                body: JSON.stringify({ url: value }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: { 'Content-Type': 'application/json' },
+                url: `${serviceUri}/api/v1/urlcheck`,
+                data: { url: value },
+                cancelToken: this.signal.token
             })
 
-            const json = await response.json()
-            const { contentLength, contentType, found } = json.result
-
+            const { contentLength, contentType, found } = response.data.result
             file.contentLength = contentLength
             file.contentType = contentType
             file.compression = await cleanupContentType(contentType)
             file.found = found
         } catch (error) {
-            Logger.error(error.message)
+            !axios.isCancel(error) && Logger.error(error.message)
         }
 
         this.props.files.push(file)

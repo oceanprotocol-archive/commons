@@ -153,14 +153,16 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 await window.web3.eth.net.getId((err, netId) => {
                     if (err) return
 
+                    const isPacific = netId === 0xcea11
                     const isNile = netId === 8995
                     const isDuero = netId === 2199
                     const isSpree = netId === 8996
-                    const isPacific = netId === 846353
 
-                    isOceanNetwork = isNile || isDuero || isSpree || isPacific
+                    isOceanNetwork = isPacific || isNile || isDuero || isSpree
 
-                    const network = isNile
+                    const network = isPacific
+                        ? 'Pacific'
+                        : isNile
                         ? 'Nile'
                         : isDuero
                         ? 'Duero'
@@ -258,11 +260,11 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
         if (isWeb3) {
             const network = await ocean.keeper.getNetworkName()
+            const isPacific = network === 'Pacific'
             const isNile = network === 'Nile'
             const isDuero = network === 'Duero'
             const isSpree = network === 'Spree'
-            const isPacific = network === 'Pacific'
-            const isOceanNetwork = isNile || isDuero || isSpree || isPacific
+            const isOceanNetwork = isPacific || isNile || isDuero || isSpree
 
             network !== this.state.network &&
                 this.setState({ isOceanNetwork, network })

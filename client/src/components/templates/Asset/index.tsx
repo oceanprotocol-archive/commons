@@ -10,7 +10,6 @@ import CategoryImage from '../../atoms/CategoryImage'
 import styles from './index.module.scss'
 
 interface AssetProps {
-    location: Location
     match: {
         params: {
             did: string

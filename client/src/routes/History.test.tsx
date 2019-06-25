@@ -1,11 +1,16 @@
 import React from 'react'
 import { render } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
 import { User } from '../context'
 import History from './History'
 
 describe('History', () => {
     it('renders without crashing', () => {
-        const { container } = render(<History />)
+        const { container } = render(
+            <MemoryRouter>
+                <History />
+            </MemoryRouter>
+        )
         expect(container.firstChild).toBeInTheDocument()
     })
 
@@ -27,7 +32,9 @@ describe('History', () => {
 
         const { container } = render(
             <User.Provider value={context}>
-                <History />
+                <MemoryRouter>
+                    <History />
+                </MemoryRouter>
             </User.Provider>
         )
         expect(container.querySelector('.message')).toBeInTheDocument()

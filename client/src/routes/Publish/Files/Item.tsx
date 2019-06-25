@@ -17,7 +17,7 @@ const Item = ({
 }) => (
     <li>
         <a href={item.url} className={styles.linkUrl} title={item.url}>
-            <Dotdotdot clamp={1}>{item.url}</Dotdotdot>
+            <Dotdotdot clamp={2}>{item.url}</Dotdotdot>
         </a>
         <div className={styles.details}>
             <span>URL {item.found ? 'confirmed' : ' not confirmed'}</span>

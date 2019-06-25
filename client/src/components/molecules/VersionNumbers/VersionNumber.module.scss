@@ -1,0 +1,22 @@
+@import '../../../styles/variables';
+
+.spinner {
+    composes: spinner, small from '../../atoms/Spinner.module.scss';
+    margin-right: $spacer;
+}
+
+.commit {
+    margin-left: $spacer / 8;
+
+    code {
+        color: $brand-grey-light;
+        font-size: $font-size-mini;
+    }
+}
+
+.network {
+    color: $brand-grey-light;
+    text-transform: capitalize;
+    margin-left: $spacer / 8;
+    font-size: $font-size-mini;
+}
