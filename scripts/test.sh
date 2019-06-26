@@ -1,4 +1,4 @@
-#/usr/bin/env/sh
+#!/bin/bash
 set -e
 
 components="server client"
@@ -10,7 +10,3 @@ do
     npm test
     cd ..
 done
-
-echo "Running End-to-End tests"
-
-npm run test:e2e
