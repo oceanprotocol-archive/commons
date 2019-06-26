@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 context('Consume', () => {
     before(() => {
-        cy.visit(Cypress.env('CONSUME_ASSET'))
+        cy.visit(`/asset/${Cypress.env('CONSUME_ASSET')}`)
 
         // Wait for end of loading
         cy.get('button', { timeout: 60000 }).should('have.length', 1)
@@ -15,7 +15,7 @@ context('Consume', () => {
         // Click consume button
         cy.get('button').click()
         // Wait consume process to end
-        cy.get('button', { timeout: 120000 }).should('contain', 'Get file')
+        cy.get('button', { timeout: 150000 }).should('contain', 'Get file')
         // check if there is no error
         cy.get('article>div').should(
             'not.contain',
