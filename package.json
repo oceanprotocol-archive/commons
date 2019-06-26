@@ -21,7 +21,7 @@
     "lint": "npm run lint:js && npm run lint:css",
     "release": "release-it --non-interactive",
     "changelog": "auto-changelog -p",
-    "cypress:run": "cypress run",
+    "cypress:run": "$(npm bin)/cypress run",
     "cypress:open": "cypress open"
   },
   "dependencies": {

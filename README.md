@@ -94,13 +94,13 @@ vi client/.env.local
 
 Test suite is setup with [Jest](https://jestjs.io) and [react-testing-library](https://github.com/kentcdodds/react-testing-library) for unit testing, and [Cypress](https://www.cypress.io) for integration testing.
 
-### Unit Tests
-
-To run all unit tests, including all linting tests:
+To run all linting, unit and integration tests in one go, run:
 
 ```bash
 npm test
 ```
+
+### Unit Tests
 
 For local development, you can start the test runners for client & server in a watch mode.
 
