@@ -16,9 +16,7 @@ const Footer = () => (
                     <Market.Consumer>
                         {state =>
                             state.totalAssets > 0 &&
-                            ` With a total of ${
-                                state.totalAssets
-                            } registered assets.`
+                            ` With a total of ${state.totalAssets} registered assets.`
                         }
                     </Market.Consumer>
                 </p>

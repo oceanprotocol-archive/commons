@@ -34,9 +34,7 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     </h2>
                     <div className={styles.metaPrimaryData}>
                         <span
-                            title={`Date created, published on ${
-                                base.datePublished
-                            }`}
+                            title={`Date created, published on ${base.datePublished}`}
                         >
                             <Moment
                                 date={base.dateCreated}

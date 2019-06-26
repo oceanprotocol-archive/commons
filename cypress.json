@@ -1,1 +1,8 @@
-{}
+{
+  "baseUrl": "http://localhost:3000",
+  "env": {
+    "NODE_URI": "https://nile.dev-ocean.com",
+    "SEEDPHRASE": "taxi music thumb unique chat sand crew more leg another off lamp",
+    "CONSUME_ASSET": "did:op:8014d305dcb44b42a5355791a2f016a654a61184456a4d178dc6e5913deb3a5c"
+  }
+}
