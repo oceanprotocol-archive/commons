@@ -29,7 +29,7 @@ before_install:
 
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
-  - ./scripts/test.sh
+  - ./scripts/test.sh || travis_terminate 1
   - ./scripts/coverage.sh
   - ./scripts/build.sh
 
