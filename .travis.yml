@@ -25,7 +25,8 @@ before_install:
 
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
-  - ./scripts/test.sh
+  - $(npm bin)/cypress run --record
+  #- ./scripts/test.sh
   - ./scripts/coverage.sh
   - ./scripts/build.sh
 
