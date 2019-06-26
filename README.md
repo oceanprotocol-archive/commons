@@ -120,7 +120,7 @@ npm run test:watch
 
 ### End-to-End Integration Tests
 
-To run all integration tests, run:
+To run all integration tests in headless mode, run:
 
 ```bash
 npm run test:e2e
@@ -129,6 +129,12 @@ npm run test:e2e
 This will automatically spin up all required resources to run the integrations tests, and then run them.
 
 The endpoints Cypress runs against are defined by your [Environment Variables](#️-Environment-Variables), and Cypress-specific variables in `cypress.json`.
+
+You can also use the UI of Cypress to run and inspect the integration tests locally:
+
+```bash
+npm run cypress:open
+```
 
 ## ✨ Code Style
 
