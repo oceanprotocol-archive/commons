@@ -102,6 +102,8 @@ To run all linting, unit and integration tests in one go, run:
 npm test
 ```
 
+The endpoints the integration tests run against are defined by your [Environment Variables](#️-Environment-Variables), and Cypress-specific variables in `cypress.json`.
+
 ### Unit Tests
 
 For local development, you can start the test runners for client & server in a watch mode.
@@ -129,8 +131,6 @@ npm run test:e2e
 ```
 
 This will automatically spin up all required resources to run the integrations tests, and then run them.
-
-The endpoints Cypress runs against are defined by your [Environment Variables](#️-Environment-Variables), and Cypress-specific variables in `cypress.json`.
 
 You can also use the UI of Cypress to run and inspect the integration tests locally:
 

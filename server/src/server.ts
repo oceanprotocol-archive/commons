@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/urlcheck', UrlCheckRouter)
 
 /// catch 404
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(404).send()
 })
 
