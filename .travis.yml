@@ -8,7 +8,6 @@ addons:
     packages:
       # for Cypress
       - libgconf-2-4
-  chrome: stable
 
 env:
   global:
