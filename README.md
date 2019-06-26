@@ -22,17 +22,19 @@
 
 If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
 
-- [🏄 Get Started](#-get-started)
-  - [🏖 Remote Ocean: Nile](#-remote-ocean-nile)
-  - [🐳 Use with Barge](#-use-with-barge)
-  - [⛵️ Environment Variables](#️-environment-variables)
-- [👩‍🔬 Testing](#-testing)
-- [✨ Code Style](#-code-style)
-- [🛳 Production](#-production)
-- [⬆️ Releases](#️-releases)
-- [📜 Changelog](#-changelog)
-- [🎁 Contributing](#-contributing)
-- [🏛 License](#-license)
+- [🏄 Get Started](#-Get-Started)
+  - [🏖 Remote Ocean: Nile](#-Remote-Ocean-Nile)
+  - [🐳 Use with Barge](#-Use-with-Barge)
+  - [⛵️ Environment Variables](#️-Environment-Variables)
+- [👩‍🔬 Testing](#-Testing)
+  - [Unit Tests](#Unit-Tests)
+  - [End-to-End Integration Tests](#End-to-End-Integration-Tests)
+- [✨ Code Style](#-Code-Style)
+- [🛳 Production](#-Production)
+- [⬆️ Releases](#️-Releases)
+- [📜 Changelog](#-Changelog)
+- [🎁 Contributing](#-Contributing)
+- [🏛 License](#-License)
 
 ## 🏄 Get Started
 
@@ -90,9 +92,11 @@ vi client/.env.local
 
 ## 👩‍🔬 Testing
 
-Test suite is setup with [Jest](https://jestjs.io) and [react-testing-library](https://github.com/kentcdodds/react-testing-library).
+Test suite is setup with [Jest](https://jestjs.io) and [react-testing-library](https://github.com/kentcdodds/react-testing-library) for unit testing, and [Cypress](https://www.cypress.io) for integration testing.
 
-To run all tests, including all linting tests:
+### Unit Tests
+
+To run all unit tests, including all linting tests:
 
 ```bash
 npm test
@@ -113,6 +117,18 @@ npm run test:watch
 cd server/
 npm run test:watch
 ```
+
+### End-to-End Integration Tests
+
+To run all integration tests, run:
+
+```bash
+npm run test:e2e
+```
+
+This will automatically spin up all required resources to run the integrations tests, and then run them.
+
+The endpoints Cypress runs against are defined by your [Environment Variables](#️-Environment-Variables), and Cypress-specific variables in `cypress.json`.
 
 ## ✨ Code Style
 
