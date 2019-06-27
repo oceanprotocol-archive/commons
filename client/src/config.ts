@@ -11,17 +11,17 @@ export const nodeUri =
     process.env.REACT_APP_NODE_URI || 'https://pacific.oceanprotocol.com'
 export const aquariusUri =
     process.env.REACT_APP_AQUARIUS_URI ||
-    'https://aquarius.pacific.dev-ocean.com'
+    'https://aquarius.commons.oceanprotocol.com'
 export const brizoUri =
-    process.env.REACT_APP_BRIZO_URI || 'https://brizo.pacific.dev-ocean.com'
+    process.env.REACT_APP_BRIZO_URI || 'https://brizo.commons.oceanprotocol.com'
 export const brizoAddress =
     process.env.REACT_APP_BRIZO_ADDRESS ||
     '0x008c25ed3594e094db4592f4115d5fa74c4f41ea'
 export const secretStoreUri =
     process.env.REACT_APP_SECRET_STORE_URI ||
-    'https://secret-store.pacific.oceanprotocol.com'
+    'https://secret-store.oceanprotocol.com'
 export const faucetUri =
-    process.env.REACT_APP_FAUCET_URI || 'https://faucet.pacific.dev-ocean.com'
+    process.env.REACT_APP_FAUCET_URI || 'https://faucet.oceanprotocol.com'
 
 //
 // APP CONFIG
