@@ -3,6 +3,6 @@
   "env": {
     "NODE_URI": "https://nile.dev-ocean.com",
     "SEEDPHRASE": "taxi music thumb unique chat sand crew more leg another off lamp",
-    "CONSUME_ASSET": "did:op:8014d305dcb44b42a5355791a2f016a654a61184456a4d178dc6e5913deb3a5c"
+    "CONSUME_ASSET": "did:op:0499b7aecaed49c7bbc687100c92ce3b7ee6a29ebb764968a89eb4ed6ecd7c36"
   }
 }
