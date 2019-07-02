@@ -13,8 +13,8 @@ class About extends Component {
                 <Content>
                     <p>
                         Commons is built on top of the Ocean{' '}
-                        <a href="https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet">
-                            Nile test network
+                        <a href="https://docs.oceanprotocol.com/concepts/pacific-network/">
+                            Pacific network
                         </a>{' '}
                         and is targeted at enthusiastic data scientists with
                         some crypto experience. It can be used with any
