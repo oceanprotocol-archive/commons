@@ -18,7 +18,7 @@ env:
     - REACT_APP_BRIZO_URI="https://brizo.nile.dev-ocean.com"
     - REACT_APP_SECRET_STORE_URI="https://secret-store.nile.dev-ocean.com"
     - REACT_APP_FAUCET_URI="https://faucet.nile.dev-ocean.com"
-    - REACT_APP_BRIZO_ADDRESS="0x376817c638d2a04f475a73af37f7b51a2862d567"
+    - REACT_APP_BRIZO_ADDRESS="0x4aaab179035dc57b35e2ce066919048686f82972"
 
 before_install:
   - npm install -g npm
