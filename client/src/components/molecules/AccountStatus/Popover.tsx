@@ -54,7 +54,7 @@ export default class Popover extends PureComponent<{
 
                         <div className={styles.popoverInfoline}>
                             {network && !isOceanNetwork
-                                ? 'Please connect to Custom RPC\n https://nile.dev-ocean.com'
+                                ? 'Please connect to Custom RPC\n https://pacific.oceanprotocol.com'
                                 : network && `Connected to ${network} network`}
                         </div>
                     </>
