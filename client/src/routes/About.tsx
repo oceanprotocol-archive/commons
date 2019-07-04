@@ -8,7 +8,7 @@ class About extends Component {
         return (
             <Route
                 title="About"
-                description="A marketplace to find and publish open data sets in the Ocean Network."
+                description="A marketplace to find and publish open data sets in the Ocean Pacific Network."
             >
                 <Content>
                     <p>

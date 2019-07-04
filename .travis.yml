@@ -13,12 +13,12 @@ addons:
 env:
   global:
     # run E2E tests against these values
-    - REACT_APP_NODE_URI="https://nile.dev-ocean.com"
-    - REACT_APP_AQUARIUS_URI="https://aquarius.nile.dev-ocean.com"
-    - REACT_APP_BRIZO_URI="https://brizo.nile.dev-ocean.com"
-    - REACT_APP_SECRET_STORE_URI="https://secret-store.nile.dev-ocean.com"
-    - REACT_APP_FAUCET_URI="https://faucet.nile.dev-ocean.com"
-    - REACT_APP_BRIZO_ADDRESS="0x4aaab179035dc57b35e2ce066919048686f82972"
+    - REACT_APP_NODE_URI="https://pacific.oceanprotocol.com"
+    - REACT_APP_AQUARIUS_URI="https://aquarius.commons.oceanprotocol.com"
+    - REACT_APP_BRIZO_URI="https://brizo.commons.oceanprotocol.com"
+    - REACT_APP_SECRET_STORE_URI="https://secret-store.oceanprotocol.com"
+    - REACT_APP_FAUCET_URI="https://faucet.oceanprotocol.com"
+    - REACT_APP_BRIZO_ADDRESS="0x008c25ed3594e094db4592f4115d5fa74c4f41ea"
 
 before_install:
   - npm install -g npm
@@ -29,7 +29,10 @@ before_install:
 
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
-  - ./scripts/test.sh
+  # executing `npm test` scripts individually here, so first one failing will exit the build
+  - npm run lint || travis_terminate 1
+  - ./scripts/test.sh || travis_terminate 1
+  - npm run test:e2e || travis_terminate 1
   - ./scripts/coverage.sh
   - ./scripts/build.sh
 

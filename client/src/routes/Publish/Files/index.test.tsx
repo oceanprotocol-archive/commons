@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, fireEvent, waitForElement } from '@testing-library/react'
 import mockAxios from 'jest-mock-axios'
-import { serviceUri } from '../../../config'
 import Files from '.'
 
 const onChange = jest.fn()
