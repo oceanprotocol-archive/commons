@@ -118,7 +118,7 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
         return (
             <Route
                 title="Faucet"
-                description="Shower yourself with some Ether for Ocean's Nile test network."
+                description="Shower yourself with some Ether for Ocean's Pacific network."
             >
                 <Content>
                     <Web3message />

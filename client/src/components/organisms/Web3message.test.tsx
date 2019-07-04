@@ -21,7 +21,7 @@ describe('Web3message', () => {
             </User.Provider>
         )
         expect(container.firstChild).toHaveTextContent(
-            'Not connected to Nile network'
+            'Not connected to Pacific network'
         )
     })
 
