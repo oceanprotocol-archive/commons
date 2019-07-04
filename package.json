@@ -55,10 +55,8 @@
     "url": "https://github.com/oceanprotocol/commons"
   },
   "release-it": {
-    "scripts": {
-      "beforeStart": "npm test",
-      "beforeStage": "npm run changelog",
-      "afterRelease": "echo Successfully released ${name} v${version} to ${repo.repository}."
+    "hooks": {
+      "after:bump": "npm run changelog"
     },
     "plugins": {
       "@release-it/bumper": {
