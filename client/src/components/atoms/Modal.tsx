@@ -2,7 +2,7 @@ import React from 'react'
 import ReactModal from 'react-modal'
 import styles from './Modal.module.scss'
 
-ReactModal.setAppElement('#root')
+if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement('#root')
 
 const Modal = ({
     title,
@@ -11,7 +11,8 @@ const Modal = ({
     toggleModal,
     children,
     onAfterOpen,
-    onRequestClose
+    onRequestClose,
+    ...props
 }: {
     title: string
     description?: string
@@ -29,6 +30,7 @@ const Modal = ({
             contentLabel={title}
             className={styles.modal}
             overlayClassName={styles.modalOverlay}
+            {...props}
         >
             <button className={styles.close} onClick={toggleModal}>
                 &times;
