@@ -25,6 +25,14 @@ describe('POST /api/v1/urlcheck', () => {
     })
 })
 
+describe('POST /api/v1/report', () => {
+    it('responds with error message when message is missing', async () => {
+        const response = await request(server).post('/api/v1/report')
+        const text = await JSON.parse(response.text)
+        expect(text.message).toBe('missing message')
+    })
+})
+
 describe('Errors', () => {
     it('responds with 404 on unknown path', async () => {
         const response = await request(server).post('/whatever')
