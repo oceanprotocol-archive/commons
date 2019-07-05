@@ -146,6 +146,7 @@ export default class AssetFile extends PureComponent<
                         // weird 0 hack so TypeScript is happy
                         onClick={() => this.purchaseAsset(ddo, index || 0)}
                         disabled={!isLogged || !isOceanNetwork}
+                        name="Download"
                     >
                         Get file
                     </Button>

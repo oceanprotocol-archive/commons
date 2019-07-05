@@ -12,6 +12,7 @@ interface ButtonProps {
     onClick?: any
     disabled?: boolean
     to?: string
+    name?: string
 }
 
 export default class Button extends PureComponent<ButtonProps, any> {
