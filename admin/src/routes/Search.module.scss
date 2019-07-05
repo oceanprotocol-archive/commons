@@ -1,0 +1,32 @@
+@import '../styles/variables';
+
+.resultsTitle {
+    color: $brand-grey-light;
+    font-size: $font-size-h3;
+    margin-top: -($spacer / 2);
+    margin-bottom: $spacer;
+
+    span {
+        color: $brand-grey-dark;
+    }
+}
+
+.results {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: $spacer;
+
+    @media (min-width: $break-point--small) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $break-point--medium) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.empty {
+    text-align: center;
+    margin-top: $spacer * 4;
+    color: $brand-grey-light;
+}

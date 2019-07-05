@@ -1,0 +1,70 @@
+@import '../../../styles/variables';
+@import '../../../../node_modules/react-datepicker/dist/react-datepicker-cssmodules.css';
+
+//
+// Date picker
+//
+:global .react-datepicker {
+    font-family: inherit;
+    color: inherit;
+    border-color: $brand-black;
+}
+
+:global .react-datepicker__header {
+    background: $brand-black;
+    border-radius: 0;
+
+    .react-datepicker__day-name,
+    .react-datepicker__day,
+    .react-datepicker__time-name,
+    .react-datepicker__current-month,
+    .react-datepicker-time__header,
+    .react-datepicker-year-header {
+        color: $brand-white;
+    }
+}
+
+:global .react-datepicker__current-month,
+:global .react-datepicker-time__header,
+:global .react-datepicker-year-header,
+:global .react-datepicker__day-name {
+    font-weight: $font-weight-bold;
+}
+
+:global .react-datepicker__month-container {
+    float: none;
+}
+
+:global .react-datepicker-popper {
+    max-width: 16rem;
+}
+
+:global .react-datepicker-popper[data-placement^='top'] .react-datepicker__triangle:before,
+:global .react-datepicker__year-read-view--down-arrow:before,
+:global .react-datepicker__month-read-view--down-arrow:before,
+:global .react-datepicker__month-year-read-view--down-arrow:before {
+    border-top-color: $brand-black;
+}
+
+:global .react-datepicker__day--selected,
+:global .react-datepicker__day--in-selecting-range,
+:global .react-datepicker__day--in-range,
+:global .react-datepicker__month-text--selected,
+:global .react-datepicker__month-text--in-selecting-range,
+:global .react-datepicker__month-text--in-range {
+    background-color: $brand-black;
+    border-radius: 50%;
+    font-weight: $font-weight-bold;
+}
+
+:global .react-datepicker__day:hover,
+:global .react-datepicker__month-text:hover {
+    background-color: $brand-pink;
+    border-radius: 50%;
+    font-weight: $font-weight-bold;
+    color: $brand-white;
+}
+
+:global .react-datepicker__day--outside-month {
+    color: $brand-grey-light;
+}

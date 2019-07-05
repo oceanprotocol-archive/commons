@@ -1,0 +1,128 @@
+{
+  "steps": [
+    {
+      "title": "Essentials",
+      "description": "Start by adding a title and URLs for your data set.",
+      "fields": {
+        "name": {
+          "label": "Title",
+          "placeholder": "e.g. Shapes of Desert Plants",
+          "type": "text",
+          "required": true,
+          "help": "Enter a concise title. You will be able to enter a more thorough description in the next step."
+        },
+        "files": {
+          "label": "Files",
+          "placeholder": "e.g. https://file.com/file.json",
+          "type": "text",
+          "required": true,
+          "help": "Provide one or multiple urls to your data set files."
+        }
+      }
+    },
+    {
+      "title": "Information",
+      "description": "Further describe and categorize your data set to help people discover it.",
+      "fields": {
+        "description": {
+          "label": "Description",
+          "help": "Add a thorough description with as much detail as possible.",
+          "placeholder": "e.g. Shapes of 23 common desert plants.",
+          "type": "textarea",
+          "required": true,
+          "rows": 5
+        },
+        "categories": {
+          "label": "Category",
+          "help": "Pick a category which best fits your data set.",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Image Recognition",
+            "Dataset Of Datasets",
+            "Language",
+            "Performing Arts",
+            "Visual Arts & Design",
+            "Philosophy",
+            "History",
+            "Theology",
+            "Anthropology & Archeology",
+            "Sociology",
+            "Psychology",
+            "Politics",
+            "Interdisciplinary",
+            "Economics & Finance",
+            "Demography",
+            "Biology",
+            "Chemistry",
+            "Physics & Energy",
+            "Earth & Climate",
+            "Space & Astronomy",
+            "Mathematics",
+            "Computer Technology",
+            "Engineering",
+            "Agriculture & Bio Engineering",
+            "Transportation",
+            "Urban Planning",
+            "Health & Medicine",
+            "Business & Management",
+            "Sports & Recreation",
+            "Communication & Journalism",
+            "Deep Learning",
+            "Law",
+            "Other"
+          ]
+        },
+        "dateCreated": {
+          "label": "Creation Date",
+          "help": "Select the date the asset was created, or was updated for the last time.",
+          "type": "date",
+          "required": true
+        }
+      }
+    },
+    {
+      "title": "Authorship",
+      "description": "Give proper attribution for your data set.",
+      "fields": {
+        "author": {
+          "label": "Author",
+          "placeholder": "e.g. Jelly McJellyfish",
+          "type": "text",
+          "required": true
+        },
+        "copyrightHolder": {
+          "label": "Copyright Holder",
+          "placeholder": "e.g. Marine Institute of Jellyfish",
+          "type": "text",
+          "required": true
+        },
+        "license": {
+          "label": "License",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Public Domain",
+            "PDDL: Public Domain Dedication and License",
+            "ODC-By: Attribution License",
+            "ODC-ODbL: Open Database License",
+            "CDLA-Sharing: Community Data License Agreement",
+            "CDLA-Permissive: Community Data License Agreement",
+            "CC0: Public Domain Dedication",
+            "CC BY: Attribution 4.0 International",
+            "CC BY-SA: Attribution-ShareAlike 4.0 International",
+            "CC BY-ND: Attribution-NoDerivatives 4.0 International",
+            "CC BY-NC: Attribution-NonCommercial 4.0 International",
+            "CC BY-NC-SA: Attribution-NonCommercial-ShareAlike 4.0 International",
+            "CC BY-NC-ND: Attribution-NonCommercial-NoDerivatives 4.0 International"
+          ]
+        }
+      }
+    },
+    {
+      "title": "Register",
+      "description": "Splendid, we got all the data. Now let's register your data set.",
+      "content": "After clicking the button below you will be asked by your wallet to sign this request."
+    }
+  ]
+}

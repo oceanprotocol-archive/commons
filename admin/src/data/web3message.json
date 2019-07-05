@@ -1,0 +1,6 @@
+{
+  "noweb3": "Not a Web3 Browser. For publishing and downloading an asset you need to <a href='https://docs.oceanprotocol.com/tutorials/metamask-setup/' target='_blank' rel='noopener noreferrer'>setup MetaMask</a> or use any other Web3-capable plugin or browser.",
+  "noAccount": "No accounts detected. For publishing and downloading an asset you need to unlock your Web3 account.",
+  "hasAccount": "",
+  "wrongNetwork": "Not connected to Pacific network.<br />Please connect in MetaMask with Custom RPC <code>https://pacific.oceanprotocol.com</code>"
+}

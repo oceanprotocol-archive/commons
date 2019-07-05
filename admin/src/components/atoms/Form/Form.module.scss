@@ -1,0 +1,39 @@
+@import '../../../styles/variables';
+
+.form {
+    width: 100%;
+    background: $brand-white;
+    padding: $spacer / 1.5;
+    border: 1px solid $brand-grey-lighter;
+    border-radius: $border-radius;
+
+    @media (min-width: $break-point--small) {
+        padding: $spacer;
+    }
+
+    fieldset {
+        border: 0;
+        padding: 0;
+    }
+}
+
+.formMinimal {
+    composes: form;
+    background: none;
+    padding: 0;
+    border: 0;
+}
+
+.formHeader {
+    margin-bottom: $spacer;
+}
+
+.formTitle {
+    font-size: $font-size-h2;
+    margin: 0;
+}
+
+.formDescription {
+    margin-bottom: 0;
+    margin-top: $spacer / 2;
+}

@@ -1,0 +1,70 @@
+@import '../../../styles/variables';
+
+.buttonMain {
+    margin: auto;
+    margin-bottom: $spacer / 2;
+    display: block;
+}
+
+.error {
+    text-align: center;
+    color: $red;
+    font-size: $font-size-small;
+}
+
+.fileWrap {
+    margin-left: $spacer / 4;
+    margin-right: $spacer / 4;
+    margin-bottom: $spacer * $line-height;
+    flex: 1 1 100%;
+
+    @media (min-width: $break-point--small) {
+        flex-basis: calc(100% / 3 - #{$spacer} / 2);
+    }
+}
+
+.file {
+    display: inline-block;
+    background: $brand-grey-dark
+        url('../../../../node_modules/@oceanprotocol/art/jellyfish/jellyfish-grid.svg')
+        no-repeat -1rem 4.5rem;
+    background-size: 100%;
+    padding: $spacer $spacer / 2;
+    margin-bottom: $spacer / 2;
+    text-align: left;
+    position: relative;
+    height: 8.5rem;
+    width: 6.5rem;
+
+    &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 1rem solid $body-background;
+        border-left: 1rem solid transparent;
+    }
+
+    li {
+        font-size: $font-size-small;
+        font-weight: $font-weight-bold;
+        color: $brand-white;
+
+        &:before {
+            display: none;
+        }
+    }
+
+    .empty {
+        font-size: $font-size-mini;
+        font-weight: $font-weight-base;
+        opacity: .75;
+    }
+
+    // move spinner a bit up
+    + div {
+        margin-top: $spacer / 2;
+    }
+}

@@ -1,0 +1,57 @@
+@import '../../../styles/variables';
+
+.tableWrap {
+    // make 'em scrollable
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table {
+    border-top: 1px solid $brand-grey-lighter;
+
+    table {
+        margin-left: $spacer;
+        width: calc(100% - #{$spacer});
+        margin-bottom: -1px;
+
+        td {
+            padding: $spacer / 6 $spacer / 2;
+
+            // stylelint-disable-next-line selector-max-compound-selectors
+            &,
+            code {
+                font-size: $font-size-mini;
+            }
+        }
+    }
+
+    td {
+        padding: $spacer / 4 $spacer / 2;
+        vertical-align: top;
+
+        &:last-child {
+            text-align: right;
+        }
+
+        // stylelint-disable-next-line selector-no-qualifying-type
+        &[colspan] {
+            padding: 0;
+        }
+    }
+
+    a {
+        color: $brand-grey;
+
+        &:hover,
+        &:focus {
+            &,
+            code {
+                color: $brand-pink;
+            }
+        }
+    }
+}
+
+.label {
+    min-width: 15rem;
+}

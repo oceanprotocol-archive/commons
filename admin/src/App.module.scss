@@ -1,0 +1,27 @@
+@import './styles/variables';
+
+.app {
+    height: 100%;
+
+    // for sticky footer
+    display: flex;
+    min-height: calc(100vh - #{$page-frame * 2});
+    flex-direction: column;
+}
+
+.main {
+    flex: 1;
+}
+
+.loader {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 25vh;
+
+    > div {
+        width: 100%;
+    }
+}

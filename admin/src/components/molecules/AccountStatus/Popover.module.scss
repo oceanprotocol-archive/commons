@@ -1,0 +1,56 @@
+@import '../../../styles/variables';
+
+$popoverWidth: 18rem;
+
+.popover {
+    position: relative;
+    width: $popoverWidth;
+    padding: $spacer / 2;
+    background: $brand-black;
+    border-radius: .1rem;
+    border: .1rem solid $brand-grey-light;
+    box-shadow: 0 6px 16px 0 rgba($brand-black, .3);
+    color: $brand-grey-light;
+    font-size: $font-size-small;
+    animation: showPopup .2s ease-in forwards;
+    white-space: initial;
+    text-align: left;
+}
+
+@keyframes showPopup {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.popoverInfoline {
+    border-bottom: .05rem solid $brand-grey;
+    padding: $spacer / 3 0;
+
+    &:first-child {
+        padding-top: 0;
+    }
+
+    &:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    button {
+        font-size: $font-size-small;
+    }
+}
+
+.balance {
+    font-size: $font-size-small;
+    margin-left: $spacer / 2;
+    white-space: nowrap;
+
+    &:first-child {
+        margin-left: 0;
+    }
+}

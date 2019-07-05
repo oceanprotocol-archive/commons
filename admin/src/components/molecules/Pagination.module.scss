@@ -1,0 +1,72 @@
+@import '../../styles/variables';
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: $spacer * 2;
+    margin-bottom: $spacer;
+    padding-left: 0;
+
+    li {
+        margin: 0;
+
+        &:before {
+            display: none;
+        }
+    }
+}
+
+.number {
+    text-align: center;
+    font-weight: $font-weight-bold;
+    padding: $spacer / 4 $spacer / 2;
+    margin-left: -1px;
+    margin-top: -1px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid $brand-grey-lighter;
+    min-width: 3.5rem;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        transform: none;
+        outline: 0;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: lighten($brand-grey-lighter, 7%);
+    }
+}
+
+.current,
+.prev,
+.next,
+.break {
+    composes: number;
+}
+
+.current {
+    cursor: default;
+    pointer-events: none;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        color: $brand-grey-light;
+        background: lighten($brand-grey-lighter, 7%);
+    }
+}
+
+.next {
+    text-align: right;
+}
+
+.prevNextDisabled {
+    opacity: 0;
+}
