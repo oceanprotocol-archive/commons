@@ -45,6 +45,7 @@ export default class Report extends PureComponent<
                                 name="comment"
                                 label="Comment"
                                 help="Briefly describe what is wrong with this asset."
+                                required
                             />
                             <Button primary>Report Data Set</Button>
                         </Form>

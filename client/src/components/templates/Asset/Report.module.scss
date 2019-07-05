@@ -11,10 +11,10 @@
 }
 
 .info {
+    background: $brand-white;
     padding: $spacer;
     border: 1px solid $brand-grey-lighter;
     border-radius: $border-radius;
-    margin-bottom: $spacer;
 
     h3 {
         font-size: $font-size-base;

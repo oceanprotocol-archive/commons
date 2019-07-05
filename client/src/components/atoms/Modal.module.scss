@@ -16,14 +16,14 @@
 .modal {
     padding: $spacer;
     border-radius: $border-radius;
-    background: $brand-white;
+    background: $body-background;
     margin: $spacer auto;
     max-width: $break-point--small;
     position: relative;
     animation: moveUp .2s ease-out backwards;
 
     @media (min-width: $break-point--small) {
-        padding: $spacer * 2 $spacer;
+        padding: $spacer * 2 $spacer * 1.5;
     }
 
     &:focus {
