@@ -274,6 +274,9 @@ samp {
     font-size: $font-size-small;
     border-radius: $border-radius;
     text-shadow: none;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
 
     h1 &,
     h2 &,
