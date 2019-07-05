@@ -1,0 +1,33 @@
+@import '../../../styles/variables';
+
+.actions {
+    text-align: right;
+    margin-top: $spacer;
+}
+
+.openLink {
+    margin: 0;
+    font-size: $font-size-small;
+}
+
+.info {
+    padding: $spacer;
+    border: 1px solid $brand-grey-lighter;
+    border-radius: $border-radius;
+    margin-bottom: $spacer;
+
+    h3 {
+        font-size: $font-size-base;
+        margin-top: 0;
+        margin-bottom: $spacer / 4;
+    }
+
+    p {
+        border-bottom: 1px solid $brand-grey-lighter;
+        padding-bottom: $spacer / 2;
+    }
+
+    code {
+        padding: 0;
+    }
+}

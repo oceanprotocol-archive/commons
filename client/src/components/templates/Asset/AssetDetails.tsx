@@ -5,6 +5,7 @@ import Markdown from '../../atoms/Markdown'
 import CategoryLink from '../../atoms/CategoryLink'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
+import Report from './Report'
 
 interface AssetDetailsProps {
     metadata: MetaData
@@ -58,6 +59,8 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     />
                 )}
 
+                <Report did={ddo.id} title={metadata.base.name} />
+
                 <div className={styles.metaFixed}>
                     <h2
                         className={styles.metaFixedTitle}
@@ -97,10 +100,6 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                     files={base.files ? base.files : []}
                     ddo={ddo}
                 />
-
-                {/* <pre>
-                    <code>{JSON.stringify(metadata, null, 2)}</code>
-                </pre> */}
             </>
         )
     }
