@@ -7,14 +7,26 @@ import Button from '../../atoms/Button'
 import Input from '../../atoms/Form/Input'
 import Form from '../../atoms/Form/Form'
 import { serviceUri } from '../../../config'
+import Spinner from '../../atoms/Spinner'
 
 export default class Report extends PureComponent<
     { did: string; title: string },
-    { isModalOpen: boolean; comment: string; error?: string }
+    {
+        isModalOpen: boolean
+        comment: string
+        message: string
+        isSending: boolean
+        hasError?: boolean
+        hasSuccess?: boolean
+    }
 > {
     public state = {
         isModalOpen: false,
-        comment: ''
+        comment: '',
+        message: 'Sending...',
+        isSending: false,
+        hasError: false,
+        hasSuccess: false
     }
 
     // for canceling axios requests
@@ -36,6 +48,7 @@ export default class Report extends PureComponent<
 
     private sendEmail = async (event: Event) => {
         event.preventDefault()
+        this.setState({ isSending: true })
 
         const msg = {
             to: process.env.REACT_APP_REPORT_EMAIL,
@@ -53,10 +66,19 @@ export default class Report extends PureComponent<
                 cancelToken: this.signal.token
             })
 
+            this.setState({
+                isSending: false,
+                hasSuccess: true,
+                message: 'Thanks for the report! We will take a look soon.'
+            })
             return response.data.result
         } catch (error) {
             !axios.isCancel(error) &&
-                this.setState({ error: error.message }) &&
+                this.setState({
+                    message: error.message,
+                    isSending: false,
+                    hasError: true
+                }) &&
                 Logger.error(error.message)
         }
     }
@@ -83,25 +105,37 @@ export default class Report extends PureComponent<
                             <code>{this.props.did}</code>
                         </p>
 
-                        <Form minimal>
-                            <Input
-                                type="textarea"
-                                name="comment"
-                                label="Comment"
-                                help="Briefly describe what is wrong with this asset."
-                                required
-                                value={this.state.comment}
-                                onChange={this.inputChange}
-                                rows={2}
-                            />
-                            <Button
-                                primary
-                                onClick={(e: Event) => this.sendEmail(e)}
-                                disabled={this.state.comment === ''}
-                            >
-                                Report Data Set
-                            </Button>
-                        </Form>
+                        {this.state.isSending ? (
+                            <Spinner message={this.state.message} />
+                        ) : this.state.hasError ? (
+                            <div className={styles.error}>
+                                {this.state.message}
+                            </div>
+                        ) : this.state.hasSuccess ? (
+                            <div className={styles.success}>
+                                {this.state.message}
+                            </div>
+                        ) : (
+                            <Form minimal>
+                                <Input
+                                    type="textarea"
+                                    name="comment"
+                                    label="Comment"
+                                    help="Briefly describe what is wrong with this asset."
+                                    required
+                                    value={this.state.comment}
+                                    onChange={this.inputChange}
+                                    rows={2}
+                                />
+                                <Button
+                                    primary
+                                    onClick={(e: Event) => this.sendEmail(e)}
+                                    disabled={this.state.comment === ''}
+                                >
+                                    Report Data Set
+                                </Button>
+                            </Form>
+                        )}
                     </div>
                 </Modal>
             </div>

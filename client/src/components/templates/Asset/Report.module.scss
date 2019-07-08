@@ -32,3 +32,18 @@
         color: $brand-grey-light;
     }
 }
+
+.error {
+    background: $red;
+    padding: $spacer / 2;
+    text-align: center;
+    color: $brand-white;
+    border-radius: $border-radius;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-small;
+}
+
+.success {
+    composes: error;
+    background: $green;
+}
