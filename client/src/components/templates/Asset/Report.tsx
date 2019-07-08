@@ -95,7 +95,7 @@ export default class Report extends PureComponent<
                 </Button>
                 <Modal
                     title="Report Data Set"
-                    description="Found something wrong with this data set? Tell us about it and we will take a look."
+                    description="Found some faulty metadata, wrongly attributed data, or anything else wrong with this data set? Tell us about it and we will take a look."
                     isOpen={this.state.isModalOpen}
                     toggleModal={this.toggleModal}
                 >
@@ -121,11 +121,11 @@ export default class Report extends PureComponent<
                                     type="textarea"
                                     name="comment"
                                     label="Comment"
-                                    help="Briefly describe what is wrong with this asset."
+                                    help="Briefly describe what is wrong with this asset. If you want to get contacted by us, add your email at the end."
                                     required
                                     value={this.state.comment}
                                     onChange={this.inputChange}
-                                    rows={2}
+                                    rows={1}
                                 />
                                 <Button
                                     primary
