@@ -60,7 +60,7 @@ Url Checker returns size and additional information about requested file. This s
 
 ### Report
 
-Report endpoints sends an email via SendGrid and posts a message to Slack. Requires `SENDGRID_API_KEY` & `SLACK_TOKEN` set as environment variables.
+Report endpoints sends an email via SendGrid. Requires `SENDGRID_API_KEY` set as environment variables.
 
 **Endpoint:** POST `/api/v1/report`
 

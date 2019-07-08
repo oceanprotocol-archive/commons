@@ -26,6 +26,8 @@ If you're a developer and want to contribute to, or want to utilize this marketp
   - [🏖 Remote Ocean: Pacific](#-Remote-Ocean-Pacific)
   - [🐳 Use with Barge](#-Use-with-Barge)
   - [⛵️ Environment Variables](#️-Environment-Variables)
+    - [Client](#Client)
+    - [Server](#Server)
 - [👩‍🔬 Testing](#-Testing)
   - [Unit Tests](#Unit-Tests)
   - [End-to-End Integration Tests](#End-to-End-Integration-Tests)
@@ -41,7 +43,7 @@ If you're a developer and want to contribute to, or want to utilize this marketp
 This repo contains a client and a server, both written in TypeScript:
 
 - **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
-- **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking.
+- **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking. The endpoints are documented in [server Readme](server/).
 
 To spin up both, the client and the server in a watch mode for local development, execute:
 
@@ -79,6 +81,8 @@ Modify `./client/src/config.ts` or set environment variables to use those local 
 
 ### ⛵️ Environment Variables
 
+#### Client
+
 The `./client/src/config.ts` file is setup to prioritize environment variables for setting each Ocean component endpoint.
 
 By setting environment variables, you can easily switch between Ocean networks the commons client connects to, without directly modifying `./client/src/config.ts`. This is helpful e.g. for local development so you don't accidentially commit changes to the config file.
@@ -90,6 +94,17 @@ cp client/.env.local.example client/.env.local
 
 # uncomment the config you need
 vi client/.env.local
+```
+
+#### Server
+
+The server uses its own environment variables too:
+
+```bash
+cp server/.env.example server/.env
+
+# edit variables
+vi server/.env
 ```
 
 ## 👩‍🔬 Testing
