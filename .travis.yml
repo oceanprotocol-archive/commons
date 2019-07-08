@@ -14,8 +14,8 @@ env:
   global:
     # run E2E tests against these values
     - REACT_APP_NODE_URI="https://pacific.oceanprotocol.com"
-    - REACT_APP_AQUARIUS_URI="https://aquarius.commons.oceanprotocol.com"
-    - REACT_APP_BRIZO_URI="https://brizo.commons.oceanprotocol.com"
+    - REACT_APP_AQUARIUS_URI="https://aquarius.test.oceanprotocol.com"
+    - REACT_APP_BRIZO_URI="https://brizo.test.oceanprotocol.com"
     - REACT_APP_SECRET_STORE_URI="https://secret-store.oceanprotocol.com"
     - REACT_APP_FAUCET_URI="https://faucet.oceanprotocol.com"
     - REACT_APP_BRIZO_ADDRESS="0x008c25ed3594e094db4592f4115d5fa74c4f41ea"
