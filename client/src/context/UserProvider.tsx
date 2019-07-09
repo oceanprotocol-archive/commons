@@ -10,6 +10,7 @@ import { BurnerWalletProvider } from './BurnerWalletProvider'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
+const DEFAULT_WEB3 = new Web3(new Web3.providers.HttpProvider(nodeUri)) // default web3
 
 // taken from
 // https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/web3/providers.d.ts
@@ -47,6 +48,7 @@ declare global {
 
 interface UserProviderState {
     isLogged: boolean
+    isBurner: boolean
     isLoading: boolean
     isOceanNetwork: boolean
     account: string
@@ -71,6 +73,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         this.setState(
             {
                 isLogged: true,
+                isBurner: false,
                 web3
             },
             () => {
@@ -86,6 +89,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         this.setState(
             {
                 isLogged: true,
+                isBurner: true,
                 web3
             },
             () => {
@@ -96,6 +100,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     public state = {
         isLogged: false,
+        isBurner: false,
         isLoading: true,
         isOceanNetwork: false,
         balance: {
@@ -103,7 +108,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
             ocn: 0
         },
         network: '',
-        web3: new Web3(new Web3.providers.HttpProvider(nodeUri)),
+        web3: DEFAULT_WEB3,
         account: '',
         ocean: {} as any,
         requestFromFaucet: () => requestFromFaucet(''),
@@ -168,24 +173,25 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 }
                 break
             case 'BurnerWallet':
-                const zerowalletProvider = new BurnerWalletProvider()
-                if (await zerowalletProvider.isLogged()) {
-                    await zerowalletProvider.startLogin()
+                const burnerWalletProvider = new BurnerWalletProvider()
+                if (await burnerWalletProvider.isLogged()) {
+                    await burnerWalletProvider.startLogin()
                     this.setState(
                         {
                             isLogged: true,
-                            web3: zerowalletProvider.getProvider()
+                            isBurner: true,
+                            web3: burnerWalletProvider.getProvider()
                         },
                         () => {
                             this.loadOcean()
                         }
                     )
                 } else {
-                    this.loadOcean()
+                    this.loginBurnerWallet()
                 }
                 break
             default:
-                this.loadOcean()
+                this.loginBurnerWallet()
                 break
         }
     }

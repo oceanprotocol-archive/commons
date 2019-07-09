@@ -1,16 +1,15 @@
 import React, { PureComponent } from 'react'
 import Account from '../atoms/Account'
-import Button from '../atoms/Button'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Web3message.module.scss'
 import { User } from '../../context'
+import WalletSelector from './WalletSelector'
 import content from '../../data/web3message.json'
 
 export default class Web3message extends PureComponent {
     private message = (
         message: string,
         account?: string,
-        unlockAccounts?: () => any
     ) => (
         <div className={styles.message}>
             {account ? (
@@ -19,11 +18,7 @@ export default class Web3message extends PureComponent {
                 <div className={styles.warnings}>
                     <AccountStatus className={styles.status} />
                     <span dangerouslySetInnerHTML={{ __html: message }} />{' '}
-                    {unlockAccounts && (
-                        <Button onClick={() => unlockAccounts()} link>
-                            Unlock Account
-                        </Button>
-                    )}
+                    <WalletSelector/>
                 </div>
             )}
         </div>
@@ -33,14 +28,16 @@ export default class Web3message extends PureComponent {
         const {
             isOceanNetwork,
             isLogged,
+            isBurner,
             account,
-            unlockAccounts
         } = this.context
 
         return !isOceanNetwork
             ? this.message(content.wrongNetwork)
             : !isLogged
-            ? this.message(content.noAccount, '', unlockAccounts)
+            ? this.message(content.noAccount)
+            : isBurner
+            ? this.message(content.burnerWallet)
             : isLogged
             ? this.message(content.hasAccount, account)
             : null
