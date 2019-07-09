@@ -44,6 +44,17 @@ export default class Report extends PureComponent<
 
     private toggleModal = () => {
         this.setState({ isModalOpen: !this.state.isModalOpen })
+        this.state.isModalOpen && this.reset()
+    }
+
+    private reset() {
+        this.setState({
+            comment: '',
+            message: 'Sending...',
+            isSending: false,
+            hasError: false,
+            hasSuccess: false
+        })
     }
 
     private sendEmail = async (event: Event) => {

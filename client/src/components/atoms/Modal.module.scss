@@ -1,5 +1,10 @@
 @import '../../styles/variables';
 
+// prevent background scrolling
+:global(.ReactModal__Body--open) {
+    overflow: hidden;
+}
+
 .modalOverlay {
     position: fixed;
     top: 0;
