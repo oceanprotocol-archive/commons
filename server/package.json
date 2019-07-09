@@ -3,10 +3,10 @@
   "description": "Ocean Protocol marketplace backend.",
   "version": "0.6.2",
   "license": "Apache-2.0",
-  "main": "dist/server.js",
+  "main": "dist/src/server.js",
   "scripts": {
     "start": "nodemon --exec ts-node src/server.ts",
-    "serve": "node dist/server.js",
+    "serve": "node dist/src/server.js",
     "build": "tsc",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
