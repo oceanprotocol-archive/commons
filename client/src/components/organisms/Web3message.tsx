@@ -31,16 +31,13 @@ export default class Web3message extends PureComponent {
 
     public render() {
         const {
-            isWeb3,
             isOceanNetwork,
             isLogged,
             account,
             unlockAccounts
         } = this.context
 
-        return !isWeb3
-            ? this.message(content.noweb3)
-            : !isOceanNetwork
+        return !isOceanNetwork
             ? this.message(content.wrongNetwork)
             : !isLogged
             ? this.message(content.noAccount, '', unlockAccounts)

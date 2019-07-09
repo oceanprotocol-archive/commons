@@ -20,9 +20,7 @@ const Indicator = ({
     >
         <User.Consumer>
             {states =>
-                !states.isWeb3 ? (
-                    <span className={styles.statusIndicator} />
-                ) : !states.isLogged || !states.isOceanNetwork ? (
+                !states.isLogged || !states.isOceanNetwork ? (
                     <span className={styles.statusIndicatorCloseEnough} />
                 ) : states.isLogged ? (
                     <span className={styles.statusIndicatorActive} />

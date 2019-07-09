@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as Logo } from '@oceanprotocol/art/logo/logo.svg'
-import { User } from '../../context'
 import AccountStatus from '../molecules/AccountStatus'
+import WalletSelector from './WalletSelector'
 import styles from './Header.module.scss'
 
 import menu from '../../data/menu.json'
@@ -33,8 +33,7 @@ export default class Header extends PureComponent {
                         {menu.map(item => (
                             <MenuItem key={item.title} item={item} />
                         ))}
-                        <button onClick={this.context.loginMetamask}>login Metamask</button>
-                        <button onClick={this.context.loginZeroWallet}>login ZWallet</button>
+                        <WalletSelector/>
                         <AccountStatus className={styles.accountStatus} />
                     </nav>
                 </div>
@@ -42,5 +41,3 @@ export default class Header extends PureComponent {
         )
     }
 }
-
-Header.contextType = User

@@ -31,9 +31,15 @@ export class MetamaskProvider {
     async startLogin() {
         try {
             await window.ethereum.enable()
+            localStorage.setItem('logType', 'Metamask')
         } catch (error) {
             return false
         }
+    }
+
+    async logout() {
+        localStorage.removeItem('logType')
+        // reload page?
     }
 
     getProvider() {

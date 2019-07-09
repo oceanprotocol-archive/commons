@@ -6,7 +6,7 @@ import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
 import { nodeUri } from '../config'
 import MarketProvider from './MarketProvider'
 import { MetamaskProvider } from './MetamaskProvider'
-import { ZeroWalletProvider } from './ZeroWalletProvider'
+import { BurnerWalletProvider } from './BurnerWalletProvider'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
@@ -48,7 +48,6 @@ declare global {
 interface UserProviderState {
     isLogged: boolean
     isLoading: boolean
-    isWeb3: boolean
     isOceanNetwork: boolean
     account: string
     balance: {
@@ -59,26 +58,15 @@ interface UserProviderState {
     web3: Web3
     ocean: Ocean
     requestFromFaucet(account: string): Promise<FaucetResponse>
-    unlockAccounts(): Promise<any>
     loginMetamask(): Promise<any>
-    loginZeroWallet(): Promise<any>
+    loginBurnerWallet(): Promise<any>
     message: string
 }
 
 export default class UserProvider extends PureComponent<{}, UserProviderState> {
-    private unlockAccounts = async () => {
-        try {
-            window.ethereum.enable()
-        } catch (error) {
-            // User denied account access...
-            return null
-        }
-    }
-
     private loginMetamask = async () => {
         const metamaskProvider = new MetamaskProvider()
         await metamaskProvider.startLogin()
-        localStorage.setItem('logType', 'Metamask')
         const web3 = metamaskProvider.getProvider()
         this.setState(
             {
@@ -91,11 +79,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         )
     }
 
-    private loginZeroWallet = async () => {
-        const zerowalletProvider = new ZeroWalletProvider()
-        await zerowalletProvider.createLogin()
-        localStorage.setItem('logType', 'ZeroWallet')
-        const web3 = zerowalletProvider.getProvider()
+    private loginBurnerWallet = async () => {
+        const burnerwalletProvider = new BurnerWalletProvider()
+        await burnerwalletProvider.startLogin()
+        const web3 = burnerwalletProvider.getProvider()
         this.setState(
             {
                 isLogged: true,
@@ -110,7 +97,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     public state = {
         isLogged: false,
         isLoading: true,
-        isWeb3: true,
         isOceanNetwork: false,
         balance: {
             eth: 0,
@@ -121,9 +107,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         account: '',
         ocean: {} as any,
         requestFromFaucet: () => requestFromFaucet(''),
-        unlockAccounts: () => this.unlockAccounts(),
         loginMetamask: () => this.loginMetamask(),
-        loginZeroWallet: () => this.loginZeroWallet(),
+        loginBurnerWallet: () => this.loginBurnerWallet(),
         message: 'Connecting to Ocean...'
     }
 
@@ -182,10 +167,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                     this.loadOcean()
                 }
                 break
-            case 'ZeroWallet':
-                const zerowalletProvider = new ZeroWalletProvider()
+            case 'BurnerWallet':
+                const zerowalletProvider = new BurnerWalletProvider()
                 if (await zerowalletProvider.isLogged()) {
-                    await zerowalletProvider.restoreStoredLogin()
+                    await zerowalletProvider.startLogin()
                     this.setState(
                         {
                             isLogged: true,
@@ -250,19 +235,17 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private fetchNetwork = async () => {
-        const { ocean, isWeb3 } = this.state
+        const { ocean } = this.state
 
-        if (isWeb3) {
-            const network = await ocean.keeper.getNetworkName()
-            const isPacific = network === 'Pacific'
-            const isNile = network === 'Nile'
-            const isDuero = network === 'Duero'
-            const isSpree = network === 'Spree'
-            const isOceanNetwork = isPacific || isNile || isDuero || isSpree
+        const network = await ocean.keeper.getNetworkName()
+        const isPacific = network === 'Pacific'
+        const isNile = network === 'Nile'
+        const isDuero = network === 'Duero'
+        const isSpree = network === 'Spree'
+        const isOceanNetwork = isPacific || isNile || isDuero || isSpree
 
-            network !== this.state.network &&
+        network !== this.state.network &&
                 this.setState({ isOceanNetwork, network })
-        }
     }
 
     public render() {

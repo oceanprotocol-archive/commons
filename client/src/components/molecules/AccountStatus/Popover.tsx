@@ -12,7 +12,6 @@ export default class Popover extends PureComponent<{
             account,
             balance,
             network,
-            isWeb3,
             isOceanNetwork
         } = this.context
 
@@ -22,12 +21,7 @@ export default class Popover extends PureComponent<{
                 ref={this.props.forwardedRef}
                 style={this.props.style}
             >
-                {!isWeb3 ? (
-                    <div className={styles.popoverInfoline}>
-                        No Web3 detected. Use a browser with MetaMask installed
-                        to publish assets.
-                    </div>
-                ) : (
+                {
                     <>
                         <div className={styles.popoverInfoline}>
                             <Account account={account} />
@@ -58,7 +52,7 @@ export default class Popover extends PureComponent<{
                                 : network && `Connected to ${network} network`}
                         </div>
                     </>
-                )}
+                }
             </div>
         )
     }
