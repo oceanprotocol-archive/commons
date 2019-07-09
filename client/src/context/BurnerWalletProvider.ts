@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import { nodeUri } from '../config'
-import bip39 from 'bip39'
 import HDWalletProvider from 'truffle-hdwallet-provider'
+const bip39 = require('bip39') // eslint-disable-line @typescript-eslint/no-var-requires
 
 export class BurnerWalletProvider {
     private web3: Web3

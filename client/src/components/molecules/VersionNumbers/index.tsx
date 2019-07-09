@@ -149,13 +149,13 @@ export default class VersionNumbers extends PureComponent<
         return minimal ? (
             <this.MinimalOutput />
         ) : (
-            <div className={styles.versions} id="#oceanversions">
-                <h2 className={styles.versionsTitle}>
+            <>
+                <h2 className={styles.versionsTitle} id="#oceanversions">
                     Ocean Components Status
                 </h2>
                 <VersionStatus status={this.state.status} />
                 <VersionTable data={this.state} />
-            </div>
+            </>
         )
     }
 }

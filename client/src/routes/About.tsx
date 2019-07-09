@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
 import VersionNumbers from '../components/molecules/VersionNumbers'
+import Web3message from '../components/organisms/Web3message'
+import stylesVersionNumbers from '../components/molecules/VersionNumbers/index.module.scss'
 
 class About extends Component {
     public render() {
@@ -37,6 +39,10 @@ class About extends Component {
                 </Content>
 
                 <Content>
+                    <h2 className={stylesVersionNumbers.versionsTitle}>
+                        Your Web3 Account Status
+                    </h2>
+                    <Web3message />
                     <VersionNumbers />
                 </Content>
             </Route>

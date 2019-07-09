@@ -7,33 +7,39 @@ import WalletSelector from './WalletSelector'
 import content from '../../data/web3message.json'
 
 export default class Web3message extends PureComponent {
-    private message = (message: string, account?: string) => (
-        <div className={styles.message}>
-            {account ? (
-                <Account account={account} />
-            ) : (
-                <div className={styles.warnings}>
-                    <AccountStatus className={styles.status} />
-                    <span dangerouslySetInnerHTML={{ __html: message }} />{' '}
-                    <WalletSelector />
-                </div>
-            )}
-        </div>
-    )
+    public static contextType = User
+
+    private message = () => {
+        const { isOceanNetwork, isLogged, isBurner } = this.context
+
+        return !isOceanNetwork && !isBurner
+            ? content.wrongNetwork
+            : !isLogged
+            ? content.noAccount
+            : isBurner
+            ? content.hasBurnerWallet
+            : isLogged
+            ? content.hasMetaMaskWallet
+            : ''
+    }
 
     public render() {
-        const { isOceanNetwork, isLogged, isBurner, account } = this.context
-
-        return !isOceanNetwork
-            ? this.message(content.wrongNetwork)
-            : !isLogged
-            ? this.message(content.noAccount)
-            : isBurner
-            ? this.message(content.burnerWallet)
-            : isLogged
-            ? this.message(content.hasAccount, account)
-            : null
+        return (
+            <div className={styles.message}>
+                {this.context.account ? (
+                    <Account
+                        account={this.context.account}
+                        isBurner={this.context.isBurner}
+                    />
+                ) : (
+                    <AccountStatus className={styles.status} />
+                )}
+                <em
+                    className={styles.text}
+                    dangerouslySetInnerHTML={{ __html: this.message() }}
+                />{' '}
+                <WalletSelector />
+            </div>
+        )
     }
 }
-
-Web3message.contextType = User

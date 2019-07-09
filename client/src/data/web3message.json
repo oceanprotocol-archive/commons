@@ -1,6 +1,6 @@
 {
   "noAccount": "No wallet selected. For publishing and downloading an asset you need to use one.",
-  "burnerWallet": "You are using temporary burner wallet. Improve your security by migrating to Metamask",
-  "hasAccount": "",
+  "hasBurnerWallet": "<p>We created a temporary burner wallet for you, allowing you to use all Commons functionality without any setup on your side. This wallet will persist in your browser across sessions, but not across different browsers or devices.</p>To personalize your experience and improve your security, <a href='https://docs.oceanprotocol.com/tutorials/metamask-setup/'>migrate to MetaMask</a>.",
+  "hasMetaMaskWallet": "Connected with MetaMask.",
   "wrongNetwork": "Not connected to Pacific network.<br />Please connect in MetaMask with Custom RPC <code>https://pacific.oceanprotocol.com</code>"
 }

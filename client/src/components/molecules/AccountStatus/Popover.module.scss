@@ -50,6 +50,10 @@ $popoverWidth: 18rem;
     margin-left: $spacer / 2;
     white-space: nowrap;
 
+    strong {
+        color: $brand-grey-lighter;
+    }
+
     &:first-child {
         margin-left: 0;
     }

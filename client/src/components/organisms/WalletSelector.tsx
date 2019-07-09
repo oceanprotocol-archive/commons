@@ -6,10 +6,10 @@ import Button from '../atoms/Button'
 
 export default class WalletSelector extends PureComponent<
     {},
-    {
-        isModalOpen: boolean
-    }
+    { isModalOpen: boolean }
 > {
+    public static contextType = User
+
     public state = {
         isModalOpen: false
     }
@@ -25,12 +25,13 @@ export default class WalletSelector extends PureComponent<
 
     private loginMetamask = () => {
         this.context.loginMetamask()
+        this.context.logoutBurnerWallet()
         this.toggleModal()
     }
 
     public render() {
         return (
-            <div className={styles.actions}>
+            <>
                 <Button
                     link
                     className={styles.openLink}
@@ -53,9 +54,7 @@ export default class WalletSelector extends PureComponent<
                         </button>
                     </div>
                 </Modal>
-            </div>
+            </>
         )
     }
 }
-
-WalletSelector.contextType = User

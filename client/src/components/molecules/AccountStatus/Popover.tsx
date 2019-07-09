@@ -4,11 +4,17 @@ import { User } from '../../../context'
 import styles from './Popover.module.scss'
 
 export default class Popover extends PureComponent<{
-    forwardedRef: (ref: HTMLElement | null) => void
-    style: React.CSSProperties
+    forwardedRef?: (ref: HTMLElement | null) => void
+    style?: React.CSSProperties
 }> {
     public render() {
-        const { account, balance, network, isOceanNetwork } = this.context
+        const {
+            account,
+            balance,
+            network,
+            isOceanNetwork,
+            isBurner
+        } = this.context
 
         return (
             <div
@@ -19,7 +25,7 @@ export default class Popover extends PureComponent<{
                 {
                     <>
                         <div className={styles.popoverInfoline}>
-                            <Account account={account} />
+                            <Account account={account} isBurner={isBurner} />
                         </div>
 
                         {account && balance && (

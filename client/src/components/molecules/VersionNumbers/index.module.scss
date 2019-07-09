@@ -1,12 +1,9 @@
 @import '../../../styles/variables';
 
-.versions {
-    margin-top: $spacer * 2;
-}
-
 .versionsTitle {
     font-size: $font-size-large;
     margin-bottom: $spacer / 2;
+    margin-top: $spacer * 2;
 }
 
 .versionsMinimal {

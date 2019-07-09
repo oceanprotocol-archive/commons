@@ -11,12 +11,14 @@
     text-align: left;
 }
 
-.warnings {
-    padding-left: $spacer;
+.text {
+    margin-left: $spacer;
+    display: inline-block;
 }
 
 .status {
-    margin-left: -($spacer);
-    margin-right: $spacer / 2;
+    position: absolute;
+    left: 0;
+    top: $spacer / 1.5;
     padding: 0;
 }

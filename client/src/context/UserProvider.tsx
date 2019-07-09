@@ -62,6 +62,7 @@ interface UserProviderState {
     requestFromFaucet(account: string): Promise<FaucetResponse>
     loginMetamask(): Promise<any>
     loginBurnerWallet(): Promise<any>
+    logoutBurnerWallet(): Promise<any>
     message: string
 }
 
@@ -98,6 +99,11 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         )
     }
 
+    private logoutBurnerWallet = async () => {
+        const burnerwalletProvider = new BurnerWalletProvider()
+        await burnerwalletProvider.logout()
+    }
+
     public state = {
         isLogged: false,
         isBurner: false,
@@ -114,6 +120,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         requestFromFaucet: () => requestFromFaucet(''),
         loginMetamask: () => this.loginMetamask(),
         loginBurnerWallet: () => this.loginBurnerWallet(),
+        logoutBurnerWallet: () => this.logoutBurnerWallet(),
         message: 'Connecting to Ocean...'
     }
 

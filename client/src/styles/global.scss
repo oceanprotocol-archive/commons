@@ -140,6 +140,11 @@ em,
     font-style: italic;
 }
 
+small {
+    font-size: $font-size-small;
+    display: inline-block;
+}
+
 abbr[title],
 dfn {
     text-transform: none;

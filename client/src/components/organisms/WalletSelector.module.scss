@@ -1,13 +1,9 @@
 @import '../../styles/variables';
 
-.actions {
-    text-align: right;
-    margin-top: $spacer;
-}
-
 .openLink {
     margin: 0;
-    font-size: $font-size-small;
+    margin-top: $spacer / 2;
+    margin-left: $spacer;
 }
 
 .info {
