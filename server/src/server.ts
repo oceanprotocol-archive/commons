@@ -3,7 +3,7 @@ import express from 'express'
 import compression from 'compression'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
-import pkg from '../../package.json'
+import pkg from '../package.json'
 
 // routes
 import UrlCheckRouter from './routes/UrlCheckRouter'
