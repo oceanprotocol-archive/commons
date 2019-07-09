@@ -1,9 +1,9 @@
 import Web3 from 'web3'
 
 export class MetamaskProvider {
-    web3: Web3
+    private web3: Web3
 
-    constructor() {
+    public constructor() {
         // Default
         this.web3 = null as any
         // Modern dapp browsers
@@ -16,19 +16,19 @@ export class MetamaskProvider {
         }
     }
 
-    async isAvaliable() {
+    public async isAvailable() {
         return this.web3 !== null
     }
 
-    async isLogged() {
-        if(this.web3 === null) return false
-        if((await this.web3.eth.getAccounts()).length > 0) {
+    public async isLogged() {
+        if (this.web3 === null) return false
+        if ((await this.web3.eth.getAccounts()).length > 0) {
             return true
         }
         return false
     }
 
-    async startLogin() {
+    public async startLogin() {
         try {
             await window.ethereum.enable()
             localStorage.setItem('logType', 'Metamask')
@@ -37,12 +37,12 @@ export class MetamaskProvider {
         }
     }
 
-    async logout() {
+    public async logout() {
         localStorage.removeItem('logType')
         // reload page?
     }
 
-    getProvider() {
+    public getProvider() {
         return this.web3
     }
- }
+}

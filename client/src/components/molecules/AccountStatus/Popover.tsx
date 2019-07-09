@@ -8,12 +8,7 @@ export default class Popover extends PureComponent<{
     style: React.CSSProperties
 }> {
     public render() {
-        const {
-            account,
-            balance,
-            network,
-            isOceanNetwork
-        } = this.context
+        const { account, balance, network, isOceanNetwork } = this.context
 
         return (
             <div

@@ -33,7 +33,7 @@ export default class Header extends PureComponent {
                         {menu.map(item => (
                             <MenuItem key={item.title} item={item} />
                         ))}
-                        <WalletSelector/>
+                        <WalletSelector />
                         <AccountStatus className={styles.accountStatus} />
                     </nav>
                 </div>

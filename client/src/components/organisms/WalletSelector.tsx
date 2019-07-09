@@ -28,7 +28,6 @@ export default class WalletSelector extends PureComponent<
         this.toggleModal()
     }
 
-
     public render() {
         return (
             <div className={styles.actions}>
@@ -46,8 +45,12 @@ export default class WalletSelector extends PureComponent<
                     toggleModal={this.toggleModal}
                 >
                     <div className={styles.info}>
-                        <button onClick={this.loginBurnerWallet}>login BurnerWallet</button>
-                        <button onClick={this.loginMetamask}>login Metamask</button>
+                        <button onClick={this.loginBurnerWallet}>
+                            login BurnerWallet
+                        </button>
+                        <button onClick={this.loginMetamask}>
+                            login Metamask
+                        </button>
                     </div>
                 </Modal>
             </div>

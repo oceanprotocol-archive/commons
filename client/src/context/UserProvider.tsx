@@ -164,11 +164,12 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private bootstrap = async () => {
         const logType = localStorage.getItem('logType')
+        const metamaskProvider = new MetamaskProvider()
+
         switch (logType) {
             case 'Metamask':
-                const metamaskProvider = new MetamaskProvider()
                 if (
-                    (await metamaskProvider.isAvaliable()) &&
+                    (await metamaskProvider.isAvailable()) &&
                     (await metamaskProvider.isLogged())
                 ) {
                     const web3 = metamaskProvider.getProvider()
@@ -249,7 +250,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         const isOceanNetwork = isPacific || isNile || isDuero || isSpree
 
         network !== this.state.network &&
-                this.setState({ isOceanNetwork, network })
+            this.setState({ isOceanNetwork, network })
     }
 
     public render() {
