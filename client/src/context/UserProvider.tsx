@@ -139,6 +139,19 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         }
     }
 
+    private loadDefaultWeb3 = async () => {
+        this.setState(
+            {
+                isLogged: false,
+                isBurner: false,
+                web3: DEFAULT_WEB3
+            },
+            () => {
+                this.loadOcean()
+            }
+        )
+    }
+
     private loadOcean = async () => {
         const { ocean } = await provideOcean(this.state.web3)
         this.setState({ ocean, isLoading: false }, () => {
@@ -169,26 +182,11 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                         }
                     )
                 } else {
-                    this.loadOcean()
+                    this.loadDefaultWeb3()
                 }
                 break
             case 'BurnerWallet':
-                const burnerWalletProvider = new BurnerWalletProvider()
-                if (await burnerWalletProvider.isLogged()) {
-                    await burnerWalletProvider.startLogin()
-                    this.setState(
-                        {
-                            isLogged: true,
-                            isBurner: true,
-                            web3: burnerWalletProvider.getProvider()
-                        },
-                        () => {
-                            this.loadOcean()
-                        }
-                    )
-                } else {
-                    this.loginBurnerWallet()
-                }
+                this.loginBurnerWallet()
                 break
             default:
                 this.loginBurnerWallet()
