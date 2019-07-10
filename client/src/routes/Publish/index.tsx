@@ -326,11 +326,6 @@ export default class Publish extends Component<{}, PublishState> {
                         description={`Publish a new data set into the Ocean Protocol ${market.network} Network.`}
                     >
                         <Content>
-                            {(!this.context.isLogged ||
-                                !this.context.isOceanNetwork) && (
-                                <Web3message />
-                            )}
-
                             <Progress
                                 steps={steps}
                                 currentStep={this.state.currentStep}

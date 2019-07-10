@@ -4,6 +4,7 @@ import slugify from '@sindresorhus/slugify'
 import styles from './VersionTableRow.module.scss'
 import { VersionTableContracts, VersionTableCommons } from './VersionTable'
 import VersionNumber from './VersionNumber'
+import { ReactComponent as Caret } from '../../../img/caret.svg'
 
 const VersionTableRow = ({ value }: { value: any }) => {
     const collapseStyles = {
@@ -26,11 +27,7 @@ const VersionTableRow = ({ value }: { value: any }) => {
                 <td>
                     {(value.name === 'Commons' || value.contracts) && (
                         <button className={styles.handle} {...getToggleProps()}>
-                            {isOpen ? (
-                                <span>&#9660;</span>
-                            ) : (
-                                <span>&#9658;</span>
-                            )}
+                            <Caret className={isOpen ? styles.open : ''} />
                         </button>
                     )}
                     <a

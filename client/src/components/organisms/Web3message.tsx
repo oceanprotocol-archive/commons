@@ -23,16 +23,19 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
     }
 
     public render() {
+        const { network } = this.context
+
         return (
             <div className={styles.message}>
                 <div className={styles.account}>
                     <Account
                         account={this.context.account}
                         isBurner={this.context.isBurner}
+                        extended={this.props.extended}
                     />
                 </div>
 
-                {this.props.extended && (
+                {(network !== 'Pacific' || this.props.extended) && (
                     <div className={styles.text}>
                         <AccountStatus className={styles.status} />
                         <em

@@ -1,9 +1,8 @@
 @import '../../styles/variables';
 
 .openLink {
-    margin: 0;
     font-size: $font-size-small !important; // stylelint-disable-line
-    margin-left: $spacer / 4;
+    margin-left: $spacer / 2;
 }
 
 .info {

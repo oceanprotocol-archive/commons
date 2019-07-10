@@ -11,5 +11,13 @@
     margin-top: -.1rem;
     padding-right: .5rem;
     cursor: pointer;
-    color: $brand-grey-light;
+
+    svg {
+        fill: $brand-grey-light;
+        transition: .2s ease-out;
+    }
+}
+
+.open {
+    transform: rotate(90deg);
 }
