@@ -8,7 +8,7 @@ describe('Web3message', () => {
     it('renders with burner wallet message', () => {
         const { container } = render(
             <User.Provider value={{ ...userMockConnected, isBurner: true }}>
-                <Web3message />
+                <Web3message extended />
             </User.Provider>
         )
         expect(container.firstChild).toHaveTextContent('Burner Wallet')
@@ -19,7 +19,7 @@ describe('Web3message', () => {
             <User.Provider
                 value={{ ...userMockConnected, isOceanNetwork: false }}
             >
-                <Web3message />
+                <Web3message extended />
             </User.Provider>
         )
         expect(container.firstChild).toHaveTextContent(
@@ -30,7 +30,7 @@ describe('Web3message', () => {
     it('renders with noAccount message', () => {
         const { container } = render(
             <User.Provider value={{ ...userMock, isOceanNetwork: true }}>
-                <Web3message />
+                <Web3message extended />
             </User.Provider>
         )
         expect(container.firstChild).toHaveTextContent('No wallet selected.')

@@ -33,14 +33,14 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
                 </div>
 
                 {this.props.extended && (
-                    <p className={styles.text}>
+                    <div className={styles.text}>
                         <AccountStatus className={styles.status} />
                         <em
                             dangerouslySetInnerHTML={{
                                 __html: this.message()
                             }}
                         />
-                    </p>
+                    </div>
                 )}
             </div>
         )

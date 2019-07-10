@@ -10,9 +10,7 @@ describe('AccountStatus', () => {
 
     it('togglePopover fires', () => {
         const { container } = render(<AccountStatus />)
-
-        const indicator = container.querySelector('.statusIndicator')
-
+        const indicator = container.querySelector('.status')
         indicator && fireEvent.mouseOver(indicator)
         expect(container.querySelector('.popover')).toBeInTheDocument()
         indicator && fireEvent.mouseOut(indicator)
