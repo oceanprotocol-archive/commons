@@ -3,7 +3,7 @@ import oceanMock from './ocean-mock'
 const userMock = {
     isLogged: false,
     isLoading: false,
-    isWeb3: false,
+    isBurner: false,
     isOceanNetwork: false,
     account: '',
     web3: {},
@@ -11,14 +11,15 @@ const userMock = {
     balance: { eth: 0, ocn: 0 },
     network: '',
     requestFromFaucet: jest.fn(),
-    unlockAccounts: jest.fn(),
+    loginMetamask: jest.fn(),
+    loginBurnerWallet: jest.fn(),
     message: ''
 }
 
 const userMockConnected = {
     isLogged: true,
     isLoading: false,
-    isWeb3: true,
+    isBurner: false,
     isOceanNetwork: true,
     account: '0xxxxxx',
     web3: {},
@@ -26,7 +27,8 @@ const userMockConnected = {
     balance: { eth: 0, ocn: 0 },
     network: '',
     requestFromFaucet: jest.fn(),
-    unlockAccounts: jest.fn(),
+    loginMetamask: jest.fn(),
+    loginBurnerWallet: jest.fn(),
     message: ''
 }
 

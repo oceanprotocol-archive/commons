@@ -2,6 +2,7 @@ import React from 'react'
 
 export const User = React.createContext({
     isLogged: false,
+    isBurner: false,
     isLoading: false,
     isOceanNetwork: false,
     account: '',

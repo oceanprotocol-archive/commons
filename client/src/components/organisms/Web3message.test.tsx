@@ -5,18 +5,18 @@ import { User } from '../../context'
 import { userMock, userMockConnected } from '../../../__mocks__/user-mock'
 
 describe('Web3message', () => {
-    it('renders with noWeb3 message', () => {
+    it('renders with burner wallet message', () => {
         const { container } = render(
-            <User.Provider value={{ ...userMock }}>
+            <User.Provider value={{ ...userMockConnected, isBurner: true }}>
                 <Web3message />
             </User.Provider>
         )
-        expect(container.firstChild).toHaveTextContent('Not a Web3 Browser')
+        expect(container.firstChild).toHaveTextContent('Burner Wallet')
     })
 
     it('renders with wrongNetwork message', () => {
         const { container } = render(
-            <User.Provider value={{ ...userMock, isWeb3: true }}>
+            <User.Provider value={{ ...userMockConnected, isOceanNetwork: false }}>
                 <Web3message />
             </User.Provider>
         )
@@ -28,12 +28,12 @@ describe('Web3message', () => {
     it('renders with noAccount message', () => {
         const { container } = render(
             <User.Provider
-                value={{ ...userMock, isWeb3: true, isOceanNetwork: true }}
+                value={{ ...userMock, isOceanNetwork: true }}
             >
                 <Web3message />
             </User.Provider>
         )
-        expect(container.firstChild).toHaveTextContent('No accounts detected')
+        expect(container.firstChild).toHaveTextContent('No wallet selected.')
     })
 
     it('renders with hasAccount message', () => {
@@ -43,22 +43,5 @@ describe('Web3message', () => {
             </User.Provider>
         )
         expect(container.firstChild).toHaveTextContent('0xxxxxx')
-    })
-
-    it('button click fires unlockAccounts', () => {
-        const { getByText } = render(
-            <User.Provider
-                value={{
-                    ...userMock,
-                    isWeb3: true,
-                    isOceanNetwork: true
-                }}
-            >
-                <Web3message />
-            </User.Provider>
-        )
-
-        fireEvent.click(getByText('Unlock Account'))
-        expect(userMock.unlockAccounts).toBeCalled()
     })
 })
