@@ -1,0 +1,16 @@
+{
+  "title": "Select wallet",
+  "description": "Select the wallet you want to use in the Commons Marketplace. By default, we create a burner wallet in your browser allowing you to use all functionality without further setup.",
+  "buttons": [
+    {
+      "title": "Burner Wallet",
+      "icon": "🔥",
+      "description": "Easiest way to use Commons without further setup. But the wallet will be gone when you change browsers or clear your cache."
+    },
+    {
+      "title": "MetaMask",
+      "icon": "🦊",
+      "description": "Most secure experience attaching everything you do in Commons to an account you control. But you need to setup MetaMask first."
+    }
+  ]
+}

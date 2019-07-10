@@ -16,14 +16,17 @@
     background: $brand-white;
     border: 1px solid $brand-grey-lighter;
     border-radius: $border-radius;
-    padding: $spacer $spacer / 1.5;
+    line-height: 1.5;
+    padding: $spacer / 1.5;
     font-family: $font-family-base;
-    display: inline-block;
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
+    text-align: left;
     cursor: pointer;
     transition: border .2s ease-out;
     margin-bottom: $spacer;
+    position: relative;
 
     @media (min-width: $break-point--small) {
         flex-basis: 48%;
@@ -34,20 +37,37 @@
     &:focus {
         border-color: $brand-pink;
     }
+}
 
-    span {
-        display: block;
-        width: 100%;
-    }
+.buttonActive {
+    composes: button;
+    pointer-events: none;
+    background: $body-background;
+}
+
+.selected {
+    position: absolute;
+    right: $spacer / 3;
+    top: $spacer / 4;
+    color: $brand-grey-light;
+    font-weight: $font-weight-bold;
+}
+
+.buttonIcon {
+    font-size: $font-size-h4;
+    display: inline-block;
+    margin-right: $spacer / 4;
 }
 
 .buttonTitle {
     font-size: $font-size-base;
     margin-bottom: $spacer / 2;
     font-weight: $font-weight-bold;
+    margin-top: 0;
 }
 
 .buttonDescription {
     font-size: $font-size-small;
-    color: $brand-grey;
+    font-weight: $font-weight-bold;
+    color: $brand-grey-light;
 }
