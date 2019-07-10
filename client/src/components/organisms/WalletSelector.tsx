@@ -41,16 +41,34 @@ export default class WalletSelector extends PureComponent<
                 </Button>
                 <Modal
                     title="Select wallet"
-                    description="Select wallet."
+                    description="Select the wallet you want to use in the Commons Marketplace."
                     isOpen={this.state.isModalOpen}
                     toggleModal={this.toggleModal}
                 >
                     <div className={styles.info}>
-                        <button onClick={this.loginBurnerWallet}>
-                            login BurnerWallet
+                        <button
+                            className={styles.button}
+                            onClick={this.loginBurnerWallet}
+                        >
+                            <span className={styles.buttonTitle}>
+                                BurnerWallet
+                            </span>
+                            <span className={styles.buttonDescription}>
+                                Provides the easiest way to use Commons without
+                                further setup. But the wallet will be gone when
+                                you change browsers or clear your cache.
+                            </span>
                         </button>
-                        <button onClick={this.loginMetamask}>
-                            login Metamask
+                        <button
+                            className={styles.button}
+                            onClick={this.loginMetamask}
+                        >
+                            <span className={styles.buttonTitle}>MetaMask</span>
+                            <span className={styles.buttonDescription}>
+                                Provides the most secure experience attaching
+                                everything you do in Commons to an account you
+                                control. But you need to setup MetaMask first.
+                            </span>
                         </button>
                     </div>
                 </Modal>

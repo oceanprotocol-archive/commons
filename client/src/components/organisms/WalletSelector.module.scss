@@ -8,39 +8,47 @@
 }
 
 .info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.button {
+    flex: 0 0 100%;
     background: $brand-white;
-    padding: $spacer;
     border: 1px solid $brand-grey-lighter;
     border-radius: $border-radius;
+    padding: $spacer $spacer / 1.5;
+    font-family: $font-family-base;
+    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
+    transition: border .2s ease-out;
+    margin-bottom: $spacer;
 
-    h3 {
-        font-size: $font-size-base;
-        margin-top: 0;
-        margin-bottom: $spacer / 8;
+    @media (min-width: $break-point--small) {
+        flex-basis: 48%;
+        margin-bottom: 0;
     }
 
-    p {
-        border-bottom: 1px solid $brand-grey-lighter;
-        padding-bottom: $spacer / 2;
+    &:hover,
+    &:focus {
+        border-color: $brand-pink;
     }
 
-    code {
-        padding: 0;
-        color: $brand-grey-light;
+    span {
+        display: block;
+        width: 100%;
     }
 }
 
-.error {
-    background: $red;
-    padding: $spacer / 2;
-    text-align: center;
-    color: $brand-white;
-    border-radius: $border-radius;
+.buttonTitle {
+    font-size: $font-size-base;
+    margin-bottom: $spacer / 8;
     font-weight: $font-weight-bold;
-    font-size: $font-size-small;
 }
 
-.success {
-    composes: error;
-    background: $green;
+.buttonDescription {
+    font-size: $font-size-small;
 }
