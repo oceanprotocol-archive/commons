@@ -1,6 +1,7 @@
 import Web3 from 'web3'
 import { nodeUri } from '../config'
 import HDWalletProvider from 'truffle-hdwallet-provider'
+import { requestFromFaucet } from '../ocean'
 const bip39 = require('bip39') // eslint-disable-line @typescript-eslint/no-var-requires
 
 export class BurnerWalletProvider {
@@ -23,18 +24,22 @@ export class BurnerWalletProvider {
     }
 
     public async startLogin() {
-        if (await this.isLogged()) {
-            const mnemonic = localStorage.getItem('seedphrase') as string
-            localStorage.setItem('logType', 'BurnerWallet')
-            const provider = new HDWalletProvider(mnemonic, `${nodeUri}`, 0, 1)
-            this.web3 = new Web3(provider)
+        let mnemonic
+        const isLogged = await this.isLogged()
+
+        if (isLogged) {
+            mnemonic = (await localStorage.getItem('seedphrase')) as string
         } else {
-            const mnemonic = bip39.generateMnemonic()
+            mnemonic = bip39.generateMnemonic()
             localStorage.setItem('seedphrase', mnemonic)
-            localStorage.setItem('logType', 'BurnerWallet')
-            const provider = new HDWalletProvider(mnemonic, `${nodeUri}`, 0, 1)
-            this.web3 = new Web3(provider)
         }
+
+        localStorage.setItem('logType', 'BurnerWallet')
+        const provider = new HDWalletProvider(mnemonic, `${nodeUri}`, 0, 1)
+        this.web3 = new Web3(provider)
+
+        // fill with Ether
+        await requestFromFaucet(provider.addresses[0])
     }
 
     public async logout() {
