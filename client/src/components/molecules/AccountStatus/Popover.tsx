@@ -8,13 +8,7 @@ export default class Popover extends PureComponent<{
     style?: React.CSSProperties
 }> {
     public render() {
-        const {
-            account,
-            balance,
-            network,
-            isOceanNetwork,
-            isBurner
-        } = this.context
+        const { account, balance, network, isOceanNetwork } = this.context
 
         return (
             <div
@@ -25,7 +19,7 @@ export default class Popover extends PureComponent<{
                 {
                     <>
                         <div className={styles.popoverInfoline}>
-                            <Account account={account} isBurner={isBurner} />
+                            <Account />
                         </div>
 
                         {account && balance && (

@@ -8,13 +8,21 @@
 
     > div:first-of-type {
         flex: 0 0 80%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-family: $font-family-monospace;
-        font-size: $font-size-small;
-        font-weight: 700;
     }
+}
+
+.accountId {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: $font-family-monospace;
+    font-size: $font-size-small;
+    font-weight: 700;
+}
+
+.unlock {
+    font-size: $font-size-small !important; // stylelint-disable-line
+    margin-left: $spacer / 2;
 }
 
 .accountType {
@@ -77,4 +85,5 @@
     display: inline-block;
     margin-right: $spacer / 3;
     margin-left: 0;
+    border: 1px solid $brand-grey-lighter;
 }

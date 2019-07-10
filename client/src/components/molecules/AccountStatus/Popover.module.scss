@@ -41,7 +41,10 @@ $popoverWidth: 18rem;
     }
 
     button {
-        display: none;
+        svg,
+        &:last-child {
+            display: none;
+        }
     }
 }
 

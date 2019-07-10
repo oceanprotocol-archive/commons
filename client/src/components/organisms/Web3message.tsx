@@ -9,7 +9,7 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
     public static contextType = User
 
     private message = () => {
-        const { isOceanNetwork, isLogged, isBurner } = this.context
+        const { isOceanNetwork, isLogged, isBurner, network } = this.context
 
         return !isOceanNetwork && !isBurner
             ? content.wrongNetworkPacific
@@ -18,7 +18,7 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
             : isBurner
             ? content.hasBurnerWallet
             : isLogged
-            ? content.hasMetaMaskWallet
+            ? content.hasMetaMaskWallet.replace('NETWORK', network)
             : ''
     }
 
@@ -28,11 +28,7 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
         return (
             <div className={styles.message}>
                 <div className={styles.account}>
-                    <Account
-                        account={this.context.account}
-                        isBurner={this.context.isBurner}
-                        extended={this.props.extended}
-                    />
+                    <Account />
                 </div>
 
                 {(network !== 'Pacific' || this.props.extended) && (
