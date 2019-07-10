@@ -16,6 +16,7 @@ interface MarketProviderProps {
 interface MarketProviderState {
     totalAssets: number
     categories: string[]
+    network: string
 }
 
 export default class MarketProvider extends PureComponent<
@@ -24,7 +25,8 @@ export default class MarketProvider extends PureComponent<
 > {
     public state = {
         totalAssets: 0,
-        categories
+        categories,
+        network: 'Pacific'
     }
 
     public async componentDidMount() {}
@@ -34,6 +36,7 @@ export default class MarketProvider extends PureComponent<
         // Cause there is no `prevContext`.
         if (prevProps.ocean !== this.props.ocean) {
             await this.getTotalAssets()
+            await this.getMarketNetwork()
         }
     }
 
@@ -51,6 +54,19 @@ export default class MarketProvider extends PureComponent<
             const { ocean } = this.props
             const search = await ocean.aquarius.queryMetadata(searchQuery)
             this.setState({ totalAssets: search.totalResults })
+        } catch (error) {
+            Logger.error('Error', error.message)
+        }
+    }
+
+    private getMarketNetwork = async () => {
+        try {
+            const { ocean } = this.props
+            // Set desired network to whatever Brizo is running in
+            const brizo = await ocean.brizo.getVersionInfo()
+            const network =
+                brizo.network.charAt(0).toUpperCase() + brizo.network.slice(1)
+            this.setState({ network })
         } catch (error) {
             Logger.error('Error', error.message)
         }

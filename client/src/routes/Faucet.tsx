@@ -3,7 +3,7 @@ import { FaucetResponse } from '../ocean'
 import Route from '../components/templates/Route'
 import Button from '../components/atoms/Button'
 import Spinner from '../components/atoms/Spinner'
-import { User } from '../context'
+import { User, Market } from '../context'
 import Web3message from '../components/organisms/Web3message'
 import styles from './Faucet.module.scss'
 import Content from '../components/atoms/Content'
@@ -112,30 +112,34 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
     )
 
     public render() {
-        const { isWeb3 } = this.context
+        const { isLogged } = this.context
         const { isLoading, error, success } = this.state
 
         return (
-            <Route
-                title="Faucet"
-                description="Shower yourself with some Ether for Ocean's Pacific network."
-            >
-                <Content>
-                    <Web3message />
+            <Market.Consumer>
+                {market => (
+                    <Route
+                        title="Faucet"
+                        description={`Shower yourself with some Ether for Ocean's ${market.network} network.`}
+                    >
+                        <Content>
+                            <Web3message />
 
-                    <div className={styles.action}>
-                        {isLoading ? (
-                            <Spinner message="Getting Ether..." />
-                        ) : error ? (
-                            <this.Error />
-                        ) : success ? (
-                            <this.Success />
-                        ) : (
-                            isWeb3 && <this.Action />
-                        )}
-                    </div>
-                </Content>
-            </Route>
+                            <div className={styles.action}>
+                                {isLoading ? (
+                                    <Spinner message="Getting Ether..." />
+                                ) : error ? (
+                                    <this.Error />
+                                ) : success ? (
+                                    <this.Success />
+                                ) : (
+                                    isLogged && <this.Action />
+                                )}
+                            </div>
+                        </Content>
+                    </Route>
+                )}
+            </Market.Consumer>
         )
     }
 }

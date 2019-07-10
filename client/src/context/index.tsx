@@ -25,4 +25,8 @@ export const User = React.createContext({
     message: ''
 })
 
-export const Market = React.createContext({ totalAssets: 0, categories: [''] })
+export const Market = React.createContext({
+    totalAssets: 0,
+    categories: [''],
+    network: ''
+})

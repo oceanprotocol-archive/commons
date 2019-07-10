@@ -3,7 +3,7 @@ import { Logger } from '@oceanprotocol/squid'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
 import AssetModel from '../../models/AssetModel'
-import { User } from '../../context'
+import { User, Market } from '../../context'
 import Web3message from '../../components/organisms/Web3message'
 import Step from './Step'
 import Progress from './Progress'
@@ -319,41 +319,47 @@ export default class Publish extends Component<{}, PublishState> {
 
     public render() {
         return (
-            <Route
-                title="Publish"
-                description="Publish a new data set into the Ocean Protocol Network."
-            >
-                <Content>
-                    {(!this.context.isLogged ||
-                        !this.context.isOceanNetwork) && <Web3message />}
+            <Market.Consumer>
+                {market => (
+                    <Route
+                        title="Publish"
+                        description={`Publish a new data set into the Ocean Protocol ${market.network} Network.`}
+                    >
+                        <Content>
+                            {(!this.context.isLogged ||
+                                !this.context.isOceanNetwork) && (
+                                <Web3message />
+                            )}
 
-                    <Progress
-                        steps={steps}
-                        currentStep={this.state.currentStep}
-                    />
-
-                    <Form onSubmit={this.registerAsset}>
-                        {steps.map((step: any, index: number) => (
-                            <Step
-                                key={index}
-                                index={index}
-                                title={step.title}
-                                description={step.description}
+                            <Progress
+                                steps={steps}
                                 currentStep={this.state.currentStep}
-                                fields={step.fields}
-                                inputChange={this.inputChange}
-                                state={this.state}
-                                next={this.next}
-                                prev={this.prev}
-                                totalSteps={steps.length}
-                                tryAgain={this.tryAgain}
-                                toStart={this.toStart}
-                                content={step.content}
                             />
-                        ))}
-                    </Form>
-                </Content>
-            </Route>
+
+                            <Form onSubmit={this.registerAsset}>
+                                {steps.map((step: any, index: number) => (
+                                    <Step
+                                        key={index}
+                                        index={index}
+                                        title={step.title}
+                                        description={step.description}
+                                        currentStep={this.state.currentStep}
+                                        fields={step.fields}
+                                        inputChange={this.inputChange}
+                                        state={this.state}
+                                        next={this.next}
+                                        prev={this.prev}
+                                        totalSteps={steps.length}
+                                        tryAgain={this.tryAgain}
+                                        toStart={this.toStart}
+                                        content={step.content}
+                                    />
+                                ))}
+                            </Form>
+                        </Content>
+                    </Route>
+                )}
+            </Market.Consumer>
         )
     }
 }
