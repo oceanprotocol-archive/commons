@@ -7,6 +7,7 @@ import { User } from '../../context'
 import Files from './Files/'
 import StepRegisterContent from './StepRegisterContent'
 import styles from './Step.module.scss'
+import Web3message from '../../components/organisms/Web3message'
 
 interface Fields {
     label: string
@@ -161,6 +162,9 @@ export default class Step extends PureComponent<StepProps, {}> {
                             Register asset
                         </Button>
                     )}
+                </div>
+                <div className={styles.account}>
+                    <Web3message />
                 </div>
             </>
         )

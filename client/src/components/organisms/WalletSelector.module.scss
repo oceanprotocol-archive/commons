@@ -2,9 +2,8 @@
 
 .openLink {
     margin: 0;
-    margin-left: $spacer * 1.5;
     font-size: $font-size-small !important; // stylelint-disable-line
-    text-transform: uppercase;
+    margin-left: $spacer / 4;
 }
 
 .info {
@@ -45,10 +44,11 @@
 
 .buttonTitle {
     font-size: $font-size-base;
-    margin-bottom: $spacer / 8;
+    margin-bottom: $spacer / 2;
     font-weight: $font-weight-bold;
 }
 
 .buttonDescription {
     font-size: $font-size-small;
+    color: $brand-grey;
 }

@@ -3,10 +3,9 @@ import Account from '../atoms/Account'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Web3message.module.scss'
 import { User } from '../../context'
-import WalletSelector from './WalletSelector'
 import content from '../../data/web3message.json'
 
-export default class Web3message extends PureComponent {
+export default class Web3message extends PureComponent<{ extended?: boolean }> {
     public static contextType = User
 
     private message = () => {
@@ -26,17 +25,23 @@ export default class Web3message extends PureComponent {
     public render() {
         return (
             <div className={styles.message}>
-                {this.context.account && (
+                <div className={styles.account}>
                     <Account
                         account={this.context.account}
                         isBurner={this.context.isBurner}
                     />
+                </div>
+
+                {this.props.extended && (
+                    <p className={styles.text}>
+                        <AccountStatus className={styles.status} />
+                        <em
+                            dangerouslySetInnerHTML={{
+                                __html: this.message()
+                            }}
+                        />
+                    </p>
                 )}
-                <p className={styles.text}>
-                    <AccountStatus className={styles.status} />
-                    <em dangerouslySetInnerHTML={{ __html: this.message() }} />
-                </p>
-                <WalletSelector />
             </div>
         )
     }

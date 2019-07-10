@@ -5,17 +5,16 @@
     color: $brand-grey;
     position: relative;
     padding-top: $spacer / 2;
-    padding-bottom: $spacer / 2;
     text-align: left;
     font-size: $font-size-small;
+}
 
-    > div:first-child {
-        margin-bottom: $spacer / 2;
-        background: $brand-white;
-        border-radius: $border-radius;
-        border: 1px solid $brand-grey-lighter;
-        padding: $spacer / 2;
-    }
+.account {
+    margin-bottom: $spacer / 2;
+    background: $brand-white;
+    border-radius: $border-radius;
+    border: 1px solid $brand-grey-lighter;
+    padding: $spacer / 2;
 }
 
 .text {

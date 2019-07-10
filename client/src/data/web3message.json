@@ -1,6 +1,6 @@
 {
   "noAccount": "No wallet selected. For publishing and downloading an asset you need to use one.",
-  "hasBurnerWallet": "We created a temporary burner wallet for you, allowing you to use all Commons functionality without any setup on your side. This wallet will persist in your browser across sessions, but not across different browsers or devices. To personalize your experience and improve your security, <a href='https://docs.oceanprotocol.com/tutorials/metamask-setup/'>learn how to migrate to MetaMask</a>.",
+  "hasBurnerWallet": "We created a temporary burner wallet for you, allowing you to use all Commons functionality without any setup on your side. This wallet will persist in your browser across sessions, but not across different browsers or devices. To personalize your experience and improve your security, <a href='https://docs.oceanprotocol.com/tutorials/metamask-setup/'>migrate to MetaMask</a>.",
   "hasMetaMaskWallet": "Connected with MetaMask.",
   "wrongNetworkPacific": "Not connected to Pacific network.<br />Please connect in MetaMask with Custom RPC <code>https://pacific.oceanprotocol.com</code>",
   "wrongNetworkNile": "Not connected to Nile network.<br />Please connect in MetaMask with Custom RPC <code>https://nile.dev-ocean.com</code>",

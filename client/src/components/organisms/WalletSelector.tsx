@@ -41,7 +41,7 @@ export default class WalletSelector extends PureComponent<
                 </Button>
                 <Modal
                     title="Select wallet"
-                    description="Select the wallet you want to use in the Commons Marketplace."
+                    description="Select the wallet you want to use in the Commons Marketplace. By default, we create a burner wallet in your browser."
                     isOpen={this.state.isModalOpen}
                     toggleModal={this.toggleModal}
                 >

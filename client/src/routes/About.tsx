@@ -45,7 +45,7 @@ class About extends Component {
                     <h2 className={stylesVersionNumbers.versionsTitle}>
                         Your Web3 Account Status
                     </h2>
-                    <Web3message />
+                    <Web3message extended />
                     <VersionNumbers />
                 </Content>
             </Route>
