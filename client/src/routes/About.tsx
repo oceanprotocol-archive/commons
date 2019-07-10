@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Market } from '../context'
 import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
 import VersionNumbers from '../components/molecules/VersionNumbers'
@@ -6,17 +7,19 @@ import Web3message from '../components/organisms/Web3message'
 import stylesVersionNumbers from '../components/molecules/VersionNumbers/index.module.scss'
 
 class About extends Component {
+    public static contextType = Market
+
     public render() {
         return (
             <Route
                 title="About"
-                description="A marketplace to find and publish open data sets in the Ocean Pacific Network."
+                description={`A marketplace to find and publish open data sets in the Ocean ${this.context.network} Network.`}
             >
                 <Content>
                     <p>
                         Commons is built on top of the Ocean{' '}
                         <a href="https://docs.oceanprotocol.com/concepts/pacific-network/">
-                            Pacific network
+                            {this.context.network} network
                         </a>{' '}
                         and is targeted at enthusiastic data scientists with
                         some crypto experience. It can be used with any

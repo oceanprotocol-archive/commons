@@ -20,6 +20,8 @@
     width: 100%;
     margin-left: calc(1.5rem + #{$spacer / 3});
     font-size: $font-size-mini;
+    font-weight: $font-weight-bold;
+    opacity: .7;
 }
 
 .blockies {

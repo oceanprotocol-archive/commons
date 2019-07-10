@@ -13,7 +13,7 @@ export default class Web3message extends PureComponent {
         const { isOceanNetwork, isLogged, isBurner } = this.context
 
         return !isOceanNetwork && !isBurner
-            ? content.wrongNetwork
+            ? content.wrongNetworkPacific
             : !isLogged
             ? content.noAccount
             : isBurner
@@ -26,18 +26,16 @@ export default class Web3message extends PureComponent {
     public render() {
         return (
             <div className={styles.message}>
-                {this.context.account ? (
+                {this.context.account && (
                     <Account
                         account={this.context.account}
                         isBurner={this.context.isBurner}
                     />
-                ) : (
-                    <AccountStatus className={styles.status} />
                 )}
-                <em
-                    className={styles.text}
-                    dangerouslySetInnerHTML={{ __html: this.message() }}
-                />{' '}
+                <p className={styles.text}>
+                    <AccountStatus className={styles.status} />
+                    <em dangerouslySetInnerHTML={{ __html: this.message() }} />
+                </p>
                 <WalletSelector />
             </div>
         )

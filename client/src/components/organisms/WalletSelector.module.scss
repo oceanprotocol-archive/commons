@@ -2,8 +2,9 @@
 
 .openLink {
     margin: 0;
-    margin-top: $spacer / 2;
-    margin-left: $spacer;
+    margin-left: $spacer * 1.5;
+    font-size: $font-size-small !important; // stylelint-disable-line
+    text-transform: uppercase;
 }
 
 .info {

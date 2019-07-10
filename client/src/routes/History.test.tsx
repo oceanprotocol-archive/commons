@@ -16,7 +16,6 @@ describe('History', () => {
     })
 
     it('outputs no wallet selected', () => {
-
         const { container } = render(
             <User.Provider value={{ ...userMock, isOceanNetwork: true }}>
                 <MemoryRouter>

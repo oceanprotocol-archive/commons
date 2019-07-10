@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Web3message from './Web3message'
 import { User } from '../../context'
 import { userMock, userMockConnected } from '../../../__mocks__/user-mock'
@@ -16,7 +16,9 @@ describe('Web3message', () => {
 
     it('renders with wrongNetwork message', () => {
         const { container } = render(
-            <User.Provider value={{ ...userMockConnected, isOceanNetwork: false }}>
+            <User.Provider
+                value={{ ...userMockConnected, isOceanNetwork: false }}
+            >
                 <Web3message />
             </User.Provider>
         )
@@ -27,9 +29,7 @@ describe('Web3message', () => {
 
     it('renders with noAccount message', () => {
         const { container } = render(
-            <User.Provider
-                value={{ ...userMock, isOceanNetwork: true }}
-            >
+            <User.Provider value={{ ...userMock, isOceanNetwork: true }}>
                 <Web3message />
             </User.Provider>
         )
