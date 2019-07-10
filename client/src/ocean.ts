@@ -11,9 +11,9 @@ import {
     verbose
 } from './config'
 
-export async function provideOcean(web3provider: Web3) {
+export async function provideOcean(web3Provider: Web3) {
     const config = {
-        web3provider,
+        web3Provider,
         nodeUri,
         aquariusUri,
         brizoUri,
@@ -21,13 +21,7 @@ export async function provideOcean(web3provider: Web3) {
         secretStoreUri,
         verbose
     }
-
-    Logger.log('accs web3:', (await web3provider.eth.getAccounts())[0])
-
     const ocean: any = await Ocean.getInstance(config)
-
-    Logger.log('accs ocean:', (await ocean.accounts.list())[0].id)
-
     return { ocean }
 }
 
