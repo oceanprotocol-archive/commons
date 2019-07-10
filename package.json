@@ -24,10 +24,7 @@
     "cypress:run": "cypress run --browser chrome",
     "cypress:open": "cypress open"
   },
-  "dependencies": {
-    "truffle-hdwallet-provider": "^1.0.10",
-    "web3": "1.0.0-beta.37"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@release-it/bumper": "^1.0.3",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
