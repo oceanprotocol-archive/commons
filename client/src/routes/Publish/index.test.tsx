@@ -1,16 +1,24 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router'
 import { render, fireEvent } from '@testing-library/react'
+import { createMemoryHistory, createLocation } from 'history'
 import Publish from '.'
 import { User } from '../../context'
 import { userMockConnected } from '../../../__mocks__/user-mock'
+
+const history = createMemoryHistory()
+const location = createLocation('/publish')
 
 describe('Publish', () => {
     it('renders without crashing', () => {
         const { container, getByText } = render(
             <User.Provider value={userMockConnected}>
                 <MemoryRouter>
-                    <Publish />
+                    <Publish
+                        history={history}
+                        location={location}
+                        match={{ params: '', path: '', url: '', isExact: true }}
+                    />
                 </MemoryRouter>
             </User.Provider>
         )
@@ -22,7 +30,16 @@ describe('Publish', () => {
         const { getByText, getByLabelText, getByTestId } = render(
             <User.Provider value={userMockConnected}>
                 <MemoryRouter>
-                    <Publish />
+                    <Publish
+                        history={history}
+                        location={{
+                            pathname: '/publish',
+                            search: '',
+                            hash: '',
+                            state: ''
+                        }}
+                        match={{ params: '', path: '', url: '', isExact: true }}
+                    />
                 </MemoryRouter>
             </User.Provider>
         )

@@ -28,16 +28,4 @@ describe('AssetFilesDetails', () => {
         )
         expect(container.firstChild).toHaveTextContent('No files attached.')
     })
-
-    it('hides Web3message when all connected', () => {
-        const { container } = render(
-            <User.Provider value={userMockConnected}>
-                <AssetFilesDetails
-                    files={[{ index: 0, url: '' }]}
-                    ddo={({} as any) as DDO}
-                />
-            </User.Provider>
-        )
-        expect(container.querySelector('.status')).not.toBeInTheDocument()
-    })
 })

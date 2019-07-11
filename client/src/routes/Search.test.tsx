@@ -6,10 +6,10 @@ import { createMemoryHistory } from 'history'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { userMockConnected } from '../../__mocks__/user-mock'
 
+const history = createMemoryHistory()
+
 describe('Search', () => {
     it('renders without crashing', () => {
-        const history = createMemoryHistory()
-
         const { container } = render(
             <User.Provider value={userMockConnected}>
                 <Router>
@@ -21,6 +21,7 @@ describe('Search', () => {
                             hash: ''
                         }}
                         history={history}
+                        match={{ params: '', path: '', url: '', isExact: true }}
                     />
                 </Router>
             </User.Provider>
