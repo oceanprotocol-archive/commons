@@ -109,7 +109,7 @@ export default class AssetFile extends PureComponent<
     public render() {
         const { ddo, file } = this.props
         const { isLoading, error, step } = this.state
-        const { isLogged, isOceanNetwork } = this.context
+        const { isLogged } = this.context
         const { index, contentType, contentLength } = file
 
         return (
@@ -145,7 +145,7 @@ export default class AssetFile extends PureComponent<
                         className={styles.buttonMain}
                         // weird 0 hack so TypeScript is happy
                         onClick={() => this.purchaseAsset(ddo, index || 0)}
-                        disabled={!isLogged || !isOceanNetwork}
+                        disabled={!isLogged}
                         name="Download"
                     >
                         Get file

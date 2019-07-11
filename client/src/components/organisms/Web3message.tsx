@@ -2,28 +2,51 @@ import React, { PureComponent } from 'react'
 import Account from '../atoms/Account'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Web3message.module.scss'
-import { User } from '../../context'
+import { User, Market } from '../../context'
 import content from '../../data/web3message.json'
 
 export default class Web3message extends PureComponent<{ extended?: boolean }> {
-    public static contextType = User
+    public static contextType = Market
 
-    private message = () => {
-        const { isOceanNetwork, isLogged, isBurner, network } = this.context
-
-        return !isOceanNetwork && !isBurner
+    private messageOceanNetwork = () =>
+        this.context.network === 'Pacific'
             ? content.wrongNetworkPacific
-            : !isLogged
-            ? content.noAccount
-            : isBurner
-            ? content.hasBurnerWallet
-            : isLogged
-            ? content.hasMetaMaskWallet.replace('NETWORK', network)
-            : ''
+            : this.context.network === 'Nile'
+            ? content.wrongNetworkNile
+            : this.context.network === 'Duero'
+            ? content.wrongNetworkDuero
+            : content.wrongNetworkSpree
+
+    private Message = () => {
+        const { networkMatch, network } = this.context
+
+        return (
+            <User.Consumer>
+                {user => (
+                    <em
+                        dangerouslySetInnerHTML={{
+                            __html:
+                                !networkMatch && !user.isBurner
+                                    ? this.messageOceanNetwork()
+                                    : !user.isLogged
+                                    ? content.noAccount
+                                    : user.isBurner
+                                    ? content.hasBurnerWallet
+                                    : user.isLogged
+                                    ? content.hasMetaMaskWallet.replace(
+                                          'NETWORK',
+                                          network
+                                      )
+                                    : ''
+                        }}
+                    />
+                )}
+            </User.Consumer>
+        )
     }
 
     public render() {
-        const { network } = this.context
+        const { networkMatch } = this.context
 
         return (
             <div className={styles.message}>
@@ -31,14 +54,10 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
                     <Account />
                 </div>
 
-                {(network !== 'Pacific' || this.props.extended) && (
+                {(!networkMatch || this.props.extended) && (
                     <div className={styles.text}>
                         <AccountStatus className={styles.status} />
-                        <em
-                            dangerouslySetInnerHTML={{
-                                __html: this.message()
-                            }}
-                        />
+                        <this.Message />
                     </div>
                 )}
             </div>

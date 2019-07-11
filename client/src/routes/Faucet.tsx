@@ -99,9 +99,7 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
             <Button
                 primary
                 onClick={() => this.getTokens(this.context.requestFromFaucet)}
-                disabled={
-                    !this.context.isLogged || !this.context.isOceanNetwork
-                }
+                disabled={!this.context.isLogged}
             >
                 Request Ether
             </Button>

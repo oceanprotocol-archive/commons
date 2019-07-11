@@ -5,5 +5,6 @@
   "wrongNetworkPacific": "Not connected to Pacific network. Please connect in MetaMask with Custom RPC <code>https://pacific.oceanprotocol.com</code>",
   "wrongNetworkNile": "Not connected to Nile network. Please connect in MetaMask with Custom RPC <code>https://nile.dev-ocean.com</code>",
   "wrongNetworkDuero": "Not connected to Duero network. Please connect in MetaMask with Custom RPC <code>https://duero.dev-ocean.com</code>",
+  "wrongNetworkSpree": "Not connected to Spree network. Please connect in MetaMask with Custom RPC <code>http://localhost:8545</code>",
   "seedphrase": "You can use this seed phrase to import this burner wallet account into other wallets, e.g. MetaMask."
 }

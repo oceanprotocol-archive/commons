@@ -5,7 +5,6 @@ export const User = React.createContext({
     isBurner: false,
     isWeb3Capable: false,
     isLoading: false,
-    isOceanNetwork: false,
     account: '',
     web3: {},
     ocean: {},
@@ -29,5 +28,6 @@ export const User = React.createContext({
 export const Market = React.createContext({
     totalAssets: 0,
     categories: [''],
-    network: ''
+    network: '',
+    networkMatch: false
 })

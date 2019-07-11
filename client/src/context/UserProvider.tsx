@@ -51,7 +51,6 @@ interface UserProviderState {
     isBurner: boolean
     isWeb3Capable: boolean
     isLoading: boolean
-    isOceanNetwork: boolean
     account: string
     balance: {
         eth: number
@@ -110,7 +109,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         isBurner: false,
         isWeb3Capable: Boolean(window.web3 || window.ethereum),
         isLoading: true,
-        isOceanNetwork: false,
         balance: {
             eth: 0,
             ocn: 0
@@ -205,13 +203,13 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private fetchAccounts = async () => {
-        const { ocean, isLogged, isOceanNetwork } = this.state
+        const { ocean, isLogged } = this.state
 
         if (isLogged) {
             let accounts
 
             // Modern dapp browsers
-            if (window.ethereum && !isLogged && isOceanNetwork) {
+            if (window.ethereum && !isLogged) {
                 // simply set to empty, and have user click a button somewhere
                 // to initiate account unlocking
                 accounts = []
@@ -250,16 +248,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private fetchNetwork = async () => {
         const { ocean } = this.state
-
         const network = await ocean.keeper.getNetworkName()
-        const isPacific = network === 'Pacific'
-        const isNile = network === 'Nile'
-        const isDuero = network === 'Duero'
-        const isSpree = network === 'Spree'
-        const isOceanNetwork = isPacific || isNile || isDuero || isSpree
-
-        network !== this.state.network &&
-            this.setState({ isOceanNetwork, network })
+        network !== this.state.network && this.setState({ network })
     }
 
     public render() {

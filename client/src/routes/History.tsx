@@ -10,9 +10,7 @@ export default class History extends Component {
         return (
             <Route title="History">
                 <Content>
-                    {(!this.context.isLogged ||
-                        !this.context.isOceanNetwork) && <Web3message />}
-
+                    {!this.context.isLogged && <Web3message />}
                     <AssetsUser list />
                 </Content>
             </Route>
