@@ -49,6 +49,7 @@ declare global {
 interface UserProviderState {
     isLogged: boolean
     isBurner: boolean
+    isWeb3Capable: boolean
     isLoading: boolean
     isOceanNetwork: boolean
     account: string
@@ -107,6 +108,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     public state = {
         isLogged: false,
         isBurner: false,
+        isWeb3Capable: Boolean(window.web3 || window.ethereum),
         isLoading: true,
         isOceanNetwork: false,
         balance: {
