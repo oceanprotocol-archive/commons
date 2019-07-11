@@ -3,6 +3,6 @@
   "env": {
     "NODE_URI": "https://pacific.oceanprotocol.com",
     "SEEDPHRASE": "taxi music thumb unique chat sand crew more leg another off lamp",
-    "CONSUME_ASSET": "did:op:75c8808fa65e4c68b73568fdb36bd2b3d8076a43205543a3ac0235ca82aeef11"
+    "CONSUME_ASSET": "did:op:3fa4721ad643489bad77e0e52ecefe9b73166873faaf4661a02486b735eea0c8"
   }
 }
