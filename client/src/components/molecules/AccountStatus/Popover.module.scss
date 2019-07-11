@@ -40,12 +40,15 @@ $popoverWidth: 18rem;
         border-bottom: 0;
     }
 
+    /* stylelint-disable */
     button {
         svg,
-        &:last-child {
+        &[data-action] {
             display: none;
         }
     }
+
+    /* stylelint-enable */
 }
 
 .balance {

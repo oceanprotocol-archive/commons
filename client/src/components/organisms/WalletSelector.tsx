@@ -81,6 +81,7 @@ export default class WalletSelector extends PureComponent<
                     link
                     className={styles.openLink}
                     onClick={this.toggleModal}
+                    data-action="wallet"
                 >
                     {content.title}
                 </Button>
