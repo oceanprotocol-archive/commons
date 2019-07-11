@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
+import withTracker from '../hoc/withTracker'
 
 class NotFound extends Component {
     public render() {
@@ -12,4 +13,4 @@ class NotFound extends Component {
     }
 }
 
-export default NotFound
+export default withTracker(NotFound)

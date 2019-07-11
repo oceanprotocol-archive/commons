@@ -13,16 +13,14 @@ const withTracker = <P extends RouteComponentProps>(
     options: FieldsObject = {}
 ) => {
     const trackPage = (page: string) => {
-        options.isWeb3 = window.web3 !== undefined
-
         ReactGA.set({ page, ...options })
         ReactGA.pageview(page)
     }
 
     const HOC = (props: P) => {
-        useEffect(() => trackPage(props.location.pathname), [
-            props.location.pathname
-        ])
+        useEffect(() => {
+            trackPage(props.location.pathname)
+        }, [props.location.pathname])
 
         return <WrappedComponent {...props} />
     }

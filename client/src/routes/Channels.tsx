@@ -3,6 +3,7 @@ import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
 import channels from '../data/channels.json'
 import ChannelTeaser from '../components/organisms/ChannelTeaser'
+import withTracker from '../hoc/withTracker'
 
 class Channels extends Component {
     public render() {
@@ -21,4 +22,4 @@ class Channels extends Component {
     }
 }
 
-export default Channels
+export default withTracker(Channels)

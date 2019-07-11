@@ -11,6 +11,7 @@ import ReactGA from 'react-ga'
 import { steps } from '../../data/form-publish.json'
 import Content from '../../components/atoms/Content'
 import { File } from './Files'
+import withTracker from '../../hoc/withTracker'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -35,7 +36,7 @@ interface PublishState {
     validationStatus?: any
 }
 
-export default class Publish extends Component<{}, PublishState> {
+class Publish extends Component<{}, PublishState> {
     public static contextType = User
 
     public state = {
@@ -357,3 +358,5 @@ export default class Publish extends Component<{}, PublishState> {
         )
     }
 }
+
+export default withTracker(Publish)

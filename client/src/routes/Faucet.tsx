@@ -7,6 +7,7 @@ import { User, Market } from '../context'
 import Web3message from '../components/organisms/Web3message'
 import styles from './Faucet.module.scss'
 import Content from '../components/atoms/Content'
+import withTracker from '../hoc/withTracker'
 
 interface FaucetState {
     isLoading: boolean
@@ -15,7 +16,7 @@ interface FaucetState {
     trxHash?: string
 }
 
-export default class Faucet extends PureComponent<{}, FaucetState> {
+class Faucet extends PureComponent<{}, FaucetState> {
     public static contextType = User
 
     public state = {
@@ -142,4 +143,4 @@ export default class Faucet extends PureComponent<{}, FaucetState> {
     }
 }
 
-Faucet.contextType = User
+export default withTracker(Faucet)

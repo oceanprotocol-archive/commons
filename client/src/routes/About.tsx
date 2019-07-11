@@ -5,6 +5,7 @@ import Content from '../components/atoms/Content'
 import VersionNumbers from '../components/molecules/VersionNumbers'
 import Web3message from '../components/organisms/Web3message'
 import stylesVersionNumbers from '../components/molecules/VersionNumbers/index.module.scss'
+import withTracker from '../hoc/withTracker'
 
 class About extends Component {
     public static contextType = Market
@@ -53,4 +54,4 @@ class About extends Component {
     }
 }
 
-export default About
+export default withTracker(About)
