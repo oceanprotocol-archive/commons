@@ -60,7 +60,7 @@ To make use of all the functionality, you need to connect to an Ocean network.
 
 By default, the client will connect to Ocean components running within [Ocean's Pacific network](https://docs.oceanprotocol.com/concepts/pacific-network/) remotely.
 
-With your MetaMask, connect to the Pacific network. To do this:
+By default, the client uses a burner wallet connected to the correct network automatically. If you choose to use MetaMask, you need to connect to the Pacific network. To do this:
 
 1. select Custom RPC in the network dropdown in MetaMask
 2. under New Network, enter `https://pacific.oceanprotocol.com` as the custom RPC URL
