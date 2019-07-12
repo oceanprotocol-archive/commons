@@ -248,7 +248,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private fetchNetwork = async () => {
         const { ocean } = this.state
-        const network = await ocean.keeper.getNetworkName()
+        let network = 'Unknown'
+        try {
+            network = await ocean.keeper.getNetworkName()
+        } catch (error) {}
         network !== this.state.network && this.setState({ network })
     }
 
