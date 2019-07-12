@@ -21,9 +21,12 @@ context('Consume', () => {
 
     it('Consume asset and check if there is no error', () => {
         // Click consume button
-        cy.get('@button').click()
+        cy.get('button[name="Download"]').click()
         // Wait consume process to end
-        cy.get('@button', { timeout: 150000 }).should('contain', 'Get file')
+        cy.get('button[name="Download"]', { timeout: 150000 }).should(
+            'contain',
+            'Get file'
+        )
         // check if there is no error
         cy.get('article>div').should(
             'not.contain',
