@@ -9,21 +9,15 @@ context('Consume', () => {
             .should('have.length', 1)
     })
 
-    beforeEach(() => {
-        cy.get('button[name="Download"]')
-            .first()
-            .as('button')
-    })
-
     it('Download button is clickable when user is connected.', () => {
-        cy.get('@button').should('not.be.disabled')
+        cy.get('button[name="Download"]').should('not.be.disabled')
     })
 
     it('Consume asset and check if there is no error', () => {
         // Click consume button
         cy.get('button[name="Download"]').click()
         // Wait consume process to end
-        cy.get('button[name="Download"]', { timeout: 150000 }).should(
+        cy.get('button[name="Download"]', { timeout: 600000 }).should(
             'contain',
             'Get file'
         )

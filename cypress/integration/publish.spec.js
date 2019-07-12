@@ -11,7 +11,7 @@ context('Publish', () => {
 
     it('Publish flow', () => {
         // Fill title
-        cy.get('input#name').type('Title test')
+        cy.get('input#name').type('Commons Integration Test')
         // Open Add a file form
         cy.get('button')
             .contains('+ Add a file')
