@@ -24,7 +24,7 @@ interface HomeState {
 class Home extends PureComponent<HomeProps, HomeState> {
     public static contextType = Market
 
-    private searchAssets = (
+    public searchAssets = (
         search: string,
         event: FormEvent<HTMLFormElement>
     ) => {
@@ -40,7 +40,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
                 className={styles.home}
             >
                 <Content>
-                    <Search key="search" searchAssets={this.searchAssets} />
+                    <Search searchAssets={this.searchAssets} />
                 </Content>
 
                 <Content wide>

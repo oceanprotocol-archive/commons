@@ -38,8 +38,8 @@ describe('Web3message', () => {
 
     it('renders with noAccount message', () => {
         const { container } = render(
-            <User.Provider value={{ ...userMock }}>
-                <Market.Provider value={{ ...marketMock }}>
+            <User.Provider value={userMock}>
+                <Market.Provider value={marketMock}>
                     <Web3message extended />
                 </Market.Provider>
             </User.Provider>
@@ -50,7 +50,7 @@ describe('Web3message', () => {
     it('renders with hasAccount message', () => {
         const { container } = render(
             <User.Provider value={userMockConnected}>
-                <Market.Provider value={{ ...marketMock }}>
+                <Market.Provider value={marketMock}>
                     <Web3message />
                 </Market.Provider>
             </User.Provider>

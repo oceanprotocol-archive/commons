@@ -142,6 +142,7 @@ export default class Report extends PureComponent<
                                     primary
                                     onClick={(e: Event) => this.sendEmail(e)}
                                     disabled={this.state.comment === ''}
+                                    data-testid="report"
                                 >
                                     Report Data Set
                                 </Button>
