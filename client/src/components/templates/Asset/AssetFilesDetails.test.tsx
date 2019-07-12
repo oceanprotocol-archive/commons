@@ -4,8 +4,6 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { DDO } from '@oceanprotocol/squid'
 import AssetFilesDetails from './AssetFilesDetails'
-import { User } from '../../../context'
-import { userMockConnected } from '../../../../__mocks__/user-mock'
 
 describe('AssetFilesDetails', () => {
     it('renders without crashing', () => {
