@@ -32,8 +32,8 @@ script:
   # executing `npm test` scripts individually here, so first one failing will exit the build
   - npm run lint || travis_terminate 1
   - ./scripts/test.sh || travis_terminate 1
-  - npm run test:e2e || travis_terminate 1
   - ./scripts/coverage.sh
+  - npm run test:e2e || travis_terminate 1
   - ./scripts/build.sh
 
 notifications:
