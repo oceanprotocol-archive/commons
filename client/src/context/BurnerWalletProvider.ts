@@ -43,7 +43,7 @@ export class BurnerWalletProvider {
     }
 
     public async logout() {
-        localStorage.removeItem('seedphrase')
+        // localStorage.removeItem('seedphrase')
         localStorage.removeItem('logType')
     }
 
