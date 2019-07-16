@@ -3,7 +3,7 @@ import Input from '../../components/atoms/Form/Input'
 import Label from '../../components/atoms/Form/Label'
 import Row from '../../components/atoms/Form/Row'
 import Button from '../../components/atoms/Button'
-import { User } from '../../context'
+import { User, Market } from '../../context'
 import Files from './Files/'
 import StepRegisterContent from './StepRegisterContent'
 import styles from './Step.module.scss'
@@ -43,6 +43,8 @@ interface StepProps {
 }
 
 export default class Step extends PureComponent<StepProps, {}> {
+    public static contextType = User
+
     public previousButton() {
         const { currentStep, prev } = this.props
 
@@ -152,23 +154,26 @@ export default class Step extends PureComponent<StepProps, {}> {
                     {this.nextButton()}
 
                     {lastStep && (
-                        <Button
-                            disabled={
-                                !this.context.isLogged ||
-                                this.props.state.isPublishing
-                            }
-                            primary
-                        >
-                            Register asset
-                        </Button>
+                        <Market.Consumer>
+                            {market => (
+                                <Button
+                                    disabled={
+                                        !this.context.isLogged ||
+                                        !market.networkMatch ||
+                                        this.props.state.isPublishing
+                                    }
+                                    primary
+                                >
+                                    Register asset
+                                </Button>
+                            )}
+                        </Market.Consumer>
                     )}
                 </div>
                 <div className={styles.account}>
-                    <Web3message />
+                    {!lastStep && <Web3message />}
                 </div>
             </>
         )
     }
 }
-
-Step.contextType = User
