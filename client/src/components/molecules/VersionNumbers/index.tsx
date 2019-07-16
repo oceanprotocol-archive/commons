@@ -79,13 +79,13 @@ export default class VersionNumbers extends PureComponent<
     // for canceling axios requests
     public signal = axios.CancelToken.source()
 
-    public async componentDidMount() {
-        this.getOceanVersions()
-        this.getFaucetVersion()
-    }
-
     public componentWillUnmount() {
         this.signal.cancel()
+    }
+
+    public componentWillReceiveProps() {
+        this.getOceanVersions()
+        this.getFaucetVersion()
     }
 
     private async getOceanVersions() {
