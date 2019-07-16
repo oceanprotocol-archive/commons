@@ -37,8 +37,8 @@ users:
 EOF
 
 # Patch deployed versions in k8s cluster
-/tmp/kubectl patch deployment marketplace-client-commons -p\
+/tmp/kubectl patch deployment -n pacific-ocean marketplace-client-commons -p\
  "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"marketplace-commons\",\"image\":\"oceanprotocol/commons_client:${TRAVIS_TAG}\"}]}}}}"
 
-/tmp/kubectl patch deployment marketplace-server-commons -p\
+/tmp/kubectl patch deployment -n pacific-ocean marketplace-server-commons -p\
  "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"marketplace-server-commons\",\"image\":\"oceanprotocol/commons_server:${TRAVIS_TAG}\"}]}}}}"
