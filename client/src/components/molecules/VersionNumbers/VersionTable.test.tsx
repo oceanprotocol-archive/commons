@@ -29,12 +29,23 @@ describe('VersionTableContracts', () => {
         rerender(
             <VersionTableContracts
                 contracts={{ hello: 'hello', hello2: 'hello2' }}
+                network="nile"
+                keeperVersion="6.6.6"
+            />
+        )
+        expect(container.querySelector('tr:last-child a').href).toMatch(
+            /submarine.nile.dev-ocean/
+        )
+
+        rerender(
+            <VersionTableContracts
+                contracts={{ hello: 'hello', hello2: 'hello2' }}
                 network="pacific"
                 keeperVersion="6.6.6"
             />
         )
         expect(container.querySelector('tr:last-child a').href).toMatch(
-            /submarine.pacific.dev-ocean/
+            /submarine.oceanprotocol/
         )
     })
 })
