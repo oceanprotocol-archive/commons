@@ -6,12 +6,10 @@
   "scripts": {
     "install": "./scripts/install.sh",
     "start": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
-    "start:commons-and-ganache": "concurrently 'npm run start:ganache' 'npm run start'",
     "build": "./scripts/build.sh",
     "test": "npm run lint && scripts/test.sh && npm run test:e2e",
-    "test:e2e": "start-test start:commons-and-ganache http-get://localhost:3000 cypress:run",
+    "test:e2e": "start-test start http-get://localhost:3000 cypress:run",
     "test:watch": "npm run lint && concurrently \"cd client && npm run test:watch\" \"cd server && npm run test:watch\"",
-    "start:ganache": "ganache-cli -m 'stamp polar cup smart ill agree human episode reform trigger text forget' -i 5777",
     "format:js": "prettier --parser typescript --write '**/*.{js,jsx,ts,tsx}'",
     "format:css": "prettier-stylelint --ignore-path .gitignore --write --quiet '**/*.{css,scss}'",
     "format": "npm run format:js && npm run format:css",
