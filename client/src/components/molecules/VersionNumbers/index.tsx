@@ -9,19 +9,14 @@ import { version } from '../../../../package.json'
 import styles from './index.module.scss'
 
 import { nodeUri, faucetUri } from '../../../config'
-import { User } from '../../../context'
+import { User, Market } from '../../../context'
 
 import VersionTable from './VersionTable'
 import VersionStatus from './VersionStatus'
 
-// construct values which are not part of any response
-export const commonsVersion =
-    process.env.NODE_ENV === 'production' ? version : `${version}-dev`
-const commonsNetwork = new URL(nodeUri).hostname.split('.')[0]
-const faucetNetwork = new URL(faucetUri).hostname.split('.')[1]
-
 interface VersionNumbersProps {
     minimal?: boolean
+    account: string
 }
 
 export interface VersionNumbersState extends OceanPlatformVersions {
@@ -44,12 +39,20 @@ export default class VersionNumbers extends PureComponent<
 > {
     public static contextType = User
 
+    // construct values which are not part of any response
+    public commonsVersion =
+        process.env.NODE_ENV === 'production' ? version : `${version}-dev`
+    public commonsNetwork = new URL(nodeUri).hostname.split('.')[0]
+    public faucetNetwork = faucetUri.includes('dev-ocean')
+        ? new URL(faucetUri).hostname.split('.')[1]
+        : 'Pacific'
+
     // define a minimal default state to fill UI
     public state: VersionNumbersState = {
         commons: {
             name: 'Commons',
-            network: commonsNetwork,
-            version: commonsVersion
+            network: this.commonsNetwork,
+            version: this.commonsVersion
         },
         squid: {
             name: 'Squid-js',
@@ -66,7 +69,7 @@ export default class VersionNumbers extends PureComponent<
         faucet: {
             name: 'Faucet',
             version: '',
-            network: faucetNetwork,
+            network: this.faucetNetwork,
             status: OceanPlatformTechStatus.Loading
         },
         status: {
@@ -79,9 +82,18 @@ export default class VersionNumbers extends PureComponent<
     // for canceling axios requests
     public signal = axios.CancelToken.source()
 
-    public async componentDidMount() {
+    public componentDidMount() {
         this.getOceanVersions()
         this.getFaucetVersion()
+    }
+
+    public async componentDidUpdate(prevProps: any) {
+        // Workaround: Using account prop instead of getting it from
+        // context to be able to compare. Cause there is no `prevContext`.
+        if (prevProps.account !== this.props.account) {
+            this.getOceanVersions()
+            this.getFaucetVersion()
+        }
     }
 
     public componentWillUnmount() {
@@ -132,14 +144,19 @@ export default class VersionNumbers extends PureComponent<
         const { commons, squid, brizo, aquarius } = this.state
 
         return (
-            <p className={styles.versionsMinimal}>
-                <a
-                    title={`${squid.name} v${squid.version}\n${brizo.name} v${brizo.version}\n${aquarius.name} v${aquarius.version}`}
-                    href={'/about'}
-                >
-                    v{commons.version} {squid.network && `(${squid.network})`}
-                </a>
-            </p>
+            <Market.Consumer>
+                {market => (
+                    <p className={styles.versionsMinimal}>
+                        <a
+                            title={`${squid.name} v${squid.version}\n${brizo.name} v${brizo.version}\n${aquarius.name} v${aquarius.version}`}
+                            href={'/about'}
+                        >
+                            v{commons.version}{' '}
+                            {market.network && `(${market.network})`}
+                        </a>
+                    </p>
+                )}
+            </Market.Consumer>
         )
     }
 
@@ -149,13 +166,13 @@ export default class VersionNumbers extends PureComponent<
         return minimal ? (
             <this.MinimalOutput />
         ) : (
-            <div className={styles.versions} id="#oceanversions">
-                <h2 className={styles.versionsTitle}>
+            <>
+                <h2 className={styles.versionsTitle} id="#oceanversions">
                     Ocean Components Status
                 </h2>
                 <VersionStatus status={this.state.status} />
                 <VersionTable data={this.state} />
-            </div>
+            </>
         )
     }
 }

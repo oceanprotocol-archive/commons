@@ -6,6 +6,7 @@ import Route from '../components/templates/Route'
 import styles from './Styleguide.module.scss'
 import form from '../data/form-styleguide.json'
 import Content from '../components/atoms/Content'
+import withTracker from '../hoc/withTracker'
 
 class Styleguide extends Component {
     public formFields = (entries: any[]) =>
@@ -47,4 +48,4 @@ class Styleguide extends Component {
     }
 }
 
-export default Styleguide
+export default withTracker(Styleguide)

@@ -8,6 +8,7 @@ import stylesApp from '../../../App.module.scss'
 import Content from '../../atoms/Content'
 import CategoryImage from '../../atoms/CategoryImage'
 import styles from './index.module.scss'
+import withTracker from '../../../hoc/withTracker'
 
 interface AssetProps {
     match: {
@@ -23,7 +24,9 @@ interface AssetState {
     error: string
 }
 
-export default class Asset extends Component<AssetProps, AssetState> {
+class Asset extends Component<AssetProps, AssetState> {
+    public static contextType = User
+
     public state = {
         ddo: ({} as any) as DDO,
         metadata: ({ base: { name: '' } } as any) as MetaData,
@@ -79,4 +82,4 @@ export default class Asset extends Component<AssetProps, AssetState> {
     }
 }
 
-Asset.contextType = User
+export default withTracker(Asset)

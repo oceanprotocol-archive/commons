@@ -32,7 +32,11 @@ const Modal = ({
             overlayClassName={styles.modalOverlay}
             {...props}
         >
-            <button className={styles.close} onClick={toggleModal}>
+            <button
+                className={styles.close}
+                onClick={toggleModal}
+                data-testid="closeModal"
+            >
                 &times;
             </button>
 

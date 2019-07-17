@@ -53,13 +53,11 @@ export const VersionTableContracts = ({
                     // sort alphabetically
                     .sort((a, b) => a.localeCompare(b))
                     .map(key => {
-                        const submarineLink = `https://submarine${
-                            network === 'duero'
-                                ? '.duero'
-                                : network === 'pacific'
-                                ? '.pacific'
-                                : ''
-                        }.dev-ocean.com/address/${contracts[key]}`
+                        const submarineLink = `https://submarine.${
+                            network === 'pacific'
+                                ? 'oceanprotocol'
+                                : `${network}.dev-ocean`
+                        }.com/address/${contracts[key]}`
 
                         return (
                             <tr key={key}>

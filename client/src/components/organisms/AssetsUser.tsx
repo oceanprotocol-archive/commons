@@ -57,10 +57,9 @@ export default class AssetsUser extends PureComponent<
     }
 
     public render() {
-        const { account, isOceanNetwork } = this.context
+        const { account } = this.context
 
         return (
-            isOceanNetwork &&
             account && (
                 <div className={styles.assetsUser}>
                     {this.props.recent && (

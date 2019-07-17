@@ -1,20 +1,16 @@
 import React, { PureComponent } from 'react'
 import Account from '../../atoms/Account'
-import { User } from '../../../context'
+import { User, Market } from '../../../context'
 import styles from './Popover.module.scss'
 
 export default class Popover extends PureComponent<{
-    forwardedRef: (ref: HTMLElement | null) => void
-    style: React.CSSProperties
+    forwardedRef?: (ref: HTMLElement | null) => void
+    style?: React.CSSProperties
 }> {
+    public static contextType = User
+
     public render() {
-        const {
-            account,
-            balance,
-            network,
-            isWeb3,
-            isOceanNetwork
-        } = this.context
+        const { account, balance, network } = this.context
 
         return (
             <div
@@ -22,15 +18,10 @@ export default class Popover extends PureComponent<{
                 ref={this.props.forwardedRef}
                 style={this.props.style}
             >
-                {!isWeb3 ? (
-                    <div className={styles.popoverInfoline}>
-                        No Web3 detected. Use a browser with MetaMask installed
-                        to publish assets.
-                    </div>
-                ) : (
+                {
                     <>
                         <div className={styles.popoverInfoline}>
-                            <Account account={account} />
+                            <Account />
                         </div>
 
                         {account && balance && (
@@ -52,16 +43,28 @@ export default class Popover extends PureComponent<{
                             </div>
                         )}
 
-                        <div className={styles.popoverInfoline}>
-                            {network && !isOceanNetwork
-                                ? 'Please connect to Custom RPC\n https://pacific.oceanprotocol.com'
-                                : network && `Connected to ${network} network`}
-                        </div>
+                        <Market.Consumer>
+                            {market => (
+                                <div className={styles.popoverInfoline}>
+                                    {network && !market.networkMatch
+                                        ? `Please connect to Custom RPC
+                                           ${
+                                               market.network === 'Pacific'
+                                                   ? 'https://pacific.oceanprotocol.com'
+                                                   : market.network === 'Nile'
+                                                   ? 'https://nile.dev-ocean.com'
+                                                   : market.network === 'Duero'
+                                                   ? 'https://duero.dev-ocean.com'
+                                                   : 'http://localhost:8545'
+                                           }`
+                                        : network &&
+                                          `Connected to ${network} network`}
+                                </div>
+                            )}
+                        </Market.Consumer>
                     </>
-                )}
+                }
             </div>
         )
     }
 }
-
-Popover.contextType = User

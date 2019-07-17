@@ -10,6 +10,7 @@ import AssetTeaser from '../components/molecules/AssetTeaser'
 import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
 import Content from '../components/atoms/Content'
+import withTracker from '../hoc/withTracker'
 
 interface SearchProps {
     location: Location
@@ -27,7 +28,9 @@ interface SearchState {
     searchCategories: string
 }
 
-export default class Search extends PureComponent<SearchProps, SearchState> {
+class Search extends PureComponent<SearchProps, SearchState> {
+    public static contextType = User
+
     public state = {
         results: [],
         totalResults: 0,
@@ -159,4 +162,4 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
     }
 }
 
-Search.contextType = User
+export default withTracker(Search)

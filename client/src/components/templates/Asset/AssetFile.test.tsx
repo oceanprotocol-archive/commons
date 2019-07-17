@@ -5,9 +5,10 @@ import { render, fireEvent } from '@testing-library/react'
 import { DDO } from '@oceanprotocol/squid'
 import { StateMock } from '@react-mock/state'
 import ReactGA from 'react-ga'
-import { User } from '../../../context'
+import { User, Market } from '../../../context'
 import AssetFile, { messages } from './AssetFile'
 import { userMockConnected } from '../../../../__mocks__/user-mock'
+import { marketMock } from '../../../../__mocks__/market-mock'
 
 const file = {
     index: 0,
@@ -39,7 +40,9 @@ describe('AssetFile', () => {
     it('button to be enabled when connected', async () => {
         const { getByText } = render(
             <User.Provider value={userMockConnected}>
-                <AssetFile file={file} ddo={ddo} />
+                <Market.Provider value={marketMock}>
+                    <AssetFile file={file} ddo={ddo} />
+                </Market.Provider>
             </User.Provider>
         )
         const button = getByText('Get file')
@@ -50,12 +53,12 @@ describe('AssetFile', () => {
 
     it('renders feedback message: initial', async () => {
         const { container } = render(
-            <StateMock state={{ isLoading: true, step: null }}>
+            <StateMock state={{ isLoading: true, step: 99 }}>
                 <AssetFile file={file} ddo={ddo} />
             </StateMock>
         )
         expect(container.querySelector('.spinner')).toHaveTextContent(
-            messages.start
+            messages[99]
         )
     })
 

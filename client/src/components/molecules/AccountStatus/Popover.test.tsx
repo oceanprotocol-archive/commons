@@ -2,7 +2,8 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import Popover from './Popover'
 import { userMock, userMockConnected } from '../../../../__mocks__/user-mock'
-import { User } from '../../../context'
+import { marketMock } from '../../../../__mocks__/market-mock'
+import { User, Market } from '../../../context'
 
 describe('Popover', () => {
     it('renders without crashing', () => {
@@ -25,12 +26,14 @@ describe('Popover', () => {
 
     it('renders correct network', () => {
         const { container } = render(
-            <User.Provider value={{ ...userMockConnected, network: 'Nile' }}>
-                <Popover forwardedRef={() => null} style={{}} />
+            <User.Provider value={{ ...userMockConnected, network: 'Pacific' }}>
+                <Market.Provider value={{ ...marketMock }}>
+                    <Popover forwardedRef={() => null} style={{}} />
+                </Market.Provider>
             </User.Provider>
         )
         expect(container.firstChild).toBeInTheDocument()
-        expect(container.firstChild).toHaveTextContent('Connected to Nile')
+        expect(container.firstChild).toHaveTextContent('Connected to Pacific')
     })
 
     it('renders with wrong network', () => {
@@ -38,7 +41,6 @@ describe('Popover', () => {
             <User.Provider
                 value={{
                     ...userMockConnected,
-                    isOceanNetwork: false,
                     network: '1'
                 }}
             >

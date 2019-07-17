@@ -40,15 +40,25 @@ $popoverWidth: 18rem;
         border-bottom: 0;
     }
 
+    /* stylelint-disable */
     button {
-        font-size: $font-size-small;
+        svg,
+        &[data-action] {
+            display: none;
+        }
     }
+
+    /* stylelint-enable */
 }
 
 .balance {
     font-size: $font-size-small;
     margin-left: $spacer / 2;
     white-space: nowrap;
+
+    strong {
+        color: $brand-grey-lighter;
+    }
 
     &:first-child {
         margin-left: 0;

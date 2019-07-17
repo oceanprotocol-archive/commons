@@ -3,13 +3,13 @@ import { Logger, DDO, File } from '@oceanprotocol/squid'
 import filesize from 'filesize'
 import Button from '../../atoms/Button'
 import Spinner from '../../atoms/Spinner'
-import { User } from '../../../context'
+import { User, Market } from '../../../context'
 import styles from './AssetFile.module.scss'
 import ReactGA from 'react-ga'
 import cleanupContentType from '../../../utils/cleanupContentType'
 
-export const messages = {
-    start: 'Decrypting file URL...',
+export const messages: any = {
+    99: 'Decrypting file URL...',
     0: '1/3<br />Asking for agreement signature...',
     1: '1/3<br />Agreement initialized.',
     2: '2/3<br />Asking for two payment confirmations...',
@@ -25,24 +25,26 @@ interface AssetFileProps {
 interface AssetFileState {
     isLoading: boolean
     error: string
-    step: number | string | null
+    step: number
 }
 
 export default class AssetFile extends PureComponent<
     AssetFileProps,
     AssetFileState
 > {
+    public static contextType = User
+
     public state = {
         isLoading: false,
         error: '',
-        step: null
+        step: 99
     }
 
     private resetState = () =>
         this.setState({
             isLoading: true,
             error: '',
-            step: null
+            step: 99
         })
 
     private purchaseAsset = async (ddo: DDO, index: number) => {
@@ -109,7 +111,7 @@ export default class AssetFile extends PureComponent<
     public render() {
         const { ddo, file } = this.props
         const { isLoading, error, step } = this.state
-        const { isLogged, isOceanNetwork } = this.context
+        const { isLogged } = this.context
         const { index, contentType, contentLength } = file
 
         return (
@@ -134,22 +136,24 @@ export default class AssetFile extends PureComponent<
                 </ul>
 
                 {isLoading ? (
-                    <Spinner
-                        message={
-                            step === null ? messages.start : messages[step]
-                        }
-                    />
+                    <Spinner message={messages[step]} />
                 ) : (
-                    <Button
-                        primary
-                        className={styles.buttonMain}
-                        // weird 0 hack so TypeScript is happy
-                        onClick={() => this.purchaseAsset(ddo, index || 0)}
-                        disabled={!isLogged || !isOceanNetwork}
-                        name="Download"
-                    >
-                        Get file
-                    </Button>
+                    <Market.Consumer>
+                        {market => (
+                            <Button
+                                primary
+                                className={styles.buttonMain}
+                                // weird 0 hack so TypeScript is happy
+                                onClick={() =>
+                                    this.purchaseAsset(ddo, index || 0)
+                                }
+                                disabled={!isLogged || !market.networkMatch}
+                                name="Download"
+                            >
+                                Get file
+                            </Button>
+                        )}
+                    </Market.Consumer>
                 )}
 
                 {error !== '' && <div className={styles.error}>{error}</div>}
@@ -157,5 +161,3 @@ export default class AssetFile extends PureComponent<
         )
     }
 }
-
-AssetFile.contextType = User

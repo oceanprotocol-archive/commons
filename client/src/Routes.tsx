@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import withTracker from './hoc/withTracker'
 
 import About from './routes/About'
 import Home from './routes/Home'
@@ -17,17 +16,17 @@ import Channel from './components/templates/Channel'
 
 const Routes = () => (
     <Switch>
-        <Route component={withTracker(Home)} exact path="/" />
-        <Route component={withTracker(Styleguide)} path="/styleguide" />
-        <Route component={withTracker(About)} path="/about" />
-        <Route component={withTracker(Publish)} path="/publish" />
-        <Route component={withTracker(Search)} path="/search" />
-        <Route component={withTracker(Asset)} path="/asset/:did" />
-        <Route component={withTracker(Faucet)} path="/faucet" />
-        <Route component={withTracker(History)} path="/history" />
-        <Route component={withTracker(Channels)} exact path="/channels" />
-        <Route component={withTracker(Channel)} path="/channels/:channel" />
-        <Route component={withTracker(NotFound)} />
+        <Route component={Home} exact path="/" />
+        <Route component={Styleguide} path="/styleguide" />
+        <Route component={About} path="/about" />
+        <Route component={Publish} path="/publish" />
+        <Route component={Search} path="/search" />
+        <Route component={Asset} path="/asset/:did" />
+        <Route component={Faucet} path="/faucet" />
+        <Route component={History} path="/history" />
+        <Route component={Channels} exact path="/channels" />
+        <Route component={Channel} path="/channels/:channel" />
+        <Route component={NotFound} />
     </Switch>
 )
 

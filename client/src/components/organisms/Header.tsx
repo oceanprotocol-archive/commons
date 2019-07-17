@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as Logo } from '@oceanprotocol/art/logo/logo.svg'
-import { User } from '../../context'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Header.module.scss'
 
@@ -40,5 +39,3 @@ export default class Header extends PureComponent {
         )
     }
 }
-
-Header.contextType = User

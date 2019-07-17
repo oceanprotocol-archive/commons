@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import { User } from '../../../context'
+import { User, Market } from '../../../context'
 import styles from './Indicator.module.scss'
 
 const Indicator = ({
@@ -19,15 +19,19 @@ const Indicator = ({
         ref={forwardedRef}
     >
         <User.Consumer>
-            {states =>
-                !states.isWeb3 ? (
-                    <span className={styles.statusIndicator} />
-                ) : !states.isLogged || !states.isOceanNetwork ? (
-                    <span className={styles.statusIndicatorCloseEnough} />
-                ) : states.isLogged ? (
-                    <span className={styles.statusIndicatorActive} />
-                ) : null
-            }
+            {user => (
+                <Market.Consumer>
+                    {market =>
+                        !user.isLogged || !market.networkMatch ? (
+                            <span
+                                className={styles.statusIndicatorCloseEnough}
+                            />
+                        ) : user.isLogged ? (
+                            <span className={styles.statusIndicatorActive} />
+                        ) : null
+                    }
+                </Market.Consumer>
+            )}
         </User.Consumer>
     </div>
 )
