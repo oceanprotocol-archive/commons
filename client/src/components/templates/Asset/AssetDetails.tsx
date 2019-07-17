@@ -85,9 +85,7 @@ export default class AssetDetails extends PureComponent<
     private fetch = async (method: string, body: any) => {
         try {
             const response = await fetch(
-                `${serviceUri}/api/v1/ddo/${
-                    this.props.ddo
-                }`,
+                `${serviceUri}/api/v1/ddo/${this.props.ddo}`,
                 {
                     method,
                     body: JSON.stringify({ body }),
@@ -304,9 +302,9 @@ export default class AssetDetails extends PureComponent<
                         </span>
 
                         {categories && <this.Category value={categories} />}
-                        {/*base.categories && (
+                        {/* base.categories && (
                             <CategoryLink category={base.categories[0]} />
-                        )*/}
+                        ) */}
                         {base.files &&
                             !isEditMode &&
                             renderDatafilesLine(base.files)}
