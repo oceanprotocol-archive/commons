@@ -3,9 +3,11 @@ import express from 'express'
 import compression from 'compression'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
+import pkg from '../package.json'
 
 // routes
 import UrlCheckRouter from './routes/UrlCheckRouter'
+import ReportRouter from './routes/ReportRouter'
 
 // config
 import config from './config/config'
@@ -51,10 +53,20 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(compression())
 
 // routes
+app.get('/', (req, res) => {
+    res.send(
+        `<strong><code>
+            🏄‍♀️ <br />
+            Ocean Protocol Commons Server v${pkg.version}<br />
+            <a href="https://github.com/oceanprotocol/commons" style="text-decoration:none;color:#f6388a">github.com/oceanprotocol/commons</a>
+        </code></strong>`
+    )
+})
 app.use('/api/v1/urlcheck', UrlCheckRouter)
+app.use('/api/v1/report', ReportRouter)
 
 /// catch 404
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(404).send()
 })
 

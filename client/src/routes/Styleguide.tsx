@@ -5,6 +5,8 @@ import Input from '../components/atoms/Form/Input'
 import Route from '../components/templates/Route'
 import styles from './Styleguide.module.scss'
 import form from '../data/form-styleguide.json'
+import Content from '../components/atoms/Content'
+import withTracker from '../hoc/withTracker'
 
 class Styleguide extends Component {
     public formFields = (entries: any[]) =>
@@ -26,21 +28,25 @@ class Styleguide extends Component {
         const entries = Object.entries(form.fields)
         return (
             <Route title="Styleguide" className={styles.styleguide}>
-                <div className={styles.buttons}>
-                    <Button>I am a button</Button>
-                    <Button primary>I am a primary button</Button>
-                    <Button href="https://hello.com">
-                        I am a link disguised as a button
-                    </Button>
-                    <Button link>I am a button disguised as a text link</Button>
-                </div>
+                <Content>
+                    <div className={styles.buttons}>
+                        <Button>I am a button</Button>
+                        <Button primary>I am a primary button</Button>
+                        <Button href="https://hello.com">
+                            I am a link disguised as a button
+                        </Button>
+                        <Button link>
+                            I am a button disguised as a text link
+                        </Button>
+                    </div>
 
-                <Form title={form.title} description={form.description}>
-                    {this.formFields(entries)}
-                </Form>
+                    <Form title={form.title} description={form.description}>
+                        {this.formFields(entries)}
+                    </Form>
+                </Content>
             </Route>
         )
     }
 }
 
-export default Styleguide
+export default withTracker(Styleguide)

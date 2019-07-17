@@ -22,22 +22,28 @@
 
 If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
 
-- [🏄 Get Started](#-get-started)
-  - [🏖 Remote Ocean: Nile](#-remote-ocean-nile)
-  - [🐳 Use with Barge](#-use-with-barge)
-- [👩‍🔬 Testing](#-testing)
-- [✨ Code Style](#-code-style)
-- [🛳 Production](#-production)
-- [⬆️ Releases](#️-releases)
-- [🎁 Contributing](#-contributing)
-- [🏛 License](#-license)
+- [🏄 Get Started](#-Get-Started)
+  - [🏖 Remote Ocean: Pacific](#-Remote-Ocean-Pacific)
+  - [🐳 Use with Barge](#-Use-with-Barge)
+  - [⛵️ Environment Variables](#️-Environment-Variables)
+    - [Client](#Client)
+    - [Server](#Server)
+- [👩‍🔬 Testing](#-Testing)
+  - [Unit Tests](#Unit-Tests)
+  - [End-to-End Integration Tests](#End-to-End-Integration-Tests)
+- [✨ Code Style](#-Code-Style)
+- [🛳 Production](#-Production)
+- [⬆️ Releases](#️-Releases)
+- [📜 Changelog](#-Changelog)
+- [🎁 Contributing](#-Contributing)
+- [🏛 License](#-License)
 
 ## 🏄 Get Started
 
 This repo contains a client and a server, both written in TypeScript:
 
 - **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
-- **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking.
+- **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking. The endpoints are documented in [server Readme](server/).
 
 To spin up both, the client and the server in a watch mode for local development, execute:
 
@@ -48,15 +54,17 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser. The page will reload if you make edits to files in either `./client` or `./server`.
 
-### 🏖 Remote Ocean: Nile
+### 🏖 Remote Ocean: Pacific
 
-To make use of all the functionality, you need to connect to the Ocean network. By default, the client will connect to Ocean components running within [Ocean's Nile test network](https://docs.oceanprotocol.com/concepts/testnets/#the-nile-testnet) remotely.
+To make use of all the functionality, you need to connect to an Ocean network.
 
-This means you need to connect with your MetaMask to the Nile network too. To do this:
+By default, the client will connect to Ocean components running within [Ocean's Pacific network](https://docs.oceanprotocol.com/concepts/pacific-network/) remotely.
+
+By default, the client uses a burner wallet connected to the correct network automatically. If you choose to use MetaMask, you need to connect to the Pacific network. To do this:
 
 1. select Custom RPC in the network dropdown in MetaMask
-2. under New Network, enter `https://nile.dev-ocean.com` as the custom RPC URL
-3. Hit _Save_, and you’re now connected to Nile
+2. under New Network, enter `https://pacific.oceanprotocol.com` as the custom RPC URL
+3. Hit _Save_, and you’re now connected to Pacific
 
 ### 🐳 Use with Barge
 
@@ -69,17 +77,49 @@ cd barge
 ./start_ocean.sh --latest --no-pleuston --local-spree-node
 ```
 
-Modify `./client/src/config.ts` to use those local connections.
+Modify `./client/src/config.ts` or set environment variables to use those local connections.
+
+### ⛵️ Environment Variables
+
+#### Client
+
+The `./client/src/config.ts` file is setup to prioritize environment variables for setting each Ocean component endpoint.
+
+By setting environment variables, you can easily switch between Ocean networks the commons client connects to, without directly modifying `./client/src/config.ts`. This is helpful e.g. for local development so you don't accidentially commit changes to the config file.
+
+For local development, you can use a `.env.local` file. There's an example file with the most common network configurations preconfigured:
+
+```bash
+cp client/.env.local.example client/.env.local
+
+# uncomment the config you need
+vi client/.env.local
+```
+
+#### Server
+
+The server uses its own environment variables too:
+
+```bash
+cp server/.env.example server/.env
+
+# edit variables
+vi server/.env
+```
 
 ## 👩‍🔬 Testing
 
-Test suite is setup with [Jest](https://jestjs.io) and [react-testing-library](https://github.com/kentcdodds/react-testing-library).
+Test suite is setup with [Jest](https://jestjs.io) and [react-testing-library](https://github.com/kentcdodds/react-testing-library) for unit testing, and [Cypress](https://www.cypress.io) for integration testing.
 
-To run all tests, including all linting tests:
+To run all linting, unit and integration tests in one go, run:
 
 ```bash
 npm test
 ```
+
+The endpoints the integration tests run against are defined by your [Environment Variables](#️-Environment-Variables), and Cypress-specific variables in `cypress.json`.
+
+### Unit Tests
 
 For local development, you can start the test runners for client & server in a watch mode.
 
@@ -95,6 +135,22 @@ npm run test:watch
 
 cd server/
 npm run test:watch
+```
+
+### End-to-End Integration Tests
+
+To run all integration tests in headless mode, run:
+
+```bash
+npm run test:e2e
+```
+
+This will automatically spin up all required resources to run the integrations tests, and then run them.
+
+You can also use the UI of Cypress to run and inspect the integration tests locally:
+
+```bash
+npm run cypress:open
 ```
 
 ## ✨ Code Style
@@ -121,23 +177,27 @@ Builds the client for production to the `./client/build` folder, and the server 
 
 ## ⬆️ Releases
 
-Running any release task does the following:
+From a clean `master` branch you can run any release task doing the following:
 
-- bumps the project version
+- bumps the project version in `package.json`, `client/package.json`, `server/package.json`
+- auto-generates and updates the CHANGELOG.md file from commit messages
 - creates a Git tag
-- updates CHANGELOG.md file with commit messages
 - commits and pushes everything
 - creates a GitHub release with commit messages as description
 
 You can execute the script using {major|minor|patch} as first argument to bump the version accordingly:
 
 - To bump a patch version: `npm run release`
-- To bump a minor version: `npm run release-minor`
-- To bump a major version: `npm run release-major`
+- To bump a minor version: `npm run release minor`
+- To bump a major version: `npm run release major`
 
-By creating the Git tag with these tasks, Travis will trigger a new Kubernetes deployment automatically aftr a successful tag build.
+By creating the Git tag with these tasks, Travis will trigger a new Kubernetes live deployment automatically, after a successful tag build.
 
 For the GitHub releases steps a GitHub personal access token, exported as `GITHUB_TOKEN` is required. [Setup](https://github.com/release-it/release-it#github-releases)
+
+## 📜 Changelog
+
+See the [CHANGELOG.md](./CHANGELOG.md) file. This file is auto-generated during the above mentioned release process.
 
 ## 🎁 Contributing
 

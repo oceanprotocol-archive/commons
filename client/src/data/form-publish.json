@@ -38,7 +38,6 @@
           "type": "select",
           "required": true,
           "options": [
-            "AI For Good",
             "Image Recognition",
             "Dataset Of Datasets",
             "Language",
@@ -65,7 +64,7 @@
             "Agriculture & Bio Engineering",
             "Transportation",
             "Urban Planning",
-            "Medicine",
+            "Health & Medicine",
             "Business & Management",
             "Sports & Recreation",
             "Communication & Journalism",

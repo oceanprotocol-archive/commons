@@ -10,19 +10,22 @@
         "prettier/standard",
         "plugin:prettier/recommended",
         "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint"
+        "prettier/@typescript-eslint",
+        "plugin:cypress/recommended"
     ],
-    "plugins": ["@typescript-eslint", "prettier"],
+    "plugins": ["@typescript-eslint", "prettier", "cypress"],
     "rules": {
         "@typescript-eslint/explicit-function-return-type": 0,
         "@typescript-eslint/member-delimiter-style": [
             "error",
             { "multiline": { "delimiter": "none" } }
-        ]
+        ],
+        "@typescript-eslint/no-explicit-any": "off"
     },
     "env": {
         "es6": true,
         "browser": true,
-        "jest": true
+        "jest": true,
+        "cypress/globals": true
     }
 }

@@ -1,0 +1,86 @@
+@import '../../styles/variables';
+
+.channel {
+    width: 100%;
+
+    @media (min-width: $break-point--medium) {
+        padding-top: $spacer * 2;
+        display: flex;
+    }
+
+    > div {
+        &:first-child {
+            margin-bottom: $spacer;
+
+            @media (min-width: $break-point--medium) {
+                margin-right: $spacer;
+            }
+
+            p:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (min-width: $break-point--medium) {
+            flex: 1;
+
+            &:first-child {
+                flex: 0 0 calc(18rem + #{$spacer * 2});
+            }
+        }
+    }
+
+    // style channel teaser following another one
+    + .channel {
+        border-top: 1px solid $brand-grey-lighter;
+        margin-top: $spacer * 2;
+    }
+}
+
+.channelTitle {
+    margin-top: $spacer * 4;
+    margin-bottom: $spacer / 4;
+    color: $brand-black;
+
+    @media (min-width: $break-point--medium) {
+        margin-top: -($spacer / 4);
+    }
+}
+
+.channelHeader {
+    text-align: center;
+
+    @media (min-width: $break-point--small) {
+        text-align: left;
+    }
+
+    a {
+        display: block;
+
+        &:hover,
+        &:focus {
+            transform: none;
+
+            // category image
+            // stylelint-disable-next-line
+            .channelTitle + div {
+                opacity: 1;
+                background-size: 105%;
+            }
+        }
+    }
+}
+
+.channelTeaser {
+    color: $brand-grey;
+}
+
+.channelResults {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: $spacer;
+
+    @media (min-width: $break-point--small) {
+        grid-template-columns: 1fr 1fr;
+    }
+}

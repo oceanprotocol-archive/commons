@@ -1,0 +1,93 @@
+@import '../../styles/variables';
+
+// prevent background scrolling
+:global(.ReactModal__Body--open) {
+    overflow: hidden;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($brand-black, .7);
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    animation: fadeIn .2s ease-out backwards;
+}
+
+.modal {
+    padding: $spacer;
+    border-radius: $border-radius;
+    background: $body-background;
+    margin: $spacer auto;
+    max-width: $break-point--small;
+    position: relative;
+    animation: moveUp .2s ease-out backwards;
+
+    @media (min-width: $break-point--small) {
+        padding: $spacer * 2 $spacer * 1.5;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+.header {
+    margin-bottom: $spacer;
+}
+
+.title {
+    font-size: $font-size-h3;
+    margin: 0;
+
+    @media (min-width: $break-point--small) {
+        font-size: $font-size-h2;
+    }
+}
+
+.description {
+    margin: 0;
+    margin-top: $spacer / 2;
+}
+
+.close {
+    position: absolute;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    outline: 0;
+    top: $spacer / 4;
+    right: $spacer / 2;
+    font-size: $font-size-h2;
+    color: $brand-grey;
+
+    &:hover,
+    &:focus {
+        opacity: .7;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes moveUp {
+    from {
+        transform: translate3d(0, 1rem, 0);
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}

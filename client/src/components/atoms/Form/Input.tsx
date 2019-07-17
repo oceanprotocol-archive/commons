@@ -1,5 +1,5 @@
 import React, { PureComponent, FormEvent, ChangeEvent } from 'react'
-import slugify from 'slugify'
+import slugify from '@sindresorhus/slugify'
 import DatePicker from 'react-datepicker'
 import cx from 'classnames'
 import { ReactComponent as SearchIcon } from '../../../img/search.svg'
@@ -136,21 +136,18 @@ export default class Input extends PureComponent<InputProps, InputState> {
                                 <div className={styles.radioWrap} key={index}>
                                     <input
                                         className={styles.radio}
-                                        id={slugify(option, {
-                                            lower: true
-                                        })}
+                                        id={slugify(option)}
                                         type={type}
                                         name={name}
-                                        value={slugify(option, {
-                                            lower: true
-                                        })}
-                                        disabled={disabled}
+                                        // value={slugify(option, {
+                                        //     lower: true
+                                        // })}
+                                        // disabled={disabled}
+                                        value={slugify(option)}
                                     />
                                     <label
                                         className={styles.radioLabel}
-                                        htmlFor={slugify(option, {
-                                            lower: true
-                                        })}
+                                        htmlFor={slugify(option)}
                                     >
                                         {option}
                                     </label>

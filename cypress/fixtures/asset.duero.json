@@ -1,0 +1,190 @@
+{
+  "@context": "https://w3id.org/did/v1",
+  "id": "did:op:52f2ed716f97463e97beeb414195a075b606675874204e3da39b0c237377dbd3",
+  "publicKey": [
+    {
+      "id": "did:op:52f2ed716f97463e97beeb414195a075b606675874204e3da39b0c237377dbd3",
+      "type": "EthereumECDSAKey",
+      "owner": "0x5e3264A651303b93A3a3BC5eaB5c8676f5C3D7b1"
+    }
+  ],
+  "authentication": [
+    {
+      "type": "RsaSignatureAuthentication2018",
+      "publicKey": "did:op:52f2ed716f97463e97beeb414195a075b606675874204e3da39b0c237377dbd3"
+    }
+  ],
+  "service": [
+    {
+      "type": "Access",
+      "creator": "",
+      "purchaseEndpoint": "https://brizo.duero.dev-ocean.com:443/api/v1/brizo/services/access/initialize",
+      "serviceEndpoint": "https://brizo.duero.dev-ocean.com:443/api/v1/brizo/services/consume",
+      "name": "dataAssetAccessServiceAgreement",
+      "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+      "serviceAgreementTemplate": {
+        "contractName": "EscrowAccessSecretStoreTemplate",
+        "events": [
+          {
+            "name": "AgreementCreated",
+            "actorType": "consumer",
+            "handler": {
+              "moduleName": "escrowAccessSecretStoreTemplate",
+              "functionName": "fulfillLockRewardCondition",
+              "version": "0.1"
+            }
+          }
+        ],
+        "fulfillmentOrder": [
+          "lockReward.fulfill",
+          "accessSecretStore.fulfill",
+          "escrowReward.fulfill"
+        ],
+        "conditionDependency": {
+          "lockReward": [],
+          "accessSecretStore": [],
+          "escrowReward": ["lockReward", "accessSecretStore"]
+        },
+        "conditions": [
+          {
+            "name": "lockReward",
+            "timelock": 0,
+            "timeout": 0,
+            "contractName": "LockRewardCondition",
+            "functionName": "fulfill",
+            "parameters": [
+              {
+                "name": "_rewardAddress",
+                "type": "address",
+                "value": "0x5e3264A651303b93A3a3BC5eaB5c8676f5C3D7b1"
+              },
+              { "name": "_amount", "type": "uint256", "value": 0 }
+            ],
+            "events": [
+              {
+                "name": "Fulfilled",
+                "actorType": "publisher",
+                "handler": {
+                  "moduleName": "lockRewardCondition",
+                  "functionName": "fulfillAccessSecretStoreCondition",
+                  "version": "0.1"
+                }
+              }
+            ]
+          },
+          {
+            "name": "accessSecretStore",
+            "timelock": 0,
+            "timeout": 0,
+            "contractName": "AccessSecretStoreCondition",
+            "functionName": "fulfill",
+            "parameters": [
+              {
+                "name": "_documentId",
+                "type": "bytes32",
+                "value": "52f2ed716f97463e97beeb414195a075b606675874204e3da39b0c237377dbd3"
+              },
+              { "name": "_grantee", "type": "address", "value": "" }
+            ],
+            "events": [
+              {
+                "name": "Fulfilled",
+                "actorType": "publisher",
+                "handler": {
+                  "moduleName": "accessSecretStore",
+                  "functionName": "fulfillEscrowRewardCondition",
+                  "version": "0.1"
+                }
+              },
+              {
+                "name": "TimedOut",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "accessSecretStore",
+                  "functionName": "fulfillEscrowRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ]
+          },
+          {
+            "name": "escrowReward",
+            "timelock": 0,
+            "timeout": 0,
+            "contractName": "EscrowReward",
+            "functionName": "fulfill",
+            "parameters": [
+              { "name": "_amount", "type": "uint256", "value": 0 },
+              { "name": "_receiver", "type": "address", "value": "" },
+              { "name": "_sender", "type": "address", "value": "" },
+              { "name": "_lockCondition", "type": "bytes32", "value": "" },
+              { "name": "_releaseCondition", "type": "bytes32", "value": "" }
+            ],
+            "events": [
+              {
+                "name": "Fulfilled",
+                "actorType": "publisher",
+                "handler": {
+                  "moduleName": "escrowRewardCondition",
+                  "functionName": "verifyRewardTokens",
+                  "version": "0.1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "serviceDefinitionId": "0"
+    },
+    {
+      "type": "Authorization",
+      "service": "SecretStore",
+      "serviceEndpoint": "https://secret-store.duero.dev-ocean.com:443",
+      "serviceDefinitionId": "1"
+    },
+    {
+      "type": "Metadata",
+      "serviceEndpoint": "https://aquarius.duero.dev-ocean.com:443/api/v1/aquarius/assets/ddo/did:op:52f2ed716f97463e97beeb414195a075b606675874204e3da39b0c237377dbd3",
+      "metadata": {
+        "curation": { "rating": 0.0, "numVotes": 0, "isListed": true },
+        "base": {
+          "name": "Technical Whitepaper",
+          "description": "This paper presents Ocean Protocol. Ocean is a decentralized protocol and network of artificial intelligence (AI) data/services. \n\nOcean does decentralized orchestration: at its core are decentralized service agreements and decentralized access control, which execute on decentralized virtual machines. This allows connection to, monetization of, and curation of arbitrary data services. On that, Ocean adds network rewards to incentivize data sharing, including privacy-preserving data commons.",
+          "dateCreated": "2019-05-10T11:55:58.492Z",
+          "author": "Ocean Protocol",
+          "type": "dataset",
+          "license": "Public Domain",
+          "copyrightHolder": "Ocean Protocol Foundation Ltd.",
+          "files": [
+            {
+              "found": true,
+              "contentLength": "2989228",
+              "contentType": "application/pdf",
+              "compression": "none",
+              "index": 0
+            }
+          ],
+          "categories": ["Engineering"],
+          "links": [],
+          "tags": "",
+          "price": 0,
+          "encryptedFiles": "0x95116a697eadb4b5058682749f587321cb918ec6239a193a7e1e3587d7de28e761e8819e2241e9375b035eacc3dcec4799e0da4cd52552ab583082366ff4e0fb1f72a63ae071206859cfc53abdea2135c660cfba1e81361efce10bfcec323d63b0dcf009dd2c48dfcde09c95dcf69d6c6a318e869ac26b7dc0fcb085e1421b394aaf4d4fac05e992c13a225c5c1e138a7fb27185ba5e1709760ecd43e89eafef435ad97ffb",
+          "checksum": "9b624a8f9cd7f9d1127c818f32453f43dc6c633472a682bb880d69093b4b9615",
+          "datePublished": "2019-05-10T14:40:01Z"
+        },
+        "additionalInformation": {
+          "updateFrequency": null,
+          "structuredMarkup": []
+        }
+      },
+      "serviceDefinitionId": "2"
+    }
+  ],
+  "created": "2019-05-10T14:39:53Z",
+  "proof": {
+    "created": "2019-05-10T14:39:55Z",
+    "creator": "0x5e3264A651303b93A3a3BC5eaB5c8676f5C3D7b1",
+    "type": "DDOIntegritySignature",
+    "signatureValue": "0x94c3042facdb0601cb5c90264b1e8d1ae6902043af4303c57869d2881748621b03d943f4bb2ccd5d18429964f4ebc425d77baffc576884cfd78ae0987082c5931b"
+  }
+}

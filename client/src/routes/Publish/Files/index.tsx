@@ -1,23 +1,26 @@
 import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import axios from 'axios'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
 import ItemForm from './ItemForm'
 import Item from './Item'
 import styles from './index.module.scss'
 
-import { serviceHost, servicePort, serviceScheme } from '../../../config'
+import { serviceUri } from '../../../config'
+import cleanupContentType from '../../../utils/cleanupContentType'
+import { Logger } from '@oceanprotocol/squid'
 
-interface File {
+export interface File {
     url: string
-    found: boolean
+    contentType: string
     checksum?: string
     checksumType?: string
     contentLength?: number
-    contentType?: string
     resourceId?: string
     encoding?: string
     compression?: string
+    found: boolean // non-standard
 }
 
 interface FilesProps {
@@ -38,35 +41,16 @@ interface FilesStates {
     isFormShown: boolean
 }
 
-export const getFileCompression = async (contentType: string) => {
-    // TODO: add all the possible archive & compression MIME types
-    if (
-        contentType === 'application/zip' ||
-        contentType === 'application/gzip' ||
-        contentType === 'application/x-lzma' ||
-        contentType === 'application/x-xz' ||
-        contentType === 'application/x-tar' ||
-        contentType === 'application/x-gtar' ||
-        contentType === 'application/x-bzip2' ||
-        contentType === 'application/x-7z-compressed' ||
-        contentType === 'application/x-rar-compressed' ||
-        contentType === 'application/x-apple-diskimage'
-    ) {
-        const contentTypeSplit = contentType.split('/')
-
-        if (contentTypeSplit[1].includes('x-')) {
-            return contentTypeSplit[1].replace('x-', '')
-        }
-
-        return contentTypeSplit[1]
-    } else {
-        return 'none'
-    }
-}
-
 export default class Files extends PureComponent<FilesProps, FilesStates> {
     public state: FilesStates = {
         isFormShown: false
+    }
+
+    // for canceling axios requests
+    public signal = axios.CancelToken.source()
+
+    public componentWillUnmount() {
+        this.signal.cancel()
     }
 
     private toggleForm = (e: Event) => {
@@ -76,40 +60,28 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     private addItem = async (value: string) => {
-        let res: {
-            result: {
-                contentLength: number
-                contentType: string
-                found: boolean
-            }
-        }
-
         let file: File = {
             url: value,
-            found: false,
-            contentLength: 0,
             contentType: '',
-            compression: ''
+            found: false // non-standard
         }
 
         try {
-            const response = await fetch(
-                `${serviceScheme}://${serviceHost}:${servicePort}/api/v1/urlcheck`,
-                {
-                    method: 'POST',
-                    body: JSON.stringify({ url: value }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-            )
-            res = await response.json()
-            file.contentLength = res.result.contentLength
-            file.contentType = res.result.contentType
-            file.compression = await getFileCompression(res.result.contentType)
-            file.found = res.result.found
+            const response = await axios({
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                url: `${serviceUri}/api/v1/urlcheck`,
+                data: { url: value },
+                cancelToken: this.signal.token
+            })
+
+            const { contentLength, contentType, found } = response.data.result
+            file.contentLength = contentLength
+            file.contentType = contentType
+            file.compression = await cleanupContentType(contentType)
+            file.found = found
         } catch (error) {
-            // error
+            !axios.isCancel(error) && Logger.error(error.message)
         }
 
         this.props.files.push(file)
@@ -149,6 +121,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                     name={name}
                     value={JSON.stringify(files)}
                     onChange={onChange}
+                    data-testid="files"
                 />
 
                 <div className={styles.newItems}>

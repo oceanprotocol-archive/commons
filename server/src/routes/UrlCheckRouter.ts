@@ -24,14 +24,16 @@ export class UrlCheckRouter {
             (error, response) => {
                 if (
                     response &&
-                    response.statusCode.toString().startsWith('2')
+                    (response.statusCode.toString().startsWith('2') ||
+                        response.statusCode.toString().startsWith('416'))
                 ) {
                     const result: any = {}
                     result.found = true
 
                     if (response.headers['content-length']) {
-                        result.contentLength =
+                        result.contentLength = parseInt(
                             response.headers['content-length']
+                        ) // convert to number
                     }
 
                     if (response.headers['content-type']) {

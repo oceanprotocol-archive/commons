@@ -2,48 +2,26 @@ import { Ocean, Logger } from '@oceanprotocol/squid'
 import Web3 from 'web3'
 
 import {
-    aquariusHost,
-    aquariusPort,
-    aquariusScheme,
-    brizoHost,
-    brizoPort,
-    brizoScheme,
+    aquariusUri,
+    brizoUri,
     brizoAddress,
-    faucetHost,
-    faucetPort,
-    faucetScheme,
-    nodeHost,
-    nodePort,
-    nodeScheme,
-    parityHost,
-    parityPort,
-    parityScheme,
-    secretStoreHost,
-    secretStorePort,
-    secretStoreScheme,
+    faucetUri,
+    nodeUri,
+    secretStoreUri,
     verbose
 } from './config'
 
-export async function provideOcean(web3provider: Web3) {
-    const nodeUri = `${nodeScheme}://${nodeHost}:${nodePort}`
-    const aquariusUri = `${aquariusScheme}://${aquariusHost}:${aquariusPort}`
-    const brizoUri = `${brizoScheme}://${brizoHost}:${brizoPort}`
-    const parityUri = `${parityScheme}://${parityHost}:${parityPort}`
-    const secretStoreUri = `${secretStoreScheme}://${secretStoreHost}:${secretStorePort}`
-
+export async function provideOcean(web3Provider: Web3) {
     const config = {
-        web3provider,
+        web3Provider,
         nodeUri,
         aquariusUri,
         brizoUri,
         brizoAddress,
-        parityUri,
         secretStoreUri,
         verbose
     }
-
-    const ocean: Ocean = await Ocean.getInstance(config)
-
+    const ocean: any = await Ocean.getInstance(config)
     return { ocean }
 }
 
@@ -58,7 +36,7 @@ export interface FaucetResponse {
 
 export async function requestFromFaucet(account: string) {
     try {
-        const url = `${faucetScheme}://${faucetHost}:${faucetPort}/faucet`
+        const url = `${faucetUri}/faucet`
         const response = await fetch(url, {
             method: 'POST',
             headers: {

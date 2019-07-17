@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import Step from './Step'
 
 const stateMock = {
@@ -12,7 +12,6 @@ const stateMock = {
 
 const propsMock = {
     inputChange: () => null,
-    inputToArrayChange: () => null,
     state: stateMock,
     title: 'Hello',
     description: 'description',

@@ -2,9 +2,9 @@ import React from 'react'
 
 export const User = React.createContext({
     isLogged: false,
+    isBurner: false,
+    isWeb3Capable: false,
     isLoading: false,
-    isWeb3: false,
-    isOceanNetwork: false,
     account: '',
     web3: {},
     ocean: {},
@@ -16,10 +16,18 @@ export const User = React.createContext({
     requestFromFaucet: () => {
         /* empty */
     },
-    unlockAccounts: () => {
+    loginMetamask: () => {
+        /* empty */
+    },
+    loginBurnerWallet: () => {
         /* empty */
     },
     message: ''
 })
 
-export const Market = React.createContext({ totalAssets: 0 })
+export const Market = React.createContext({
+    totalAssets: 0,
+    categories: [''],
+    network: '',
+    networkMatch: false
+})

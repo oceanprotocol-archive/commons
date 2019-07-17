@@ -1,11 +1,12 @@
 import React from 'react'
-import { render, fireEvent } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import StepRegisterContent from './StepRegisterContent'
+import StepRegisterContent, { messages } from './StepRegisterContent'
 
 const stateMock = {
     publishedDid: '',
     publishingError: '',
+    publishingStep: 0,
     isPublishing: false,
     isPublished: false
 }
@@ -36,7 +37,7 @@ describe('StepRegisterContent', () => {
             </Router>
         )
         expect(container.querySelector('.spinnerMessage')).toHaveTextContent(
-            'Please sign with your crypto wallet'
+            messages[stateMock.publishingStep].replace(/<(?:.|\n)*?>/gm, '')
         )
     })
 

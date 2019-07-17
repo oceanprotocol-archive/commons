@@ -3,19 +3,22 @@ import Route from '../components/templates/Route'
 import AssetsUser from '../components/organisms/AssetsUser'
 import Web3message from '../components/organisms/Web3message'
 import { User } from '../context'
+import Content from '../components/atoms/Content'
+import withTracker from '../hoc/withTracker'
 
-export default class History extends Component {
+class History extends Component {
+    public static contextType = User
+
     public render() {
         return (
             <Route title="History">
-                {(!this.context.isLogged || !this.context.isOceanNetwork) && (
-                    <Web3message />
-                )}
-
-                <AssetsUser list />
+                <Content>
+                    {!this.context.isLogged && <Web3message />}
+                    <AssetsUser list />
+                </Content>
             </Route>
         )
     }
 }
 
-History.contextType = User
+export default withTracker(History)

@@ -1,24 +1,49 @@
 dist: xenial
+sudo: required
 language: node_js
 node_js:
   - '11'
 
+addons:
+  apt:
+    packages:
+      # for Cypress
+      - libgconf-2-4
+
+env:
+  global:
+    # run E2E tests against these values
+    - REACT_APP_NODE_URI="https://pacific.oceanprotocol.com"
+    - REACT_APP_AQUARIUS_URI="https://aquarius.test.oceanprotocol.com"
+    - REACT_APP_BRIZO_URI="https://brizo.test.oceanprotocol.com"
+    - REACT_APP_SECRET_STORE_URI="https://secret-store.oceanprotocol.com"
+    - REACT_APP_FAUCET_URI="https://faucet.oceanprotocol.com"
+    - REACT_APP_BRIZO_ADDRESS="0x0474ed05ba757dde575dfaaaa267d9e7f3643abc"
+
 before_install:
   - npm install -g npm
-  - npm install -g codacy-coverage
+  - npm install -g codacy-coverage truffle ganache-cli
+  # Fixes an issue where the max file watch count is exceeded, triggering ENOSPC
+  # https://stackoverflow.com/questions/22475849/node-js-error-enospc#32600959
+  - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
-  - ./scripts/test.sh
+  # executing `npm test` scripts individually here, so first one failing will exit the build
+  - npm run lint || travis_terminate 1
+  - ./scripts/test.sh || travis_terminate 1
   - ./scripts/coverage.sh
+  - npm run test:e2e || travis_terminate 1
   - ./scripts/build.sh
 
 notifications:
   email: false
 
 cache:
+  npm: true
   directories:
-    - node_modules
+    # cache folder with Cypress binary
+    - ~/.cache
 
 deploy:
   - provider: script

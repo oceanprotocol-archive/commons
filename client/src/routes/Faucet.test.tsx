@@ -1,13 +1,24 @@
 import React from 'react'
-import { render, fireEvent } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
+import { createMemoryHistory, createLocation } from 'history'
 import Faucet from './Faucet'
 import { User } from '../context'
 import { userMockConnected } from '../../__mocks__/user-mock'
 
+const history = createMemoryHistory()
+const location = createLocation('/faucet')
+
 const setup = () => {
     const utils = render(
         <User.Provider value={userMockConnected}>
-            <Faucet />
+            <MemoryRouter>
+                <Faucet
+                    history={history}
+                    location={location}
+                    match={{ params: '', path: '', url: '', isExact: true }}
+                />
+            </MemoryRouter>
         </User.Provider>
     )
     const button = utils.getByText('Request Ether')
@@ -21,7 +32,7 @@ const setup = () => {
 
 describe('Faucet', () => {
     it('renders without crashing', () => {
-        const { container } = render(<Faucet />)
+        const { container } = setup()
         expect(container.firstChild).toBeInTheDocument()
     })
 

@@ -1,53 +1,66 @@
 import React, { PureComponent } from 'react'
 import Account from '../atoms/Account'
-import Button from '../atoms/Button'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Web3message.module.scss'
-import { User } from '../../context'
+import { User, Market } from '../../context'
 import content from '../../data/web3message.json'
 
-export default class Web3message extends PureComponent {
-    private message = (
-        message: string,
-        account?: string,
-        unlockAccounts?: () => any
-    ) => (
-        <div className={styles.message}>
-            {account ? (
-                <Account account={account} />
-            ) : (
-                <div className={styles.warnings}>
-                    <AccountStatus className={styles.status} />
-                    <span dangerouslySetInnerHTML={{ __html: message }} />{' '}
-                    {unlockAccounts && (
-                        <Button onClick={() => unlockAccounts()} link>
-                            Unlock Account
-                        </Button>
-                    )}
-                </div>
-            )}
-        </div>
-    )
+export default class Web3message extends PureComponent<{ extended?: boolean }> {
+    public static contextType = Market
+
+    private messageOceanNetwork = () =>
+        this.context.network === 'Pacific'
+            ? content.wrongNetworkPacific
+            : this.context.network === 'Nile'
+            ? content.wrongNetworkNile
+            : this.context.network === 'Duero'
+            ? content.wrongNetworkDuero
+            : content.wrongNetworkSpree
+
+    private Message = () => {
+        const { networkMatch, network } = this.context
+
+        return (
+            <User.Consumer>
+                {user => (
+                    <em
+                        dangerouslySetInnerHTML={{
+                            __html:
+                                !networkMatch && !user.isBurner
+                                    ? this.messageOceanNetwork()
+                                    : !user.isLogged
+                                    ? content.noAccount
+                                    : user.isBurner
+                                    ? content.hasBurnerWallet
+                                    : user.isLogged
+                                    ? content.hasMetaMaskWallet.replace(
+                                          'NETWORK',
+                                          network
+                                      )
+                                    : ''
+                        }}
+                    />
+                )}
+            </User.Consumer>
+        )
+    }
 
     public render() {
-        const {
-            isWeb3,
-            isOceanNetwork,
-            isLogged,
-            account,
-            unlockAccounts
-        } = this.context
+        const { networkMatch } = this.context
 
-        return !isWeb3
-            ? this.message(content.noweb3)
-            : !isOceanNetwork
-            ? this.message(content.wrongNetwork)
-            : !isLogged
-            ? this.message(content.noAccount, '', unlockAccounts)
-            : isLogged
-            ? this.message(content.hasAccount, account)
-            : null
+        return (
+            <div className={styles.message}>
+                <div className={styles.account}>
+                    <Account />
+                </div>
+
+                {(!networkMatch || this.props.extended) && (
+                    <div className={styles.text}>
+                        <AccountStatus className={styles.status} />
+                        <this.Message />
+                    </div>
+                )}
+            </div>
+        )
     }
 }
-
-Web3message.contextType = User

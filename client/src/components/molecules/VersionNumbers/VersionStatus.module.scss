@@ -1,0 +1,37 @@
+@import '../../../styles/variables';
+
+.status {
+    text-align: center;
+    padding-top: $spacer / 2;
+    padding-bottom: $spacer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.element {
+    display: inline-block;
+    margin-left: $spacer / 1.5;
+    margin-right: $spacer / 1.5;
+    text-align: center;
+}
+
+.indicator,
+.indicatorActive {
+    display: inline-block;
+    margin-right: $spacer / 4;
+    margin-bottom: -.1rem;
+}
+
+.indicator {
+    composes: statusIndicator from '../AccountStatus/Indicator.module.scss';
+}
+
+.indicatorActive {
+    composes: statusIndicatorActive from '../AccountStatus/Indicator.module.scss';
+}
+
+.indicatorLabel {
+    font-family: $font-family-title;
+    color: $brand-grey;
+    text-transform: capitalize;
+}

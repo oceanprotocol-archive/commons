@@ -1,0 +1,23 @@
+@import '../../../styles/variables';
+
+.handle {
+    display: inline-block;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    margin-left: -1rem;
+    margin-top: -.1rem;
+    padding-right: .5rem;
+    cursor: pointer;
+
+    svg {
+        fill: $brand-grey-light;
+        transition: .2s ease-out;
+    }
+}
+
+.open {
+    transform: rotate(90deg);
+}

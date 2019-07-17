@@ -1,0 +1,49 @@
+@import '../../../styles/variables';
+
+.actions {
+    text-align: right;
+    margin-top: $spacer;
+}
+
+.openLink {
+    margin: 0;
+    font-size: $font-size-small;
+}
+
+.info {
+    background: $brand-white;
+    padding: $spacer;
+    border: 1px solid $brand-grey-lighter;
+    border-radius: $border-radius;
+
+    h3 {
+        font-size: $font-size-base;
+        margin-top: 0;
+        margin-bottom: $spacer / 8;
+    }
+
+    p {
+        border-bottom: 1px solid $brand-grey-lighter;
+        padding-bottom: $spacer / 2;
+    }
+
+    code {
+        padding: 0;
+        color: $brand-grey-light;
+    }
+}
+
+.error {
+    background: $red;
+    padding: $spacer / 2;
+    text-align: center;
+    color: $brand-white;
+    border-radius: $border-radius;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-small;
+}
+
+.success {
+    composes: error;
+    background: $green;
+}

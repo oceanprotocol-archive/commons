@@ -1,15 +1,21 @@
 import request from 'supertest'
 import server from '../src/server'
-import {} from 'jasmine'
 
 afterAll(done => {
     server.close(done)
 })
 
+describe('GET /', () => {
+    it('responds with success', async () => {
+        const response = await request(server).get('/')
+        expect(response.status).toBe(200)
+    })
+})
+
 describe('POST /api/v1/urlcheck', () => {
     it('responds with json', async () => {
         const response = await request(server).post('/api/v1/urlcheck')
-        expect(response.statusCode).toBe(200)
+        expect(response.status).toBe(200)
     })
 
     it('responds with error message when url is missing', async () => {
@@ -19,9 +25,17 @@ describe('POST /api/v1/urlcheck', () => {
     })
 })
 
+describe('POST /api/v1/report', () => {
+    it('responds with error message when message is missing', async () => {
+        const response = await request(server).post('/api/v1/report')
+        const text = await JSON.parse(response.text)
+        expect(text.message).toBe('missing message')
+    })
+})
+
 describe('Errors', () => {
     it('responds with 404 on unknown path', async () => {
         const response = await request(server).post('/whatever')
-        expect(response.statusCode).toBe(404)
+        expect(response.status).toBe(404)
     })
 })

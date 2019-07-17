@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import cx from 'classnames'
 import styles from './CategoryImage.module.scss'
 
 import agriculture from '../../img/categories/agriculture.jpg'
@@ -33,6 +34,7 @@ import theology from '../../img/categories/theology.jpg'
 import transport from '../../img/categories/transport.jpg'
 import urbanplanning from '../../img/categories/urbanplanning.jpg'
 import visualart from '../../img/categories/visualart.jpg'
+import aiforgood from '../../img/aiforgood.jpg'
 import fallback from '@oceanprotocol/art/jellyfish/jellyfish-back.svg'
 
 const categoryImageFile = (category: string) => {
@@ -95,6 +97,8 @@ const categoryImageFile = (category: string) => {
         case 'mathematics':
             return mathematics
         case 'Medicine':
+        case 'Health & Medicine':
+        case 'Health':
         case 'medicine':
             return medicine
         case 'Other':
@@ -133,23 +137,31 @@ const categoryImageFile = (category: string) => {
         case 'Visual Arts & Design':
         case 'visualart':
             return visualart
+        // technically no category
+        // but corresponding to title of a channel
         case 'AI For Good':
-            return dataofdata
+            return aiforgood
         default:
             return fallback
     }
 }
 
-export default class CategoryImage extends PureComponent<{ category: string }> {
+export default class CategoryImage extends PureComponent<{
+    category: string
+    header?: boolean
+    dimmed?: boolean
+}> {
     public render() {
         const image = categoryImageFile(this.props.category)
+        const classNames = cx(styles.categoryImage, {
+            [styles.header]: this.props.header,
+            [styles.dimmed]: this.props.dimmed
+        })
 
         return (
             <div
-                className={styles.categoryImage}
-                style={{
-                    backgroundImage: `url(${image})`
-                }}
+                className={classNames}
+                style={{ backgroundImage: `url(${image})` }}
             />
         )
     }

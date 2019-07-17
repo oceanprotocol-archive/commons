@@ -1,47 +1,59 @@
 import React from 'react'
-import Helmet from 'react-helmet'
 import Content from '../atoms/Content'
 import styles from './Route.module.scss'
-import meta from '../../data/meta.json'
+import Markdown from '../atoms/Markdown'
+import Seo from '../atoms/Seo'
+
+interface RouteProps {
+    title: string
+    description?: string
+    image?: any
+    shareImage?: string
+    children: any
+    wide?: boolean
+    className?: string
+}
 
 const Route = ({
     title,
     description,
+    image,
+    shareImage,
     wide,
     children,
     className
-}: {
-    title: string
-    description?: string
-    children: any
-    wide?: boolean
-    className?: string
-}) => (
-    <div className={className}>
-        <Helmet defaultTitle={meta.title} titleTemplate={`%s - ${meta.title}`}>
-            {/* Strip HTML from passed title */}
-            <title>{title.replace(/(<([^>]+)>)/gi, '')}</title>
-            {description && <meta name="description" content={description} />}
-        </Helmet>
+}: RouteProps) => {
+    // Strip HTML from passed title
+    const titleSanitized = title.replace(/(<([^>]+)>)/gi, '')
 
-        <Content wide={wide}>
+    return (
+        <div className={className}>
+            <Seo
+                title={titleSanitized}
+                description={description}
+                shareImage={shareImage}
+            />
+
             <article>
                 <header className={styles.header}>
-                    <h1 className={styles.title}>{title}</h1>
-                    {description && (
-                        <p
-                            className={styles.description}
-                            dangerouslySetInnerHTML={{
-                                __html: description
-                            }}
-                        />
-                    )}
+                    <Content wide={wide}>
+                        <h1 className={styles.title}>{titleSanitized}</h1>
+
+                        {image && image}
+
+                        {description && (
+                            <Markdown
+                                text={description}
+                                className={styles.description}
+                            />
+                        )}
+                    </Content>
                 </header>
 
                 {children}
             </article>
-        </Content>
-    </div>
-)
+        </div>
+    )
+}
 
 export default Route

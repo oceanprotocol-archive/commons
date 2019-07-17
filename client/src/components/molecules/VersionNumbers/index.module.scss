@@ -1,0 +1,13 @@
+@import '../../../styles/variables';
+
+.versionsTitle {
+    font-size: $font-size-large;
+    margin-bottom: $spacer / 2;
+    margin-top: $spacer * 2;
+}
+
+.versionsMinimal {
+    font-family: $font-family-monospace;
+    font-size: $font-size-mini;
+    margin-top: $spacer;
+}

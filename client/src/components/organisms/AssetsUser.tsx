@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Logger } from '@oceanprotocol/squid'
 import { User } from '../../context'
 import Spinner from '../atoms/Spinner'
-import Asset from '../molecules/Asset'
+import AssetTeaser from '../molecules/AssetTeaser'
 import styles from './AssetsUser.module.scss'
 
 export default class AssetsUser extends PureComponent<
@@ -57,10 +57,9 @@ export default class AssetsUser extends PureComponent<
     }
 
     public render() {
-        const { account, isOceanNetwork } = this.context
+        const { account } = this.context
 
         return (
-            isOceanNetwork &&
             account && (
                 <div className={styles.assetsUser}>
                     {this.props.recent && (
@@ -82,7 +81,7 @@ export default class AssetsUser extends PureComponent<
                                 )
                                 .filter(asset => !!asset)
                                 .map((asset: any) => (
-                                    <Asset
+                                    <AssetTeaser
                                         list={this.props.list}
                                         key={asset.id}
                                         asset={asset}

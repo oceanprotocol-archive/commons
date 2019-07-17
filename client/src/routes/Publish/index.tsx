@@ -4,52 +4,59 @@ import ReactGA from 'react-ga'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
 import AssetModel from '../../models/AssetModel'
-import { User } from '../../context'
-import Web3message from '../../components/organisms/Web3message'
+import { User, Market } from '../../context'
 import Step from './Step'
 import Progress from './Progress'
 
 import { steps } from '../../data/form-publish.json'
+import Content from '../../components/atoms/Content'
+import { File } from './Files'
+import withTracker from '../../hoc/withTracker'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
 interface PublishState {
     name?: string
     dateCreated?: string
-    description?: string
-    files?: string[]
-    price?: number
+    price?: string
     author?: string
-    type?: AssetType
     license?: string
+    description?: string
+    files?: File[]
+    type?: AssetType
     copyrightHolder?: string
-    categories?: string
-    tags?: string[]
+    categories?: string[]
+
+    currentStep?: number
+    publishingStep?: number
     isPublishing?: boolean
     isPublished?: boolean
     publishedDid?: string
     publishingError?: string
-    currentStep?: number
     validationStatus?: any
 }
 
 class Publish extends Component<{}, PublishState> {
+    public static contextType = User
+
     public state = {
-        currentStep: 1,
         name: '',
         dateCreated: new Date().toISOString(),
         description: '',
         files: [],
-        price: 0,
+        price: '0',
         author: '',
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: '',
+        categories: [],
+
+        currentStep: 1,
         isPublishing: false,
         isPublished: false,
         publishedDid: '',
         publishingError: '',
+        publishingStep: 0,
         validationStatus: {
             1: { name: false, files: false, allFieldsValid: false },
             2: {
@@ -73,16 +80,6 @@ class Publish extends Component<{}, PublishState> {
 
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value
-        })
-    }
-
-    private inputToArrayChange = (
-        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-    ) => {
-        this.validateInputs(event.currentTarget.name, event.currentTarget.value)
-
-        this.setState({
-            [event.currentTarget.name]: [event.currentTarget.value]
         })
     }
 
@@ -117,14 +114,15 @@ class Publish extends Component<{}, PublishState> {
             dateCreated: new Date().toISOString(),
             description: '',
             files: [],
-            price: 0,
+            price: '0',
             author: '',
             type: 'dataset' as AssetType,
             license: '',
             copyrightHolder: '',
-            categories: '',
+            categories: [],
             isPublishing: false,
             isPublished: false,
+            publishingStep: 0,
             currentStep: 1
         })
     }
@@ -250,106 +248,115 @@ class Publish extends Component<{}, PublishState> {
 
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        ReactGA.event({
-            category: 'Publish',
-            action: 'registerAsset-start'
-        })
+
+        ReactGA.event({ category: 'Publish', action: 'registerAsset-start' })
+
         this.setState({
             publishingError: '',
-            isPublishing: true
+            isPublishing: true,
+            publishingStep: 0
         })
+
         const { ocean } = this.context
         const account = await ocean.accounts.list()
+
+        // remove `found` attribute from all File objects
+        // in a new array
+        const files = this.state.files.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ found, ...keepAttrs }: { found: boolean }) => keepAttrs
+        )
+
         const newAsset = {
             // OEP-08 Attributes
             // https://github.com/oceanprotocol/OEPs/tree/master/8
             base: Object.assign(AssetModel.base, {
                 name: this.state.name,
                 description: this.state.description,
-                dateCreated: new Date(this.state.dateCreated).toISOString(),
+                dateCreated:
+                    new Date(this.state.dateCreated)
+                        .toISOString()
+                        .split('.')[0] + 'Z', // remove milliseconds
                 author: this.state.author,
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
-                files: this.state.files,
+                files,
                 price: this.state.price,
                 type: this.state.type,
-                categories: [this.state.categories],
-                workExample: undefined,
-                inLanguage: undefined,
-                tags: ''
-            }),
-            curation: Object.assign(AssetModel.curation),
-            additionalInformation: Object.assign(
-                AssetModel.additionalInformation
-            )
+                categories: [this.state.categories]
+            })
         }
 
         try {
-            const asset = await this.context.ocean.assets.create(
-                newAsset,
-                account[0]
-            )
+            const asset = await this.context.ocean.assets
+                .create(newAsset, account[0])
+                .next((publishingStep: number) =>
+                    this.setState({ publishingStep })
+                )
+
             this.setState({
                 publishedDid: asset.id,
                 isPublished: true
             })
+
             ReactGA.event({
                 category: 'Publish',
-                action: 'registerAsset-end' + asset.id
+                action: `registerAsset-end ${asset.id}`
             })
-        } catch (e) {
+        } catch (error) {
             // make readable errors
-            Logger.log('error:', e)
-            this.setState({
-                publishingError: e.message
-            })
+            Logger.error('error:', error.message)
+            this.setState({ publishingError: error.message })
+
             ReactGA.event({
                 category: 'Publish',
-                action: 'registerAsset-error' + e.message
+                action: `registerAsset-error ${error.message}`
             })
         }
-        this.setState({
-            isPublishing: false
-        })
+
+        this.setState({ isPublishing: false })
     }
 
     public render() {
         return (
-            <Route
-                title="Publish"
-                description="Publish a new data set into the Ocean Protocol Network."
-            >
-                {(!this.context.isLogged || !this.context.isOceanNetwork) && (
-                    <Web3message />
+            <Market.Consumer>
+                {market => (
+                    <Route
+                        title="Publish"
+                        description={`Publish a new data set into the Ocean Protocol ${market.network} Network.`}
+                    >
+                        <Content>
+                            <Progress
+                                steps={steps}
+                                currentStep={this.state.currentStep}
+                            />
+
+                            <Form onSubmit={this.registerAsset}>
+                                {steps.map((step: any, index: number) => (
+                                    <Step
+                                        key={index}
+                                        index={index}
+                                        title={step.title}
+                                        description={step.description}
+                                        currentStep={this.state.currentStep}
+                                        fields={step.fields}
+                                        inputChange={this.inputChange}
+                                        state={this.state}
+                                        next={this.next}
+                                        prev={this.prev}
+                                        totalSteps={steps.length}
+                                        tryAgain={this.tryAgain}
+                                        toStart={this.toStart}
+                                        content={step.content}
+                                    />
+                                ))}
+                            </Form>
+                        </Content>
+                    </Route>
                 )}
-
-                <Progress steps={steps} currentStep={this.state.currentStep} />
-
-                <Form onSubmit={this.registerAsset}>
-                    {steps.map((step: any, index: number) => (
-                        <Step
-                            key={index}
-                            index={index}
-                            title={step.title}
-                            description={step.description}
-                            currentStep={this.state.currentStep}
-                            fields={step.fields}
-                            inputChange={this.inputChange}
-                            inputToArrayChange={this.inputToArrayChange}
-                            state={this.state}
-                            next={this.next}
-                            prev={this.prev}
-                            totalSteps={steps.length}
-                            tryAgain={this.tryAgain}
-                            toStart={this.toStart}
-                            content={step.content}
-                        />
-                    ))}
-                </Form>
-            </Route>
+            </Market.Consumer>
         )
     }
 }
 
-Publish.contextType = User
-export default Publish
+export default withTracker(Publish)
