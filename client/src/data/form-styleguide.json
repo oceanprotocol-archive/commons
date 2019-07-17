@@ -50,14 +50,14 @@
       "placeholder": "e.g. Jelly McJellyfish",
       "type": "text",
       "required": true,
-      "small": true,
+      "small": "true",
       "help": "Help me"
     },
     "industry2": {
       "label": "Industry",
       "type": "select",
       "required": true,
-      "small": true,
+      "small": "true",
       "options": ["Automotive", "Technology"]
     }
   }
