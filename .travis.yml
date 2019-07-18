@@ -21,13 +21,9 @@ env:
     - REACT_APP_BRIZO_URI="http://localhost:8030"
     - REACT_APP_SECRET_STORE_URI="http://localhost:12001"
     - REACT_APP_FAUCET_URI="http://localhost:3001"
-    - REACT_APP_BRIZO_ADDRESS="0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e"
+    - REACT_APP_BRIZO_ADDRESS="0x00bd138abd70e2f00903268f3db08f2d25677c9e"
     # start Barge with these versions
-    - AQUARIUS_VERSION=v0.3.8
-    - BRIZO_VERSION=v0.3.14
-    - KEEPER_VERSION=v0.10.3
     - KEEPER_OWNER_ROLE_ADDRESS="0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
-    - FAUCET_VERSION=v0.2.4
 
 before_install:
   - npm install -g npm
