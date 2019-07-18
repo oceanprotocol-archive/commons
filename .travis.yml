@@ -25,6 +25,7 @@ env:
     # start Barge with these versions
     - KEEPER_OWNER_ROLE_ADDRESS="0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
     - FAUCET_TIMESPAN=0
+    - FAUCET_VERSION=v0.2.5
 
 before_install:
   - npm install -g npm
