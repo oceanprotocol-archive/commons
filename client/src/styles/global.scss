@@ -299,11 +299,15 @@ samp {
     padding-right: .15rem;
 }
 
+a > code {
+    color: $brand-pink;
+}
+
 pre {
     display: block;
     margin-bottom: $spacer;
     padding: 0;
-    background: $brand-black;
+    background: lighten($brand-grey-lighter, 5%);
 
     // make 'em scrollable
     overflow: auto;

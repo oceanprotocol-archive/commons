@@ -40,7 +40,10 @@
     }
 
     a {
-        color: $brand-grey;
+        &,
+        code {
+            color: $brand-grey;
+        }
 
         &:hover,
         &:focus {
