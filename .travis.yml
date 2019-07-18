@@ -24,6 +24,7 @@ env:
     - REACT_APP_BRIZO_ADDRESS="0x00bd138abd70e2f00903268f3db08f2d25677c9e"
     # start Barge with these versions
     - KEEPER_OWNER_ROLE_ADDRESS="0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
+    - FAUCET_TIMESPAN=0
 
 before_install:
   - npm install -g npm
