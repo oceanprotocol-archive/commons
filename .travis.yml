@@ -44,9 +44,9 @@ script:
   # - ./scripts/install.sh # runs automatically with npm ci
   # executing `npm test` scripts individually here, so first one failing will exit the build
   - npm run lint || travis_terminate 1
+  - ./scripts/keeper.sh
   - ./scripts/test.sh || travis_terminate 1
   - ./scripts/coverage.sh
-  - ./scripts/keeper.sh
   - npm run test:e2e || travis_terminate 1
   - ./scripts/build.sh
 
