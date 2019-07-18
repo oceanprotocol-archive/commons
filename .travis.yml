@@ -5,7 +5,6 @@ node_js:
   - '11'
 
 services:
-  - mongodb
   - docker
 
 addons:
@@ -23,11 +22,12 @@ env:
     - REACT_APP_SECRET_STORE_URI="http://localhost:12001"
     - REACT_APP_FAUCET_URI="http://localhost:3001"
     - REACT_APP_BRIZO_ADDRESS="0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e"
+    # start Barge with these versions
     - AQUARIUS_VERSION=v0.3.8
     - BRIZO_VERSION=v0.3.14
     - KEEPER_VERSION=v0.10.3
     - KEEPER_OWNER_ROLE_ADDRESS="0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
-    - MONGO_URL="mongodb://localhost:27017/faucetdbtest"
+    - FAUCET_VERSION=v0.2.4
 
 before_install:
   - npm install -g npm
@@ -37,9 +37,6 @@ before_install:
   - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
 before_script:
-  # Faucet
-  - docker run -d -p 127.0.0.1:3001:3001 oceanprotocol/faucet > faucet.log &
-  # Barge
   - git clone https://github.com/oceanprotocol/barge
   - cd barge
   - bash -x start_ocean.sh --no-pleuston --local-spree-node 2>&1 > start_ocean.log &
