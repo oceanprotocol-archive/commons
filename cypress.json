@@ -1,6 +1,3 @@
 {
-  "baseUrl": "http://localhost:3000",
-  "env": {
-    "CONSUME_ASSET": "did:op:3fa4721ad643489bad77e0e52ecefe9b73166873faaf4661a02486b735eea0c8"
-  }
+  "baseUrl": "http://localhost:3000"
 }

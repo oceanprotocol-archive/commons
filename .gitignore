@@ -25,3 +25,4 @@ yarn-error.log*
 # cypress
 cypress/screenshots
 cypress/videos
+cypress/fixtures/did.txt
