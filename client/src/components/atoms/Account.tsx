@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, MouseEvent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { toDataUrl } from 'ethereum-blockies'
 import styles from './Account.module.scss'
@@ -18,7 +18,8 @@ export default class Account extends PureComponent<
         isAccountInfoOpen: false
     }
 
-    private toggleAccountInfo() {
+    private toggleAccountInfo(event: MouseEvent) {
+        event.preventDefault()
         this.setState({ isAccountInfoOpen: !this.state.isAccountInfoOpen })
     }
 
@@ -61,7 +62,7 @@ export default class Account extends PureComponent<
                     {isBurner ? (
                         <button
                             className={styles.toggle}
-                            onClick={() => this.toggleAccountInfo()}
+                            onClick={event => this.toggleAccountInfo(event)}
                             title="Show More Account Info"
                         >
                             <Caret
