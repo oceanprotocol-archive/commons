@@ -25,7 +25,7 @@ env:
     # start Barge with these versions
     - KEEPER_OWNER_ROLE_ADDRESS="0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
     - FAUCET_TIMESPAN=0
-    - FAUCET_VERSION=v0.2.5
+    - FAUCET_VERSION=v0.2.6
 
 before_install:
   - npm install -g npm
@@ -37,7 +37,7 @@ before_install:
 before_script:
   - git clone https://github.com/oceanprotocol/barge
   - cd barge
-  - bash -x start_ocean.sh --no-pleuston --local-spree-node 2>&1 > start_ocean.log &
+  - bash -x start_ocean.sh --no-pleuston 2>&1 > start_ocean.log &
   - cd ..
 
 script:
