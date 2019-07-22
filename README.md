@@ -22,21 +22,21 @@
 
 If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
 
-- [🏄 Get Started](#-Get-Started)
-  - [🏖 Remote Ocean: Pacific](#-Remote-Ocean-Pacific)
-  - [🐳 Use with Barge](#-Use-with-Barge)
-  - [⛵️ Environment Variables](#️-Environment-Variables)
-    - [Client](#Client)
-    - [Server](#Server)
-- [👩‍🔬 Testing](#-Testing)
-  - [Unit Tests](#Unit-Tests)
-  - [End-to-End Integration Tests](#End-to-End-Integration-Tests)
-- [✨ Code Style](#-Code-Style)
-- [🛳 Production](#-Production)
-- [⬆️ Releases](#️-Releases)
-- [📜 Changelog](#-Changelog)
-- [🎁 Contributing](#-Contributing)
-- [🏛 License](#-License)
+- [🏄 Get Started](#-get-started)
+  - [🏖 Remote Ocean: Pacific](#-remote-ocean-pacific)
+  - [🐳 Use with Barge](#-use-with-barge)
+  - [⛵️ Environment Variables](#️-environment-variables)
+    - [Client](#client)
+    - [Server](#server)
+- [👩‍🔬 Testing](#-testing)
+  - [Unit Tests](#unit-tests)
+  - [End-to-End Integration Tests](#end-to-end-integration-tests)
+- [✨ Code Style](#-code-style)
+- [🛳 Production](#-production)
+- [⬆️ Releases](#️-releases)
+- [📜 Changelog](#-changelog)
+- [🎁 Contributing](#-contributing)
+- [🏛 License](#-license)
 
 ## 🏄 Get Started
 
@@ -68,16 +68,25 @@ By default, the client uses a burner wallet connected to the correct network aut
 
 ### 🐳 Use with Barge
 
-If you prefer to connect to locally running components instead of remote connections to Ocean's Nile network, you can spin up [`barge`](https://github.com/oceanprotocol/barge) and use a local network:
+If you prefer to connect to locally running components instead of remote connections to Ocean's Nile network, you can spin up [`barge`](https://github.com/oceanprotocol/barge) and use a local Spree network:
 
 ```bash
 git clone git@github.com:oceanprotocol/barge.git
 cd barge
 
-./start_ocean.sh --latest --no-pleuston --local-spree-node
+# startup with local Spree node
+./start_ocean.sh --latest --no-pleuston
 ```
 
-Modify `./client/src/config.ts` or set environment variables to use those local connections.
+Then set [environment variables](#️-environment-variables) to use those local connections.
+
+Finally, you need to copy the generated contract artifacts out of the Docker container. To do this, execute this script in another terminal:
+
+```bash
+./scripts/keeper.sh
+```
+
+The script will wait for all contracts to be generated in the `keeper-contracts` Docker container, then will copy the artifacts in place.
 
 ### ⛵️ Environment Variables
 

@@ -5,7 +5,7 @@
 RETRY_COUNT=0
 COMMAND_STATUS=1
 
-printf '\n\e[33mWaiting for contracts to be generated...\e[0m\n'
+printf '\n\e[33m◯ Waiting for contracts to be generated...\e[0m\n'
 
 mkdir -p artifacts
 
@@ -17,7 +17,7 @@ until [ $COMMAND_STATUS -eq 0 ] || [ $RETRY_COUNT -eq 120 ]; do
   (( RETRY_COUNT=RETRY_COUNT+1 ))
 done
 
-printf '\e[32mFound new contract artifacts.\e[0m\n'
+printf '\e[32m✔ Found new contract artifacts.\e[0m\n'
 
 rm -rf ./artifacts/
 
@@ -27,3 +27,5 @@ if [ $COMMAND_STATUS -ne 0 ]; then
 fi
 
 docker cp "${keeper_contracts_docker_id}":/keeper-contracts/artifacts/. ./client/node_modules/@oceanprotocol/keeper-contracts/artifacts/
+
+printf '\e[32m✔ Copied new contract artifacts.\e[0m\n'
