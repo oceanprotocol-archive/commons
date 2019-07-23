@@ -28,3 +28,4 @@ export const faucetUri =
 //
 export const verbose = true
 export const analyticsId = 'UA-60614729-11'
+export const allowPricing = process.env.REACT_APP_ALLOW_PRICING || 'false'
