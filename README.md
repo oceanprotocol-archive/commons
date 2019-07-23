@@ -88,6 +88,21 @@ Finally, you need to copy the generated contract artifacts out of the Docker con
 
 The script will wait for all contracts to be generated in the `keeper-contracts` Docker container, then will copy the artifacts in place.
 
+If you are on macOS, you need to additionally tweak your `/etc/hosts` file so Brizo can connect to Aquarius. This is only required on macOS and is a [known limitation of Docker for Mac](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds):
+
+```bash
+sudo vi /etc/hosts
+
+# add this line, and save
+127.0.0.1    aquarius
+```
+
+Then use this host for the local Aquarius url in the client config:
+
+```bash
+REACT_APP_AQUARIUS_URI="http://aquarius:5000"
+```
+
 ### ⛵️ Environment Variables
 
 #### Client
