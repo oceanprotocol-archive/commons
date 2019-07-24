@@ -37,13 +37,13 @@ interface PublishState {
     validationStatus?: any
 }
 
-if(allowPricing){
-    (steps as any)[0].fields['price'] = {
-        label: "Price",
-        placeholder: "Price in Ocean tokens",
-        type: "string",
+if (allowPricing) {
+    ;(steps as any)[0].fields['price'] = {
+        label: 'Price',
+        placeholder: 'Price in Ocean tokens',
+        type: 'string',
         required: true,
-        help: "Enter the price of assets in Ocean tokens."
+        help: 'Enter the price of assets in Ocean tokens.'
     }
 }
 
@@ -292,13 +292,13 @@ class Publish extends Component<{}, PublishState> {
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
                 files,
-                price: allowPricing ? Web3.utils.toWei(this.state.price, 'ether') : this.state.price,
+                price: allowPricing
+                    ? Web3.utils.toWei(this.state.price, 'ether')
+                    : this.state.price,
                 type: this.state.type,
                 categories: [this.state.categories]
             })
         }
-
-        console.log(newAsset)
 
         try {
             const asset = await this.context.ocean.assets

@@ -5,6 +5,8 @@ import Dotdotdot from 'react-dotdotdot'
 import cx from 'classnames'
 import styles from './AssetTeaser.module.scss'
 import CategoryImage from '../atoms/CategoryImage'
+import { allowPricing } from '../../config'
+import Web3 from 'web3'
 
 const AssetTeaser = ({
     asset,
@@ -41,7 +43,9 @@ const AssetTeaser = ({
                     <CategoryImage dimmed category={base.categories[0]} />
                 )}
                 <h1>{base.name}</h1>
-
+                {allowPricing
+                    ? 'Ọ ' + Web3.utils.fromWei(base.price.toString())
+                    : null}
                 {!minimal && (
                     <div className={styles.description}>
                         <Dotdotdot clamp={3}>{base.description}</Dotdotdot>

@@ -6,6 +6,8 @@ import CategoryLink from '../../atoms/CategoryLink'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 import Report from './Report'
+import { allowPricing } from '../../../config'
+import Web3 from 'web3'
 
 interface AssetDetailsProps {
     metadata: MetaData
@@ -93,6 +95,23 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                                 <code>{ddo.id}</code>
                             </span>
                         </li>
+                        {allowPricing ? (
+                            <li>
+                                <span className={styles.metaLabel}>
+                                    <strong>Price</strong>
+                                </span>
+                                <span className={styles.metaValue}>
+                                    <code>
+                                        Ọ{' '}
+                                        {base.price === '0'
+                                            ? 0
+                                            : Web3.utils.fromWei(
+                                                  base.price.toString()
+                                              )}
+                                    </code>
+                                </span>
+                            </li>
+                        ) : null}
                     </ul>
                 </div>
 
