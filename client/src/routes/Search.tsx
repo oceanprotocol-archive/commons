@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, ChangeEvent } from 'react'
+import Button from '../components/atoms/Button'
+import Input from '../components/atoms/Form/Input'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import { History, Location } from 'history'
@@ -11,6 +13,7 @@ import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
 import Content from '../components/atoms/Content'
 import withTracker from '../hoc/withTracker'
+import data from '../data/form-publish.json'
 
 interface SearchProps {
     location: Location
@@ -26,6 +29,9 @@ interface SearchState {
     isLoading: boolean
     searchTerm: string
     searchCategories: string
+    search: string
+    category: string
+    license: string
 }
 
 class Search extends PureComponent<SearchProps, SearchState> {
@@ -39,45 +45,50 @@ class Search extends PureComponent<SearchProps, SearchState> {
         currentPage: 1,
         isLoading: true,
         searchTerm: '',
-        searchCategories: ''
+        searchCategories: '',
+        searchLicense: '',
+        search: '',
+        category: '',
+        license: ''
     }
 
     public async componentDidMount() {
         const { search } = this.props.location
-        const { text, page, categories } = queryString.parse(search)
+        const { text, page, categories, license  } = queryString.parse(search)
 
+        let update: any = {}
         if (text) {
-            await this.setState({
-                searchTerm: decodeURIComponent(`${text}`)
-            })
+            update.searchTerm = decodeURIComponent(`${text}`)
+            update.search = decodeURIComponent(`${text}`)
         }
-
         if (categories) {
-            await this.setState({
-                searchCategories: decodeURIComponent(`${categories}`)
-            })
+           update.searchCategories = decodeURIComponent(`${categories}`)
+           update.category = decodeURIComponent(`${categories}`)
         }
-
-        // switch to respective page if query string is present
+        if (license) {
+            update.searchLicense = decodeURIComponent(`${license}`)
+            update.license = decodeURIComponent(`${license}`)
+        }
         if (page) {
-            const currentPage = Number(page)
-            await this.setState({ currentPage })
+           update.currentPage = Number(page)
         }
 
-        this.searchAssets()
+        this.setState(update, () => this.searchAssets())
     }
 
     private searchAssets = async () => {
         const { ocean } = this.context
-        const { offset, currentPage, searchTerm, searchCategories } = this.state
-
-        const queryValues =
-            searchCategories !== '' && searchTerm !== ''
-                ? { text: [searchTerm], categories: [searchCategories] }
-                : searchCategories !== '' && searchTerm === ''
-                ? { categories: [searchCategories] }
-                : { text: [searchTerm] }
-
+        const { offset, currentPage, search, category, license } = this.state
+        const queryValues:any = {}
+        if(search){
+            queryValues.text = [search]
+        }
+        if(category){
+            queryValues.categories = [category]
+        }
+        if(license){
+            queryValues.license = [license]
+        }
         const searchQuery = {
             offset,
             page: currentPage,
@@ -112,8 +123,38 @@ class Search extends PureComponent<SearchProps, SearchState> {
             search: `?text=${this.state.searchTerm}&page=${toPage}`
         })
 
-        await this.setState({ currentPage: toPage, isLoading: true })
-        await this.searchAssets()
+        this.setState({ currentPage: toPage, isLoading: true }, () => this.searchAssets())
+
+    }
+
+    private inputChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+        this.setState({
+            [event.currentTarget.name]: event.currentTarget.value
+        } as any)
+    }
+
+    private search = (event: ChangeEvent<HTMLInputElement>) => {
+
+        let searchUrl = '?'
+
+        if (this.state.search){
+            searchUrl = `${searchUrl}text=${encodeURIComponent(this.state.search)}&`
+        }
+        if (this.state.category){
+            searchUrl = `${searchUrl}categories=${encodeURIComponent(this.state.category)}&`
+        }
+        if (this.state.license){
+            searchUrl = `${searchUrl}license=${encodeURIComponent(this.state.license)}&`
+        }
+        this.props.history.push({
+            pathname: this.props.location.pathname,
+            search: searchUrl
+        })
+        this.setState({
+            searchTerm: this.state.search,
+            currentPage: 1,
+            isLoading: true
+        }, () => this.searchAssets())
     }
 
     public renderResults = () =>
@@ -134,10 +175,41 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
     public render() {
         const { totalResults, totalPages, currentPage } = this.state
-
+        const { steps }:any = data
         return (
             <Route title="Search" wide>
                 <Content wide>
+                    <Input
+                        type="search"
+                        name="search"
+                        label="Search for data sets"
+                        placeholder="e.g. shapes of plants"
+                        value={this.state.search}
+                        onChange={this.inputChange}
+                        group={
+                            <Button primary onClick={this.search}>
+                                Search
+                            </Button>
+                        }
+                    />
+                    <Input
+                        type="select"
+                        name="category"
+                        label="Data sets from category"
+                        placeholder="e.g. Biology"
+                        options={steps[1].fields.categories.options}
+                        value={this.state.category}
+                        onChange={this.inputChange}
+                    />
+                    <Input
+                        type="select"
+                        name="license"
+                        label="Data sets from license"
+                        placeholder="e.g. Biology"
+                        options={steps[2].fields.license.options}
+                        value={this.state.license}
+                        onChange={this.inputChange}
+                    />
                     {!this.state.isLoading && (
                         <h2 className={styles.resultsTitle}>
                             {totalResults} results for{' '}
