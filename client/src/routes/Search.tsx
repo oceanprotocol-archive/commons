@@ -54,7 +54,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
     public async componentDidMount() {
         const { search } = this.props.location
-        const { text, page, categories, license  } = queryString.parse(search)
+        const { text, page, categories, license } = queryString.parse(search)
 
         let update: any = {}
         if (text) {
@@ -62,15 +62,15 @@ class Search extends PureComponent<SearchProps, SearchState> {
             update.search = decodeURIComponent(`${text}`)
         }
         if (categories) {
-           update.searchCategories = decodeURIComponent(`${categories}`)
-           update.category = decodeURIComponent(`${categories}`)
+            update.searchCategories = decodeURIComponent(`${categories}`)
+            update.category = decodeURIComponent(`${categories}`)
         }
         if (license) {
             update.searchLicense = decodeURIComponent(`${license}`)
             update.license = decodeURIComponent(`${license}`)
         }
         if (page) {
-           update.currentPage = Number(page)
+            update.currentPage = Number(page)
         }
 
         this.setState(update, () => this.searchAssets())
@@ -79,14 +79,14 @@ class Search extends PureComponent<SearchProps, SearchState> {
     private searchAssets = async () => {
         const { ocean } = this.context
         const { offset, currentPage, search, category, license } = this.state
-        const queryValues:any = {}
-        if(search){
+        const queryValues: any = {}
+        if (search) {
             queryValues.text = [search]
         }
-        if(category){
+        if (category) {
             queryValues.categories = [category]
         }
-        if(license){
+        if (license) {
             queryValues.license = [license]
         }
         const searchQuery = {
@@ -123,38 +123,49 @@ class Search extends PureComponent<SearchProps, SearchState> {
             search: `?text=${this.state.searchTerm}&page=${toPage}`
         })
 
-        this.setState({ currentPage: toPage, isLoading: true }, () => this.searchAssets())
-
+        this.setState({ currentPage: toPage, isLoading: true }, () =>
+            this.searchAssets()
+        )
     }
 
-    private inputChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    private inputChange = (
+        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    ) => {
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value
         } as any)
     }
 
     private search = (event: ChangeEvent<HTMLInputElement>) => {
-
         let searchUrl = '?'
 
-        if (this.state.search){
-            searchUrl = `${searchUrl}text=${encodeURIComponent(this.state.search)}&`
+        if (this.state.search) {
+            searchUrl = `${searchUrl}text=${encodeURIComponent(
+                this.state.search
+            )}&`
         }
-        if (this.state.category){
-            searchUrl = `${searchUrl}categories=${encodeURIComponent(this.state.category)}&`
+        if (this.state.category) {
+            searchUrl = `${searchUrl}categories=${encodeURIComponent(
+                this.state.category
+            )}&`
         }
-        if (this.state.license){
-            searchUrl = `${searchUrl}license=${encodeURIComponent(this.state.license)}&`
+        if (this.state.license) {
+            searchUrl = `${searchUrl}license=${encodeURIComponent(
+                this.state.license
+            )}&`
         }
         this.props.history.push({
             pathname: this.props.location.pathname,
             search: searchUrl
         })
-        this.setState({
-            searchTerm: this.state.search,
-            currentPage: 1,
-            isLoading: true
-        }, () => this.searchAssets())
+        this.setState(
+            {
+                searchTerm: this.state.search,
+                currentPage: 1,
+                isLoading: true
+            },
+            () => this.searchAssets()
+        )
     }
 
     public renderResults = () =>
@@ -175,7 +186,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
     public render() {
         const { totalResults, totalPages, currentPage } = this.state
-        const { steps }:any = data
+        const { steps }: any = data
         return (
             <Route title="Search" wide>
                 <Content wide>
