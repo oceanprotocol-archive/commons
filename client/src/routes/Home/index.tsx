@@ -58,7 +58,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
                     <h2 className={styles.title}>Explore Categories</h2>
                     <div className={styles.categories}>
                         {this.context.categories
-                            .sort((a: any, b: any) => a.localeCompare(b)) // sort alphabetically
+                            .sort((a: string, b: string) => a.localeCompare(b)) // sort alphabetically
                             .map((category: string) => (
                                 <CategoryLink
                                     category={category}

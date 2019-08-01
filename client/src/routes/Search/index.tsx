@@ -25,9 +25,8 @@ interface SearchState {
     totalPages: number
     currentPage: number
     isLoading: boolean
-    searchTerm: string
-    searchCategories: string
     search: string
+    searchInput: string
     category: string
     license: string
 }
@@ -42,10 +41,8 @@ class Search extends PureComponent<SearchProps, SearchState> {
         totalPages: 1,
         currentPage: 1,
         isLoading: true,
-        searchTerm: '',
-        searchCategories: '',
-        searchLicense: '',
         search: '',
+        searchInput: '',
         category: '',
         license: ''
     }
@@ -56,15 +53,12 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
         let update: any = {}
         if (text) {
-            update.searchTerm = decodeURIComponent(`${text}`)
             update.search = decodeURIComponent(`${text}`)
         }
         if (categories) {
-            update.searchCategories = decodeURIComponent(`${categories}`)
             update.category = decodeURIComponent(`${categories}`)
         }
         if (license) {
-            update.searchLicense = decodeURIComponent(`${license}`)
             update.license = decodeURIComponent(`${license}`)
         }
         if (page) {
@@ -74,10 +68,18 @@ class Search extends PureComponent<SearchProps, SearchState> {
         this.setState(update, () => this.searchAssets())
     }
 
+    // public componentDidUpdate(prevProps: any, prevState: any) {
+    //     if (prevState.category !== this.state.category) {
+    //         this.searchAssets()
+    //     }
+    // }
+
     private searchAssets = async () => {
         const { ocean } = this.context
         const { offset, currentPage, search, category, license } = this.state
+
         const queryValues: any = {}
+
         if (search) {
             queryValues.text = [search]
         }
@@ -87,6 +89,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
         if (license) {
             queryValues.license = [license]
         }
+
         const searchQuery = {
             offset,
             page: currentPage,
@@ -118,7 +121,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
         this.props.history.push({
             pathname: this.props.location.pathname,
-            search: `?text=${this.state.searchTerm}&page=${toPage}`
+            search: `?text=${this.state.search}&page=${toPage}`
         })
 
         this.setState({ currentPage: toPage, isLoading: true }, () =>
@@ -134,36 +137,12 @@ class Search extends PureComponent<SearchProps, SearchState> {
         } as any)
     }
 
-    private search = (event: ChangeEvent<HTMLInputElement>) => {
-        let searchUrl = '?'
+    public setCategory = (category: string) => {
+        this.setState({ category }, () => this.searchAssets())
+    }
 
-        if (this.state.search) {
-            searchUrl = `${searchUrl}text=${encodeURIComponent(
-                this.state.search
-            )}&`
-        }
-        if (this.state.category) {
-            searchUrl = `${searchUrl}categories=${encodeURIComponent(
-                this.state.category
-            )}&`
-        }
-        if (this.state.license) {
-            searchUrl = `${searchUrl}license=${encodeURIComponent(
-                this.state.license
-            )}&`
-        }
-        this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: searchUrl
-        })
-        this.setState(
-            {
-                searchTerm: this.state.search,
-                currentPage: 1,
-                isLoading: true
-            },
-            () => this.searchAssets()
-        )
+    public setLicense = (license: string) => {
+        this.setState({ license }, () => this.searchAssets())
     }
 
     public renderResults = () =>
@@ -191,23 +170,27 @@ class Search extends PureComponent<SearchProps, SearchState> {
                     <div className={styles.content}>
                         <Sidebar
                             search={this.state.search}
+                            searchInput={this.state.searchInput}
                             inputChange={this.inputChange}
                             category={this.state.category}
                             license={this.state.license}
+                            setCategory={this.setCategory}
+                            setLicense={this.setLicense}
                         />
 
-                        <div className={styles.contentResults}>
+                        <div>
                             {!this.state.isLoading && (
                                 <h2 className={styles.resultsTitle}>
                                     {totalResults} results for{' '}
                                     <span>
                                         {decodeURIComponent(
-                                            this.state.searchTerm ||
-                                                this.state.searchCategories
+                                            this.state.search ||
+                                                this.state.category
                                         )}
                                     </span>
                                 </h2>
                             )}
+
                             {this.renderResults()}
 
                             <Pagination

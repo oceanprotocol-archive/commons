@@ -4,7 +4,8 @@ import cx from 'classnames'
 import styles from './Button.module.scss'
 
 interface ButtonProps {
-    children: string
+    children: any
+    title?: string
     className?: string
     primary?: boolean
     link?: boolean
