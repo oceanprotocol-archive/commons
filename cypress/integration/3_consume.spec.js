@@ -1,7 +1,9 @@
 /// <reference types="Cypress" />
 context('Consume', () => {
     before(() => {
-        cy.visit(`/asset/${Cypress.env('CONSUME_ASSET')}`)
+        cy.fixture('did').then(did => {
+            cy.visit(`/asset/${did}`)
+        })
 
         // Alias button selector & wait for end of loading
         cy.get('button[name="Download"]', { timeout: 60000 })

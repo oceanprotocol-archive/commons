@@ -4,7 +4,14 @@ language: node_js
 node_js:
   - '11'
 
+services:
+  - docker
+
 addons:
+  # required for internal Aquarius-Brizo communication
+  # https://docs.travis-ci.com/user/hosts/
+  hosts:
+    - aquarius
   apt:
     packages:
       # for Cypress
@@ -12,25 +19,35 @@ addons:
 
 env:
   global:
-    # run E2E tests against these values
-    - REACT_APP_NODE_URI="https://pacific.oceanprotocol.com"
-    - REACT_APP_AQUARIUS_URI="https://aquarius.test.oceanprotocol.com"
-    - REACT_APP_BRIZO_URI="https://brizo.test.oceanprotocol.com"
-    - REACT_APP_SECRET_STORE_URI="https://secret-store.oceanprotocol.com"
-    - REACT_APP_FAUCET_URI="https://faucet.oceanprotocol.com"
-    - REACT_APP_BRIZO_ADDRESS="0x0474ed05ba757dde575dfaaaa267d9e7f3643abc"
+    # run E2E tests against local Spree
+    - REACT_APP_NODE_URI="http://localhost:8545"
+    - REACT_APP_AQUARIUS_URI="http://aquarius:5000"
+    - REACT_APP_BRIZO_URI="http://localhost:8030"
+    - REACT_APP_SECRET_STORE_URI="http://localhost:12001"
+    - REACT_APP_FAUCET_URI="http://localhost:3001"
+    - REACT_APP_BRIZO_ADDRESS="0x00bd138abd70e2f00903268f3db08f2d25677c9e"
+    # start Barge with these versions
+    - KEEPER_OWNER_ROLE_ADDRESS="0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
+    - FAUCET_TIMESPAN=0
 
 before_install:
   - npm install -g npm
-  - npm install -g codacy-coverage truffle ganache-cli
+  - npm install -g codacy-coverage
   # Fixes an issue where the max file watch count is exceeded, triggering ENOSPC
   # https://stackoverflow.com/questions/22475849/node-js-error-enospc#32600959
   - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+before_script:
+  - git clone https://github.com/oceanprotocol/barge
+  - cd barge
+  - bash -x start_ocean.sh --no-pleuston 2>&1 > start_ocean.log &
+  - cd ..
 
 script:
   # - ./scripts/install.sh # runs automatically with npm ci
   # executing `npm test` scripts individually here, so first one failing will exit the build
   - npm run lint || travis_terminate 1
+  - ./scripts/keeper.sh
   - ./scripts/test.sh || travis_terminate 1
   - ./scripts/coverage.sh
   - npm run test:e2e || travis_terminate 1

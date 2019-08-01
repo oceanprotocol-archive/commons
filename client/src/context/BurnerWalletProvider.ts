@@ -37,9 +37,11 @@ export class BurnerWalletProvider {
         localStorage.setItem('logType', 'BurnerWallet')
         const provider = new HDWalletProvider(mnemonic, `${nodeUri}`, 0, 1)
         this.web3 = new Web3(provider)
+        const accounts = await this.web3.eth.getAccounts()
+        const balance = await this.web3.eth.getBalance(accounts[0])
 
-        // fill with Ether
-        await requestFromFaucet(provider.addresses[0])
+        // fill with Ether if account balance is empty
+        balance === '0' && (await requestFromFaucet(provider.addresses[0]))
     }
 
     public async logout() {

@@ -66,13 +66,9 @@ class Faucet extends PureComponent<{}, FaucetState> {
         const { network } = this.context
         const { trxHash } = this.state
 
-        const submarineLink = `https://submarine${
-            network === 'Duero'
-                ? '.duero'
-                : network === 'Pacific'
-                ? '.pacific'
-                : ''
-        }.dev-ocean.com/tx/${trxHash}`
+        const submarineLink = `https://submarine.${
+            network === 'pacific' ? 'oceanprotocol' : `${network}.dev-ocean`
+        }.com/tx/${trxHash}`
 
         return (
             <div className={styles.success}>
