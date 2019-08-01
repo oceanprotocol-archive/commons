@@ -43,9 +43,7 @@ const AssetTeaser = ({
                     <CategoryImage dimmed category={base.categories[0]} />
                 )}
                 <h1>{base.name}</h1>
-                {allowPricing
-                    ? 'Ọ ' + Web3.utils.fromWei(base.price.toString())
-                    : null}
+
                 {!minimal && (
                     <div className={styles.description}>
                         <Dotdotdot clamp={3}>{base.description}</Dotdotdot>
@@ -53,6 +51,14 @@ const AssetTeaser = ({
                 )}
                 <footer className={styles.assetFooter}>
                     {base.categories && <div>{base.categories[0]}</div>}
+                    {allowPricing && (
+                        <div className={styles.price}>
+                            <span>
+                                {Web3.utils.fromWei(base.price.toString())}
+                            </span>{' '}
+                            OCEAN
+                        </div>
+                    )}
                 </footer>
             </Link>
         </article>

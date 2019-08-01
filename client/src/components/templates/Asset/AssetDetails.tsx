@@ -101,14 +101,12 @@ export default class AssetDetails extends PureComponent<AssetDetailsProps> {
                                     <strong>Price</strong>
                                 </span>
                                 <span className={styles.metaValue}>
-                                    <code>
-                                        Ọ{' '}
-                                        {base.price === '0'
-                                            ? 0
-                                            : Web3.utils.fromWei(
-                                                  base.price.toString()
-                                              )}
-                                    </code>
+                                    {base.price === '0'
+                                        ? 0
+                                        : Web3.utils.fromWei(
+                                              base.price.toString()
+                                          )}{' '}
+                                    OCEAN
                                 </span>
                             </li>
                         ) : null}
