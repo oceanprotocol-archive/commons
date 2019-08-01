@@ -1,0 +1,37 @@
+@import '../../styles/variables';
+
+.sidebar {
+    @media (min-width: $break-point--medium) {
+        margin-top: $spacer * 1.1;
+    }
+
+    > div:first-child {
+        label {
+            visibility: hidden;
+        }
+    }
+}
+
+.filter {
+    // ul {
+    //     padding-left: 0;
+
+    //     li:before {
+    //         display: none;
+    //     }
+    // }
+
+    button {
+        text-align: left;
+        color: $brand-grey;
+        font-size: $font-size-small;
+    }
+}
+
+.filterTitle {
+    font-size: $font-size-base;
+    color: $brand-grey-light;
+    margin-top: 0;
+    border-bottom: 1px solid $brand-grey-lighter;
+    padding-bottom: $spacer / 2;
+}

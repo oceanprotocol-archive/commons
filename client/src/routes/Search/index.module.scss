@@ -1,9 +1,19 @@
-@import '../styles/variables';
+@import '../../styles/variables';
+
+.content {
+    display: grid;
+    grid-gap: $spacer * 2;
+    grid-template-columns: 1fr;
+
+    @media (min-width: $break-point--medium) {
+        grid-template-columns: 1fr 3fr;
+    }
+}
 
 .resultsTitle {
     color: $brand-grey-light;
     font-size: $font-size-h3;
-    margin-top: -($spacer / 2);
+    margin-top: 0;
     margin-bottom: $spacer;
 
     span {
@@ -16,11 +26,11 @@
     grid-template-columns: 1fr;
     grid-gap: $spacer;
 
-    @media (min-width: $break-point--small) {
+    @media (min-width: $break-point--medium) {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (min-width: $break-point--medium) {
+    @media (min-width: $break-point--large) {
         grid-template-columns: repeat(3, 1fr);
     }
 }

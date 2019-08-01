@@ -1,19 +1,17 @@
 import React, { PureComponent, ChangeEvent } from 'react'
-import Button from '../components/atoms/Button'
-import Input from '../components/atoms/Form/Input'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import { History, Location } from 'history'
 import { Logger } from '@oceanprotocol/squid'
-import Spinner from '../components/atoms/Spinner'
-import Route from '../components/templates/Route'
-import { User } from '../context'
-import AssetTeaser from '../components/molecules/AssetTeaser'
-import Pagination from '../components/molecules/Pagination'
-import styles from './Search.module.scss'
-import Content from '../components/atoms/Content'
-import withTracker from '../hoc/withTracker'
-import data from '../data/form-publish.json'
+import Spinner from '../../components/atoms/Spinner'
+import Route from '../../components/templates/Route'
+import { User } from '../../context'
+import AssetTeaser from '../../components/molecules/AssetTeaser'
+import Pagination from '../../components/molecules/Pagination'
+import styles from './index.module.scss'
+import Content from '../../components/atoms/Content'
+import withTracker from '../../hoc/withTracker'
+import Sidebar from './Sidebar'
 
 interface SearchProps {
     location: Location
@@ -186,59 +184,39 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
     public render() {
         const { totalResults, totalPages, currentPage } = this.state
-        const { steps }: any = data
+
         return (
             <Route title="Search" wide>
                 <Content wide>
-                    <Input
-                        type="search"
-                        name="search"
-                        label="Search for data sets"
-                        placeholder="e.g. shapes of plants"
-                        value={this.state.search}
-                        onChange={this.inputChange}
-                        group={
-                            <Button primary onClick={this.search}>
-                                Search
-                            </Button>
-                        }
-                    />
-                    <Input
-                        type="select"
-                        name="category"
-                        label="Data sets from category"
-                        placeholder="e.g. Biology"
-                        options={steps[1].fields.categories.options}
-                        value={this.state.category}
-                        onChange={this.inputChange}
-                    />
-                    <Input
-                        type="select"
-                        name="license"
-                        label="Data sets from license"
-                        placeholder="e.g. Biology"
-                        options={steps[2].fields.license.options}
-                        value={this.state.license}
-                        onChange={this.inputChange}
-                    />
-                    {!this.state.isLoading && (
-                        <h2 className={styles.resultsTitle}>
-                            {totalResults} results for{' '}
-                            <span>
-                                {decodeURIComponent(
-                                    this.state.searchTerm ||
-                                        this.state.searchCategories
-                                )}
-                            </span>
-                        </h2>
-                    )}
-                    {this.renderResults()}
+                    <div className={styles.content}>
+                        <Sidebar
+                            search={this.state.search}
+                            inputChange={this.inputChange}
+                            category={this.state.category}
+                            license={this.state.license}
+                        />
 
-                    <Pagination
-                        totalPages={totalPages}
-                        currentPage={currentPage}
-                        handlePageClick={this.handlePageClick}
-                    />
+                        <div className={styles.contentResults}>
+                            {!this.state.isLoading && (
+                                <h2 className={styles.resultsTitle}>
+                                    {totalResults} results for{' '}
+                                    <span>
+                                        {decodeURIComponent(
+                                            this.state.searchTerm ||
+                                                this.state.searchCategories
+                                        )}
+                                    </span>
+                                </h2>
+                            )}
+                            {this.renderResults()}
+
+                            <Pagination
+                                totalPages={totalPages}
+                                currentPage={currentPage}
+                                handlePageClick={this.handlePageClick}
+                            />
+                        </div>
+                    </div>
                 </Content>
             </Route>
         )
