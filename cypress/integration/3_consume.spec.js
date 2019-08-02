@@ -28,5 +28,9 @@ context('Consume', () => {
             'not.contain',
             '. Sorry about that, can you try again?'
         )
+        // eslint-disable-next-line
+        cy.wait(10000)
+        // wait for file to download before closing browser
+        // to prevent alert poping up
     })
 })
