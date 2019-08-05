@@ -4,7 +4,7 @@ import Filters from './Filters'
 import styles from './Sidebar.module.scss'
 
 export default function Sidebar({
-    searchInput,
+    search,
     inputChange,
     category,
     license,
@@ -12,7 +12,6 @@ export default function Sidebar({
     setLicense
 }: {
     search: string
-    searchInput: string
     inputChange: any
     category: string
     license: string
@@ -23,10 +22,10 @@ export default function Sidebar({
         <aside className={styles.sidebar}>
             <Input
                 type="search"
-                name="searchInput"
+                name="search"
                 label="Search"
                 placeholder="e.g. shapes of plants"
-                value={searchInput}
+                value={search}
                 onChange={inputChange}
                 // group={
                 //     <Button primary onClick={search}>

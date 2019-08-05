@@ -26,7 +26,6 @@ interface SearchState {
     currentPage: number
     isLoading: boolean
     search: string
-    searchInput: string
     category: string
     license: string
 }
@@ -42,7 +41,6 @@ class Search extends PureComponent<SearchProps, SearchState> {
         currentPage: 1,
         isLoading: true,
         search: '',
-        searchInput: '',
         category: '',
         license: ''
     }
@@ -68,27 +66,33 @@ class Search extends PureComponent<SearchProps, SearchState> {
         this.setState(update, () => this.searchAssets())
     }
 
-    // public componentDidUpdate(prevProps: any, prevState: any) {
-    //     if (prevState.category !== this.state.category) {
-    //         this.searchAssets()
-    //     }
-    // }
-
     private searchAssets = async () => {
         const { ocean } = this.context
         const { offset, currentPage, search, category, license } = this.state
 
+        let urlString = '?'
         const queryValues: any = {}
-
         if (search) {
             queryValues.text = [search]
+            urlString += `text=${search}&`
         }
         if (category) {
             queryValues.categories = [category]
+            urlString += `categories=${category}&`
         }
         if (license) {
             queryValues.license = [license]
+            urlString += `license=${license}&`
         }
+        if (currentPage !== 1) {
+            urlString += `page=${currentPage}&`
+        }
+
+        // update url
+        this.props.history.push({
+            pathname: this.props.location.pathname,
+            search: urlString
+        })
 
         const searchQuery = {
             offset,
@@ -119,11 +123,6 @@ class Search extends PureComponent<SearchProps, SearchState> {
         // react-pagination starts counting at 0, we start at 1
         const toPage = data.selected + 1
 
-        this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: `?text=${this.state.search}&page=${toPage}`
-        })
-
         this.setState({ currentPage: toPage, isLoading: true }, () =>
             this.searchAssets()
         )
@@ -134,7 +133,9 @@ class Search extends PureComponent<SearchProps, SearchState> {
     ) => {
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value
-        } as any)
+        } as any, () => {
+            this.searchAssets()
+        })
     }
 
     public setCategory = (category: string) => {
@@ -170,7 +171,6 @@ class Search extends PureComponent<SearchProps, SearchState> {
                     <div className={styles.content}>
                         <Sidebar
                             search={this.state.search}
-                            searchInput={this.state.searchInput}
                             inputChange={this.inputChange}
                             category={this.state.category}
                             license={this.state.license}

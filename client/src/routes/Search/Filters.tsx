@@ -34,7 +34,7 @@ const filters = [
     { label: labelLicense, items: optionsLicense }
 ]
 
-export default class Sidebar extends PureComponent<{
+export default class Filters extends PureComponent<{
     category: string
     license: string
     setCategory(category: string): void
@@ -81,9 +81,9 @@ export default class Sidebar extends PureComponent<{
                                                 className={styles.cancel}
                                                 title="Clear"
                                                 onClick={() =>
-                                                    alert(
-                                                        'TODO: Implement clearing'
-                                                    )
+                                                    filter.label === 'Category'
+                                                        ? setCategory('')
+                                                        : setLicense('')
                                                 }
                                             >
                                                 &times;
