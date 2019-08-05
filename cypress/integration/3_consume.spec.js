@@ -16,6 +16,9 @@ context('Consume', () => {
     })
 
     it('Consume asset and check if there is no error', () => {
+        // eslint-disable-next-line
+        cy.wait(10000)
+        // Wait for faucet
         // Click consume button
         cy.get('button[name="Download"]').click()
         // Wait consume process to end
