@@ -1,7 +1,9 @@
 /// <reference types="Cypress" />
 context('Consume', () => {
     before(() => {
-        cy.visit(`/asset/${Cypress.env('CONSUME_ASSET')}`)
+        cy.fixture('did').then(did => {
+            cy.visit(`/asset/${did}`)
+        })
 
         // Alias button selector & wait for end of loading
         cy.get('button[name="Download"]', { timeout: 60000 })
@@ -14,6 +16,9 @@ context('Consume', () => {
     })
 
     it('Consume asset and check if there is no error', () => {
+        // eslint-disable-next-line
+        cy.wait(10000)
+        // Wait for faucet
         // Click consume button
         cy.get('button[name="Download"]').click()
         // Wait consume process to end
@@ -26,5 +31,9 @@ context('Consume', () => {
             'not.contain',
             '. Sorry about that, can you try again?'
         )
+        // eslint-disable-next-line
+        cy.wait(10000)
+        // wait for file to download before closing browser
+        // to prevent alert poping up
     })
 })

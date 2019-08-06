@@ -18,24 +18,34 @@ const About = () => {
         >
             <Content>
                 <p>
-                    Commons is built on top of the Ocean{' '}
+                    Commons allows you to access thousands of datasets for free
+                    that have been registered on the Ocean Protocol{' '}
                     <a href="https://docs.oceanprotocol.com/concepts/pacific-network/">
-                        {market.network} network
+                        {market.network} Network
                     </a>{' '}
-                    and is targeted at enthusiastic data scientists with some
-                    crypto experience. It can be used with any Web3-capable
-                    browser, like Firefox with MetaMask installed.
+                    and it is targeted at enthusiastic data scientists with some
+                    crypto experience. If you are looking for quality data, you
+                    can easily use the Commons to search for and find publicly
+                    available datasets that are free of charge. If you are
+                    interested in sharing your data, you can use the Commons to
+                    publish data into the {market.network} Network.
                 </p>
 
                 <ul>
                     <li>
-                        <a href="https://blog.oceanprotocol.com/the-commons-marketplace-c57a44288314">
-                            Read the blog post →
+                        <a href="https://blog.oceanprotocol.com/the-commons-marketplace-in-pacific-network-4bcf2f595721">
+                            Blog: The Commons Marketplace in Pacific Network →
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://blog.oceanprotocol.com/the-commons-data-marketplace-c57a44288314">
+                            Blog: The Commons Marketplace →
                         </a>
                     </li>
                     <li>
                         <a href="https://github.com/oceanprotocol/commons">
-                            Check out oceanprotocol/commons on GitHub →
+                            Check out <code>oceanprotocol/commons</code> on
+                            GitHub →
                         </a>
                     </li>
                 </ul>

@@ -32,6 +32,7 @@
     h1 {
         font-size: $font-size-large;
         margin-top: 0;
+        margin-bottom: $spacer / 4;
     }
 }
 
@@ -89,7 +90,18 @@
 }
 
 .assetFooter {
-    margin-top: $spacer / 2;
+    margin-top: $spacer;
     font-size: $font-size-small;
     color: $brand-grey-light;
+    display: flex;
+    justify-content: space-between;
+}
+
+.price {
+    font-size: $font-size-mini;
+
+    span {
+        color: $brand-grey;
+        font-size: $font-size-small;
+    }
 }

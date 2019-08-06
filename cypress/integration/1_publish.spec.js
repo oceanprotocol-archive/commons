@@ -64,5 +64,16 @@ context('Publish', () => {
         cy.contains('Your asset is published!', {
             timeout: 12000
         }).should('be.visible')
+
+        // Store DID
+        cy.get('a')
+            .contains('See published asset')
+            .invoke('attr', 'href')
+            .then(href => {
+                cy.writeFile(
+                    'cypress/fixtures/did.txt',
+                    href.replace('/asset/', '')
+                )
+            })
     })
 })

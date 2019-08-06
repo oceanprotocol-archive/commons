@@ -10,6 +10,8 @@ import AssetFilesDetails from './AssetFilesDetails'
 import Button from '../../atoms/Button'
 import Spinner from '../../atoms/Spinner'
 import Report from './Report'
+import { allowPricing } from '../../../config'
+import Web3 from 'web3'
 import { serviceUri } from '../../../config'
 
 const { steps } = require('../../../data/form-publish.json') // eslint-disable-line
@@ -349,6 +351,21 @@ export default class AssetDetails extends PureComponent<
                                 <code>{ddo.id}</code>
                             </span>
                         </li>
+                        {allowPricing ? (
+                            <li>
+                                <span className={styles.metaLabel}>
+                                    <strong>Price</strong>
+                                </span>
+                                <span className={styles.metaValue}>
+                                    {base.price === '0'
+                                        ? 0
+                                        : Web3.utils.fromWei(
+                                              base.price.toString()
+                                          )}{' '}
+                                    OCEAN
+                                </span>
+                            </li>
+                        ) : null}
                     </ul>
                 </div>
 

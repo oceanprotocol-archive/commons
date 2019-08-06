@@ -58,21 +58,29 @@ const mockResponseFaulty = {
 
 describe('VersionNumbers', () => {
     it('renders without crashing', () => {
-        const { container } = render(
+        const { container, rerender } = render(
             <User.Provider value={userMockConnected}>
-                <VersionNumbers />
+                <VersionNumbers account="0x00000" />
             </User.Provider>
         )
         mockAxios.mockResponse(mockResponse)
         expect(mockAxios.get).toHaveBeenCalled()
         expect(container.firstChild).toBeInTheDocument()
+
+        rerender(
+            <User.Provider value={userMockConnected}>
+                <VersionNumbers account="0x99999" />
+            </User.Provider>
+        )
+        mockAxios.mockResponse(mockResponse)
+        expect(mockAxios.get).toHaveBeenCalled()
     })
 
     it('renders without proper component response', () => {
         const { container } = render(
             <User.Provider value={userMockConnected}>
                 <StateMock state={stateMockIncomplete}>
-                    <VersionNumbers />
+                    <VersionNumbers account="0x00000" />
                 </StateMock>
             </User.Provider>
         )

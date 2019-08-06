@@ -42,10 +42,16 @@ export default class VersionNumbers extends PureComponent<
     // construct values which are not part of any response
     public commonsVersion =
         process.env.NODE_ENV === 'production' ? version : `${version}-dev`
-    public commonsNetwork = new URL(nodeUri).hostname.split('.')[0]
+    public commonsNetwork = faucetUri.includes('localhost')
+        ? 'Spree'
+        : new URL(nodeUri).hostname.split('.')[0]
     public faucetNetwork = faucetUri.includes('dev-ocean')
         ? new URL(faucetUri).hostname.split('.')[1]
-        : 'Pacific'
+        : faucetUri.includes('oceanprotocol.com')
+        ? 'Pacific'
+        : faucetUri.includes('localhost')
+        ? 'Spree'
+        : 'Unknown'
 
     // define a minimal default state to fill UI
     public state: VersionNumbersState = {

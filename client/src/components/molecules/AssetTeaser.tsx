@@ -5,6 +5,8 @@ import Dotdotdot from 'react-dotdotdot'
 import cx from 'classnames'
 import styles from './AssetTeaser.module.scss'
 import CategoryImage from '../atoms/CategoryImage'
+import { allowPricing } from '../../config'
+import Web3 from 'web3'
 
 const AssetTeaser = ({
     asset,
@@ -49,6 +51,14 @@ const AssetTeaser = ({
                 )}
                 <footer className={styles.assetFooter}>
                     {base.categories && <div>{base.categories[0]}</div>}
+                    {allowPricing && (
+                        <div className={styles.price}>
+                            <span>
+                                {Web3.utils.fromWei(base.price.toString())}
+                            </span>{' '}
+                            OCEAN
+                        </div>
+                    )}
                 </footer>
             </Link>
         </article>

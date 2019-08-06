@@ -1,13 +1,14 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
-import ReactGA from 'react-ga'
+import Web3 from 'web3'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
 import AssetModel from '../../models/AssetModel'
 import { User, Market } from '../../context'
 import Step from './Step'
 import Progress from './Progress'
-
+import ReactGA from 'react-ga'
+import { allowPricing } from '../../config'
 import { steps } from '../../data/form-publish.json'
 import Content from '../../components/atoms/Content'
 import { File } from './Files'
@@ -25,7 +26,7 @@ interface PublishState {
     files?: File[]
     type?: AssetType
     copyrightHolder?: string
-    categories?: string[]
+    categories?: string
 
     currentStep?: number
     publishingStep?: number
@@ -34,6 +35,16 @@ interface PublishState {
     publishedDid?: string
     publishingError?: string
     validationStatus?: any
+}
+
+if (allowPricing) {
+    ;(steps as any)[0].fields['price'] = {
+        label: 'Price',
+        placeholder: 'Price in Ocean tokens',
+        type: 'string',
+        required: true,
+        help: 'Enter the price of assets in Ocean tokens.'
+    }
 }
 
 class Publish extends Component<{}, PublishState> {
@@ -49,7 +60,7 @@ class Publish extends Component<{}, PublishState> {
         type: 'dataset' as AssetType,
         license: '',
         copyrightHolder: '',
-        categories: [],
+        categories: '',
 
         currentStep: 1,
         isPublishing: false,
@@ -119,7 +130,7 @@ class Publish extends Component<{}, PublishState> {
             type: 'dataset' as AssetType,
             license: '',
             copyrightHolder: '',
-            categories: [],
+            categories: '',
             isPublishing: false,
             isPublished: false,
             publishingStep: 0,
@@ -281,7 +292,9 @@ class Publish extends Component<{}, PublishState> {
                 license: this.state.license,
                 copyrightHolder: this.state.copyrightHolder,
                 files,
-                price: this.state.price,
+                price: allowPricing
+                    ? Web3.utils.toWei(this.state.price, 'ether')
+                    : this.state.price,
                 type: this.state.type,
                 categories: [this.state.categories]
             })
