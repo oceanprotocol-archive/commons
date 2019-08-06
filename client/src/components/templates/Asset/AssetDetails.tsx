@@ -10,9 +10,8 @@ import AssetFilesDetails from './AssetFilesDetails'
 import Button from '../../atoms/Button'
 import Spinner from '../../atoms/Spinner'
 import Report from './Report'
-import { allowPricing } from '../../../config'
 import Web3 from 'web3'
-import { serviceUri } from '../../../config'
+import { serviceUri, allowPricing } from '../../../config'
 
 const { steps } = require('../../../data/form-publish.json') // eslint-disable-line
 
