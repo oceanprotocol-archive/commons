@@ -32,7 +32,9 @@ interface SearchState {
 
 class Search extends PureComponent<SearchProps, SearchState> {
     public static contextType = User
+
     public timeout: any = false
+
     public state = {
         results: [],
         totalResults: 0,
@@ -49,7 +51,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
         const { search } = this.props.location
         const { text, page, categories, license } = queryString.parse(search)
 
-        let update: any = {}
+        const update: any = {}
         if (text) {
             update.search = decodeURIComponent(`${text}`)
         }
@@ -131,22 +133,25 @@ class Search extends PureComponent<SearchProps, SearchState> {
     private inputChange = (
         event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
     ) => {
-        this.setState({
-            [event.currentTarget.name]: event.currentTarget.value
-        } as any, () => {
-            this.pendingSearch()
-        })
+        this.setState(
+            {
+                [event.currentTarget.name]: event.currentTarget.value
+            } as any,
+            () => {
+                this.pendingSearch()
+            }
+        )
     }
 
     private pendingSearch = () => {
-        this.setState({isLoading:true})
-        if(this.timeout){
+        this.setState({ isLoading: true })
+        if (this.timeout) {
             clearTimeout(this.timeout)
         }
-        this.timeout = setTimeout(this.executeSearch,500);
+        this.timeout = setTimeout(this.executeSearch, 500)
     }
 
-    private executeSearch=()=>{
+    private executeSearch = () => {
         this.timeout = false
         this.searchAssets()
     }
