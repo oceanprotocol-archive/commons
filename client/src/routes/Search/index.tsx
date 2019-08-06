@@ -32,7 +32,7 @@ interface SearchState {
 
 class Search extends PureComponent<SearchProps, SearchState> {
     public static contextType = User
-
+    public timeout: any = false
     public state = {
         results: [],
         totalResults: 0,
@@ -134,8 +134,22 @@ class Search extends PureComponent<SearchProps, SearchState> {
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value
         } as any, () => {
-            this.searchAssets()
+            this.pendingSearch()
         })
+    }
+
+    private pendingSearch = () => {
+        this.setState({isLoading:true},()=>{
+            if(this.timeout){
+                clearTimeout(this.timeout)
+            }
+            this.timeout = setTimeout(this.executeSearch,250);
+        })
+    }
+
+    private executeSearch=()=>{
+        this.timeout = false
+        this.searchAssets()
     }
 
     public setCategory = (category: string) => {
@@ -193,11 +207,13 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
                             {this.renderResults()}
 
-                            <Pagination
-                                totalPages={totalPages}
-                                currentPage={currentPage}
-                                handlePageClick={this.handlePageClick}
-                            />
+                            {!this.state.isLoading && (
+                                <Pagination
+                                    totalPages={totalPages}
+                                    currentPage={currentPage}
+                                    handlePageClick={this.handlePageClick}
+                                />
+                            )}
                         </div>
                     </div>
                 </Content>
