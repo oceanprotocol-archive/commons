@@ -139,12 +139,11 @@ class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     private pendingSearch = () => {
-        this.setState({isLoading:true},()=>{
-            if(this.timeout){
-                clearTimeout(this.timeout)
-            }
-            this.timeout = setTimeout(this.executeSearch,250);
-        })
+        this.setState({isLoading:true})
+        if(this.timeout){
+            clearTimeout(this.timeout)
+        }
+        this.timeout = setTimeout(this.executeSearch,500);
     }
 
     private executeSearch=()=>{
@@ -153,11 +152,11 @@ class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     public setCategory = (category: string) => {
-        this.setState({ category }, () => this.searchAssets())
+        this.setState({ category, isLoading: true }, () => this.searchAssets())
     }
 
     public setLicense = (license: string) => {
-        this.setState({ license }, () => this.searchAssets())
+        this.setState({ license, isLoading: true }, () => this.searchAssets())
     }
 
     public renderResults = () =>
