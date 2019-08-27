@@ -36,6 +36,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-cypress": "^2.6.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-utils": ">=1.4.1",
     "prettier": "^1.18.2",
     "prettier-stylelint": "^0.4.2",
     "release-it": "^12.3.4",
