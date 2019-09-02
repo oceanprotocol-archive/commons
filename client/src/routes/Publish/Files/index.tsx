@@ -60,7 +60,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     private addItem = async (value: string) => {
-        let file: File = {
+        const file: File = {
             url: value,
             contentType: '',
             found: false // non-standard

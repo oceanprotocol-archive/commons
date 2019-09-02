@@ -5,7 +5,7 @@ import ItemForm from './ItemForm'
 const addItem = jest.fn()
 
 const setup = () => {
-    const utils = render(<ItemForm placeholder={'Hello'} addItem={addItem} />)
+    const utils = render(<ItemForm placeholder="Hello" addItem={addItem} />)
     const input = utils.getByPlaceholderText('Hello')
     const button = utils.getByText('Add File')
     const { container } = utils

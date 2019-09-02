@@ -38,8 +38,8 @@ const renderComponent = () =>
     render(
         <Files
             files={files}
-            placeholder={'Hello'}
-            name={'Hello'}
+            placeholder="Hello"
+            name="Hello"
             onChange={onChange}
         />
     )

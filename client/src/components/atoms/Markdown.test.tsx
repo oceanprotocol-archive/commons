@@ -4,7 +4,7 @@ import Markdown from './Markdown'
 
 describe('Markdown', () => {
     it('renders without crashing', () => {
-        const { container } = render(<Markdown text={'#hello'} />)
+        const { container } = render(<Markdown text="#hello" />)
         expect(container.firstChild).toBeInTheDocument()
     })
 })

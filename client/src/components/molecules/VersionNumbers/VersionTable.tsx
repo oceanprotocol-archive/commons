@@ -43,7 +43,7 @@ export const VersionTableContracts = ({
                 </td>
                 <td>
                     <VersionNumber
-                        name={'Keeper Contracts'}
+                        name="Keeper Contracts"
                         version={keeperVersion}
                     />
                 </td>

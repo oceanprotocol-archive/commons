@@ -12,7 +12,7 @@ export default class AssetsUser extends PureComponent<
 > {
     public state = { results: [], isLoading: true }
 
-    public _isMounted: boolean = false
+    public _isMounted = false
 
     public componentDidMount() {
         this._isMounted = true
@@ -88,7 +88,7 @@ export default class AssetsUser extends PureComponent<
                                     />
                                 ))}
                             {this.props.recent && (
-                                <Link className={styles.link} to={'/history'}>
+                                <Link className={styles.link} to="/history">
                                     All Data Sets
                                 </Link>
                             )}

@@ -42,9 +42,11 @@ export default class VersionNumbers extends PureComponent<
     // construct values which are not part of any response
     public commonsVersion =
         process.env.NODE_ENV === 'production' ? version : `${version}-dev`
+
     public commonsNetwork = faucetUri.includes('localhost')
         ? 'Spree'
         : new URL(nodeUri).hostname.split('.')[0]
+
     public faucetNetwork = faucetUri.includes('dev-ocean')
         ? new URL(faucetUri).hostname.split('.')[1]
         : faucetUri.includes('oceanprotocol.com')
@@ -155,7 +157,7 @@ export default class VersionNumbers extends PureComponent<
                     <p className={styles.versionsMinimal}>
                         <a
                             title={`${squid.name} v${squid.version}\n${brizo.name} v${brizo.version}\n${aquarius.name} v${aquarius.version}`}
-                            href={'/about'}
+                            href="/about"
                         >
                             v{commons.version}{' '}
                             {market.network && `(${market.network})`}

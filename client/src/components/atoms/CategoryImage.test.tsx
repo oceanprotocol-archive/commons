@@ -5,7 +5,7 @@ import formPublish from '../../data/form-publish.json'
 
 describe('CategoryImage', () => {
     it('renders fallback image', () => {
-        const { container } = render(<CategoryImage category={''} />)
+        const { container } = render(<CategoryImage category="" />)
         expect(container.firstChild).toBeInTheDocument()
         expect(container.firstChild.style.backgroundImage).toMatch(
             /jellyfish-back/

@@ -57,7 +57,7 @@ class Asset extends Component<AssetProps, AssetState> {
 
         return isLoading ? (
             <div className={stylesApp.loader}>
-                <Spinner message={'Loading asset...'} />
+                <Spinner message="Loading asset..." />
             </div>
         ) : error !== '' ? (
             <div className={styles.error}>{error}</div>

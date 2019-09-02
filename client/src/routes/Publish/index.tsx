@@ -38,7 +38,7 @@ interface PublishState {
 }
 
 if (allowPricing) {
-    ;(steps as any)[0].fields['price'] = {
+    ;(steps as any)[0].fields.price = {
         label: 'Price',
         placeholder: 'Price in Ocean tokens',
         type: 'string',
@@ -139,7 +139,7 @@ class Publish extends Component<{}, PublishState> {
     }
 
     private validateInputs = (name: string, value: string) => {
-        let hasContent = value.length > 0
+        const hasContent = value.length > 0
 
         // Setting state for all fields
         if (hasContent) {
@@ -176,7 +176,7 @@ class Publish extends Component<{}, PublishState> {
     }
 
     private runValidation = () => {
-        let { validationStatus } = this.state
+        const { validationStatus } = this.state
         //
         // Step 1
         //

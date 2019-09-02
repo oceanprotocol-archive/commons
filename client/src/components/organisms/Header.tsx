@@ -23,7 +23,7 @@ export default class Header extends PureComponent {
         return (
             <header className={styles.header}>
                 <div className={styles.headerContent}>
-                    <NavLink to={'/'} className={styles.headerLogo}>
+                    <NavLink to="/" className={styles.headerLogo}>
                         <Logo className={styles.headerLogoImage} />
                         <h1 className={styles.headerTitle}>{meta.title}</h1>
                     </NavLink>

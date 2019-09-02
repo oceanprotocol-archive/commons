@@ -17,6 +17,7 @@ export default class Pagination extends PureComponent<
     PaginationState
 > {
     public state = { smallViewport: true }
+
     private mq = window.matchMedia && window.matchMedia('(min-width: 600px)')
 
     public componentDidMount() {
@@ -55,9 +56,9 @@ export default class Pagination extends PureComponent<
                     pageRangeDisplayed={smallViewport ? 3 : 6}
                     onPageChange={data => handlePageClick(data)}
                     disableInitialCallback
-                    previousLabel={'←'}
-                    nextLabel={'→'}
-                    breakLabel={'...'}
+                    previousLabel="←"
+                    nextLabel="→"
+                    breakLabel="..."
                     containerClassName={styles.pagination}
                     pageLinkClassName={styles.number}
                     activeLinkClassName={styles.current}
