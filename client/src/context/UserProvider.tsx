@@ -125,6 +125,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private accountsInterval: any = null
+
     private networkInterval: any = null
 
     public async componentDidMount() {

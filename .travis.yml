@@ -2,7 +2,7 @@ dist: xenial
 sudo: required
 language: node_js
 node_js:
-  - '11'
+  - "11"
 
 services:
   - docker
@@ -25,7 +25,7 @@ env:
     - REACT_APP_BRIZO_URI="http://localhost:8030"
     - REACT_APP_SECRET_STORE_URI="http://localhost:12001"
     - REACT_APP_FAUCET_URI="http://localhost:3001"
-    - REACT_APP_BRIZO_ADDRESS="0x00bd138abd70e2f00903268f3db08f2d25677c9e"
+    - REACT_APP_BRIZO_ADDRESS="0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0"
     # start Barge with these versions
     - KEEPER_OWNER_ROLE_ADDRESS="0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
     - FAUCET_TIMESPAN=0

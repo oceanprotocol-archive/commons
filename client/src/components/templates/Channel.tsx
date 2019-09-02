@@ -83,7 +83,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
 
     private handlePageClick = async (data: { selected: number }) => {
         // react-pagination starts counting at 0, we start at 1
-        let toPage = data.selected + 1
+        const toPage = data.selected + 1
 
         this.props.history.push({ search: `?page=${toPage}` })
 

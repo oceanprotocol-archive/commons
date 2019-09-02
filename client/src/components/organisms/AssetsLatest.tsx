@@ -13,7 +13,7 @@ interface AssetsLatestState {
 export default class AssetsLatest extends PureComponent<{}, AssetsLatestState> {
     public state = { latestAssets: [], isLoadingLatest: true }
 
-    public _isMounted: boolean = false
+    public _isMounted = false
 
     public componentDidMount() {
         this._isMounted = true
