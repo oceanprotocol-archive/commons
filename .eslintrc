@@ -1,7 +1,12 @@
 {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": [
+            "./tsconfig.json",
+            "./client/tsconfig.json",
+            "./server/tsconfig.json",
+            "./cypress/tsconfig.json"
+        ]
     },
     "extends": [
         "oceanprotocol",
@@ -27,5 +32,10 @@
         "browser": true,
         "jest": true,
         "cypress/globals": true
+    },
+    "settings": {
+        "react": {
+            "version": "16.8"
+        }
     }
 }
