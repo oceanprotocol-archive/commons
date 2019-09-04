@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, waitForElement } from '@testing-library/react'
+import { render, fireEvent, waitForElement, act } from '@testing-library/react'
 import mockAxios from 'jest-mock-axios'
 import Files from '.'
 
@@ -56,14 +56,30 @@ describe('Files', () => {
         const { container, getByText } = renderComponent()
 
         // open
-        fireEvent.click(getByText('+ Add a file'))
+        fireEvent.click(getByText('+ Add a file URL'))
         await waitForElement(() => getByText('- Cancel'))
         expect(container.querySelector('.itemForm')).toBeInTheDocument()
 
         // close
         fireEvent.click(getByText('- Cancel'))
-        await waitForElement(() => getByText('+ Add a file'))
+        await waitForElement(() => getByText('+ Add a file URL'))
         expect(container.querySelector('.grow-exit')).toBeInTheDocument()
+    })
+
+    it('new IPFS file form can be opened and closed', async () => {
+        const { container, getByText } = renderComponent()
+
+        // open
+        act(async () => {
+            fireEvent.click(getByText('+ Add to IPFS'))
+            await waitForElement(() => getByText('- Cancel'))
+            expect(container.querySelector('.ipfsForm')).toBeInTheDocument()
+
+            // close
+            fireEvent.click(getByText('- Cancel'))
+            await waitForElement(() => getByText('+ Add to IPFS'))
+            expect(container.querySelector('.grow-exit')).toBeInTheDocument()
+        })
     })
 
     it('item can be removed', async () => {
@@ -76,7 +92,7 @@ describe('Files', () => {
     it('item can be added', async () => {
         const { getByText, getByPlaceholderText } = renderComponent()
 
-        fireEvent.click(getByText('+ Add a file'))
+        fireEvent.click(getByText('+ Add a file URL'))
         await waitForElement(() => getByText('- Cancel'))
         fireEvent.change(getByPlaceholderText('Hello'), {
             target: { value: 'https://hello.com' }

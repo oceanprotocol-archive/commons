@@ -23,6 +23,7 @@
     "ethereum-blockies": "github:MyEtherWallet/blockies",
     "filesize": "^4.1.2",
     "history": "^4.9.0",
+    "ipfs": "^0.37.1",
     "is-url": "^1.2.4",
     "moment": "^2.24.0",
     "query-string": "^6.8.2",
