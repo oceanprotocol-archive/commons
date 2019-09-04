@@ -4,13 +4,15 @@ import Ipfs from 'ipfs'
 import { useEffect, useState } from 'react'
 
 let ipfs: any = null
-let ipfsMessage: string | null = null
+let ipfsMessage = ''
 
 export default function useIpfs() {
     const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
     const [ipfsInitError, setIpfsInitError] = useState(null)
 
     async function startIpfs() {
+        ipfsMessage = 'Starting IPFS...'
+
         if (ipfs) {
             console.log('IPFS already started')
             // } else if (window.ipfs && window.ipfs.enable) {
@@ -18,7 +20,7 @@ export default function useIpfs() {
             //     ipfs = await window.ipfs.enable()
         } else {
             try {
-                const message = 'IPFS Started'
+                const message = 'IPFS started'
                 console.time(message)
                 ipfs = await Ipfs.create()
                 console.timeEnd(message)
@@ -40,12 +42,13 @@ export default function useIpfs() {
         // just like componentDidUnmount()
         return function cleanup() {
             if (ipfs && ipfs.stop) {
-                console.time('IPFS Stopped')
+                console.time('IPFS stopped')
                 ipfs.stop()
                 setIpfsReady(false)
                 ipfs = null
-                ipfsMessage = null
-                console.timeEnd('IPFS Stopped')
+                ipfsMessage = ''
+                setIpfsInitError(null)
+                console.timeEnd('IPFS stopped')
             }
         }
     }, [])

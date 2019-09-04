@@ -1,5 +1,4 @@
 import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import axios from 'axios'
 import { Logger } from '@oceanprotocol/squid'
 import Button from '../../../components/atoms/Button'
@@ -58,15 +57,21 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     private toggleForm = (e: Event) => {
         e.preventDefault()
-        this.setState({ isFormShown: !this.state.isFormShown })
+        this.setState({
+            isFormShown: !this.state.isFormShown,
+            isIpfsFormShown: false
+        })
     }
 
     private toggleIpfsForm = (e: Event) => {
         e.preventDefault()
-        this.setState({ isIpfsFormShown: !this.state.isIpfsFormShown })
+        this.setState({
+            isIpfsFormShown: !this.state.isIpfsFormShown,
+            isFormShown: false
+        })
     }
 
-    private addItem = async (url: string) => {
+    private async getFile(url: string) {
         const file: File = {
             url,
             contentType: '',
@@ -83,15 +88,34 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
             })
 
             const { contentLength, contentType, found } = response.data.result
+
             file.contentLength = contentLength
             file.contentType = contentType
             file.compression = cleanupContentType(contentType)
             file.found = found
+
+            return file
         } catch (error) {
             !axios.isCancel(error) && Logger.error(error.message)
         }
+    }
 
-        this.props.files.push(file)
+    private addFile = async (url: string) => {
+        // check for duplicate urls
+        const duplicateFiles = this.props.files.filter(props =>
+            url.includes(props.url)
+        )
+
+        if (duplicateFiles.length > 0) {
+            return this.setState({
+                isFormShown: false,
+                isIpfsFormShown: false
+            })
+        }
+
+        const file: File | undefined = await this.getFile(url)
+        file && this.props.files.push(file)
+
         const event = {
             currentTarget: {
                 name: 'files',
@@ -99,13 +123,14 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
             }
         }
         this.props.onChange(event as any)
+
         this.setState({
-            isFormShown: !this.state.isFormShown,
-            isIpfsFormShown: !this.state.isIpfsFormShown
+            isFormShown: false,
+            isIpfsFormShown: false
         })
     }
 
-    private removeItem = (index: number) => {
+    private removeFile = (index: number) => {
         this.props.files.splice(index, 1)
         const event = {
             currentTarget: {
@@ -136,57 +161,33 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
                 <div className={styles.newItems}>
                     {files.length > 0 && (
-                        <TransitionGroup
-                            component="ul"
-                            className={styles.itemsList}
-                        >
+                        <ul className={styles.itemsList}>
                             {files.map((item: any, index: number) => (
-                                <CSSTransition
-                                    key={index}
-                                    timeout={400}
-                                    classNames="fade"
-                                >
-                                    <Item
-                                        item={item}
-                                        removeItem={() =>
-                                            this.removeItem(index)
-                                        }
-                                    />
-                                </CSSTransition>
+                                <Item
+                                    key={item.url}
+                                    item={item}
+                                    removeItem={() => this.removeFile(index)}
+                                />
                             ))}
-                        </TransitionGroup>
+                        </ul>
                     )}
 
                     <Button link onClick={this.toggleForm}>
-                        {isFormShown ? '- Cancel' : '+ Add a file URL'}
+                        {isFormShown ? '- Cancel' : '+ From public URL'}
                     </Button>
 
                     <Button link onClick={this.toggleIpfsForm}>
                         {isIpfsFormShown ? '- Cancel' : '+ Add to IPFS'}
                     </Button>
 
-                    <CSSTransition
-                        classNames="grow"
-                        in={isFormShown}
-                        timeout={200}
-                        unmountOnExit
-                        onExit={() => this.setState({ isFormShown: false })}
-                    >
+                    {isFormShown && (
                         <ItemForm
                             placeholder={placeholder}
-                            addItem={this.addItem}
+                            addFile={this.addFile}
                         />
-                    </CSSTransition>
+                    )}
 
-                    <CSSTransition
-                        classNames="grow"
-                        in={isIpfsFormShown}
-                        timeout={200}
-                        unmountOnExit
-                        onExit={() => this.setState({ isIpfsFormShown: false })}
-                    >
-                        <Ipfs addItem={this.addItem} />
-                    </CSSTransition>
+                    {isIpfsFormShown && <Ipfs addFile={this.addFile} />}
                 </div>
             </>
         )

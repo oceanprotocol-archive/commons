@@ -5,7 +5,7 @@ import Button from '../../../components/atoms/Button'
 import styles from './ItemForm.module.scss'
 
 interface ItemFormProps {
-    addItem(url: string): void
+    addFile(url: string): void
     placeholder: string
 }
 
@@ -42,7 +42,7 @@ export default class ItemForm extends PureComponent<
             return
         }
 
-        this.props.addItem(url)
+        this.props.addFile(url)
     }
 
     private onChangeUrl = (e: React.FormEvent<HTMLInputElement>) => {

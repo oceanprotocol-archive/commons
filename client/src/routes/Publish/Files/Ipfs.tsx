@@ -1,39 +1,66 @@
 /* eslint-disable no-console */
 
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import useIpfs from '../../../hooks/use-ipfs'
+import Label from '../../../components/atoms/Form/Label'
+import Spinner from '../../../components/atoms/Spinner'
 import styles from './Ipfs.module.scss'
 
 async function pingUrl(url: string) {
     try {
         const response = await axios(url)
-        if (response.status !== 200) console.error(`Could not find ${url}`)
+        if (response.status !== 200) console.error(`Not found: ${url}`)
 
-        console.log(`File found under ${url}`)
+        console.log(`File found: ${url}`)
         return
     } catch (error) {
         console.error(error.message)
     }
 }
 
-export default function Ipfs({ addItem }: { addItem(url: string): void }) {
-    const { ipfs, ipfsInitError, ipfsMessage } = useIpfs()
+function formatBytes(a: number, b: number) {
+    if (a === 0) return '0 Bytes'
+    const c = 1024
+    const d = b || 2
+    const e = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    const f = Math.floor(Math.log(a) / Math.log(c))
+
+    return parseFloat((a / Math.pow(c, f)).toFixed(d)) + ' ' + e[f]
+}
+
+export default function Ipfs({ addFile }: { addFile(url: string): void }) {
+    const { ipfs, isIpfsReady, ipfsInitError, ipfsMessage } = useIpfs()
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState('')
 
     async function saveToIpfs(buffer: Buffer) {
+        setLoading(true)
+        setMessage('Adding to local IPFS node<br />')
+
         try {
-            const response = await ipfs.add(buffer)
+            const response = await ipfs.add(buffer, {
+                progress: (length: number) => {
+                    setMessage(
+                        `Adding to local IPFS node<br />
+                        ${formatBytes(length, 0)}`
+                    )
+                }
+            })
+
             const cid = response[0].hash
             console.log(`File added: ${cid}`)
 
             // ping url to make it globally available
             const url = `https://ipfs.io/ipfs/${cid}`
+            setMessage('Checking global IPFS URL')
             await pingUrl(url)
 
             // add IPFS url to file.url
-            addItem(url)
+            addFile(url)
         } catch (error) {
             console.error(error.message)
+            setLoading(false)
         }
     }
 
@@ -50,12 +77,26 @@ export default function Ipfs({ addItem }: { addItem(url: string): void }) {
 
     return (
         <div className={styles.ipfsForm}>
-            <input
-                type="file"
-                onChange={e => handleCaptureFile(e.target.files)}
-            />
-            {ipfsMessage && <div>{ipfsMessage}</div>}
-            {ipfsInitError && <div>{ipfsInitError}</div>}
+            <Label htmlFor="fileUpload" required>
+                Add File To IPFS
+            </Label>
+            {loading ? (
+                <Spinner message={message} />
+            ) : (
+                <input
+                    type="file"
+                    name="fileUpload"
+                    id="fileUpload"
+                    onChange={e => handleCaptureFile(e.target.files)}
+                    disabled={!isIpfsReady}
+                />
+            )}
+            {ipfsMessage !== '' && (
+                <div className={styles.message}>{ipfsMessage}</div>
+            )}
+            {ipfsInitError && (
+                <div className={styles.error}>{ipfsInitError}</div>
+            )}
         </div>
     )
 }
