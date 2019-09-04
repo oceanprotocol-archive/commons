@@ -36,23 +36,15 @@ export default class Button extends PureComponent<ButtonProps, any> {
             classes = styles.button
         }
 
-        if (to) {
-            return (
-                <Link to={to} className={cx(classes, className)} {...props}>
-                    {children}
-                </Link>
-            )
-        }
-
-        if (href) {
-            return (
-                <a href={href} className={cx(classes, className)} {...props}>
-                    {children}
-                </a>
-            )
-        }
-
-        return (
+        return to ? (
+            <Link to={to} className={cx(classes, className)} {...props}>
+                {children}
+            </Link>
+        ) : href ? (
+            <a href={href} className={cx(classes, className)} {...props}>
+                {children}
+            </a>
+        ) : (
             <button className={cx(classes, className)} {...props}>
                 {children}
             </button>

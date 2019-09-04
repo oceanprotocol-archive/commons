@@ -1,15 +1,16 @@
 import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import axios from 'axios'
+import { Logger } from '@oceanprotocol/squid'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
 import ItemForm from './ItemForm'
 import Item from './Item'
+import Ipfs from './Ipfs'
 import styles from './index.module.scss'
 
 import { serviceUri } from '../../../config'
 import cleanupContentType from '../../../utils/cleanupContentType'
-import { Logger } from '@oceanprotocol/squid'
 
 export interface File {
     url: string
@@ -39,11 +40,13 @@ interface FilesProps {
 
 interface FilesStates {
     isFormShown: boolean
+    isIpfsFormShown: boolean
 }
 
 export default class Files extends PureComponent<FilesProps, FilesStates> {
     public state: FilesStates = {
-        isFormShown: false
+        isFormShown: false,
+        isIpfsFormShown: false
     }
 
     // for canceling axios requests
@@ -55,13 +58,17 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     private toggleForm = (e: Event) => {
         e.preventDefault()
-
         this.setState({ isFormShown: !this.state.isFormShown })
     }
 
-    private addItem = async (value: string) => {
+    private toggleIpfsForm = (e: Event) => {
+        e.preventDefault()
+        this.setState({ isIpfsFormShown: !this.state.isIpfsFormShown })
+    }
+
+    private addItem = async (url: string) => {
         const file: File = {
-            url: value,
+            url,
             contentType: '',
             found: false // non-standard
         }
@@ -71,14 +78,14 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 url: `${serviceUri}/api/v1/urlcheck`,
-                data: { url: value },
+                data: { url },
                 cancelToken: this.signal.token
             })
 
             const { contentLength, contentType, found } = response.data.result
             file.contentLength = contentLength
             file.contentType = contentType
-            file.compression = await cleanupContentType(contentType)
+            file.compression = cleanupContentType(contentType)
             file.found = found
         } catch (error) {
             !axios.isCancel(error) && Logger.error(error.message)
@@ -92,7 +99,10 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
             }
         }
         this.props.onChange(event as any)
-        this.setState({ isFormShown: !this.state.isFormShown })
+        this.setState({
+            isFormShown: !this.state.isFormShown,
+            isIpfsFormShown: !this.state.isIpfsFormShown
+        })
     }
 
     private removeItem = (index: number) => {
@@ -108,8 +118,8 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     public render() {
-        const { isFormShown } = this.state
         const { files, help, placeholder, name, onChange } = this.props
+        const { isFormShown, isIpfsFormShown } = this.state
 
         return (
             <>
@@ -148,7 +158,11 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                     )}
 
                     <Button link onClick={this.toggleForm}>
-                        {isFormShown ? '- Cancel' : '+ Add a file'}
+                        {isFormShown ? '- Cancel' : '+ Add a file URL'}
+                    </Button>
+
+                    <Button link onClick={this.toggleIpfsForm}>
+                        {isIpfsFormShown ? '- Cancel' : '+ Add to IPFS'}
                     </Button>
 
                     <CSSTransition
@@ -162,6 +176,16 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                             placeholder={placeholder}
                             addItem={this.addItem}
                         />
+                    </CSSTransition>
+
+                    <CSSTransition
+                        classNames="grow"
+                        in={isIpfsFormShown}
+                        timeout={200}
+                        unmountOnExit
+                        onExit={() => this.setState({ isIpfsFormShown: false })}
+                    >
+                        <Ipfs addItem={this.addItem} />
                     </CSSTransition>
                 </div>
             </>
