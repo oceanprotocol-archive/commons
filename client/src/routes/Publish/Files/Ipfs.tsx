@@ -30,7 +30,13 @@ function formatBytes(a: number, b: number) {
 }
 
 export default function Ipfs({ addFile }: { addFile(url: string): void }) {
-    const { ipfs, isIpfsReady, ipfsInitError, ipfsMessage } = useIpfs()
+    const {
+        ipfs,
+        ipfsVersion,
+        isIpfsReady,
+        ipfsInitError,
+        ipfsMessage
+    } = useIpfs()
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
 
@@ -92,7 +98,12 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
                 />
             )}
             {ipfsMessage !== '' && (
-                <div className={styles.message}>{ipfsMessage}</div>
+                <div
+                    className={styles.message}
+                    title={`js-ipfs v${ipfsVersion}`}
+                >
+                    {ipfsMessage}
+                </div>
             )}
             {ipfsInitError && (
                 <div className={styles.error}>{ipfsInitError}</div>

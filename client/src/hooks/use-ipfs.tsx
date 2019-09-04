@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 let ipfs: any = null
 let ipfsMessage = ''
+let ipfsVersion = ''
 
 export default function useIpfs() {
     const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
@@ -25,6 +26,9 @@ export default function useIpfs() {
                 ipfs = await Ipfs.create()
                 console.timeEnd(message)
                 ipfsMessage = message
+
+                const { version } = await ipfs.version()
+                ipfsVersion = version
             } catch (error) {
                 const message = `IPFS init error: ${error.message}`
                 ipfsMessage = message
@@ -47,11 +51,12 @@ export default function useIpfs() {
                 setIpfsReady(false)
                 ipfs = null
                 ipfsMessage = ''
+                ipfsVersion = ''
                 setIpfsInitError(null)
                 console.timeEnd('IPFS stopped')
             }
         }
     }, [])
 
-    return { ipfs, isIpfsReady, ipfsInitError, ipfsMessage }
+    return { ipfs, ipfsVersion, isIpfsReady, ipfsInitError, ipfsMessage }
 }
