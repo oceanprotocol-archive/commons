@@ -5,6 +5,22 @@ import Files from '.'
 
 const onChange = jest.fn()
 
+// filter out IPFS node messages
+const originalLog = console.log
+
+beforeAll(() => {
+    console.log = (...args: any) => {
+        if (/Swarm listening/.test(args[0])) {
+            return
+        }
+        originalLog.call(console, ...args)
+    }
+})
+
+afterAll(() => {
+    console.log = originalLog
+})
+
 afterEach(() => {
     mockAxios.reset()
 })
@@ -67,12 +83,15 @@ describe('Files', () => {
     })
 
     it('new IPFS file form can be opened and closed', async () => {
-        const { container, getByText } = renderComponent()
+        const { container, getByText, findByText } = renderComponent()
 
         // open
         fireEvent.click(getByText('+ Add to IPFS'))
         await waitForElement(() => getByText('- Cancel'))
         expect(container.querySelector('.ipfsForm')).toBeInTheDocument()
+
+        // wait for IPFS node
+        await findByText(/IPFS /)
 
         // close
         fireEvent.click(getByText('- Cancel'))
