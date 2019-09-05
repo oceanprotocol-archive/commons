@@ -173,7 +173,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                     )}
 
                     <Button link onClick={this.toggleForm}>
-                        {isFormShown ? '- Cancel' : '+ From public URL'}
+                        {isFormShown ? '- Cancel' : '+ From URL'}
                     </Button>
 
                     <Button link onClick={this.toggleIpfsForm}>
