@@ -23,12 +23,13 @@ export default function useIpfs() {
             try {
                 const message = 'IPFS started'
                 console.time(message)
+
                 ipfs = await Ipfs.create()
                 console.timeEnd(message)
                 ipfsMessage = message
 
-                const { version } = await ipfs.version()
-                ipfsVersion = version
+                const { agentVersion } = await ipfs.id()
+                ipfsVersion = agentVersion
             } catch (error) {
                 const message = `IPFS init error: ${error.message}`
                 ipfsMessage = message
@@ -43,7 +44,7 @@ export default function useIpfs() {
     useEffect(() => {
         startIpfs()
 
-        // just like componentDidUnmount()
+        // just like componentWillUnmount()
         return function cleanup() {
             if (ipfs && ipfs.stop) {
                 console.time('IPFS stopped')
