@@ -57,10 +57,15 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
             const cid = response[0].hash
             console.log(`File added: ${cid}`)
 
-            // ping url to make it globally available
+            // Ping gateway url to make it globally available.
+            // Using gateway.ipfs.io is faster for initial ping,
+            // but we store ipfs.io url in DDO.
+            // https://ipfs.github.io/public-gateway-checker/
             const url = `https://ipfs.io/ipfs/${cid}`
-            setMessage('Checking global IPFS URL')
-            await pingUrl(url)
+            const urlGateway = `https://gateway.ipfs.io/ipfs/${cid}`
+
+            setMessage('Checking IPFS gateway URL')
+            await pingUrl(urlGateway)
 
             // add IPFS url to file.url
             addFile(url)
@@ -98,10 +103,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
                 />
             )}
             {ipfsMessage !== '' && (
-                <div
-                    className={styles.message}
-                    title={`js-ipfs v${ipfsVersion}`}
-                >
+                <div className={styles.message} title={ipfsVersion}>
                     {ipfsMessage}
                 </div>
             )}
