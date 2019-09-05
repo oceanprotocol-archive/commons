@@ -72,13 +72,13 @@ describe('Files', () => {
         const { container, getByText } = renderComponent()
 
         // open
-        fireEvent.click(getByText('+ From public URL'))
+        fireEvent.click(getByText('+ From URL'))
         await waitForElement(() => getByText('- Cancel'))
         expect(container.querySelector('.itemForm')).toBeInTheDocument()
 
         // close
         fireEvent.click(getByText('- Cancel'))
-        await waitForElement(() => getByText('+ From public URL'))
+        await waitForElement(() => getByText('+ From URL'))
         expect(container.querySelector('.itemForm')).not.toBeInTheDocument()
     })
 
@@ -109,7 +109,7 @@ describe('Files', () => {
     it('item can be added', async () => {
         const { getByText, getByPlaceholderText } = renderComponent()
 
-        fireEvent.click(getByText('+ From public URL'))
+        fireEvent.click(getByText('+ From URL'))
         await waitForElement(() => getByText('- Cancel'))
         fireEvent.change(getByPlaceholderText('Hello'), {
             target: { value: 'https://hello.com' }
