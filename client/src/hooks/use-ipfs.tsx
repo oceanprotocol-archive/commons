@@ -35,7 +35,7 @@ export default function useIpfs() {
                 ipfsMessage = message
                 console.error(message)
                 ipfs = null
-                setIpfsInitError(error)
+                setIpfsInitError(error.message)
             }
         }
         setIpfsReady(Boolean(ipfs))
