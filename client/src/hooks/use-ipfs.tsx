@@ -11,7 +11,7 @@ let ipfsVersion = ''
 
 export default function useIpfs() {
     const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
-    const [ipfsInitError, setIpfsInitError] = useState(null)
+    const [ipfsError, setIpfsError] = useState(null)
 
     async function startIpfs() {
         ipfsMessage = 'Starting IPFS...'
@@ -46,7 +46,7 @@ export default function useIpfs() {
                 ipfsMessage = message
                 console.error(message)
                 ipfs = null
-                setIpfsInitError(error.message)
+                setIpfsError(error.message)
             }
         }
         setIpfsReady(Boolean(ipfs))
@@ -64,11 +64,11 @@ export default function useIpfs() {
                 ipfs = null
                 ipfsMessage = ''
                 ipfsVersion = ''
-                setIpfsInitError(null)
+                setIpfsError(null)
                 console.timeEnd('IPFS stopped')
             }
         }
     }, [])
 
-    return { ipfs, ipfsVersion, isIpfsReady, ipfsInitError, ipfsMessage }
+    return { ipfs, ipfsVersion, isIpfsReady, ipfsError, ipfsMessage }
 }

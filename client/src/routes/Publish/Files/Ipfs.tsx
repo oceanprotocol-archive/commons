@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import axios from 'axios'
-import useIpfs from '../../../hooks/use-ipfs'
+import useIpfsApi from '../../../hooks/use-ipfs-api'
 import Label from '../../../components/atoms/Form/Label'
 import Spinner from '../../../components/atoms/Spinner'
 import styles from './Ipfs.module.scss'
@@ -30,39 +30,44 @@ function formatBytes(a: number, b: number) {
 }
 
 export default function Ipfs({ addFile }: { addFile(url: string): void }) {
+    const config = {
+        host: 'ipfs.infura.io',
+        port: '5001',
+        protocol: 'https'
+    }
+
     const {
         ipfs,
         ipfsVersion,
         isIpfsReady,
-        ipfsInitError,
+        ipfsError,
         ipfsMessage
-    } = useIpfs()
+    } = useIpfsApi(config)
+
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
 
     async function saveToIpfs(buffer: Buffer) {
         setLoading(true)
-        setMessage('Adding to local IPFS node<br />')
+        setMessage('Adding to remote IPFS node<br />')
 
         try {
             const response = await ipfs.add(buffer, {
-                progress: (length: number) => {
+                progress: (length: number) =>
                     setMessage(
-                        `Adding to local IPFS node<br />
+                        `Adding to remote IPFS node<br />
                         ${formatBytes(length, 0)}`
                     )
-                }
             })
 
             const cid = response[0].hash
             console.log(`File added: ${cid}`)
 
-            // Ping gateway url to make it globally available.
-            // Using gateway.ipfs.io is faster for initial ping,
-            // but we store ipfs.io url in DDO.
+            // Ping gateway url to make it globally available,
+            // but store ipfs.io url in DDO.
             // https://ipfs.github.io/public-gateway-checker/
             const url = `https://ipfs.io/ipfs/${cid}`
-            const urlGateway = `https://gateway.ipfs.io/ipfs/${cid}`
+            const urlGateway = `https://ipfs.infura.io/ipfs/${cid}`
 
             setMessage('Checking IPFS gateway URL')
             await pingUrl(urlGateway)
@@ -107,9 +112,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
                     {ipfsMessage}
                 </div>
             )}
-            {ipfsInitError && (
-                <div className={styles.error}>{ipfsInitError}</div>
-            )}
+            {ipfsError && <div className={styles.error}>{ipfsError}</div>}
         </div>
     )
 }
