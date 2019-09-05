@@ -5,22 +5,6 @@ import Files from '.'
 
 const onChange = jest.fn()
 
-// filter out IPFS node messages
-const originalLog = console.log
-
-beforeAll(() => {
-    console.log = (...args: any) => {
-        if (/Swarm listening/.test(args[0])) {
-            return
-        }
-        originalLog.call(console, ...args)
-    }
-})
-
-afterAll(() => {
-    console.log = originalLog
-})
-
 afterEach(() => {
     mockAxios.reset()
 })

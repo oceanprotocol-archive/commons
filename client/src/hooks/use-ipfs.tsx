@@ -2,6 +2,8 @@
 
 import Ipfs from 'ipfs'
 import { useEffect, useState } from 'react'
+import os from 'os'
+import shortid from 'shortid'
 
 let ipfs: any = null
 let ipfsMessage = ''
@@ -24,7 +26,16 @@ export default function useIpfs() {
                 const message = 'IPFS started'
                 console.time(message)
 
-                ipfs = await Ipfs.create()
+                ipfs = await Ipfs.create({
+                    repo: `${os.homedir()}/.jsipfs-${shortid.generate()}`,
+                    config: {
+                        Addresses: {
+                            // 0 for port so system just assigns a new free port
+                            // to allow multiple nodes running at same time
+                            Swarm: ['/ip4/0.0.0.0/tcp/0']
+                        }
+                    }
+                })
                 console.timeEnd(message)
                 ipfsMessage = message
 
