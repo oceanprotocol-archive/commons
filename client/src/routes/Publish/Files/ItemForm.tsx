@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import isUrl from 'is-url'
+import isUrl from 'is-url-superb'
 import Input from '../../../components/atoms/Form/Input'
 import Button from '../../../components/atoms/Button'
 import styles from './ItemForm.module.scss'
@@ -37,7 +37,7 @@ export default class ItemForm extends PureComponent<
             return
         }
 
-        if (url && !isUrl(url)) {
+        if (url && !url.includes('ipfs://') && !isUrl(url)) {
             this.setState({ noUrl: true })
             return
         }
