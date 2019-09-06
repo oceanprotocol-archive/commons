@@ -13,9 +13,22 @@ describe('GET /', () => {
 })
 
 describe('POST /api/v1/urlcheck', () => {
-    it('responds with json', async () => {
-        const response = await request(server).post('/api/v1/urlcheck')
+    it('responds with json on http://', async () => {
+        const response = await request(server)
+            .post('/api/v1/urlcheck')
+            .send({ url: 'https://oceanprotocol.com/tech-whitepaper.pdf' })
         expect(response.status).toBe(200)
+        expect(response.body).toBeTruthy()
+    })
+
+    it('responds with json on ipfs://', async () => {
+        const response = await request(server)
+            .post('/api/v1/urlcheck')
+            .send({
+                url: 'ipfs://QmQfpdcMWnLTXKKW9GPV7NgtEugghgD6HgzSF6gSrp2mL9'
+            })
+        expect(response.status).toBe(200)
+        expect(response.body).toBeTruthy()
     })
 
     it('responds with error message when url is missing', async () => {
