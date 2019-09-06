@@ -14,7 +14,7 @@ context('Publish', () => {
         cy.get('input#name').type('Commons Integration Test')
         // Open Add a file form
         cy.get('button')
-            .contains('+ Add a file')
+            .contains('+ From URL')
             .click()
         // Fill url of file
         cy.get('input#url').type(
