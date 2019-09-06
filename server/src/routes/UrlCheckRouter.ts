@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express'
 import request from 'request'
+import config from '../config/config'
 
 export class UrlCheckRouter {
     public router: Router
@@ -12,13 +13,22 @@ export class UrlCheckRouter {
     }
 
     public checkUrl(req: Request, res: Response) {
-        if (!req.body.url) {
+        let { url } = req.body
+
+        if (!url) {
             return res.send({ status: 'error', message: 'missing url' })
         }
+
+        // map native IPFS URLs to gateway URLs
+        if (url.includes('ipfs://')) {
+            const cid = url.split('ipfs://')[1]
+            url = `${config.ipfsGatewayUrl}/ipfs/${cid}`
+        }
+
         request(
             {
                 method: 'HEAD',
-                url: req.body.url,
+                url,
                 headers: { Range: 'bytes=0-' }
             },
             (error, response) => {
