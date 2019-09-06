@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { useEffect, useState } from 'react'
 import ipfsClient from 'ipfs-http-client'
 
@@ -19,10 +21,14 @@ export default function useIpfsApi(config: {
         if (ipfs) return
 
         try {
+            const message = 'Connected to IPFS gateway'
+            console.time(message)
             ipfs = await ipfsClient(config)
+            console.timeEnd(message)
+            ipfsMessage = message
+
             const version = await ipfs.version()
             ipfsVersion = version.version
-            ipfsMessage = 'Connected to IPFS gateway'
         } catch (error) {
             setIpfsError(error.message)
         }
