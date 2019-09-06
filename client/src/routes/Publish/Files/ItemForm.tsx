@@ -68,6 +68,7 @@ export default class ItemForm extends PureComponent<
                     placeholder={this.props.placeholder}
                     value={url}
                     onChange={this.onChangeUrl}
+                    help="Supported protocols are http(s):// and ipfs://"
                 />
 
                 <Button onClick={(e: Event) => this.handleSubmit(e)}>
