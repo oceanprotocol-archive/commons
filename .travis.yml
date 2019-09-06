@@ -61,11 +61,10 @@ cache:
   directories:
     # cache folder with Cypress binary
     - ~/.cache
-
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script: bash -ex ./scripts/deploy_on_k8s.sh
-    on:
-      tags: true
-      all_branches: true
+# deploy:
+#   - provider: script
+#     skip_cleanup: true
+#     script: bash -ex ./scripts/deploy_on_k8s.sh
+#     on:
+#       tags: true
+#       all_branches: true
