@@ -7,19 +7,21 @@ let ipfs: any = null
 let ipfsMessage = ''
 let ipfsVersion = ''
 
-export default function useIpfsApi(config: {
+interface IpfsConfig {
     host: string
     port: string
     protocol: string
-}) {
+}
+
+export default function useIpfsApi(config: IpfsConfig) {
     const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
     const [ipfsError, setIpfsError] = useState(null)
 
     useEffect(() => {
         async function initIpfs() {
-            ipfsMessage = 'Checking IPFS gateway...'
+            if (ipfs !== null) return
 
-            if (ipfs) return
+            ipfsMessage = 'Checking IPFS gateway...'
 
             try {
                 const message = 'Connected to IPFS gateway'
@@ -35,8 +37,11 @@ export default function useIpfsApi(config: {
             }
             setIpfsReady(Boolean(ipfs))
         }
-        initIpfs()
 
+        initIpfs()
+    }, [config])
+
+    useEffect(() => {
         // just like componentWillUnmount()
         return function cleanup() {
             if (ipfs) {
@@ -47,7 +52,7 @@ export default function useIpfsApi(config: {
                 setIpfsError(null)
             }
         }
-    }, [config])
+    }, [])
 
     return { ipfs, ipfsVersion, isIpfsReady, ipfsError, ipfsMessage }
 }

@@ -1,33 +1,12 @@
 /* eslint-disable no-console */
 
 import React, { useState } from 'react'
-import axios from 'axios'
-import useIpfsApi from '../../../hooks/use-ipfs-api'
-import Label from '../../../components/atoms/Form/Label'
-import Spinner from '../../../components/atoms/Spinner'
-import styles from './Ipfs.module.scss'
-
-async function pingUrl(url: string) {
-    try {
-        const response = await axios(url)
-        if (response.status !== 200) console.error(`Not found: ${url}`)
-
-        console.log(`File found: ${url}`)
-        return
-    } catch (error) {
-        console.error(error.message)
-    }
-}
-
-function formatBytes(a: number, b: number) {
-    if (a === 0) return '0 Bytes'
-    const c = 1024
-    const d = b || 2
-    const e = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    const f = Math.floor(Math.log(a) / Math.log(c))
-
-    return parseFloat((a / Math.pow(c, f)).toFixed(d)) + ' ' + e[f]
-}
+import useIpfsApi from '../../../../hooks/use-ipfs-api'
+import Label from '../../../../components/atoms/Form/Label'
+import Spinner from '../../../../components/atoms/Spinner'
+import Dropzone from '../../../../components/molecules/Dropzone'
+import { formatBytes, pingUrl } from './utils'
+import styles from './index.module.scss'
 
 export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     const config = {
@@ -80,15 +59,17 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
         }
     }
 
-    function handleCaptureFile(files: FileList | null) {
-        const reader: any = new window.FileReader()
-        const file = files && files[0]
+    function handleOnDrop(files: any) {
+        const reader: any = new FileReader()
 
-        reader.readAsArrayBuffer(file)
-        reader.onloadend = () => {
-            const buffer: any = Buffer.from(reader.result)
-            saveToIpfs(buffer)
-        }
+        files &&
+            files.forEach((file: File) => {
+                reader.readAsArrayBuffer(file)
+                reader.onloadend = () => {
+                    const buffer: any = Buffer.from(reader.result)
+                    saveToIpfs(buffer)
+                }
+            })
     }
 
     return (
@@ -99,13 +80,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
             {loading ? (
                 <Spinner message={message} />
             ) : (
-                <input
-                    type="file"
-                    name="fileUpload"
-                    id="fileUpload"
-                    onChange={e => handleCaptureFile(e.target.files)}
-                    disabled={!isIpfsReady}
-                />
+                <Dropzone handleOnDrop={handleOnDrop} disabled={!isIpfsReady} />
             )}
             {ipfsMessage !== '' && (
                 <div className={styles.message} title={ipfsVersion}>
