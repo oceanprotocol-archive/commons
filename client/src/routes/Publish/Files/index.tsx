@@ -89,10 +89,10 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
             const { contentLength, contentType, found } = response.data.result
 
-            file.contentLength = contentLength
-            file.contentType = contentType
-            file.compression = cleanupContentType(contentType)
-            file.found = found
+            if (contentLength) file.contentLength = contentLength
+            if (contentType) file.contentType = contentType
+            if (contentType) file.compression = cleanupContentType(contentType)
+            if (found) file.found = found
 
             return file
         } catch (error) {
