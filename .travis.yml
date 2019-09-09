@@ -38,6 +38,9 @@ before_install:
   - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
 before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
   - git clone https://github.com/oceanprotocol/barge
   - cd barge
   - bash -x start_ocean.sh --no-pleuston 2>&1 > start_ocean.log &
@@ -52,6 +55,9 @@ script:
   - ./scripts/coverage.sh
   - npm run test:e2e || travis_terminate 1
   - ./scripts/build.sh
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 notifications:
   email: false
