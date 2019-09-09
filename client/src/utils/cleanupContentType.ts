@@ -7,23 +7,24 @@ const cleanupContentType = (contentType: string) => {
     let contentTypeCleaned
 
     // TODO: add all the possible archive & compression MIME types
-    if (
-        contentType === 'application/x-lzma' ||
-        contentType === 'application/x-xz' ||
-        contentType === 'application/x-tar' ||
-        contentType === 'application/x-gtar' ||
-        contentType === 'application/x-bzip2' ||
-        contentType === 'application/x-gzip' ||
-        contentType === 'application/x-7z-compressed' ||
-        contentType === 'application/x-rar-compressed' ||
-        contentType === 'application/x-zip-compressed' ||
-        contentType === 'application/x-apple-diskimage'
-    ) {
-        contentTypeCleaned = contentTypeSplit
-            .replace('x-', '')
-            .replace('-compressed', '')
-    } else {
-        contentTypeCleaned = contentTypeSplit
+    switch (contentType) {
+        case 'application/x-lzma':
+        case 'application/x-xz':
+        case 'application/x-tar':
+        case 'application/x-gtar':
+        case 'application/x-bzip2':
+        case 'application/x-gzip':
+        case 'application/x-7z-compressed':
+        case 'application/x-rar-compressed':
+        case 'application/x-zip-compressed':
+        case 'application/x-apple-diskimage':
+            contentTypeCleaned = contentTypeSplit
+                .replace('x-', '')
+                .replace('-compressed', '')
+            break
+        default:
+            contentTypeCleaned = contentTypeSplit
+            break
     }
 
     // Manual replacements
