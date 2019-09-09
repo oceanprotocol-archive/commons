@@ -4,7 +4,7 @@
     margin-top: $spacer;
     margin-bottom: $spacer;
     border: .2rem dashed $brand-grey-lighter;
-    border-radius: 1rem;
+    border-radius: $border-radius * 2;
     padding: $spacer;
     background: $brand-white;
     transition: .2s ease-out;
@@ -17,6 +17,7 @@
         color: $brand-grey-light;
     }
 
+    &:hover,
     &:focus,
     &:active {
         border-color: $brand-grey-light;

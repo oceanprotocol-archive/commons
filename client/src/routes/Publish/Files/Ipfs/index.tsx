@@ -8,13 +8,13 @@ import Dropzone from '../../../../components/molecules/Dropzone'
 import { formatBytes, pingUrl } from './utils'
 import styles from './index.module.scss'
 
-export default function Ipfs({ addFile }: { addFile(url: string): void }) {
-    const config = {
-        host: 'ipfs.infura.io',
-        port: '5001',
-        protocol: 'https'
-    }
+const config = {
+    host: 'ipfs.infura.io',
+    port: '5001',
+    protocol: 'https'
+}
 
+export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     const {
         ipfs,
         ipfsVersion,
@@ -26,16 +26,24 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
 
-    async function saveToIpfs(buffer: Buffer) {
+    async function saveToIpfs(
+        data: File | Buffer | ReadableStream,
+        size: number
+    ) {
+        const totalSize = formatBytes(size, 0)
+
         setLoading(true)
-        setMessage('Adding to remote IPFS node<br />')
+        setMessage(`Adding to IPFS<br /><small>0/${totalSize}</small><br />`)
 
         try {
-            const response = await ipfs.add(buffer, {
+            const response = await ipfs.add(data, {
                 progress: (length: number) =>
                     setMessage(
-                        `Adding to remote IPFS node<br />
-                        ${formatBytes(length, 0)}`
+                        `Adding to IPFS<br />
+                        <small>${formatBytes(
+                            length,
+                            0
+                        )}/${totalSize}</small><br />`
                     )
             })
 
@@ -43,9 +51,9 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
             console.log(`File added: ${cid}`)
 
             // Ping gateway url to make it globally available,
-            // but store ipfs.io url in DDO.
+            // but store native url in DDO.
             // https://ipfs.github.io/public-gateway-checker/
-            const url = `https://ipfs.io/ipfs/${cid}`
+            const url = `ipfs://${cid}`
             const urlGateway = `https://ipfs.infura.io/ipfs/${cid}`
 
             setMessage('Checking IPFS gateway URL')
@@ -54,22 +62,13 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
             // add IPFS url to file.url
             addFile(url)
         } catch (error) {
-            console.error(error.message)
+            console.error(`Adding to IPFS failed: ${error.message}`)
             setLoading(false)
         }
     }
 
-    function handleOnDrop(files: any) {
-        const reader: any = new FileReader()
-
-        files &&
-            files.forEach((file: File) => {
-                reader.readAsArrayBuffer(file)
-                reader.onloadend = () => {
-                    const buffer: any = Buffer.from(reader.result)
-                    saveToIpfs(buffer)
-                }
-            })
+    function handleOnDrop(files: File[]) {
+        files.forEach((file: File) => saveToIpfs(file, file.size))
     }
 
     return (

@@ -6,7 +6,7 @@ export default function Dropzone({
     handleOnDrop,
     disabled
 }: {
-    handleOnDrop(files: FileList): void
+    handleOnDrop(files: File[]): void
     disabled?: boolean
 }) {
     const onDrop = useCallback(acceptedFiles => handleOnDrop(acceptedFiles), [
