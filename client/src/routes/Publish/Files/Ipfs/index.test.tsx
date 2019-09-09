@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 import Ipfs from '.'
 
 const addFile = jest.fn()
@@ -12,6 +12,6 @@ describe('Ipfs', () => {
         expect(container.firstChild).toBeInTheDocument()
 
         // wait for IPFS node
-        await findByText(/IPFS /)
+        await findByText(/Connected to /)
     })
 })

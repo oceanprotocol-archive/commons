@@ -34,7 +34,30 @@ describe('Report', () => {
         expect(comment).toHaveTextContent('Plants')
         fireEvent.click(getByTestId('report'))
         mockAxios.mockResponse(mockResponse)
-        // expect(mockAxios.post).toHaveBeenCalled()
+        expect(mockAxios).toHaveBeenCalled()
+
+        // close modal
+        fireEvent.click(getByTestId('closeModal'))
+    })
+
+    it('catches response error', async () => {
+        ReactModal.setAppElement(document.createElement('div'))
+
+        const { getByText, getByLabelText, getByTestId } = render(
+            <Report did="did:xxx" title="Hello" />
+        )
+        // open modal
+        fireEvent.click(getByText('Report Data Set'))
+        await wait(() => expect(getByText('did:xxx')).toBeInTheDocument())
+
+        // add comment
+        const comment = getByLabelText('Comment')
+        fireEvent.change(comment, {
+            target: { value: 'Plants' }
+        })
+        expect(comment).toHaveTextContent('Plants')
+        fireEvent.click(getByTestId('report'))
+        mockAxios.mockError({ message: 'Error catch' })
 
         // close modal
         fireEvent.click(getByTestId('closeModal'))
