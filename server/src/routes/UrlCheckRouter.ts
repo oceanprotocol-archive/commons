@@ -32,34 +32,45 @@ export class UrlCheckRouter {
                 headers: { Range: 'bytes=0-' }
             },
             (error, response) => {
-                if (
-                    response &&
-                    (response.statusCode.toString().startsWith('2') ||
-                        response.statusCode.toString().startsWith('416'))
-                ) {
+                const { headers, statusCode } = response
+                const successResponses =
+                    statusCode.toString().startsWith('2') ||
+                    statusCode.toString().startsWith('416')
+
+                if (response && successResponses) {
                     const result: any = {}
                     result.found = true
 
-                    if (response.headers['content-length']) {
+                    if (headers['content-length']) {
                         result.contentLength = parseInt(
-                            response.headers['content-length']
+                            headers['content-length']
                         ) // convert to number
                     }
 
-                    if (response.headers['content-type']) {
-                        const typeAndCharset = response.headers[
-                            'content-type'
-                        ].split(';')
+                    // sometimes servers send content-range header,
+                    // try to use it if content-length is not present
+                    if (
+                        headers['content-range'] &&
+                        !headers['content-length']
+                    ) {
+                        const size = headers['content-range'].split('/')[1]
+                        result.contentLength = parseInt(size) // convert to number
+                    }
 
-                        result.contentType = typeAndCharset[0] // eslint-disable-line prefer-destructuring
+                    if (headers['content-type']) {
+                        const typeAndCharset = headers['content-type'].split(
+                            ';'
+                        )
+
+                        /* eslint-disable prefer-destructuring */
+                        result.contentType = typeAndCharset[0]
 
                         if (typeAndCharset[1]) {
-                            /* eslint-disable prefer-destructuring */
                             result.contentCharset = typeAndCharset[1].split(
                                 '='
                             )[1]
-                            /* eslint-enable prefer-destructuring */
                         }
+                        /* eslint-enable prefer-destructuring */
                     }
                     return res.send({ status: 'success', result })
                 }
