@@ -128,6 +128,8 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
             isFormShown: false,
             isIpfsFormShown: false
         })
+
+        this.forceUpdate()
     }
 
     private removeFile = (index: number) => {

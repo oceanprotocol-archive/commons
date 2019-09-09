@@ -35,3 +35,6 @@ export const allowPricing =
     process.env.REACT_APP_ALLOW_PRICING === 'true' || false
 export const showRequestTokens =
     process.env.REACT_APP_SHOW_REQUEST_TOKENS_BUTTON === 'true' || false
+// https://ipfs.github.io/public-gateway-checker/
+export const ipfsGatewayUri =
+    process.env.REACT_APP_IPFS_GATEWAY_URI || 'https://gateway.ipfs.io'

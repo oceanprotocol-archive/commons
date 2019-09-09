@@ -6,6 +6,7 @@ import Label from '../../../../components/atoms/Form/Label'
 import Spinner from '../../../../components/atoms/Spinner'
 import Dropzone from '../../../../components/molecules/Dropzone'
 import { formatBytes, pingUrl } from './utils'
+import { ipfsGatewayUri } from '../../../../config'
 import styles from './index.module.scss'
 
 const config = {
@@ -26,10 +27,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
 
-    async function saveToIpfs(
-        data: File | Buffer | ReadableStream,
-        size: number
-    ) {
+    async function saveToIpfs(data: Buffer, size: number) {
         const totalSize = formatBytes(size, 0)
 
         setLoading(true)
@@ -52,9 +50,8 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
 
             // Ping gateway url to make it globally available,
             // but store native url in DDO.
-            // https://ipfs.github.io/public-gateway-checker/
+            const urlGateway = `${ipfsGatewayUri}/ipfs/${cid}`
             const url = `ipfs://${cid}`
-            const urlGateway = `https://ipfs.infura.io/ipfs/${cid}`
 
             setMessage('Checking IPFS gateway URL')
             await pingUrl(urlGateway)
@@ -68,7 +65,15 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     }
 
     function handleOnDrop(files: File[]) {
-        files.forEach((file: File) => saveToIpfs(file, file.size))
+        files.forEach((file: File) => {
+            const reader: any = new FileReader()
+
+            reader.readAsArrayBuffer(file)
+            reader.onloadend = () => {
+                const buffer: any = Buffer.from(reader.result)
+                saveToIpfs(buffer, file.size)
+            }
+        })
     }
 
     return (

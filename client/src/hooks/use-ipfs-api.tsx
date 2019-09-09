@@ -24,7 +24,7 @@ export default function useIpfsApi(config: IpfsConfig) {
             ipfsMessage = 'Checking IPFS gateway...'
 
             try {
-                const message = 'Connected to IPFS gateway'
+                const message = `Connected to ${config.host}`
                 console.time(message)
                 ipfs = await ipfsClient(config)
                 console.timeEnd(message)
