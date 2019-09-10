@@ -10,6 +10,8 @@ export default class AssetsUser extends PureComponent<
     { list?: boolean; recent?: number },
     { results: any[]; isLoading: boolean }
 > {
+    public static contextType = User
+
     public state = { results: [], isLoading: true }
 
     public _isMounted = false
@@ -58,51 +60,46 @@ export default class AssetsUser extends PureComponent<
 
     public render() {
         const { account } = this.context
+        const { recent, list } = this.props
+        const { isLoading, results } = this.state
+
+        if (!account) return null
 
         return (
-            account && (
-                <div className={styles.assetsUser}>
-                    {this.props.recent && (
-                        <h2 className={styles.subTitle}>
-                            Your Latest Published Data Sets
-                        </h2>
-                    )}
+            <div className={styles.assetsUser}>
+                {this.props.recent && (
+                    <h2 className={styles.subTitle}>
+                        Your Latest Published Data Sets
+                    </h2>
+                )}
 
-                    {this.state.isLoading ? (
-                        <Spinner />
-                    ) : this.state.results.length ? (
-                        <>
-                            {this.state.results
-                                .slice(
-                                    0,
-                                    this.props.recent
-                                        ? this.props.recent
-                                        : undefined
-                                )
-                                .filter(asset => !!asset)
-                                .map((asset: any) => (
-                                    <AssetTeaser
-                                        list={this.props.list}
-                                        key={asset.id}
-                                        asset={asset}
-                                    />
-                                ))}
-                            {this.props.recent && (
-                                <Link className={styles.link} to="/history">
-                                    All Data Sets
-                                </Link>
-                            )}
-                        </>
-                    ) : (
-                        <div className={styles.empty}>
-                            <p>No Data Sets Yet.</p>
-                            <Link to="/publish">+ Publish A Data Set</Link>
-                        </div>
-                    )}
-                </div>
-            )
+                {isLoading ? (
+                    <Spinner />
+                ) : results.length ? (
+                    <>
+                        {results
+                            .slice(0, recent || undefined)
+                            .filter(asset => !!asset)
+                            .map((asset: any) => (
+                                <AssetTeaser
+                                    list={list}
+                                    key={asset.id}
+                                    asset={asset}
+                                />
+                            ))}
+                        {recent && (
+                            <Link className={styles.link} to="/history">
+                                All Data Sets
+                            </Link>
+                        )}
+                    </>
+                ) : (
+                    <div className={styles.empty}>
+                        <p>No Data Sets Yet.</p>
+                        <Link to="/publish">+ Publish A Data Set</Link>
+                    </div>
+                )}
+            </div>
         )
     }
 }
-
-AssetsUser.contextType = User
