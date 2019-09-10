@@ -34,35 +34,6 @@ const mockResponse = {
     }
 }
 
-function flushPromises(ui: any, container: any) {
-    return new Promise(resolve =>
-        setImmediate(() => {
-            render(ui, { container })
-            resolve(container)
-        })
-    )
-}
-
-function dispatchEvt(node: any, type: string, data: any) {
-    const event = new Event(type, { bubbles: true })
-    Object.assign(event, data)
-    fireEvent(node, event)
-}
-
-function mockData(files: any) {
-    return {
-        dataTransfer: {
-            files,
-            items: files.map((file: any) => ({
-                kind: 'file',
-                type: file.type,
-                getAsFile: () => file
-            })),
-            types: ['Files']
-        }
-    }
-}
-
 const renderComponent = () =>
     render(
         <Files

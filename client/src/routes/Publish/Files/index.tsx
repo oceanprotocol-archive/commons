@@ -10,6 +10,7 @@ import styles from './index.module.scss'
 
 import { serviceUri } from '../../../config'
 import cleanupContentType from '../../../utils/cleanupContentType'
+import shortid from 'shortid'
 
 export interface File {
     url: string
@@ -42,6 +43,19 @@ interface FilesStates {
     isIpfsFormShown: boolean
 }
 
+const buttons = [
+    {
+        id: 'url',
+        title: '+ From URL',
+        titleActive: '- Cancel'
+    },
+    {
+        id: 'ipfs',
+        title: '+ Add to IPFS',
+        titleActive: '- Cancel'
+    }
+]
+
 export default class Files extends PureComponent<FilesProps, FilesStates> {
     public state: FilesStates = {
         isFormShown: false,
@@ -55,19 +69,13 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
         this.signal.cancel()
     }
 
-    private toggleForm = (e: Event) => {
+    private toggleForm = (e: Event, form: string) => {
         e.preventDefault()
-        this.setState({
-            isFormShown: !this.state.isFormShown,
-            isIpfsFormShown: false
-        })
-    }
 
-    private toggleIpfsForm = (e: Event) => {
-        e.preventDefault()
         this.setState({
-            isIpfsFormShown: !this.state.isIpfsFormShown,
-            isFormShown: false
+            isFormShown: form === 'url' ? !this.state.isFormShown : false,
+            isIpfsFormShown:
+                form === 'ipfs' ? !this.state.isIpfsFormShown : false
         })
     }
 
@@ -90,9 +98,12 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
             const { contentLength, contentType, found } = response.data.result
 
             if (contentLength) file.contentLength = contentLength
-            if (contentType) file.contentType = contentType
-            if (contentType) file.compression = cleanupContentType(contentType)
-            if (found) file.found = found
+            if (contentType) {
+                file.contentType = contentType
+                file.compression = cleanupContentType(contentType)
+            }
+
+            file.found = found
 
             return file
         } catch (error) {
@@ -174,13 +185,23 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                         </ul>
                     )}
 
-                    <Button link onClick={this.toggleForm}>
-                        {isFormShown ? '- Cancel' : '+ From URL'}
-                    </Button>
+                    {buttons.map(button => {
+                        const isActive =
+                            (button.id === 'url' && isFormShown) ||
+                            (button.id === 'ipfs' && isIpfsFormShown)
 
-                    <Button link onClick={this.toggleIpfsForm}>
-                        {isIpfsFormShown ? '- Cancel' : '+ Add to IPFS'}
-                    </Button>
+                        return (
+                            <Button
+                                key={shortid.generate()}
+                                link
+                                onClick={(e: Event) =>
+                                    this.toggleForm(e, button.id)
+                                }
+                            >
+                                {isActive ? button.titleActive : button.title}
+                            </Button>
+                        )
+                    })}
 
                     {isFormShown && (
                         <ItemForm

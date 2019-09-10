@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, act } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Ipfs from '.'
 
 const addFile = jest.fn()
