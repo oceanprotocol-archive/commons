@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express'
 import SendgridMail from '@sendgrid/mail'
-import config from '../config/config'
+import config from '../config'
 
 SendgridMail.setApiKey(config.sendgridApiKey)
 

@@ -39,6 +39,31 @@ describe('POST /api/v1/urlcheck', () => {
 })
 
 describe('POST /api/v1/report', () => {
+    const msg = {
+        to: 'test@example.com',
+        from: 'test@example.com',
+        subject: 'My Subject',
+        text: 'Text',
+        html: '<strong>HTML</strong>'
+    }
+
+    it('responds with json', async () => {
+        const response = await request(server)
+            .post('/api/v1/report')
+            .send({ msg })
+        expect(response.status).toBe(200)
+        expect(response.body).toBeTruthy()
+    })
+
+    it('responds with error', async () => {
+        const response = await request(server)
+            .post('/api/v1/report')
+            .send({ msg: 'Hello World' })
+        expect(response.text).toBe(
+            "undefined - Cannot create property 'isMultiple' on string 'Hello World'"
+        )
+    })
+
     it('responds with error message when message is missing', async () => {
         const response = await request(server).post('/api/v1/report')
         const text = await JSON.parse(response.text)
