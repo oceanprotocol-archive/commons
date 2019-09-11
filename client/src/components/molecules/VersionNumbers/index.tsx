@@ -47,14 +47,6 @@ export default class VersionNumbers extends PureComponent<
         ? 'Spree'
         : new URL(nodeUri).hostname.split('.')[0]
 
-    public faucetNetwork = faucetUri.includes('dev-ocean')
-        ? new URL(faucetUri).hostname.split('.')[1]
-        : faucetUri.includes('oceanprotocol.com')
-        ? 'Pacific'
-        : faucetUri.includes('localhost')
-        ? 'Spree'
-        : 'Unknown'
-
     // define a minimal default state to fill UI
     public state: VersionNumbersState = {
         commons: {
@@ -77,7 +69,7 @@ export default class VersionNumbers extends PureComponent<
         faucet: {
             name: 'Faucet',
             version: '',
-            network: this.faucetNetwork,
+            network: '',
             status: OceanPlatformTechStatus.Loading
         },
         status: {
@@ -135,11 +127,14 @@ export default class VersionNumbers extends PureComponent<
             // fail silently
             if (response.status !== 200) return
 
+            const { version, network } = response.data
+
             this.setState({
                 ...this.state,
                 faucet: {
                     ...this.state.faucet,
-                    version: response.data.version,
+                    version,
+                    network,
                     status: OceanPlatformTechStatus.Working
                 }
             })

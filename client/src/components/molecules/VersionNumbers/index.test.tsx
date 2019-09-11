@@ -34,7 +34,8 @@ const stateMockIncomplete = {
     },
     faucet: {
         name: 'Faucet',
-        version: undefined
+        version: undefined,
+        network: undefined
     },
     status: {
         ok: false,
@@ -46,7 +47,8 @@ const stateMockIncomplete = {
 const mockResponse = {
     data: {
         software: 'Faucet',
-        version: '6.6.6'
+        version: '6.6.6',
+        network: 'Pacific'
     }
 }
 
