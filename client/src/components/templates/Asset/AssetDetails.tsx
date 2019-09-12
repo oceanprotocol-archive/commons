@@ -33,6 +33,7 @@ const MetaFixedItem = ({ name, value }: { name: string; value: string }) => (
 
 export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
     const { base } = metadata
+    const price = base.price && Web3.utils.fromWei(base.price.toString())
 
     const metaFixed = [
         {
@@ -52,11 +53,7 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
         },
         {
             name: 'Price',
-            value: `${
-                base.price === '0'
-                    ? 0
-                    : Web3.utils.fromWei(base.price.toString())
-            } OCEAN`,
+            value: `${price === '0' ? 0 : price} OCEAN`,
             show: allowPricing
         }
     ]

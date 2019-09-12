@@ -16,6 +16,5 @@ describe('Details', () => {
             />
         )
         expect(container.firstChild).toBeInTheDocument()
-        expect(container.querySelector('.loader')).toBeInTheDocument()
     })
 })
