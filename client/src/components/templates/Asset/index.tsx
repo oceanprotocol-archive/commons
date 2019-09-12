@@ -54,12 +54,13 @@ class Asset extends Component<AssetProps, AssetState> {
     public render() {
         const { metadata, ddo, error } = this.state
         const isLoading = metadata.base.name === ''
+        const hasError = error !== ''
 
-        return isLoading ? (
+        return isLoading && !hasError ? (
             <div className={stylesApp.loader}>
                 <Spinner message="Loading asset..." />
             </div>
-        ) : error !== '' ? (
+        ) : hasError ? (
             <div className={styles.error}>{error}</div>
         ) : (
             <Route
