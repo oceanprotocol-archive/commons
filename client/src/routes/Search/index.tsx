@@ -2,6 +2,7 @@ import React, { PureComponent, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import { History, Location } from 'history'
+import shortid from 'shortid'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../../components/atoms/Spinner'
 import Route from '../../components/templates/Route'
@@ -165,14 +166,20 @@ class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     public renderResults = () =>
-        this.state.isLoading ? (
-            <Spinner message="Searching..." />
-        ) : this.state.results && this.state.results.length ? (
-            <div className={styles.results}>
-                {this.state.results.map((asset: any) => (
-                    <AssetTeaser key={asset.id} asset={asset} />
-                ))}
-            </div>
+        this.state.results && this.state.results.length ? (
+            <>
+                <div className={styles.results}>
+                    {this.state.results.map((asset: any) => (
+                        <AssetTeaser key={shortid.generate()} asset={asset} />
+                    ))}
+                </div>
+
+                <Pagination
+                    totalPages={this.state.totalPages}
+                    currentPage={this.state.currentPage}
+                    handlePageClick={this.handlePageClick}
+                />
+            </>
         ) : (
             <div className={styles.empty}>
                 <p>No Data Sets Found.</p>
@@ -181,42 +188,45 @@ class Search extends PureComponent<SearchProps, SearchState> {
         )
 
     public render() {
-        const { totalResults, totalPages, currentPage } = this.state
+        const {
+            isLoading,
+            results,
+            totalResults,
+            search,
+            category,
+            license
+        } = this.state
 
         return (
             <Route title="Search" wide>
                 <Content wide>
                     <div className={styles.content}>
                         <Sidebar
-                            search={this.state.search}
+                            search={search}
                             inputChange={this.inputChange}
-                            category={this.state.category}
-                            license={this.state.license}
+                            category={category}
+                            results={results}
+                            license={license}
                             setCategory={this.setCategory}
                             setLicense={this.setLicense}
                         />
 
                         <div>
-                            {!this.state.isLoading && (
-                                <h2 className={styles.resultsTitle}>
-                                    {totalResults} results for{' '}
-                                    <span>
-                                        {decodeURIComponent(
-                                            this.state.search ||
-                                                this.state.category
-                                        )}
-                                    </span>
-                                </h2>
-                            )}
+                            {isLoading ? (
+                                <Spinner message="Searching..." />
+                            ) : (
+                                <>
+                                    <h2 className={styles.resultsTitle}>
+                                        {totalResults} results for{' '}
+                                        <span>
+                                            {decodeURIComponent(
+                                                search || category
+                                            )}
+                                        </span>
+                                    </h2>
 
-                            {this.renderResults()}
-
-                            {!this.state.isLoading && (
-                                <Pagination
-                                    totalPages={totalPages}
-                                    currentPage={currentPage}
-                                    handlePageClick={this.handlePageClick}
-                                />
+                                    {this.renderResults()}
+                                </>
                             )}
                         </div>
                     </div>

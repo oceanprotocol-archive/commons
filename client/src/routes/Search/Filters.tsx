@@ -1,4 +1,5 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
+import shortid from 'shortid'
 import Button from '../../components/atoms/Button'
 import styles from './Filters.module.scss'
 import data from '../../data/form-publish.json'
@@ -11,89 +12,104 @@ const labelCategories =
     steps[1].fields.categories &&
     steps[1].fields.categories.label
 
-const optionsCategories =
-    steps &&
-    steps[1].fields &&
-    steps[1].fields.categories &&
-    steps[1].fields.categories.options
-
 const labelLicense =
     steps &&
     steps[2].fields &&
     steps[2].fields.license &&
     steps[2].fields.license.label
 
-const optionsLicense =
-    steps &&
-    steps[2].fields &&
-    steps[2].fields.license &&
-    steps[2].fields.license.options
+function getFilterMetadata(results: any[]) {
+    const filterCategories: string[] = []
+    const filterLicenses: string[] = []
 
-const filters = [
-    { label: labelCategories, items: optionsCategories },
-    { label: labelLicense, items: optionsLicense }
-]
+    results.map(asset => {
+        const { metadata } = asset.findServiceByType('Metadata')
+        const { categories, license } = metadata.base
+        categories && filterCategories.push(categories[0])
+        license && filterLicenses.push(license)
+        return null
+    })
 
-export default class Filters extends PureComponent<{
+    return { filterCategories, filterLicenses }
+}
+
+export default function Filters({
+    category,
+    license,
+    results,
+    setCategory,
+    setLicense
+}: {
     category: string
     license: string
+    results: any[]
     setCategory(category: string): void
     setLicense(license: string): void
-}> {
-    public render() {
-        const { category, license, setCategory, setLicense } = this.props
+}) {
+    const { filterCategories, filterLicenses } = getFilterMetadata(results)
 
-        return filters.map(filter => (
-            <div
-                key={filter.items && filter.items[0]}
-                className={styles.filter}
-            >
-                <h3 className={styles.filterTitle}>{filter.label}</h3>
-                <ul className={styles.filter}>
-                    {filter.items &&
-                        filter.items
-                            .sort((a: string, b: string) => a.localeCompare(b)) // sort alphabetically
-                            .map((option: string) => {
-                                const isActive =
-                                    category === option || license === option
+    const filters = [
+        { label: labelCategories, items: filterCategories },
+        { label: labelLicense, items: filterLicenses }
+    ]
 
-                                return (
-                                    <li
-                                        key={option}
-                                        className={
-                                            isActive ? styles.active : undefined
-                                        }
-                                    >
-                                        <Button
-                                            link
-                                            className={styles.option}
-                                            onClick={() =>
-                                                filter.label === 'Category'
-                                                    ? setCategory(option)
-                                                    : setLicense(option)
+    return (
+        <>
+            {filters.map(filter => (
+                <div key={shortid.generate()} className={styles.filter}>
+                    <h3 className={styles.filterTitle}>{filter.label}</h3>
+                    <ul className={styles.filter}>
+                        {filter.items &&
+                            filter.items
+                                .sort((a: string, b: string) =>
+                                    a.localeCompare(b)
+                                ) // sort alphabetically
+                                .map((option: string) => {
+                                    const isActive =
+                                        category === option ||
+                                        license === option
+
+                                    return (
+                                        <li
+                                            key={shortid.generate()}
+                                            className={
+                                                isActive
+                                                    ? styles.active
+                                                    : undefined
                                             }
                                         >
-                                            {option}{' '}
-                                        </Button>
-                                        {isActive && (
                                             <Button
                                                 link
-                                                className={styles.cancel}
-                                                title="Clear"
+                                                className={styles.option}
                                                 onClick={() =>
                                                     filter.label === 'Category'
-                                                        ? setCategory('')
-                                                        : setLicense('')
+                                                        ? setCategory(option)
+                                                        : setLicense(option)
                                                 }
                                             >
-                                                &times;
+                                                {option}{' '}
                                             </Button>
-                                        )}
-                                    </li>
-                                )
-                            })}
-                </ul>
-            </div>
-        ))
-    }
+                                            {isActive && (
+                                                <Button
+                                                    link
+                                                    className={styles.cancel}
+                                                    title="Clear"
+                                                    onClick={() =>
+                                                        filter.label ===
+                                                        'Category'
+                                                            ? setCategory('')
+                                                            : setLicense('')
+                                                    }
+                                                >
+                                                    &times;
+                                                </Button>
+                                            )}
+                                        </li>
+                                    )
+                                })}
+                    </ul>
+                </div>
+            ))}
+        </>
+    )
 }

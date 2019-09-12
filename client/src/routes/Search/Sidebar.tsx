@@ -8,6 +8,7 @@ export default function Sidebar({
     inputChange,
     category,
     license,
+    results,
     setCategory,
     setLicense
 }: {
@@ -15,6 +16,7 @@ export default function Sidebar({
     inputChange: any
     category: string
     license: string
+    results: any[]
     setCategory(category: string): void
     setLicense(license: string): void
 }) {
@@ -37,6 +39,7 @@ export default function Sidebar({
             <Filters
                 category={category}
                 license={license}
+                results={results}
                 setCategory={setCategory}
                 setLicense={setLicense}
             />
