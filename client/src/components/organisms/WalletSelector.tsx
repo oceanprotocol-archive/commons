@@ -15,19 +15,20 @@ export default class WalletSelector extends PureComponent<
         isModalOpen: false
     }
 
-    private toggleModal = () => {
+    private handleToggleModal = (e?: Event) => {
+        e && e.preventDefault()
         this.setState({ isModalOpen: !this.state.isModalOpen })
     }
 
     private loginBurnerWallet = () => {
         this.context.loginBurnerWallet()
-        this.toggleModal()
+        this.handleToggleModal()
     }
 
     private loginMetamask = () => {
         this.context.loginMetamask()
         this.context.logoutBurnerWallet()
-        this.toggleModal()
+        this.handleToggleModal()
     }
 
     private WalletButton = ({
@@ -80,7 +81,7 @@ export default class WalletSelector extends PureComponent<
                 <Button
                     link
                     className={styles.openLink}
-                    onClick={this.toggleModal}
+                    onClick={this.handleToggleModal}
                     data-action="wallet"
                 >
                     {content.title}
@@ -89,7 +90,7 @@ export default class WalletSelector extends PureComponent<
                     title={content.title}
                     description={content.description}
                     isOpen={this.state.isModalOpen}
-                    toggleModal={this.toggleModal}
+                    toggleModal={this.handleToggleModal}
                 >
                     <div className={styles.info}>
                         {content.buttons.map(({ title, description, icon }) => (
