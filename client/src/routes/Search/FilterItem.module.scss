@@ -1,0 +1,39 @@
+@import '../../styles/variables';
+
+.item {
+    position: relative;
+
+    &:before {
+        display: none;
+    }
+}
+
+.option {
+    padding-top: $spacer / 10;
+    padding-bottom: $spacer / 10;
+    padding-right: $spacer / 6;
+    text-align: left;
+    color: $brand-grey-light;
+    font-size: $font-size-small;
+    transition: .1s ease-out;
+}
+
+.active {
+    composes: item;
+
+    .option {
+        color: $brand-grey-dark;
+        font-weight: $font-weight-bold;
+        border-left: .3rem solid $brand-black;
+        padding-left: $spacer / 4;
+    }
+}
+
+.cancel {
+    position: absolute;
+    right: 0;
+    top: $spacer / 10;
+    font-size: $font-size-h3;
+    color: inherit;
+    line-height: 1;
+}

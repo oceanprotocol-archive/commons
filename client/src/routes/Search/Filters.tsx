@@ -1,8 +1,9 @@
 import React from 'react'
 import shortid from 'shortid'
-import Button from '../../components/atoms/Button'
 import styles from './Filters.module.scss'
 import data from '../../data/form-publish.json'
+import FilterItem from './FilterItem'
+import { DDO } from '@oceanprotocol/squid'
 
 const { steps } = data
 
@@ -19,16 +20,21 @@ const labelLicense =
     steps[2].fields.license.label
 
 function getFilterMetadata(results: any[]) {
-    const filterCategories: string[] = []
-    const filterLicenses: string[] = []
+    let filterCategories: string[] = []
+    let filterLicenses: string[] = []
 
-    results.map(asset => {
+    results.map((asset: DDO) => {
+        if (!asset.findServiceByType) return null
         const { metadata } = asset.findServiceByType('Metadata')
         const { categories, license } = metadata.base
         categories && filterCategories.push(categories[0])
         license && filterLicenses.push(license)
         return null
     })
+
+    // remove duplicates
+    filterCategories = Array.from(new Set(filterCategories))
+    filterLicenses = Array.from(new Set(filterLicenses))
 
     return { filterCategories, filterLicenses }
 }
@@ -37,14 +43,14 @@ export default function Filters({
     category,
     license,
     results,
-    setCategory,
-    setLicense
+    filterByCategory,
+    filterByLicense
 }: {
     category: string
     license: string
     results: any[]
-    setCategory(category: string): void
-    setLicense(license: string): void
+    filterByCategory(category: string): void
+    filterByLicense(license: string): void
 }) {
     const { filterCategories, filterLicenses } = getFilterMetadata(results)
 
@@ -70,41 +76,13 @@ export default function Filters({
                                         license === option
 
                                     return (
-                                        <li
-                                            key={shortid.generate()}
-                                            className={
-                                                isActive
-                                                    ? styles.active
-                                                    : undefined
-                                            }
-                                        >
-                                            <Button
-                                                link
-                                                className={styles.option}
-                                                onClick={() =>
-                                                    filter.label === 'Category'
-                                                        ? setCategory(option)
-                                                        : setLicense(option)
-                                                }
-                                            >
-                                                {option}{' '}
-                                            </Button>
-                                            {isActive && (
-                                                <Button
-                                                    link
-                                                    className={styles.cancel}
-                                                    title="Clear"
-                                                    onClick={() =>
-                                                        filter.label ===
-                                                        'Category'
-                                                            ? setCategory('')
-                                                            : setLicense('')
-                                                    }
-                                                >
-                                                    &times;
-                                                </Button>
-                                            )}
-                                        </li>
+                                        <FilterItem
+                                            isActive={isActive}
+                                            filter={filter}
+                                            filterByCategory={filterByCategory}
+                                            filterByLicense={filterByLicense}
+                                            option={option}
+                                        />
                                     )
                                 })}
                     </ul>

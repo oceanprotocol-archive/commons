@@ -17,6 +17,8 @@ const AssetTeaser = ({
     list?: boolean
     minimal?: boolean
 }) => {
+    if (!asset.findServiceByType) return null
+
     const { attributes } = asset.findServiceByType('metadata')
     const { main, additionalInformation } = attributes
 

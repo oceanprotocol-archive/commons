@@ -9,16 +9,16 @@ export default function Sidebar({
     category,
     license,
     results,
-    setCategory,
-    setLicense
+    filterByCategory,
+    filterByLicense
 }: {
     search: string
     inputChange: any
     category: string
     license: string
     results: any[]
-    setCategory(category: string): void
-    setLicense(license: string): void
+    filterByCategory(category: string): void
+    filterByLicense(license: string): void
 }) {
     return (
         <aside className={styles.sidebar}>
@@ -40,8 +40,8 @@ export default function Sidebar({
                 category={category}
                 license={license}
                 results={results}
-                setCategory={setCategory}
-                setLicense={setLicense}
+                filterByCategory={filterByCategory}
+                filterByLicense={filterByLicense}
             />
         </aside>
     )

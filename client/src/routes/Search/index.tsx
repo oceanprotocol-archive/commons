@@ -1,18 +1,15 @@
 import React, { PureComponent, ChangeEvent } from 'react'
-import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import { History, Location } from 'history'
-import shortid from 'shortid'
-import { Logger } from '@oceanprotocol/squid'
+import { Logger, DDO } from '@oceanprotocol/squid'
 import Spinner from '../../components/atoms/Spinner'
 import Route from '../../components/templates/Route'
 import { User } from '../../context'
-import AssetTeaser from '../../components/molecules/AssetTeaser'
-import Pagination from '../../components/molecules/Pagination'
-import styles from './index.module.scss'
 import Content from '../../components/atoms/Content'
 import withTracker from '../../hoc/withTracker'
 import Sidebar from './Sidebar'
+import Results from './Results'
+import styles from './index.module.scss'
 
 interface SearchProps {
     location: Location
@@ -21,6 +18,7 @@ interface SearchProps {
 
 interface SearchState {
     results: any[]
+    resultsFiltered: any[]
     totalResults: number
     offset: number
     totalPages: number
@@ -38,6 +36,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
     public state = {
         results: [],
+        resultsFiltered: [],
         totalResults: 0,
         offset: 25,
         totalPages: 1,
@@ -112,6 +111,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
             const search = await ocean.assets.query(searchQuery)
             this.setState({
                 results: search.results,
+                resultsFiltered: search.results,
                 totalResults: search.totalResults,
                 totalPages: search.totalPages,
                 isLoading: false
@@ -161,31 +161,36 @@ class Search extends PureComponent<SearchProps, SearchState> {
         this.setState({ category, isLoading: true }, () => this.searchAssets())
     }
 
+    public filterByCategory = (category: string) => {
+        const resultsFiltered: any[] = this.state.results.filter(
+            (asset: DDO) => {
+                const { metadata } = asset.findServiceByType('Metadata')
+                const { categories } = metadata.base
+                if (!categories) return true
+
+                return category === '' ? true : categories.includes(category)
+            }
+        )
+
+        this.setState({ resultsFiltered, category })
+    }
+
+    public filterByLicense = (name: string) => {
+        const resultsFiltered: any[] = this.state.results.filter(
+            (asset: any) => {
+                const { metadata } = asset.findServiceByType('Metadata')
+                const { license } = metadata.base
+
+                return name === '' ? true : license === name
+            }
+        )
+
+        this.setState({ resultsFiltered, license: name })
+    }
+
     public setLicense = (license: string) => {
         this.setState({ license, isLoading: true }, () => this.searchAssets())
     }
-
-    public renderResults = () =>
-        this.state.results && this.state.results.length ? (
-            <>
-                <div className={styles.results}>
-                    {this.state.results.map((asset: any) => (
-                        <AssetTeaser key={shortid.generate()} asset={asset} />
-                    ))}
-                </div>
-
-                <Pagination
-                    totalPages={this.state.totalPages}
-                    currentPage={this.state.currentPage}
-                    handlePageClick={this.handlePageClick}
-                />
-            </>
-        ) : (
-            <div className={styles.empty}>
-                <p>No Data Sets Found.</p>
-                <Link to="/publish">+ Publish A Data Set</Link>
-            </div>
-        )
 
     public render() {
         const {
@@ -194,7 +199,10 @@ class Search extends PureComponent<SearchProps, SearchState> {
             totalResults,
             search,
             category,
-            license
+            license,
+            resultsFiltered,
+            totalPages,
+            currentPage
         } = this.state
 
         return (
@@ -207,26 +215,24 @@ class Search extends PureComponent<SearchProps, SearchState> {
                             category={category}
                             results={results}
                             license={license}
-                            setCategory={this.setCategory}
-                            setLicense={this.setLicense}
+                            filterByCategory={this.filterByCategory}
+                            filterByLicense={this.filterByLicense}
                         />
 
                         <div>
                             {isLoading ? (
                                 <Spinner message="Searching..." />
                             ) : (
-                                <>
-                                    <h2 className={styles.resultsTitle}>
-                                        {totalResults} results for{' '}
-                                        <span>
-                                            {decodeURIComponent(
-                                                search || category
-                                            )}
-                                        </span>
-                                    </h2>
-
-                                    {this.renderResults()}
-                                </>
+                                <Results
+                                    title={decodeURIComponent(
+                                        search || category
+                                    )}
+                                    results={resultsFiltered}
+                                    totalResults={totalResults}
+                                    totalPages={totalPages}
+                                    currentPage={currentPage}
+                                    handlePageClick={this.handlePageClick}
+                                />
                             )}
                         </div>
                     </div>

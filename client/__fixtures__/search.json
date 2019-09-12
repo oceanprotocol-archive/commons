@@ -1,0 +1,2740 @@
+{
+  "results": [
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:5910ff59e3e64dc5a8dbec2bc51c5e53cf55917dc9a14bffa21ca8d7b4b24aad",
+      "created": "2019-05-28T14:50:18Z",
+      "publicKey": [
+        {
+          "id": "did:op:5910ff59e3e64dc5a8dbec2bc51c5e53cf55917dc9a14bffa21ca8d7b4b24aad",
+          "type": "EthereumECDSAKey",
+          "owner": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:5910ff59e3e64dc5a8dbec2bc51c5e53cf55917dc9a14bffa21ca8d7b4b24aad"
+        }
+      ],
+      "service": [
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/consume",
+          "creator": "",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/access/initialize",
+          "name": "dataAssetAccessServiceAgreement",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "accessSecretStore": [],
+              "escrowReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "5910ff59e3e64dc5a8dbec2bc51c5e53cf55917dc9a14bffa21ca8d7b4b24aad"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com:443",
+          "service": "SecretStore",
+          "serviceDefinitionId": "1"
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com:443/api/v1/aquarius/assets/ddo/did:op:5910ff59e3e64dc5a8dbec2bc51c5e53cf55917dc9a14bffa21ca8d7b4b24aad",
+          "metadata": {
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            },
+            "base": {
+              "name": "Water Quality Lake Titicaca ",
+              "description": "Water Quality Analysis for Lake Titicaca (2003-2011) measured by:\n\na) Total suspended matter (TSM) and/or turbidity - TSM is provided in the unit milligram per litre (mg/l), turbidity as Nephelometric Turbidity Unit (NTU) or (more up to date) Formazine Turbidity Unit (FTU).\nb) Phytoplankton and Chlorophyll a: Chlorophyll a is one essential pigment included in phytoplankton cells and therefore a measure of phytoplankton. Common unit of chlorophyll is (Âµg/l).\n\nThis dataset is one of the products produced under the 2008-2012 World Bank (WBG) - European Space Agency (ESA) partnership, and is published in the partnership report: Earth Observation for Sustainable Development, June 2013.\n\n---\nSustainable Development Goals: Climate",
+              "dateCreated": "2017-10-22T22:00:00.000Z",
+              "author": "World Development Indicators, The World Bank",
+              "type": "dataset",
+              "license": "CC BY: Attribution 4.0 International",
+              "copyrightHolder": "World Bank Group",
+              "files": [
+                {
+                  "found": true,
+                  "contentLength": "114086095",
+                  "contentType": "application/zip",
+                  "compression": "zip",
+                  "index": 0
+                },
+                {
+                  "found": true,
+                  "contentLength": "13605391",
+                  "contentType": "application/zip",
+                  "compression": "zip",
+                  "index": 1
+                },
+                {
+                  "found": true,
+                  "contentLength": "133826422",
+                  "contentType": "application/zip",
+                  "compression": "zip",
+                  "index": 2
+                }
+              ],
+              "categories": ["Earth & Climate"],
+              "links": [],
+              "tags": ["ai-for-good"],
+              "price": "0",
+              "encryptedFiles": "0xbe4ccd2e0d81507c4e0a0359219b3488e1dc885d144ab726401a9365c67a0de2c0c51929f5fd0b0d8670d124478a5b7dab12175f272c3599cc00fe0727ed7f2c67c578decff3e5c0132ef10d8379de6e79f584a4f89201835b9ded7d55961aabb6be02cd906e62b27081b92cfa243942dd751390784285620605d3362ccbde5581fe7451aa6e332ff55454e156063479227fbde93a4ce0f236654261670e0f1ce5472ed8f996d9694f87ba42ffe52502fbbf36d7983b602f20d8411ffca084f2b87282e1b72259e437a13393650fb09830298410ee067e22aac2b1ef4917658d6012d443dfb9d84be8285dfb6db6afac9935b649275607893a9de6cf6c6cbb1a121fc98bb9d917074f24e7ac873b8542fa8ac4647c971a63c27d712e7e676b8f9431f2fb5b809d4107fa93fac41b2c135910e09c9747f1147f4419f22f86b5fdc8a05940bf4cac8503bac8ebd6189fe30d0594d7b6c1c236a0be715ce49ecb5daddf63d84c74a80058382f73e6565726bda64d8b51924e582ec58022517a5b2159f73235f480c5b119005acc3c6ab61c3b2cf0cd0e66af82e18d4fc8b1f9b469c1ac4433c004030719e4a96a6a6413f57ec6ee0bc6d4d01017d5ed97ad72bab491fc7a9a6580c04c5757542bc5418244fd3ec93801ecf234726212980219845e529d3c529a4d7b0166b6cad212d902e2476237e2862aa77cd23af562b1699c176b41d32fea15f621218c8b6216c2efc3da522ea003782b2ccf814f25613301032ca06c1d1ef0ce4acdc77ea398df65f879321710412721085993b2cc0fca672efcbbf4b21eaebb6f7d4f90f458db26a90acf2772c1b40584824002b9804dba9cb9c200b0151ea83a927c49fc0099f4a95c1cad8a865408755809f1c18bbf2d6c519ccd2685a3aeb6b7c1eb63d4908767c424752c90a2a6a26bbb49c5bb0e4cd0ffe9f5ca575f29a7839d01b63456175e25ac06f9b236d3801407bf205e304a2f1e3e00206fd9823272d04872e8209c5b7f9dd1fb43aaa8956ba761e8edfe1966a875cb9443e39d6c7d7ff7d16db754758b128af0a7db4acc7ce8612225fc397f62d1bec88cddcdff8c7758",
+              "checksum": "0af61fa9b1063d558f4470d469d6d11043ffbb2ba77617e6175dbf2138c867fb",
+              "datePublished": "2019-05-28T14:50:33Z"
+            },
+            "additionalInformation": {
+              "updateFrequency": null,
+              "structuredMarkup": []
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "created": "2019-05-28T14:50:23Z",
+        "creator": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b",
+        "type": "DDOIntegritySignature",
+        "signatureValue": "0x978a4d73bb98cff9f0a795b99445ec525bc5c120d6c6fa694d5a963af2642cb539d4db8e3eaa40679834e9551ee451b68ea5361a6d015b3c6858c056f76752241b"
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:60a7bb3dcc114a5ba5160ac1326f97c0d2f6bfea22624d3ca6ab1ef4e06f05de",
+      "created": "2019-05-28T14:46:51Z",
+      "publicKey": [
+        {
+          "id": "did:op:60a7bb3dcc114a5ba5160ac1326f97c0d2f6bfea22624d3ca6ab1ef4e06f05de",
+          "type": "EthereumECDSAKey",
+          "owner": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:60a7bb3dcc114a5ba5160ac1326f97c0d2f6bfea22624d3ca6ab1ef4e06f05de"
+        }
+      ],
+      "service": [
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/consume",
+          "creator": "",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/access/initialize",
+          "name": "dataAssetAccessServiceAgreement",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "accessSecretStore": [],
+              "escrowReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "60a7bb3dcc114a5ba5160ac1326f97c0d2f6bfea22624d3ca6ab1ef4e06f05de"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com:443",
+          "service": "SecretStore",
+          "serviceDefinitionId": "1"
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com:443/api/v1/aquarius/assets/ddo/did:op:60a7bb3dcc114a5ba5160ac1326f97c0d2f6bfea22624d3ca6ab1ef4e06f05de",
+          "metadata": {
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            },
+            "base": {
+              "name": "Hydropower Dams - West Africa and India",
+              "description": "This database contains parameters gathered after an assessment of the technological potential for development of floating solar photovoltaic (PV) projects on existing hydropower dams and other reservoirs, starting with a pilot in FY18 focused on West Africa and India.\n\nThe database is primarily based on the information provided by [FAO Aquastat Database](http://www.fao.org/nr/water/aquastat/sets/index.stm#dams) and on the data gathered from World Bank hydro projects.\n\nThe database will be included in the [Global Solar Atlas](http://globalsolaratlas.info/) where they will be directly linked to the solar resource maps. The purpose of the resulting Floating Solar Atlas is to enable potential developers or stakeholders to quickly navigate to the site of interest and obtain information about the potential for development of a floating solar PV project.\n\nFollowing the FY18 pilot, the work is likely to be scaled up to provide global coverage.\n\n---\nSustainable Development Goals: Climate, Water",
+              "dateCreated": "2017-12-31T23:00:00.000Z",
+              "author": "World Development Indicators, The World Bank",
+              "type": "dataset",
+              "license": "CC BY: Attribution 4.0 International",
+              "copyrightHolder": "World Bank Group",
+              "files": [
+                {
+                  "found": true,
+                  "contentLength": "1026576",
+                  "contentType": "text/csv",
+                  "compression": "csv",
+                  "index": 0
+                }
+              ],
+              "categories": ["Physics & Energy"],
+              "links": [],
+              "tags": ["ai-for-good"],
+              "price": "0",
+              "encryptedFiles": "0x22228193fdfa1d7f899c049af9626755cc089f50234d3cfd1d2096383896f55c1d3d508c5bb020821a1062b955a38ded0332a33a7889c8ce56d59e2cf400b174eda0b799b95719075f1c247d7c7314859fba39b0202e1d50b298bc89b139b1a71281840664ade4442c44d0936e8b3b3e030e717225ceb5dd2d53026845a0fb2b1a8bcf0b6515a320f788d373063bab44b95b4626b308bf30af62c3b99c2e4268377027c04309a9e173adc4a8afd73896ede65d96a27b8e951e1641e11d8ff859b7237c6bbe8527c981adf914",
+              "checksum": "0f6037eb7182fe3787f5e9cead7017c5360a75234ca60b4740939991e25f6ee2",
+              "datePublished": "2019-05-28T14:47:26Z"
+            },
+            "additionalInformation": {
+              "updateFrequency": null,
+              "structuredMarkup": []
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "created": "2019-05-28T14:47:14Z",
+        "creator": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b",
+        "type": "DDOIntegritySignature",
+        "signatureValue": "0xabe6c336b51d2841f959cdbd03045b519699835d51aae86b54d04679180fe0c540aa197b8481f17466d49301501ff3261b5f51526d89e5ee0f2940dcd18934591c"
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:06d147c249d4428f84b844f79073b6ec480fd9024ce9463eb7012fa28667a92b",
+      "created": "2019-05-28T14:25:01Z",
+      "publicKey": [
+        {
+          "id": "did:op:06d147c249d4428f84b844f79073b6ec480fd9024ce9463eb7012fa28667a92b",
+          "type": "EthereumECDSAKey",
+          "owner": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:06d147c249d4428f84b844f79073b6ec480fd9024ce9463eb7012fa28667a92b"
+        }
+      ],
+      "service": [
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/consume",
+          "creator": "",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/access/initialize",
+          "name": "dataAssetAccessServiceAgreement",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "accessSecretStore": [],
+              "escrowReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "06d147c249d4428f84b844f79073b6ec480fd9024ce9463eb7012fa28667a92b"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com:443",
+          "service": "SecretStore",
+          "serviceDefinitionId": "1"
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com:443/api/v1/aquarius/assets/ddo/did:op:06d147c249d4428f84b844f79073b6ec480fd9024ce9463eb7012fa28667a92b",
+          "metadata": {
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            },
+            "base": {
+              "name": "Water Bodies in Africa",
+              "description": "This dataset shows water bodies in Africa including lakes, reservoir, and lagoon.\n\nData is curated from RCMRD Geoportal at http://geoportal.rcmrd.org/layers/servir%3Aafrica_water_bodies\n\nThe Regional Centre for Mapping of Resources for Development (RCMRD) was established in Nairobi – Kenya in 1975 under the auspices of the United Nations Economic Commission for Africa (UNECA) and the then Organization of African Unity (OAU), today African Union (AU). RCMRD is an inter-governmental organization and currently has 20 Contracting Member States in the Eastern and Southern Africa Regions; Botswana, Burundi, Comoros, Ethiopia, Kenya, Lesotho, Malawi, Mauritius, Namibia, Rwanda, Seychelles, Somali, South Africa, South Sudan, Sudan, Swaziland, Tanzania, Uganda, Zambia and Zimbabwe.\n\nTo learn more about RCMRD, please visit http://www.rcmrd.org/\n\n---\nSustainable Development Goals: Water",
+              "dateCreated": "2019-05-28T14:23:47.953Z",
+              "author": "World Development Indicators, The World Bank",
+              "type": "dataset",
+              "license": "CC BY: Attribution 4.0 International",
+              "copyrightHolder": "World Bank Group",
+              "files": [
+                {
+                  "found": true,
+                  "contentLength": "2764203",
+                  "contentType": "binary/octet-stream",
+                  "compression": "Binary",
+                  "index": 0
+                }
+              ],
+              "categories": ["Earth & Climate"],
+              "links": [],
+              "tags": ["ai-for-good"],
+              "price": "0",
+              "encryptedFiles": "0xf840370b35ef1b5994a8dd33a09926b1c357fd3041eb90f086fd71e5ed9b004b761295966020b0216d87a82c59c50f5670e56fb278e15621236ee503ad18ab4a606bac7248bbce8f152f136e31c7c027713acc6b053f482bf95439592b81160524c022d2521623f3484c2de630e64bfbf18a941d0a343e32c16fdd9a8967305da79168756ef8513e479d018f29f5092436df6ad5ff551d47430880bdafd53dda5f01f463c78f510e288254950a5df82c55fd669b8599285934b03a6d4d8e83f6e1bc46c784c86791862c71d9ab8fb8b54f0fbd03c7a9ec174214967f24",
+              "checksum": "65d7cdb0f02844d4e4e4b641f3ac24f11eb99a79d58258d42fef177818a9215f",
+              "datePublished": "2019-05-28T14:25:16Z"
+            },
+            "additionalInformation": {
+              "updateFrequency": null,
+              "structuredMarkup": []
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "created": "2019-05-28T14:25:06Z",
+        "creator": "0x36A7f3383A63279cDaF4DfC0F3ABc07d90252C6b",
+        "type": "DDOIntegritySignature",
+        "signatureValue": "0xbf7abd49a281ec3f65043bdd641e91f1960018b850ccf3d790e42e50992fe9217f28020ab6d3d3ab6922282cb044b24b2dc87b6b03b7d61fbb7ca93bcd2546ab1b"
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:f557c303cb674898a8b5e611f2ec4e057a281febfb374ae3be5982e978ef1ee9",
+      "created": "2019-05-27T14:56:30Z",
+      "publicKey": [
+        {
+          "id": "did:op:f557c303cb674898a8b5e611f2ec4e057a281febfb374ae3be5982e978ef1ee9",
+          "type": "EthereumECDSAKey",
+          "owner": "0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:f557c303cb674898a8b5e611f2ec4e057a281febfb374ae3be5982e978ef1ee9"
+        }
+      ],
+      "service": [
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/consume",
+          "creator": "",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/access/initialize",
+          "name": "dataAssetAccessServiceAgreement",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "accessSecretStore": [],
+              "escrowReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "f557c303cb674898a8b5e611f2ec4e057a281febfb374ae3be5982e978ef1ee9"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com:443",
+          "service": "SecretStore",
+          "serviceDefinitionId": "1"
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com:443/api/v1/aquarius/assets/ddo/did:op:f557c303cb674898a8b5e611f2ec4e057a281febfb374ae3be5982e978ef1ee9",
+          "metadata": {
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            },
+            "base": {
+              "name": "Health Nutrition and Population",
+              "description": "Health Nutrition and Population Statistics database provides key health, nutrition and population statistics gathered from a variety of international and national sources. Themes include global surgery, health financing, HIV/AIDS, immunization, infectious diseases, medical resources and usage, noncommunicable diseases, nutrition, population dynamics, reproductive health, universal health coverage, and water and sanitation.\n\n---\nSustainable Development Goals: Hunger, Health",
+              "dateCreated": "2010-06-09T22:00:00.000Z",
+              "author": "World Development Indicators, The World Bank",
+              "type": "dataset",
+              "license": "CC BY: Attribution 4.0 International",
+              "copyrightHolder": "World Bank Group",
+              "files": [
+                {
+                  "found": true,
+                  "contentLength": "20452050",
+                  "contentType": "application/x-zip-compressed",
+                  "compression": "none",
+                  "index": 0
+                },
+                {
+                  "found": true,
+                  "contentLength": "19157883",
+                  "contentType": "application/x-zip-compressed",
+                  "compression": "none",
+                  "index": 1
+                }
+              ],
+              "categories": ["Demography"],
+              "links": [],
+              "tags": ["ai-for-good"],
+              "price": "0",
+              "encryptedFiles": "0x15771cd35ec369b0af81aecd47824ae8013883506b56fb86b3e84ad1fa73500f03679221c8cefd631604cf2d6f9fbe1c41338778c12d86188ffdd01ab9105107f65c04c225454cee84f5a0ad90d61dc077b6513905e62a0fcc11ffe2b555f65b2e40f882e406b89bee0229b57f8a52ab4fee919943434d577ce6b223bf9623a05d01c1f6d8f53a379a1fa6e0ee6465ec7fc2741ece341551f4be7f5e77dbae3fd8e874a47716713efd0a2b2b32564bf05a10ccfff67d28d688543dd0e78021673f7cd7c690125aef718b769b67b6be78116664ef2974642163b4864ebcfa902fe287d4dde37a9e39323b3f3b222dcd004e58a797cf0af15a6cf8a19ac41fd65226c42b4abe84aed2b512a5086bc8ba4e3772a7f5c5d124ada3bc0a847aca2582f0c087797b7b9fc12f1d6220ef556aa235937814e55c8ed88b989b93220f5e01284d9a1c73aacc12cb858e60bfc8d5ea70f2f0f28271b96cb050885ab07294c09563deef37c49a18ee7e20f203a0544d790e8bc82f2950",
+              "checksum": "c2db04363e79688b9dd0932b797e6b81b4f66d0e802def043c0b5c0dfc16606e",
+              "datePublished": "2019-05-27T14:56:47Z"
+            },
+            "additionalInformation": {
+              "updateFrequency": null,
+              "structuredMarkup": []
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "created": "2019-05-27T14:56:33Z",
+        "creator": "0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e",
+        "type": "DDOIntegritySignature",
+        "signatureValue": "0xdbc74d4467c8eae423b02f6f52fb9fe18ae6108a7338d9a158d7017e7186e7994fcefed353d717dffaef359f351ab96c401f56b4d9e39443428da92ac9e420a61c"
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:74bc00330b664cc6a4f0e154543a047cfdec1b1972884179a87a923f54a0ae52",
+      "created": "2019-05-27T14:51:39Z",
+      "publicKey": [
+        {
+          "id": "did:op:74bc00330b664cc6a4f0e154543a047cfdec1b1972884179a87a923f54a0ae52",
+          "type": "EthereumECDSAKey",
+          "owner": "0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:74bc00330b664cc6a4f0e154543a047cfdec1b1972884179a87a923f54a0ae52"
+        }
+      ],
+      "service": [
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/consume",
+          "creator": "",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/access/initialize",
+          "name": "dataAssetAccessServiceAgreement",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "accessSecretStore": [],
+              "escrowReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "74bc00330b664cc6a4f0e154543a047cfdec1b1972884179a87a923f54a0ae52"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": "0"
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com:443",
+          "service": "SecretStore",
+          "serviceDefinitionId": "1"
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com:443/api/v1/aquarius/assets/ddo/did:op:74bc00330b664cc6a4f0e154543a047cfdec1b1972884179a87a923f54a0ae52",
+          "metadata": {
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            },
+            "base": {
+              "name": "World development indicators",
+              "description": "The primary World Bank collection of development indicators, compiled from officially-recognized international sources. It presents the most current and accurate global development data available, and includes national, regional and global estimates.\n\n---\nSustainable Development Goals: Poverty, Hunger, Health, Education, Gender Equality, Water, Energy, Economy, Infrastructure, Reduced Inequality, Sustainability, Responsible Consumption, Climate, Marine Life, Life on Land, Justice, Collaboration",
+              "dateCreated": "2010-11-05T23:00:00.000Z",
+              "author": "World Development Indicators, The World Bank",
+              "type": "dataset",
+              "license": "CC BY: Attribution 4.0 International",
+              "copyrightHolder": "World Bank Group",
+              "files": [
+                {
+                  "found": true,
+                  "contentLength": "68648651",
+                  "contentType": "application/x-zip-compressed",
+                  "compression": "none",
+                  "index": 0
+                },
+                {
+                  "found": true,
+                  "contentLength": "1102336",
+                  "contentType": "application/vnd.ms-excel",
+                  "compression": "none",
+                  "index": 1
+                }
+              ],
+              "categories": ["Interdisciplinary"],
+              "links": [],
+              "tags": ["ai-for-good"],
+              "price": "0",
+              "encryptedFiles": "0xdb34abfc032ace7b7e3c0b1f65579b1a1da3fbe6aac8b6ff98dfb1ebf58683e8d5e693a05e022cf746d6c87b9ba3e4f3b9606b5e851fb6396859e3b84d6ad0540a9e2755a44ecd8267667111c4265b571cf3487f9ed4017345a91e8136d27466765ffa969620dfe1f2a8cd9c4e6fa3a4db608d420fa34c9024150a93b89f09a8673b4788fd4f3df08b52baa9eeb9d0fd963e3108c888168d620b677c8ad3dd051505138cf17679ae8f8f476f4367046f526c9b388deba85f31a8e5a3b6bd07ce87ce42943b38aaedf123d074effbbf33663c541fdf32c23e26649e059dbadf8f4d11190ef6753de8eab24a4672b0c89e726ca67c6fd0341223dc90e17dba31210e7ff1e1c22d0044dba87c7e87adeec8c44d35ba0e43ac345d6c3b9ae79f6f7d94c3cde8b90947daf1892657862a130d45b2feae8895c1b9a69e030299e627e9e7d206d5d6aceba70b42c829beb7914bf5eae1d7f632a1acf92d1829fbc4bb3efdd0f1506542dbd2acc277",
+              "checksum": "ac6dba8f859a08786535ad962cba224fd986eba5dcb1a38c85c0a27e881e0311",
+              "datePublished": "2019-05-27T14:51:46Z"
+            },
+            "additionalInformation": {
+              "updateFrequency": null,
+              "structuredMarkup": []
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "created": "2019-05-27T14:51:41Z",
+        "creator": "0x00Bd138aBD70e2F00903268F3Db08f2D25677C9e",
+        "type": "DDOIntegritySignature",
+        "signatureValue": "0xed22ca32cb203a1272365041fad47cc896e3093593d0e3cfb4e7d3541c3860442074746d80e5526cd0da0db4c528a57e9ebee4a027de5b08306bc3a55c53f9d51b"
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:3fdcc402b9994d88828e82f9be16e40eaf8eed10036c48ae9a826415e3ca46ce",
+      "publicKey": [
+        {
+          "id": "did:op:3fdcc402b9994d88828e82f9be16e40eaf8eed10036c48ae9a826415e3ca46ce",
+          "type": "EthereumECDSAKey",
+          "owner": "0x8Aee00e82c73Eabc80013Aa2627F452b9dEDb20f"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:3fdcc402b9994d88828e82f9be16e40eaf8eed10036c48ae9a826415e3ca46ce"
+        }
+      ],
+      "service": [
+        {
+          "type": "Access",
+          "creator": "",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/access/initialize",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com:443/api/v1/brizo/services/consume",
+          "name": "dataAssetAccessServiceAgreement",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "accessSecretStore": [],
+              "escrowReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0x8Aee00e82c73Eabc80013Aa2627F452b9dEDb20f"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "3fdcc402b9994d88828e82f9be16e40eaf8eed10036c48ae9a826415e3ca46ce"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ],
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Authorization",
+          "service": "SecretStore",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com:443",
+          "serviceDefinitionId": "1"
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com:443/api/v1/aquarius/assets/ddo/did:op:3fdcc402b9994d88828e82f9be16e40eaf8eed10036c48ae9a826415e3ca46ce",
+          "metadata": {
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            },
+            "base": {
+              "name": "Amazon rainforest satellite imagery",
+              "description": "## Description\nSet of satellite imagery tiles with associated labels. Labels are related to cloud cover,  presence of water (rivers and lakes), and general labels (presence of jungle/clearcutting, roads,  towns, etc.). \n\nUseful for training satellite classification AI. \n\n## Data source \nOriginal data from [planet](https://www.planet.com/). Curated data from [this kaggle competition](https://www.kaggle.com/c/planet-understanding-the-amazon-from-space)\n\n## Files\n\n`train.csv` - a list of training file names and their labels, the labels are space-delimited\n\n`[train/test]-jpg[-additional].tar.7z` - jpg files for the training/test set \n\nFor all the tar.7z files, you can extract them with:\n`7za x train-jpg.tar.7z`\n`tar xf train-jpg.tar`\n\n## Satellite data\nThe set of chips for this competition use the GeoTiff format and each contain four bands of data: red, green, blue, and near infrared. The specific spectral response of the satellites can be found in the Planet documentation. Each of these channels is in 16-bit digital number format, and meets the specification of the Planet four band analytic ortho scene product.",
+              "dateCreated": "2017-05-04T22:00:00.000Z",
+              "author": "Planet Labs, Inc. ",
+              "type": "dataset",
+              "license": "Public Domain",
+              "copyrightHolder": "Planet Labs, Inc.",
+              "files": [
+                {
+                  "found": true,
+                  "contentLength": "318407195",
+                  "contentType": "application/x-7z-compressed",
+                  "compression": "7z-compressed",
+                  "index": 0
+                },
+                {
+                  "found": true,
+                  "contentLength": "632362315",
+                  "contentType": "application/x-7z-compressed",
+                  "compression": "7z-compressed",
+                  "index": 1
+                },
+                {
+                  "found": true,
+                  "contentLength": "629296207",
+                  "contentType": "application/x-7z-compressed",
+                  "compression": "7z-compressed",
+                  "index": 2
+                },
+                {
+                  "found": true,
+                  "contentLength": "1432177",
+                  "contentType": "text/csv",
+                  "compression": "none",
+                  "index": 3
+                }
+              ],
+              "categories": ["Earth & Climate"],
+              "links": [],
+              "tags": "",
+              "price": 0,
+              "encryptedFiles": "0x26be5655a57e91c71d4d6b1d608cc96aa898fea746c057990c6e13d5cdfd2f193277aac8bf80bbc2cebd0697111358312c83220c08c1735696eb13c331e21ea67c7941c7ee2c23ffcb2cafbe4076fc00c14550b2a14fd0002f51a3625a6289ffb2155c5921f89839ae8cc1b8ee7afaf325c1ff8c2df17fb3d00f1e4cb73414b7c5a0ce76ec9ac54e7d5c44976cd637d1a9f149ea4f4867b1a11caa56145bd33fa01ca264648cf677a401439616dd797fc3755800325db2fd5f11c5246b959eeeedd5d775463e6735ec532bccc429b7f97471f83126bccef9223f3aa3d670ec1d11870515d47bacdedfbff3badf7f7c9eec22c0bb60ecfc589fbf84cad3c3a072f1b018353ab323d756cd562298e9cd88feaad2fec7b60a473b6e9eec4b890222c185f0b6bca49dc6f2ba0bcc7904e6eccbae9576d93795bfe52d86c437e2eec5716e053400a35f929fc90bf7dbd725c788143f4f62ff9efc5f1d0a9604457267019202cbf5ce63b902a85fa28d3fcc3749ae4293ccfc53c4f5aa39e26b2b0b30c77ae66b91cb418d368112c18b01b56ee5a7855ff05d6a56b55521128562710e85dedbad3203514cc5df6f5e6b1d4f813e4220d21c899062239d4877c4bb8adcbb8ccf8867045f559f1d20d32fae8e0313d99acb5dd3cf3dd7f29263ebd00b361517a91f86174b997349d04924e714fe30e5a3043d72953ac5541d244586d1b678672156ff085b11b7bd076917acefbd3b1942ec9869e08f6e0ba74b61531905c7582971449cdfe733c69e4bd4b10ff9b578a3775d93ab17af84a4e0a9fc60ab8ac12b3b8c5073befeaacab75c9599aa5009a65ac31ba5b2b8939bc46b76797a3f62e98f933fb66629d3fa6334fe235ebbffe409127aacc1e654c73c17551a706a5d90a1ed504dd725579fba2a93e51d5d3a6e469eed7aed47944c9219f248da3151974885d43271a67307eeaf764342dd136e02c5178ace983c283f8302682bd83e4db68bc2c652512226c6298fb59e4a6289244f1ef882117f6d8e0ff8ee30b597b1204eb6a52f424b1ff83b8ee25d95b5f167ec37f101eb2924ca67c012bf2586f622582d808d0529917c034fc3dc0d8360ec0054e42ea7c831c744bb806071be2382e3640f82a55eb4eea48eade65ea75fb97caebd7176350efbb93846e96e1d3074b43ec7a3002d9c4db9718cb5cdcec3bd1ade5a3ea569f3b2dadd2de8",
+              "checksum": "d0c418ee93b0c5c6185ab967047e2cf925fdca8df9b4b23da1290b2dccdd005f",
+              "datePublished": "2019-05-17T08:37:52Z"
+            },
+            "additionalInformation": {
+              "updateFrequency": null,
+              "structuredMarkup": []
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "created": "2019-05-17T08:37:25Z",
+      "proof": {
+        "created": "2019-05-17T08:37:28Z",
+        "creator": "0x8Aee00e82c73Eabc80013Aa2627F452b9dEDb20f",
+        "type": "DDOIntegritySignature",
+        "signatureValue": "0xb2820dad739476439c00fdb6c2e5c8db258081b27033b976e1a72c1e0ba908ae7f6453930e7c4a9e5fe1bea345f68556b7808f45d0e23716e12d57151f0a14e91b"
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:60a5ac8448764e54be1bad8831627accd53f93af2d1a47b4ac21c4c8490d259b",
+      "created": "2019-04-08T13:02:22Z",
+      "publicKey": [
+        {
+          "id": "did:op:60a5ac8448764e54be1bad8831627accd53f93af2d1a47b4ac21c4c8490d259b",
+          "type": "EthereumECDSAKey",
+          "owner": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:60a5ac8448764e54be1bad8831627accd53f93af2d1a47b4ac21c4c8490d259b"
+        }
+      ],
+      "service": [
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com",
+          "purchaseEndpoint": "https://secret-store.dev-ocean.com",
+          "service": "SecretStore",
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/consume",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/access/initialize",
+          "serviceDefinitionId": "1",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "name": "dataAssetAccessServiceAgreement",
+          "creator": "",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "grantSecretStoreAccess": [],
+              "releaseReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0xeD4Ef53376C6f103d2d7029D7E702e082767C6ff"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "60a5ac8448764e54be1bad8831627accd53f93af2d1a47b4ac21c4c8490d259b"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 1
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:60a5ac8448764e54be1bad8831627accd53f93af2d1a47b4ac21c4c8490d259b",
+          "purchaseEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:60a5ac8448764e54be1bad8831627accd53f93af2d1a47b4ac21c4c8490d259b",
+          "metadata": {
+            "base": {
+              "name": "drinking-water-quality",
+              "dateCreated": "2019-03-25T07:32:47.126807Z",
+              "author": "pub-singapores-national-water-agency",
+              "license": "No License Specified",
+              "price": 1,
+              "checksum": "d60fc0f147790c23f035213f6aa14c92e7dfc7735caca0f54f858ab52f306945",
+              "categories": ["other"],
+              "tags": [
+                "Food Safety",
+                "Healthcare",
+                "Hygiene",
+                "Water",
+                "Water Quality"
+              ],
+              "type": "dataset",
+              "description": "The quality of our drinking water is regulated by the Environmental Public Health (EPH) (Quality of Piped Drinking Water) Regulations 2008. The drinking water standards set out under the EPH Regulations were based on the WHO Guidelines for Drinking-water Quality.",
+              "files": [
+                {
+                  "index": 0
+                }
+              ],
+              "links": [],
+              "encryptedFiles": "0xae94c4267d5da1f4268f48dc013dce06b5628e9a6de806b1b501582258213987c8ed1d9e7bf5e6890e59d6234fb2d50b16c07eea90bed3423d1e9caaf4c6b06d692962d43faec2e0cadcb973296cfc539e4287990471c0fc1c4b099297717e97730443f205b933021da384b4834ffe5234105705d0b37121b417524b1d130853bd80b1c7c15808921f6162f50b6679add98df25f02f2971b528d032bc871",
+              "datePublished": "2019-04-08T13:02:25Z"
+            },
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "type": "DDOIntegritySignature",
+        "created": "2019-04-08T13:02:25Z",
+        "creator": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4",
+        "signatureValue": "BwDaSpv8Lami8nBo9lN5INP1C81U3M9DCnl122EquywnquCjze1n71rsMkghied6aKMonQDeRltTAN7d+LRknk1to5S+fBUWW/EotqEPTpWhfDna0WGSuZ/CWi6ty4XgHFss3HSwjmaTsWvJSakn1Ejx3iNX31/Fe7Q8dDV9t7o="
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:7648596b60f74301ae1ef9baa5d637255d517ff362434754a3779e1de4c8219b",
+      "created": "2019-04-05T13:16:30Z",
+      "publicKey": [
+        {
+          "id": "did:op:7648596b60f74301ae1ef9baa5d637255d517ff362434754a3779e1de4c8219b",
+          "type": "EthereumECDSAKey",
+          "owner": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:7648596b60f74301ae1ef9baa5d637255d517ff362434754a3779e1de4c8219b"
+        }
+      ],
+      "service": [
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com",
+          "purchaseEndpoint": "https://secret-store.dev-ocean.com",
+          "service": "SecretStore",
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/consume",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/access/initialize",
+          "serviceDefinitionId": "1",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "name": "dataAssetAccessServiceAgreement",
+          "creator": "",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "grantSecretStoreAccess": [],
+              "releaseReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0xeD4Ef53376C6f103d2d7029D7E702e082767C6ff"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "7648596b60f74301ae1ef9baa5d637255d517ff362434754a3779e1de4c8219b"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:7648596b60f74301ae1ef9baa5d637255d517ff362434754a3779e1de4c8219b",
+          "purchaseEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:7648596b60f74301ae1ef9baa5d637255d517ff362434754a3779e1de4c8219b",
+          "metadata": {
+            "base": {
+              "name": "autos",
+              "dateCreated": "2014-04-06T23:19:49",
+              "author": "Jeffrey C. Schlimmer (Jeffrey.Schlimmer@a.gp.cs.cmu.edu)unknown",
+              "license": "Public",
+              "price": 0,
+              "checksum": "fa4fffe555dc9689e5e697360fe81020d8351fc59787983a517d103181393a44",
+              "categories": ["autos"],
+              "type": "dataset",
+              "description": "**Author**: Jeffrey C. Schlimmer (Jeffrey.Schlimmer@a.gp.cs.cmu.edu)\\n **Source**: [UCI](https://archive.ics.uci.edu/ml/datasets/Automobile) - 1987\\n **Please cite**:\\n \\n **1985 Auto Imports Database**\\n This data set consists of three types of entities: (a) the specification of an auto in terms of various characteristics, (b) its assigned insurance risk rating, (c) its normalized losses in use as compared to other cars. The second rating corresponds to the degree to which the auto is more risky than its price indicates. Cars are initially assigned a risk factor symbol associated with its price. Then, if it is more risky (or less), this symbol is adjusted by moving it up (or down) the scale. Actuarians call this process \"symboling\". A value of +3 indicates that the auto is risky, -3 that it is probably pretty safe.\\n \\n The third factor is the relative average loss payment per insured vehicle year. This value is normalized for all autos within a particular size classification (two-door small, station wagons, sports/speciality, etc...), and represents the average loss per car per year.\\n \\n Several of the attributes in the database could be used as a \"class\" attribute.\\n \\n Sources:\\n 1) 1985 Model Import Car and Truck Specifications, 1985 Ward's Automotive Yearbook.\\n 2) Personal Auto Manuals, Insurance Services Office, 160 Water Street, New York, NY 10038\\n 3) Insurance Collision Report, Insurance Institute for Highway Safety, Watergate 600, Washington, DC 20037\\n \\n Past Usage:\\n Kibler,~D., Aha,~D.~W., & Albert,~M. (1989). Instance-based prediction of real-valued attributes. {it Computational Intelligence}, {it 5}, 51--57.\\n \\n \\n Attribute Information:\\n >\\n 1. symboling: -3, -2, -1, 0, 1, 2, 3.\\n 2. normalized-losses: continuous from 65 to 256.\\n 3. make: alfa-romero, audi, bmw, chevrolet, dodge, honda,\\n isuzu, jaguar, mazda, mercedes-benz, mercury,\\n mitsubishi, nissan, peugot, plymouth, porsche,\\n renault, saab, subaru, toyota, volkswagen, volvo\\n 4. fuel-type: diesel, gas.\\n 5. aspiration: std, turbo.\\n 6. num-of-doors: four, two.\\n 7. body-style: hardtop, wagon, sedan, hatchback, convertible.\\n 8. drive-wheels: 4wd, fwd, rwd.\\n 9. engine-location: front, rear.\\n 10. wheel-base: continuous from 86.6 120.9.\\n 11. length: continuous from 141.1 to 208.1.\\n 12. width: continuous from 60.3 to 72.3.\\n 13. height: continuous from 47.8 to 59.8.\\n 14. curb-weight: continuous from 1488 to 4066.\\n 15. engine-type: dohc, dohcv, l, ohc, ohcf, ohcv, rotor.\\n 16. num-of-cylinders: eight, five, four, six, three, twelve, two.\\n 17. engine-size: continuous from 61 to 326.\\n 18. fuel-system: 1bbl, 2bbl, 4bbl, idi, mfi, mpfi, spdi, spfi.\\n 19. bore: continuous from 2.54 to 3.94.\\n 20. stroke: continuous from 2.07 to 4.17.\\n 21. compression-ratio: continuous from 7 to 23.\\n 22. horsepower: continuous from 48 to 288.\\n 23. peak-rpm: continuous from 4150 to 6600.\\n 24. city-mpg: continuous from 13 to 49.\\n 25. highway-mpg: continuous from 16 to 54.\\n 26. price: continuous from 5118 to 45400.",
+              "inLanguage": "en",
+              "files": [
+                {
+                  "index": 0,
+                  "contentType": "csv",
+                  "contentLength": 28538
+                },
+                {
+                  "index": 1,
+                  "contentType": "ARFF",
+                  "contentLength": 28538
+                }
+              ],
+              "links": [
+                {
+                  "url": "https://archive.ics.uci.edu/ml/citation_policy.html",
+                  "name": "citation"
+                }
+              ],
+              "encryptedFiles": "0xda38a5c2d7830c5c033a8f5d76326eed788eee0fe2fef2dd09bf3fe0f2b8fbf550069d606c225c9ba7d0c325a5405ee76e2341e429517358beeba18a25168bf9ae14b9ed26bc4c6d1fd5e4c7698244b140239510f0bd2df94e8fea67c0cde5c262f82097eee03ed79cb2c1c101f9f112dcfb9d97dcd79e53ce64f4d5f78c785ca31bb2a815f3d4a7d7721285e2a20a4c199ce361b39d0879711a8fa62fad5ea6e7e24b2178461e2119cb067d91b1c76040c613dae02c46dda9e8bef9c39a9d12f13e71552f807444c3145e9aa162a0d4766690c19af5ece22c4153412382f22669610559e66b09d86eb54fe89fba403fe844febed77e054702394f0361fdf524d624ac9017dc20c7871f1d0642",
+              "datePublished": "2019-04-05T13:16:33Z"
+            },
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "type": "DDOIntegritySignature",
+        "created": "2019-04-05T13:16:32Z",
+        "creator": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4",
+        "signatureValue": "HpmSQwVivy5UbSPON6taxjvW2DryF3j5IbJwT5c91GLxUXUqkmq+SGcKf79Xo09+j1fzqxRtzPm3GOHiLGsfVZpvfPKEBYgPjwmxTLKYE0UCwXIN4v6UzN9KsfDFqs93u2bzRPVZuYNMILXwZu3zHZ4OQF9MSstjZIW1hoGh9rI="
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:5e4e1139daab4e2e9460dddfa87d36018e1a9516b22345a39fcf31b5b4e2d8fb",
+      "created": "2019-04-05T12:36:29Z",
+      "publicKey": [
+        {
+          "id": "did:op:5e4e1139daab4e2e9460dddfa87d36018e1a9516b22345a39fcf31b5b4e2d8fb",
+          "type": "EthereumECDSAKey",
+          "owner": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:5e4e1139daab4e2e9460dddfa87d36018e1a9516b22345a39fcf31b5b4e2d8fb"
+        }
+      ],
+      "service": [
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com",
+          "purchaseEndpoint": "https://secret-store.dev-ocean.com",
+          "service": "SecretStore",
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/consume",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/access/initialize",
+          "serviceDefinitionId": "1",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "name": "dataAssetAccessServiceAgreement",
+          "creator": "",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "grantSecretStoreAccess": [],
+              "releaseReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0xeD4Ef53376C6f103d2d7029D7E702e082767C6ff"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "5e4e1139daab4e2e9460dddfa87d36018e1a9516b22345a39fcf31b5b4e2d8fb"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:5e4e1139daab4e2e9460dddfa87d36018e1a9516b22345a39fcf31b5b4e2d8fb",
+          "purchaseEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:5e4e1139daab4e2e9460dddfa87d36018e1a9516b22345a39fcf31b5b4e2d8fb",
+          "metadata": {
+            "base": {
+              "name": "vote",
+              "dateCreated": "2014-04-06T23:23:15",
+              "author": "unknown",
+              "license": "Public",
+              "price": 0,
+              "checksum": "4e8cc2aca76f852f59daf1035e28afac71b8061048e90c32973eaa68c1ff886c",
+              "categories": ["vote"],
+              "type": "dataset",
+              "description": "**Author**:\\n **Source**: Unknown -\\n **Please cite**:\\n \\n 1. Title: 1984 United States Congressional Voting Records Database\\n \\n 2. Source Information:\\n (a) Source: Congressional Quarterly Almanac, 98th Congress,\\n 2nd session 1984, Volume XL: Congressional Quarterly Inc.\\n Washington, D.C., 1985.\\n (b) Donor: Jeff Schlimmer (Jeffrey.Schlimmer@a.gp.cs.cmu.edu)\\n (c) Date: 27 April 1987\\n \\n 3. Past Usage\\n - Publications\\n 1. Schlimmer, J. C. (1987). Concept acquisition through\\n representational adjustment. Doctoral dissertation, Department of\\n Information and Computer Science, University of California, Irvine, CA.\\n -- Results: about 90%-95% accuracy appears to be STAGGER's asymptote\\n - Predicted attribute: party affiliation (2 classes)\\n \\n 4. Relevant Information:\\n This data set includes votes for each of the U.S. House of\\n Representatives Congressmen on the 16 key votes identified by the\\n CQA. The CQA lists nine different types of votes: voted for, paired\\n for, and announced for (these three simplified to yea), voted\\n against, paired against, and announced against (these three\\n simplified to nay), voted present, voted present to avoid conflict\\n of interest, and did not vote or otherwise make a position known\\n (these three simplified to an unknown disposition).\\n \\n 5. Number of Instances: 435 (267 democrats, 168 republicans)\\n \\n 6. Number of Attributes: 16 + class name = 17 (all Boolean valued)\\n \\n 7. Attribute Information:\\n 1. Class Name: 2 (democrat, republican)\\n 2. handicapped-infants: 2 (y,n)\\n 3. water-project-cost-sharing: 2 (y,n)\\n 4. adoption-of-the-budget-resolution: 2 (y,n)\\n 5. physician-fee-freeze: 2 (y,n)\\n 6. el-salvador-aid: 2 (y,n)\\n 7. religious-groups-in-schools: 2 (y,n)\\n 8. anti-satellite-test-ban: 2 (y,n)\\n 9. aid-to-nicaraguan-contras: 2 (y,n)\\n 10. mx-missile: 2 (y,n)\\n 11. immigration: 2 (y,n)\\n 12. synfuels-corporation-cutback: 2 (y,n)\\n 13. education-spending: 2 (y,n)\\n 14. superfund-right-to-sue: 2 (y,n)\\n 15. crime: 2 (y,n)\\n 16. duty-free-exports: 2 (y,n)\\n 17. export-administration-act-south-africa: 2 (y,n)\\n \\n 8. Missing Attribute Values: Denoted by \"?\"\\n \\n NOTE: It is important to recognize that \"?\" in this database does\\n not mean that the value of the attribute is unknown. It\\n means simply, that the value is not \"yea\" or \"nay\" (see\\n \"Relevant Information\" section above).\\n \\n Attribute: #Missing Values:\\n 1: 0\\n 2: 0\\n 3: 12\\n 4: 48\\n 5: 11\\n 6: 11\\n 7: 15\\n 8: 11\\n 9: 14\\n 10: 15\\n 11: 22\\n 12: 7\\n 13: 21\\n 14: 31\\n 15: 25\\n 16: 17\\n 17: 28\\n \\n 9. Class Distribution: (2 classes)\\n 1. 45.2 percent are democrat\\n 2. 54.8 percent are republican\\n \\n Class predictiveness and predictability: Pr(C|A=V) and Pr(A=V|C)\\n Attribute 1: (A = handicapped-infants)\\n 0.91; 1.21 (C=democrat; V=y)\\n 0.09; 0.10 (C=republican; V=y)\\n 0.43; 0.38 (C=democrat; V=n)\\n 0.57; 0.41 (C=republican; V=n)\\n 0.75; 0.03 (C=democrat; V=?)\\n 0.25; 0.01 (C=republican; V=?)\\n Attribute 2: (A = water-project-cost-sharing)\\n 0.62; 0.45 (C=democrat; V=y)\\n 0.38; 0.23 (C=republican; V=y)\\n 0.62; 0.45 (C=democrat; V=n)\\n 0.38; 0.23 (C=republican; V=n)\\n 0.58; 0.10 (C=democrat; V=?)\\n 0.42; 0.06 (C=republican; V=?)\\n Attribute 3: (A = adoption-of-the-budget-resolution)\\n 0.91; 0.87 (C=democrat; V=y)\\n 0.09; 0.07 (C=republican; V=y)\\n 0.17; 0.11 (C=democrat; V=n)\\n 0.83; 0.44 (C=republican; V=n)\\n 0.64; 0.03 (C=democrat; V=?)\\n 0.36; 0.01 (C=republican; V=?)\\n Attribute 4: (A = physician-fee-freeze)\\n 0.08; 0.05 (C=democrat; V=y)\\n 0.92; 0.50 (C=republican; V=y)\\n 0.99; 0.92 (C=democrat; V=n)\\n 0.01; 0.01 (C=republican; V=n)\\n 0.73; 0.03 (C=democrat; V=?)\\n 0.27; 0.01 (C=republican; V=?)\\n Attribute 5: (A = el-salvador-aid)\\n 0.26; 0.21 (C=democrat; V=y)\\n 0.74; 0.48 (C=republican; V=y)\\n 0.96; 0.75 (C=democrat; V=n)\\n 0.04; 0.02 (C=republican; V=n)\\n 0.80; 0.04 (C=democrat; V=?)\\n 0.20; 0.01 (C=republican; V=?)\\n Attribute 6: (A = religious-groups-in-schools)\\n 0.45; 0.46 (C=democrat; V=y)\\n 0.55; 0.46 (C=republican; V=y)\\n 0.89; 0.51 (C=democrat; V=n)\\n 0.11; 0.05 (C=republican; V=n)\\n 0.82; 0.03 (C=democrat; V=?)\\n 0.18; 0.01 (C=republican; V=?)\\n Attribute 7: (A = anti-satellite-test-ban)\\n 0.84; 0.75 (C=democrat; V=y)\\n 0.16; 0.12 (C=republican; V=y)\\n 0.32; 0.22 (C=democrat; V=n)\\n 0.68; 0.38 (C=republican; V=n)\\n 0.57; 0.03 (C=democrat; V=?)\\n 0.43; 0.02 (C=republican; V=?)\\n Attribute 8: (A = aid-to-nicaraguan-contras)\\n 0.90; 0.82 (C=democrat; V=y)\\n 0.10; 0.07 (C=republican; V=y)\\n 0.25; 0.17 (C=democrat; V=n)\\n 0.75; 0.41 (C=republican; V=n)\\n 0.27; 0.01 (C=democrat; V=?)\\n 0.73; 0.03 (C=republican; V=?)\\n Attribute 9: (A = mx-missile)\\n 0.91; 0.70 (C=democrat; V=y)\\n 0.09; 0.06 (C=republican; V=y)\\n 0.29; 0.22 (C=democrat; V=n)\\n 0.71; 0.45 (C=republican; V=n)\\n 0.86; 0.07 (C=democrat; V=?)\\n 0.14; 0.01 (C=republican; V=?)\\n Attribute 10: (A = immigration)\\n 0.57; 0.46 (C=democrat; V=y)\\n 0.43; 0.28 (C=republican; V=y)\\n 0.66; 0.52 (C=democrat; V=n)\\n 0.34; 0.23 (C=republican; V=n)\\n 0.57; 0.01 (C=democrat; V=?)\\n 0.43; 0.01 (C=republican; V=?)\\n Attribute 11: (A = synfuels-corporation-cutback)\\n 0.86; 0.48 (C=democrat; V=y)\\n 0.14; 0.06 (C=republican; V=y)\\n 0.48; 0.47 (C=democrat; V=n)\\n 0.52; 0.43 (C=republican; V=n)\\n 0.57; 0.04 (C=democrat; V=?)\\n 0.43; 0.03 (C=republican; V=?)\\n Attribute 12: (A = education-spending)\\n 0.21; 0.13 (C=democrat; V=y)\\n 0.79; 0.42 (C=republican; V=y)\\n 0.91; 0.80 (C=democrat; V=n)\\n 0.09; 0.06 (C=republican; V=n)\\n 0.58; 0.07 (C=democrat; V=?)\\n 0.42; 0.04 (C=republican; V=?)\\n Attribute 13: (A = superfund-right-to-sue)\\n 0.35; 0.27 (C=democrat; V=y)\\n 0.65; 0.42 (C=republican; V=y)\\n 0.89; 0.67 (C=democrat; V=n)\\n 0.11; 0.07 (C=republican; V=n)\\n 0.60; 0.06 (C=democrat; V=?)\\n 0.40; 0.03 (C=republican; V=?)\\n Attribute 14: (A = crime)\\n 0.36; 0.34 (C=democrat; V=y)\\n 0.64; 0.49 (C=republican; V=y)\\n 0.98; 0.63 (C=democrat; V=n)\\n 0.02; 0.01 (C=republican; V=n)\\n 0.59; 0.04 (C=democrat; V=?)\\n 0.41; 0.02 (C=republican; V=?)\\n Attribute 15: (A = duty-free-exports)\\n 0.92; 0.60 (C=democrat; V=y)\\n 0.08; 0.04 (C=republican; V=y)\\n 0.39; 0.34 (C=democrat; V=n)\\n 0.61; 0.44 (C=republican; V=n)\\n 0.57; 0.06 (C=democrat; V=?)\\n 0.43; 0.04 (C=republican; V=?)\\n Attribute 16: (A = export-administration-act-south-africa)\\n 0.64; 0.65 (C=democrat; V=y)\\n 0.36; 0.30 (C=republican; V=y)\\n 0.19; 0.04 (C=democrat; V=n)\\n 0.81; 0.15 (C=republican; V=n)\\n 0.79; 0.31 (C=democrat; V=?)\\n 0.21; 0.07 (C=republican; V=?)",
+              "inLanguage": "en",
+              "files": [
+                {
+                  "index": 0,
+                  "contentType": "csv",
+                  "contentLength": 39614
+                },
+                {
+                  "index": 1,
+                  "contentType": "ARFF",
+                  "contentLength": 39614
+                }
+              ],
+              "links": [
+                {
+                  "url": "https://archive.ics.uci.edu/ml/citation_policy.html",
+                  "name": "citation"
+                }
+              ],
+              "encryptedFiles": "0x38015a5a18682dbf874f3449c160d8f81f7a529c1c430e761502792d574d1c80d9775681e8a69f00bb2f34e93011d0b60a40be98573a236a05053de42860b8388e92a047b2050d125a677dba906db1ee44b6510e2554d3248b752fe4c128b0b20475921eee20b8f3bc3c60e5ffc781f2c73de8fb7b2301e4f61ff31d4858abb65bcf4ca72c6412d051590bfac7ff8fa066ceb2a5880d4084e9cf8f29de171d67d7c5552cfac48759a5ea80d9feef2ea07bdf2b780fdc1cc7a0e3c7a59fb03005b0a908e3211b22f04454d8a0b05f2fda2712cd87b45574685aca1d728cba558c165d209e1172e65d947a213e41d5a6394e79b2102869e38c98748e29cac96aaa6a467e4cdd7212286f4be997c203",
+              "datePublished": "2019-04-05T12:36:32Z"
+            },
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "type": "DDOIntegritySignature",
+        "created": "2019-04-05T12:36:32Z",
+        "creator": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4",
+        "signatureValue": "hsTTPVUnCmVKiECKqXjJTA7unh1wrL/NdZ9sdxEYDTJqsRr62SL2tWGz3WDtpkxjJckI7DvmoJMJjmjnToTKAIe5mWmr2vSfxuE1gdpN7XYxM7WZj5QkKSEpqd/Mcmo0GwdZYMF5c+TH9/CBgs+uuTBiOEGeGoCueGgLYoHOTbw="
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:d01668bb572a4ee099d1b32261028b9cb24e1109f5a34c0198991c4b13d27fd1",
+      "created": "2019-04-05T12:23:50Z",
+      "publicKey": [
+        {
+          "id": "did:op:d01668bb572a4ee099d1b32261028b9cb24e1109f5a34c0198991c4b13d27fd1",
+          "type": "EthereumECDSAKey",
+          "owner": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:d01668bb572a4ee099d1b32261028b9cb24e1109f5a34c0198991c4b13d27fd1"
+        }
+      ],
+      "service": [
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com",
+          "purchaseEndpoint": "https://secret-store.dev-ocean.com",
+          "service": "SecretStore",
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/consume",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/access/initialize",
+          "serviceDefinitionId": "1",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "name": "dataAssetAccessServiceAgreement",
+          "creator": "",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "grantSecretStoreAccess": [],
+              "releaseReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0xeD4Ef53376C6f103d2d7029D7E702e082767C6ff"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "d01668bb572a4ee099d1b32261028b9cb24e1109f5a34c0198991c4b13d27fd1"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:d01668bb572a4ee099d1b32261028b9cb24e1109f5a34c0198991c4b13d27fd1",
+          "purchaseEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:d01668bb572a4ee099d1b32261028b9cb24e1109f5a34c0198991c4b13d27fd1",
+          "metadata": {
+            "base": {
+              "name": "pasture",
+              "dateCreated": "2014-08-26T21:50:16",
+              "author": "Dave Barker",
+              "license": "Public",
+              "price": 0,
+              "checksum": "50310ec11a880e2b4832c023686cc50860eddceb6097b7b8361a2368913d2481",
+              "categories": ["pasture"],
+              "type": "dataset",
+              "description": "**Author**: Dave Barker\\n **Source**: [original](http://www.cs.waikato.ac.nz/ml/weka/datasets.html) -\\n **Please cite**:\\n \\n Pasture Production\\n \\n Data source: Dave Barker\\n AgResearch Grasslands, Palmerston North, New Zealand\\n \\n The objective was to predict pasture production from a variety of biophysical factors. Vegetation and soil variables from areas of grazed North Island hill country with different management (fertilizer application/stocking rate) histories (1973-1994) were measured and subdivided into 36 paddocks. Nineteen vegetation (including herbage production); soil chemical, physical and biological; and soil water variables were selected as potentially useful biophysical indicators.\\n \\n Attribute Information:\\n 1. fertiliser - fertiliser used - enumerated\\n 2. slope - slope of the paddock - integer\\n 3. aspect-dev-NW - the deviation from the north-west - integer\\n 4. OlsenP - integer\\n 5. MinN - integer\\n 6. TS - integer\\n 7. Ca-Mg - calcium magnesium ration - real\\n 8. LOM - soil lom (g/100g) - real\\n 9. NFIX-mean - a mean calculation - real\\n 10. Eworms-main-3 - main 3 spp earth worms per g/m2 - real\\n 11. Eworms-No-species - number of spp - integer\\n 12. KUnSat - mm/hr - real\\n 13. OM - real\\n 14. Air-Perm - real\\n 15. Porosity - real\\n 16. HFRG-pct-mean - mean percent - real\\n 17. legume-yield - kgDM/ha - real\\n 18. OSPP-pct-mean - mean percent - real\\n 19. Jan-Mar-mean-TDR - real\\n 20. Annual-Mean-Runoff - in mm - real\\n 21. root-surface-area - m2/m3 - real\\n 22. Leaf-P - ppm - real\\n 23. pasture-prod-class - pasture production categorisation - enumerated",
+              "inLanguage": "en",
+              "files": [
+                {
+                  "index": 0,
+                  "contentType": "csv",
+                  "contentLength": 1888
+                },
+                {
+                  "index": 1,
+                  "contentType": "ARFF",
+                  "contentLength": 1888
+                }
+              ],
+              "links": [
+                {
+                  "url": "https://archive.ics.uci.edu/ml/citation_policy.html",
+                  "name": "citation"
+                }
+              ],
+              "encryptedFiles": "0x2de35a3691b5996d36e156b4de807186f4fa075c5eeade8bf8d0cca95809f6249ac26e3b0e0f1d2b913481c3094bf66aea67d1c6ad009389fd5f91ecd94ed60c9c5c6827c4ef72c9a8bf472a8de7f22730b8b253f991651ac82b8e2f37b7c41593438eb2bd863013aec3763f48f4ef680bb9263f840370cd294d28155934bfff9417cd5a76d2649054c93d13697e004a29f7c902ced1fb4d46b549abfbce84fb0f7a58934662617b2dc8bdaa253b0829692b96fb5c4d7ef44c8f4ff44ef4e8056278030a003d20595f807365a7e9a1e76ffefea9abfc44688af6a060eb06767dc351b6b19f6802deff013563b5a4bcbf34f7b84da637fafe7522d77aa597c98ba00f749fefe52598da3a",
+              "datePublished": "2019-04-05T12:23:53Z"
+            },
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "type": "DDOIntegritySignature",
+        "created": "2019-04-05T12:23:52Z",
+        "creator": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4",
+        "signatureValue": "Ue/ziJ0ejMIlA2nQJ62nwKAssF5Yjs8Z7RTrFbegT1NzaFrwVHKixwQCscg0UmTp6kCPeI1qpqgz++yPyonHRtqtKucCgN1RkPrI0HglG3N8/x4dFVMT//71COx1QKsPT7PzMeoWI4gBZwUzjtqXi69bpwO8T8GTZqpdFgpp7WY="
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:a73c50fcbaa24197946c9e294f3ac1a664daaf8f4fc34ce68ecc30958cd9dff0",
+      "created": "2019-04-05T12:16:40Z",
+      "publicKey": [
+        {
+          "id": "did:op:a73c50fcbaa24197946c9e294f3ac1a664daaf8f4fc34ce68ecc30958cd9dff0",
+          "type": "EthereumECDSAKey",
+          "owner": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:a73c50fcbaa24197946c9e294f3ac1a664daaf8f4fc34ce68ecc30958cd9dff0"
+        }
+      ],
+      "service": [
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com",
+          "purchaseEndpoint": "https://secret-store.dev-ocean.com",
+          "service": "SecretStore",
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/consume",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/access/initialize",
+          "serviceDefinitionId": "1",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "name": "dataAssetAccessServiceAgreement",
+          "creator": "",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "grantSecretStoreAccess": [],
+              "releaseReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0xeD4Ef53376C6f103d2d7029D7E702e082767C6ff"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "a73c50fcbaa24197946c9e294f3ac1a664daaf8f4fc34ce68ecc30958cd9dff0"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:a73c50fcbaa24197946c9e294f3ac1a664daaf8f4fc34ce68ecc30958cd9dff0",
+          "purchaseEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:a73c50fcbaa24197946c9e294f3ac1a664daaf8f4fc34ce68ecc30958cd9dff0",
+          "metadata": {
+            "base": {
+              "name": "covertype",
+              "dateCreated": "2014-04-23T13:14:37",
+              "author": "Jock A. Blackard, Dr. Denis J. Dean, Dr. Charles W. Anderson",
+              "license": "Public",
+              "price": 0,
+              "checksum": "4c5b754ca32ff18bd7d4895fc8dc7742e834b6a6245cd2e6081f5341be9c1f0e",
+              "categories": ["covertype"],
+              "type": "dataset",
+              "description": "**Author**: Jock A. Blackard, Dr. Denis J. Dean, Dr. Charles W. Anderson\\n **Source**: Unknown\\n \\n **Note: This is a 19% subsample from the original UCI dataset (see version 4). The origin is currently not clear.**\\n \\n **Covertype**\\n Predicting forest cover type from cartographic variables only (no remotely sensed data). The actual forest cover type for a given observation (30 x 30 meter cell) was determined from US Forest Service (USFS) Region 2 Resource Information System &#40;RIS&#41; data. Independent variables were derived from data originally obtained from US Geological Survey (USGS) and USFS data. Data is in raw form (not scaled) and contains binary (0 or 1) columns of data for qualitative independent variables (wilderness areas and soil types).\\n \\n This study area includes four wilderness areas located in the Roosevelt National Forest of northern Colorado. These areas represent forests with minimal human-caused disturbances, so that existing forest cover types are more a result of ecological processes rather than forest management practices.\\n \\n Some background information for these four wilderness areas: Neota (area 2) probably has the highest mean elevational value of the 4 wilderness areas. Rawah (area 1) and Comanche Peak (area 3) would have a lower mean elevational value, while Cache la Poudre (area 4) would have the lowest mean elevational value.\\n \\n As for primary major tree species in these areas, Neota would have spruce/fir (type 1), while Rawah and Comanche Peak would probably have lodgepole pine (type 2) as their primary species, followed by spruce/fir and aspen (type 5). Cache la Poudre would tend to have Ponderosa pine (type 3), Douglas-fir (type 6), and cottonwood/willow (type 4).\\n \\n The Rawah and Comanche Peak areas would tend to be more typical of the overall dataset than either the Neota or Cache la Poudre, due to their assortment of tree species and range of predictive variable values (elevation, etc.) Cache la Poudre would probably be more unique than the others, due to its relatively low elevation range and species composition.\\n \\n Attribute Information:\\n Given is the attribute name, attribute type, the measurement unit and a brief description. The forest cover type is the classification problem. The order of this listing corresponds to the order of numerals along the rows of the database.\\n >\\n Name / Data Type / Measurement / Description\\n Elevation / quantitative /meters / Elevation in meters\\n Aspect / quantitative / azimuth / Aspect in degrees azimuth\\n Slope / quantitative / degrees / Slope in degrees\\n Horizontal_Distance_To_Hydrology / quantitative / meters / Horz Dist to nearest surface water features\\n Vertical_Distance_To_Hydrology / quantitative / meters / Vert Dist to nearest surface water features\\n Horizontal_Distance_To_Roadways / quantitative / meters / Horz Dist to nearest roadway\\n Hillshade_9am / quantitative / 0 to 255 index / Hillshade index at 9am, summer solstice\\n Hillshade_Noon / quantitative / 0 to 255 index / Hillshade index at noon, summer solstice\\n Hillshade_3pm / quantitative / 0 to 255 index / Hillshade index at 3pm, summer solstice\\n Horizontal_Distance_To_Fire_Points / quantitative / meters / Horz Dist to nearest wildfire ignition points\\n Wilderness_Area (4 binary columns) / qualitative / 0 (absence) or 1 (presence) / Wilderness area designation\\n Soil_Type (40 binary columns) / qualitative / 0 (absence) or 1 (presence) / Soil Type designation\\n Cover_Type (7 types) / integer / 1 to 7 / Forest Cover Type designation\\n \\n \\n Relevant Papers:\\n - Blackard, Jock A. and Denis J. Dean. 2000. \"Comparative Accuracies of Artificial Neural Networks and Discriminant Analysis in Predicting Forest Cover Types from Cartographic Variables.\" Computers and Electronics in Agriculture 24(3):131-151.\\n - Blackard, Jock A. and Denis J. Dean. 1998. \"Comparative Accuracies of Neural Networks and Discriminant Analysis in Predicting Forest Cover Types from Cartographic Variables.\" Second Southern Forestry GIS Conference. University of Georgia. Athens, GA. Pages 189-199.\\n - Blackard, Jock A. 1998. \"Comparison of Neural Networks and Discriminant Analysis in Predicting Forest Cover Types.\" Ph.D. dissertation. Department of Forest Sciences. Colorado State University. Fort Collins, Colorado. 165 pages.",
+              "inLanguage": "en",
+              "files": [
+                {
+                  "index": 0,
+                  "contentType": "csv"
+                },
+                {
+                  "index": 1,
+                  "contentType": "ARFF"
+                }
+              ],
+              "links": [
+                {
+                  "url": "https://archive.ics.uci.edu/ml/citation_policy.html",
+                  "name": "citation"
+                }
+              ],
+              "encryptedFiles": "0xcbd22d2dcb819c761f19a0ac032d6826d6adc2cbac173e2c65611e2aa34145867aa281a3eb7d8d2b1b85a8e303c037c95520ffe15fa013b947d20796d000b07627f384bfba8ba7e66fbbda1735ce8afe42c4aa8efb89f3934e2c208df820f3396e54cf784b4186ae021e38b1ff212d71e4264477955d0d030ed03dce5aa600dcdbe909eff22fdbe25df86f25b7d11af642dd5e8cf9a4c32c446961c8b7bd9750184ea63906cbe77aa4b48379bfa13b6e64e491d56676344d1a0804f68c16fca09a75962b843359e342ff81f901aaaad0b3850226c388a4704ba9c9ff7ebd37fbb0e8610b4217478b1d5a7e5b7a",
+              "datePublished": "2019-04-05T12:16:43Z"
+            },
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "type": "DDOIntegritySignature",
+        "created": "2019-04-05T12:16:42Z",
+        "creator": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4",
+        "signatureValue": "zp98I73SChl81h+Soo5JWySqz51FrOE2HJufT1LT2zB5h5SM+8JprkeQbreiovmmv8xgTzodPskL/LLoVGYwxYrCrHlgG4vGHZAxoy/nJBUOa1xB1Q8jD6/yGcs/F9hvvuCkespi7XmYvjL2X49p7MJFZG6slnZGCBSMP3eJJcM="
+      }
+    },
+    {
+      "@context": "https://w3id.org/did/v1",
+      "id": "did:op:d02e08401ccb4a4eaa3d54aef9e8ce894af61011076f4f949db61ed0f67117b6",
+      "created": "2019-04-05T09:29:03Z",
+      "publicKey": [
+        {
+          "id": "did:op:d02e08401ccb4a4eaa3d54aef9e8ce894af61011076f4f949db61ed0f67117b6",
+          "type": "EthereumECDSAKey",
+          "owner": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4"
+        }
+      ],
+      "authentication": [
+        {
+          "type": "RsaSignatureAuthentication2018",
+          "publicKey": "did:op:d02e08401ccb4a4eaa3d54aef9e8ce894af61011076f4f949db61ed0f67117b6"
+        }
+      ],
+      "service": [
+        {
+          "type": "Authorization",
+          "serviceEndpoint": "https://secret-store.dev-ocean.com",
+          "purchaseEndpoint": "https://secret-store.dev-ocean.com",
+          "service": "SecretStore",
+          "serviceDefinitionId": "0"
+        },
+        {
+          "type": "Access",
+          "serviceEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/consume",
+          "purchaseEndpoint": "https://brizo.marketplace.dev-ocean.com/api/v1/brizo/services/access/initialize",
+          "serviceDefinitionId": "1",
+          "templateId": "0xfA16d26e9F4fffC6e40963B281a0bB08C31ed40C",
+          "name": "dataAssetAccessServiceAgreement",
+          "creator": "",
+          "serviceAgreementTemplate": {
+            "contractName": "EscrowAccessSecretStoreTemplate",
+            "events": [
+              {
+                "name": "AgreementCreated",
+                "actorType": "consumer",
+                "handler": {
+                  "moduleName": "escrowAccessSecretStoreTemplate",
+                  "functionName": "fulfillLockRewardCondition",
+                  "version": "0.1"
+                }
+              }
+            ],
+            "fulfillmentOrder": [
+              "lockReward.fulfill",
+              "accessSecretStore.fulfill",
+              "escrowReward.fulfill"
+            ],
+            "conditionDependency": {
+              "lockReward": [],
+              "grantSecretStoreAccess": [],
+              "releaseReward": ["lockReward", "accessSecretStore"]
+            },
+            "conditions": [
+              {
+                "name": "lockReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "LockRewardCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "lockRewardCondition",
+                      "functionName": "fulfillAccessSecretStoreCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_rewardAddress",
+                    "type": "address",
+                    "value": "0xeD4Ef53376C6f103d2d7029D7E702e082767C6ff"
+                  },
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "accessSecretStore",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "AccessSecretStoreCondition",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  },
+                  {
+                    "name": "TimedOut",
+                    "actorType": "consumer",
+                    "handler": {
+                      "moduleName": "accessSecretStore",
+                      "functionName": "fulfillEscrowRewardCondition",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_documentId",
+                    "type": "bytes32",
+                    "value": "d02e08401ccb4a4eaa3d54aef9e8ce894af61011076f4f949db61ed0f67117b6"
+                  },
+                  {
+                    "name": "_grantee",
+                    "type": "address",
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "name": "escrowReward",
+                "timelock": 0,
+                "timeout": 0,
+                "contractName": "EscrowReward",
+                "functionName": "fulfill",
+                "events": [
+                  {
+                    "name": "Fulfilled",
+                    "actorType": "publisher",
+                    "handler": {
+                      "moduleName": "escrowRewardCondition",
+                      "functionName": "verifyRewardTokens",
+                      "version": "0.1"
+                    }
+                  }
+                ],
+                "parameters": [
+                  {
+                    "name": "_amount",
+                    "type": "uint256",
+                    "value": 0
+                  },
+                  {
+                    "name": "_receiver",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_sender",
+                    "type": "address",
+                    "value": ""
+                  },
+                  {
+                    "name": "_lockCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  },
+                  {
+                    "name": "_releaseCondition",
+                    "type": "bytes32",
+                    "value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "Metadata",
+          "serviceEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:d02e08401ccb4a4eaa3d54aef9e8ce894af61011076f4f949db61ed0f67117b6",
+          "purchaseEndpoint": "https://aquarius.marketplace.dev-ocean.com/api/v1/aquarius/assets/ddo/did:op:d02e08401ccb4a4eaa3d54aef9e8ce894af61011076f4f949db61ed0f67117b6",
+          "metadata": {
+            "base": {
+              "name": "wdbc",
+              "dateCreated": "2015-05-26T16:24:07",
+              "author": "Dominique Van Cappel, THOMSON-SINTRA",
+              "license": "Public",
+              "price": 0,
+              "checksum": "5c0ba02132fc2200eeb39b8bf3bfcaeffb987af9a719db0c11a7fd6e11bebc27",
+              "categories": ["phoneme"],
+              "type": "dataset",
+              "description": "**Author**: Dominique Van Cappel, THOMSON-SINTRA \\n**Source**: [KEEL](http://sci2s.ugr.es/keel/dataset.php?cod=105#sub2), [ELENA](https://www.elen.ucl.ac.be/neural-nets/Research/Projects/ELENA/databases/REAL/phoneme/) - 1993 \\n**Please cite**: None \\n\\nThe aim of this dataset is to distinguish between nasal (class 0) and oral sounds (class 1). Five different attributes were chosen to characterize each vowel: they are the amplitudes of the five first harmonics AHi, normalised by the total energy Ene (integrated on all the frequencies): AHi/Ene. The phonemes are transcribed as follows: sh as in she, dcl as in dark, iy as the vowel in she, aa as the vowel in dark, and ao as the first vowel in water. \\n\\n### Source\\n\\nThe current dataset was formatted by the KEEL repository, but originally hosted by the [ELENA Project](https://www.elen.ucl.ac.be/neural-nets/Research/Projects/ELENA/elena.htm#stuff). The dataset originates from the European ESPRIT 5516 project: ROARS. The aim of this project was the development and the implementation of a real time analytical system for French and Spanish speech recognition. \\n\\n### Relevant information\\n\\nMost of the already existing speech recognition systems are global systems (typically Hidden Markov Models and Time Delay Neural Networks) which recognizes signals and do not really use the speech\\nspecificities. On the contrary, analytical systems take into account the articulatory process leading to the different phonemes of a given language, the idea being to deduce the presence of each of the\\nphonetic features from the acoustic observation.\\n\\nThe main difficulty of analytical systems is to obtain acoustical parameters sufficiantly reliable. These acoustical measurements must :\\n\\n - contain all the information relative to the concerned phonetic feature.\\n - being speaker independent.\\n - being context independent.\\n - being more or less robust to noise.\\n\\nThe primary acoustical observation is always voluminous (spectrum x N different observation moments) and classification cannot been processed directly.\\n\\nIn ROARS, the initial database is provided by cochlear spectra, which may be seen as the output of a filters bank having a constant DeltaF/F0, where the central frequencies are distributed on a\\nlogarithmic scale (MEL type) to simulate the frequency answer of the auditory nerves. The filters outputs are taken every 2 or 8 msec (integration on 4 or 16 msec) depending on the type of phoneme\\nobserved (stationary or transitory). \\n\\nThe aim of the present database is to distinguish between nasal and\\noral vowels. There are thus two different classes:\\n\\n- Class 0 : Nasals \\n- Class 1 : Orals \\n\\nThis database contains vowels coming from 1809 isolated syllables (for example: pa, ta, pan,...). Five different attributes were chosen to characterize each vowel: they are the amplitudes of the five first harmonics AHi, normalised by the total energy Ene (integrated on all the frequencies): AHi/Ene. Each harmonic is signed: positive when it corresponds to a local maximum of the spectrum and negative otherwise.\\n\\nThree observation moments have been kept for each vowel to obtain 5427 different instances: \\n\\n - the observation corresponding to the maximum total energy Ene. \\n \\n - the observations taken 8 msec before and 8 msec after the observation corresponding to this maximum total energy.\\n\\nFrom these 5427 initial values, 23 instances for which the amplitude of the 5 first harmonics was zero were removed, leading to the 5404 instances of the present database. The patterns are presented in a random order.\\n\\n### Past Usage \\n\\nAlinat, P., Periodic Progress Report 4, ROARS Project ESPRIT II- Number 5516, February 1993, Thomson report TS. ASM 93/S/EGS/NC/079 \\n \\nGuerin-Dugue, A. and others, Deliverable R3-B4-P - Task B4: Benchmarks, Technical report, Elena-NervesII \"Enhanced Learning for Evolutive Neural Architecture\", ESPRIT-Basic Research Project Number 6891, June 1995 \\n\\nVerleysen, M. and Voz, J.L. and Thissen, P. and Legat, J.D., A statistical Neural Network for high-dimensional vector classification, ICNN'95 - IEEE International Conference on Neural Networks, November 1995, Perth, Western Australia. \\n \\nVoz J.L., Verleysen M., Thissen P. and Legat J.D., Suboptimal Bayesian classification by vector quantization with small clusters. ESANN95-European Symposium on Artificial Neural Networks, April 1995, M. Verleysen editor, D facto publications, Brussels, Belgium. \\n \\nVoz J.L., Verleysen M., Thissen P. and Legat J.D., A practical view of suboptimal Bayesian classification, IWANN95-Proceedings of the International Workshop on Artificial Neural Networks, June 1995, Mira, Cabestany, Prieto editors, Springer-Verlag Lecture Notes in Computer Sciences, Malaga, Spain",
+              "inLanguage": "en",
+              "files": [
+                {
+                  "index": 0,
+                  "contentType": "csv"
+                },
+                {
+                  "index": 1,
+                  "contentType": "ARFF"
+                }
+              ],
+              "links": [
+                {
+                  "url": "https://archive.ics.uci.edu/ml/citation_policy.html",
+                  "name": "citation"
+                }
+              ],
+              "encryptedFiles": "0x51e75b0d7e07b2a25a9e19c0dfff6e47f45599b73d3d102d1efdbae9aae65bc691ad0c58edf61230edcb957429ce4b3e1d8719886c04212df5f489d940c8820acbe940acf713a8370edcd1a48e068bb5fddb9a7b8cb67caa613713572a980626dd98ce2376d229c7fccb32156df9777f96f8ece22953852f34120ae2b16ccb2aaffb3d1f214479d9e3fe362e67ee05a979891c2b204b99be62aae119e33aff5d237df0f3a708e085f6d196fa0a71e355780fea60ef13376815a6f8a9ddedcddb5cdf26653697812a241fbd0a2f421788db6179f58a8640e9172f0bdf9e6a7ac0",
+              "datePublished": "2019-04-05T09:29:07Z"
+            },
+            "curation": {
+              "rating": 0,
+              "numVotes": 0,
+              "isListed": true
+            }
+          },
+          "serviceDefinitionId": "2"
+        }
+      ],
+      "proof": {
+        "type": "DDOIntegritySignature",
+        "created": "2019-04-05T09:29:06Z",
+        "creator": "0x372E3D432e3Ba583E2aD20ED7270ceAAdb7A08d4",
+        "signatureValue": "IY39Cv26+nWMImYcKloGj2H80R3w75ivYM3Df7gQka4ZzOdGWaAY3+/QpbihJz0CblUmmRNXNa4Lkj9E+nDR3STS/q0Gc4VnoOAE2GLXMgknh7l2qLNTbDmXZR196GLApaIYKTSFJEvJD0NMAmVMi52JIRNwhS0mWZia7tE9/Sk="
+      }
+    }
+  ],
+  "page": 1,
+  "total_pages": 2,
+  "total_results": 24
+}

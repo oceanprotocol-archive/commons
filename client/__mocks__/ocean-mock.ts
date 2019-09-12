@@ -1,16 +1,12 @@
+import searchMock from '../__fixtures__/search.json'
+
 const oceanMock = {
     ocean: {
         accounts: {
             list: () => ['xxx', 'xxx']
         },
         aquarius: {
-            queryMetadata: () => {
-                return {
-                    results: [],
-                    totalResults: 1,
-                    totalPages: 1
-                }
-            }
+            queryMetadata: () => searchMock
         },
         assets: {
             query: () => {
