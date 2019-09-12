@@ -77,6 +77,7 @@ export default function Filters({
 
                                     return (
                                         <FilterItem
+                                            key={shortid.generate()}
                                             isActive={isActive}
                                             filter={filter}
                                             filterByCategory={filterByCategory}
