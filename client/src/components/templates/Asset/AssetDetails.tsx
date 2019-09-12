@@ -1,6 +1,7 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import Moment from 'react-moment'
 import { DDO, MetaData, File } from '@oceanprotocol/squid'
+import shortid from 'shortid'
 import Markdown from '../../atoms/Markdown'
 import CategoryLink from '../../atoms/CategoryLink'
 import styles from './AssetDetails.module.scss'
@@ -21,19 +22,44 @@ export function datafilesLine(files: File[]) {
     return <span>{files.length} data files</span>
 }
 
-const Pricing = ({ price }: { price: string }) => (
+const MetaFixedItem = ({ name, value }: { name: string; value: string }) => (
     <li>
         <span className={styles.metaLabel}>
-            <strong>Price</strong>
+            <strong>{name}</strong>
         </span>
-        <span className={styles.metaValue}>
-            {price === '0' ? 0 : Web3.utils.fromWei(price.toString())} OCEAN
-        </span>
+        <span className={styles.metaValue}>{value}</span>
     </li>
 )
 
 export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
     const { base } = metadata
+
+    const metaFixed = [
+        {
+            name: 'Author',
+            value: base.author,
+            show: true
+        },
+        {
+            name: 'License',
+            value: base.license,
+            show: true
+        },
+        {
+            name: 'DID',
+            value: ddo.id,
+            show: true
+        },
+        {
+            name: 'Price',
+            value: `${
+                base.price === '0'
+                    ? 0
+                    : Web3.utils.fromWei(base.price.toString())
+            } OCEAN`,
+            show: allowPricing
+        }
+    ]
 
     return (
         <>
@@ -77,27 +103,15 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
                     Fixed Metadata
                 </h2>
                 <ul>
-                    <li>
-                        <span className={styles.metaLabel}>
-                            <strong>Author</strong>
-                        </span>
-                        <span className={styles.metaValue}>{base.author}</span>
-                    </li>
-                    <li>
-                        <span className={styles.metaLabel}>
-                            <strong>License</strong>
-                        </span>
-                        <span className={styles.metaValue}>{base.license}</span>
-                    </li>
-                    <li>
-                        <span className={styles.metaLabel}>
-                            <strong>DID</strong>
-                        </span>
-                        <span className={styles.metaValue}>
-                            <code>{ddo.id}</code>
-                        </span>
-                    </li>
-                    {allowPricing ? <Pricing price={base.price} /> : null}
+                    {metaFixed
+                        .filter(item => item.show)
+                        .map(item => (
+                            <MetaFixedItem
+                                key={shortid.generate()}
+                                name={item.name}
+                                value={item.value}
+                            />
+                        ))}
                 </ul>
             </div>
 
