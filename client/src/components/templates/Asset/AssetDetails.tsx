@@ -53,8 +53,8 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
         },
         {
             name: 'Price',
-            value: `${price === '0' ? 0 : price} OCEAN`,
-            show: allowPricing
+            value: `${price} OCEAN`,
+            show: price !== '0'
         }
     ]
 
