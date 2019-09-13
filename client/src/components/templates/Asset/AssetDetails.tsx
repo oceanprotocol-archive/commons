@@ -1,6 +1,7 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import Moment from 'react-moment'
 import { DDO, MetaData, File } from '@oceanprotocol/squid'
+import shortid from 'shortid'
 import Markdown from '../../atoms/Markdown'
 import CategoryLink from '../../atoms/CategoryLink'
 import styles from './AssetDetails.module.scss'
@@ -21,103 +22,97 @@ export function datafilesLine(files: File[]) {
     return <span>{files.length} data files</span>
 }
 
-export default class AssetDetails extends PureComponent<AssetDetailsProps> {
-    public render() {
-        const { metadata, ddo } = this.props
-        const { base } = metadata
+const MetaFixedItem = ({ name, value }: { name: string; value: string }) => (
+    <li>
+        <span className={styles.metaLabel}>
+            <strong>{name}</strong>
+        </span>
+        <span className={styles.metaValue}>{value}</span>
+    </li>
+)
 
-        return (
-            <>
-                <aside className={styles.metaPrimary}>
-                    <h2
-                        className={styles.copyrightHolder}
-                        title="Copyright Holder"
+export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
+    const { base } = metadata
+    const price = base.price && Web3.utils.fromWei(base.price.toString())
+
+    const metaFixed = [
+        {
+            name: 'Author',
+            value: base.author,
+            show: true
+        },
+        {
+            name: 'License',
+            value: base.license,
+            show: true
+        },
+        {
+            name: 'DID',
+            value: ddo.id,
+            show: true
+        },
+        {
+            name: 'Price',
+            value: `${price} OCEAN`,
+            show: price !== '0'
+        }
+    ]
+
+    return (
+        <>
+            <aside className={styles.metaPrimary}>
+                <h2 className={styles.copyrightHolder} title="Copyright Holder">
+                    {base.copyrightHolder}
+                </h2>
+                <div className={styles.metaPrimaryData}>
+                    <span
+                        title={`Date created, published on ${base.datePublished}`}
                     >
-                        {base.copyrightHolder}
-                    </h2>
-                    <div className={styles.metaPrimaryData}>
-                        <span
-                            title={`Date created, published on ${base.datePublished}`}
-                        >
-                            <Moment
-                                date={base.dateCreated}
-                                format="L"
-                                interval={0}
-                            />
-                        </span>
+                        <Moment
+                            date={base.dateCreated}
+                            format="L"
+                            interval={0}
+                        />
+                    </span>
 
-                        {base.categories && (
-                            <CategoryLink category={base.categories[0]} />
-                        )}
+                    {base.categories && (
+                        <CategoryLink category={base.categories[0]} />
+                    )}
 
-                        {base.files && datafilesLine(base.files)}
-                    </div>
-                </aside>
-
-                {base.description && (
-                    <Markdown
-                        text={base.description}
-                        className={styles.description}
-                    />
-                )}
-
-                <Report did={ddo.id} title={metadata.base.name} />
-
-                <div className={styles.metaFixed}>
-                    <h2
-                        className={styles.metaFixedTitle}
-                        title="This metadata can not be changed because it is used to generate the checksums for the DDO, and to encrypt the file urls."
-                    >
-                        Fixed Metadata
-                    </h2>
-                    <ul>
-                        <li>
-                            <span className={styles.metaLabel}>
-                                <strong>Author</strong>
-                            </span>
-                            <span className={styles.metaValue}>
-                                {base.author}
-                            </span>
-                        </li>
-                        <li>
-                            <span className={styles.metaLabel}>
-                                <strong>License</strong>
-                            </span>
-                            <span className={styles.metaValue}>
-                                {base.license}
-                            </span>
-                        </li>
-                        <li>
-                            <span className={styles.metaLabel}>
-                                <strong>DID</strong>
-                            </span>
-                            <span className={styles.metaValue}>
-                                <code>{ddo.id}</code>
-                            </span>
-                        </li>
-                        {allowPricing ? (
-                            <li>
-                                <span className={styles.metaLabel}>
-                                    <strong>Price</strong>
-                                </span>
-                                <span className={styles.metaValue}>
-                                    {base.price === '0'
-                                        ? 0
-                                        : Web3.utils.fromWei(
-                                              base.price.toString()
-                                          )}{' '}
-                                    OCEAN
-                                </span>
-                            </li>
-                        ) : null}
-                    </ul>
+                    {base.files && datafilesLine(base.files)}
                 </div>
+            </aside>
 
-                <AssetFilesDetails
-                    files={base.files ? base.files : []}
-                    ddo={ddo}
+            {base.description && (
+                <Markdown
+                    text={base.description}
+                    className={styles.description}
                 />
-            </>
-        )
-    }
+            )}
+
+            <Report did={ddo.id} title={metadata.base.name} />
+
+            <div className={styles.metaFixed}>
+                <h2
+                    className={styles.metaFixedTitle}
+                    title="This metadata can not be changed because it is used to generate the checksums for the DDO, and to encrypt the file urls."
+                >
+                    Fixed Metadata
+                </h2>
+                <ul>
+                    {metaFixed
+                        .filter(item => item.show)
+                        .map(item => (
+                            <MetaFixedItem
+                                key={shortid.generate()}
+                                name={item.name}
+                                value={item.value}
+                            />
+                        ))}
+                </ul>
+            </div>
+
+            <AssetFilesDetails files={base.files ? base.files : []} ddo={ddo} />
+        </>
+    )
 }
