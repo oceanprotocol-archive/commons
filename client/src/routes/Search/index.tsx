@@ -6,6 +6,7 @@ import Spinner from '../../components/atoms/Spinner'
 import Route from '../../components/templates/Route'
 import { User } from '../../context'
 import Content from '../../components/atoms/Content'
+import Button from '../../components/atoms/Button'
 import Input from '../../components/atoms/Form/Input'
 import withTracker from '../../hoc/withTracker'
 import Sidebar from './Sidebar'
@@ -19,7 +20,6 @@ interface SearchProps {
 
 interface SearchState {
     results: any[]
-    resultsFiltered: any[]
     totalResults: number
     offset: number
     totalPages: number
@@ -37,7 +37,6 @@ class Search extends PureComponent<SearchProps, SearchState> {
 
     public state = {
         results: [],
-        resultsFiltered: [],
         totalResults: 0,
         offset: 25,
         totalPages: 1,
@@ -69,7 +68,9 @@ class Search extends PureComponent<SearchProps, SearchState> {
         this.setState(update, () => this.searchAssets())
     }
 
-    private searchAssets = async () => {
+    private searchAssets = async (event?: any) => {
+        event && event.preventDefault()
+
         const { ocean } = this.context
         const { offset, currentPage, search, category, license } = this.state
 
@@ -112,7 +113,6 @@ class Search extends PureComponent<SearchProps, SearchState> {
             const search = await ocean.assets.query(searchQuery)
             this.setState({
                 results: search.results,
-                resultsFiltered: search.results,
                 totalResults: search.totalResults,
                 totalPages: search.totalPages,
                 isLoading: false
@@ -132,61 +132,13 @@ class Search extends PureComponent<SearchProps, SearchState> {
         )
     }
 
-    private inputChange = (
-        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-    ) => {
-        this.setState(
-            {
-                [event.currentTarget.name]: event.currentTarget.value
-            } as any,
-            () => {
-                this.pendingSearch()
-            }
-        )
-    }
-
-    private pendingSearch = () => {
-        this.setState({ isLoading: true })
-        if (this.timeout) {
-            clearTimeout(this.timeout)
-        }
-        this.timeout = setTimeout(this.executeSearch, 500)
-    }
-
-    private executeSearch = () => {
-        this.timeout = false
-        this.searchAssets()
+    private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (this.state.search !== event.target.value)
+            this.setState({ search: event.target.value })
     }
 
     public setCategory = (category: string) => {
         this.setState({ category, isLoading: true }, () => this.searchAssets())
-    }
-
-    public filterByCategory = (category: string) => {
-        const resultsFiltered: any[] = this.state.results.filter(
-            (asset: DDO) => {
-                const { metadata } = asset.findServiceByType('Metadata')
-                const { categories } = metadata.base
-                if (!categories) return true
-
-                return category === '' ? true : categories.includes(category)
-            }
-        )
-
-        this.setState({ resultsFiltered, category })
-    }
-
-    public filterByLicense = (name: string) => {
-        const resultsFiltered: any[] = this.state.results.filter(
-            (asset: any) => {
-                const { metadata } = asset.findServiceByType('Metadata')
-                const { license } = metadata.base
-
-                return name === '' ? true : license === name
-            }
-        )
-
-        this.setState({ resultsFiltered, license: name })
     }
 
     public setLicense = (license: string) => {
@@ -201,7 +153,6 @@ class Search extends PureComponent<SearchProps, SearchState> {
             search,
             category,
             license,
-            resultsFiltered,
             totalPages,
             currentPage
         } = this.state
@@ -209,19 +160,21 @@ class Search extends PureComponent<SearchProps, SearchState> {
         return (
             <Route title="Search">
                 <Content>
-                    <Input
-                        type="search"
-                        name="search"
-                        label=""
-                        placeholder="e.g. shapes of plants"
-                        value={search}
-                        onChange={this.inputChange}
-                        // group={
-                        //     <Button primary onClick={this.executeSearch}>
-                        //         Search
-                        //     </Button>
-                        // }
-                    />
+                    <form onSubmit={this.searchAssets}>
+                        <Input
+                            type="search"
+                            name="search"
+                            label=""
+                            placeholder="e.g. shapes of plants"
+                            value={search}
+                            onChange={this.inputChange}
+                            group={
+                                <Button primary onClick={this.searchAssets}>
+                                    Search
+                                </Button>
+                            }
+                        />
+                    </form>
                 </Content>
                 <Content wide>
                     <div className={styles.content}>
@@ -230,10 +183,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
                                 <Spinner message="Searching..." />
                             ) : (
                                 <Results
-                                    title={decodeURIComponent(
-                                        search || category
-                                    )}
-                                    results={resultsFiltered}
+                                    results={results}
                                     totalResults={totalResults}
                                     totalPages={totalPages}
                                     currentPage={currentPage}
@@ -246,8 +196,8 @@ class Search extends PureComponent<SearchProps, SearchState> {
                             category={category}
                             license={license}
                             results={results}
-                            filterByCategory={this.filterByCategory}
-                            filterByLicense={this.filterByLicense}
+                            setCategory={this.setCategory}
+                            setLicense={this.setLicense}
                         />
                     </div>
                 </Content>

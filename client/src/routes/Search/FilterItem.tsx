@@ -5,15 +5,15 @@ import styles from './FilterItem.module.scss'
 export default function FilterItem({
     isActive,
     filter,
-    filterByCategory,
-    filterByLicense,
+    setCategory,
+    setLicense,
     option
 }: {
     isActive: boolean
     filter: any
     option: string
-    filterByCategory(category: string): void
-    filterByLicense(license: string): void
+    setCategory(category: string): void
+    setLicense(license: string): void
 }) {
     return (
         <li className={isActive ? styles.active : styles.item}>
@@ -22,8 +22,8 @@ export default function FilterItem({
                 className={styles.option}
                 onClick={() =>
                     filter.label === 'Category'
-                        ? filterByCategory(option)
-                        : filterByLicense(option)
+                        ? setCategory(option)
+                        : setLicense(option)
                 }
             >
                 {option}{' '}
@@ -35,8 +35,8 @@ export default function FilterItem({
                     title="Clear"
                     onClick={() =>
                         filter.label === 'Category'
-                            ? filterByCategory('')
-                            : filterByLicense('')
+                            ? setCategory('')
+                            : setLicense('')
                     }
                 >
                     &times;

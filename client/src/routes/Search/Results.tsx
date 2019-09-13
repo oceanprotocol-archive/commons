@@ -6,14 +6,12 @@ import Pagination from '../../components/molecules/Pagination'
 import styles from './Results.module.scss'
 
 export default function Results({
-    title,
     results,
     totalResults,
     totalPages,
     currentPage,
     handlePageClick
 }: {
-    title: string
     results: any[]
     totalResults: number
     totalPages: number
@@ -23,7 +21,7 @@ export default function Results({
     return results && results.length ? (
         <>
             <h2 className={styles.resultsTitle}>
-                {totalResults} results for <span>{title}</span>
+                {totalResults} {totalResults === 1 ? 'result' : 'results'}
             </h2>
             <div className={styles.results}>
                 {results.map((asset: any) => (

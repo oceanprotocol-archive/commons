@@ -43,14 +43,14 @@ export default function Sidebar({
     category,
     license,
     results,
-    filterByCategory,
-    filterByLicense
+    setCategory,
+    setLicense
 }: {
     category: string
     license: string
     results: any[]
-    filterByCategory(category: string): void
-    filterByLicense(license: string): void
+    setCategory(category: string): void
+    setLicense(license: string): void
 }) {
     const { filterCategories, filterLicenses } = getFilterMetadata(results)
 
@@ -80,8 +80,8 @@ export default function Sidebar({
                                             key={shortid.generate()}
                                             isActive={isActive}
                                             filter={filter}
-                                            filterByCategory={filterByCategory}
-                                            filterByLicense={filterByLicense}
+                                            setCategory={setCategory}
+                                            setLicense={setLicense}
                                             option={option}
                                         />
                                     )

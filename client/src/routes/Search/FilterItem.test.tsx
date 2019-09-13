@@ -3,16 +3,16 @@ import { render, fireEvent } from '@testing-library/react'
 import FilterItem from './FilterItem'
 
 describe('FilterItem', () => {
-    const filterByCategory = jest.fn()
-    const filterByLicense = jest.fn()
+    const setCategory = jest.fn()
+    const setLicense = jest.fn()
 
     it('renders without crashing', () => {
         const { container } = render(
             <FilterItem
                 isActive={false}
                 filter={{ label: 'Category' }}
-                filterByCategory={filterByCategory}
-                filterByLicense={filterByLicense}
+                setCategory={setCategory}
+                setLicense={setLicense}
                 option="Hello"
             />
         )
@@ -24,13 +24,13 @@ describe('FilterItem', () => {
             <FilterItem
                 isActive
                 filter={{ label: 'Category' }}
-                filterByCategory={filterByCategory}
-                filterByLicense={filterByLicense}
+                setCategory={setCategory}
+                setLicense={setLicense}
                 option="Hello"
             />
         )
         fireEvent.click(getByText(/Hello/))
-        expect(filterByCategory).toHaveBeenCalled()
+        expect(setCategory).toHaveBeenCalled()
         fireEvent.click(getByTitle('Clear'))
     })
 
@@ -39,13 +39,13 @@ describe('FilterItem', () => {
             <FilterItem
                 isActive
                 filter={{ label: 'License' }}
-                filterByCategory={filterByCategory}
-                filterByLicense={filterByLicense}
+                setCategory={setCategory}
+                setLicense={setLicense}
                 option="Hello"
             />
         )
         fireEvent.click(getByText(/Hello/))
-        expect(filterByLicense).toHaveBeenCalled()
+        expect(setLicense).toHaveBeenCalled()
         fireEvent.click(getByTitle('Clear'))
     })
 })
