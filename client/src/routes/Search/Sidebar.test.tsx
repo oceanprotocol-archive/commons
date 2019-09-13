@@ -3,13 +3,13 @@ import { render } from '@testing-library/react'
 import { User } from '../../context'
 import { userMockConnected } from '../../../__mocks__/user-mock'
 import searchMock from '../../../__fixtures__/search.json'
-import Filters from './Filters'
+import Sidebar from './Sidebar'
 
-describe('Filters', () => {
+describe('Sidebar', () => {
     it('renders without crashing', () => {
         const { container } = render(
             <User.Provider value={userMockConnected}>
-                <Filters
+                <Sidebar
                     category="Architecture"
                     license="Public"
                     results={searchMock.results}

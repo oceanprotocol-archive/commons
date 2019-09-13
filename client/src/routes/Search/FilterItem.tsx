@@ -1,5 +1,4 @@
 import React from 'react'
-import shortid from 'shortid'
 import Button from '../../components/atoms/Button'
 import styles from './FilterItem.module.scss'
 
@@ -17,10 +16,7 @@ export default function FilterItem({
     filterByLicense(license: string): void
 }) {
     return (
-        <li
-            key={shortid.generate()}
-            className={isActive ? styles.active : styles.item}
-        >
+        <li className={isActive ? styles.active : styles.item}>
             <Button
                 link
                 className={styles.option}

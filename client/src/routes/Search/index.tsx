@@ -6,6 +6,7 @@ import Spinner from '../../components/atoms/Spinner'
 import Route from '../../components/templates/Route'
 import { User } from '../../context'
 import Content from '../../components/atoms/Content'
+import Input from '../../components/atoms/Form/Input'
 import withTracker from '../../hoc/withTracker'
 import Sidebar from './Sidebar'
 import Results from './Results'
@@ -206,19 +207,24 @@ class Search extends PureComponent<SearchProps, SearchState> {
         } = this.state
 
         return (
-            <Route title="Search" wide>
+            <Route title="Search">
+                <Content>
+                    <Input
+                        type="search"
+                        name="search"
+                        label=""
+                        placeholder="e.g. shapes of plants"
+                        value={search}
+                        onChange={this.inputChange}
+                        // group={
+                        //     <Button primary onClick={this.executeSearch}>
+                        //         Search
+                        //     </Button>
+                        // }
+                    />
+                </Content>
                 <Content wide>
                     <div className={styles.content}>
-                        <Sidebar
-                            search={search}
-                            inputChange={this.inputChange}
-                            category={category}
-                            results={results}
-                            license={license}
-                            filterByCategory={this.filterByCategory}
-                            filterByLicense={this.filterByLicense}
-                        />
-
                         <div>
                             {isLoading ? (
                                 <Spinner message="Searching..." />
@@ -235,6 +241,14 @@ class Search extends PureComponent<SearchProps, SearchState> {
                                 />
                             )}
                         </div>
+
+                        <Sidebar
+                            category={category}
+                            license={license}
+                            results={results}
+                            filterByCategory={this.filterByCategory}
+                            filterByLicense={this.filterByLicense}
+                        />
                     </div>
                 </Content>
             </Route>
