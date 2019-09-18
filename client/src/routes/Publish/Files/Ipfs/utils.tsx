@@ -13,12 +13,16 @@ export async function pingUrl(url: string) {
     }
 }
 
-export function formatBytes(a: number, b: number) {
-    if (a === 0) return '0 Bytes'
-    const c = 1024
-    const d = b || 2
-    const e = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    const f = Math.floor(Math.log(a) / Math.log(c))
-
-    return parseFloat((a / Math.pow(c, f)).toFixed(d)) + ' ' + e[f]
+export function readFileAsync(file: File) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onerror = () => {
+            reader.abort()
+            reject(new DOMException('Problem parsing input file.'))
+        }
+        reader.onload = () => {
+            resolve(reader.result)
+        }
+        reader.readAsArrayBuffer(file)
+    })
 }

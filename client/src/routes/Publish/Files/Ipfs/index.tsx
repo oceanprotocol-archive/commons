@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import useIpfsApi from '../../../../hooks/use-ipfs-api'
 import Label from '../../../../components/atoms/Form/Label'
 import Spinner from '../../../../components/atoms/Spinner'
 import Dropzone from '../../../../components/molecules/Dropzone'
-import { formatBytes, pingUrl } from './utils'
+import { formatBytes } from '../../../../utils/utils'
+import { pingUrl, readFileAsync } from './utils'
 import { ipfsGatewayUri } from '../../../../config'
 import styles from './index.module.scss'
 
@@ -26,54 +27,56 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
 
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
+    const [received, setReceived] = useState(0)
 
-    async function saveToIpfs(data: Buffer, size: number) {
-        const totalSize = formatBytes(size, 0)
+    useEffect(() => {
+        setMessage(
+            `Adding to IPFS<br />
+            <small>${formatBytes(received, 0)}</small><br />`
+        )
+    }, [received])
 
-        setLoading(true)
-        setMessage(`Adding to IPFS<br /><small>0/${totalSize}</small><br />`)
-
+    async function addToIpfs(data: Buffer | ArrayBuffer | File | File[]) {
         try {
             const response = await ipfs.add(data, {
-                progress: (length: number) =>
-                    setMessage(
-                        `Adding to IPFS<br />
-                        <small>${formatBytes(
-                            length,
-                            0
-                        )}/${totalSize}</small><br />`
-                    )
+                progress: (length: number) => {
+                    console.log(`Received: ${formatBytes(length, 0)}`)
+                    setReceived(length)
+                }
             })
-
+            console.log(response)
             const cid = response[0].hash
             console.log(`File added: ${cid}`)
-
-            // Ping gateway url to make it globally available,
-            // but store native url in DDO.
-            const urlGateway = `${ipfsGatewayUri}/ipfs/${cid}`
-            const url = `ipfs://${cid}`
-
-            setMessage('Checking IPFS gateway URL')
-            await pingUrl(urlGateway)
-
-            // add IPFS url to file.url
-            addFile(url)
+            return cid
         } catch (error) {
             console.error(`Adding to IPFS failed: ${error.message}`)
             setLoading(false)
         }
     }
 
-    function handleOnDrop(files: File[]) {
-        files.forEach((file: File) => {
-            const reader: any = new FileReader()
+    async function handleOnDrop(acceptedFiles: File[]) {
+        const { size } = acceptedFiles[0]
+        const totalSize = formatBytes(size, 0)
 
-            reader.readAsArrayBuffer(file)
-            reader.onloadend = () => {
-                const buffer: any = Buffer.from(reader.result)
-                saveToIpfs(buffer, file.size)
-            }
-        })
+        setLoading(true)
+        setMessage(`Adding to IPFS<br /><small>0/${totalSize}</small><br />`)
+
+        // Add file to IPFS node
+        const content: any = await readFileAsync(acceptedFiles[0])
+        const data = Buffer.from(content)
+        const cid = await addToIpfs(data)
+        if (!cid) return
+
+        // Ping gateway url to make it globally available,
+        // but store native url in DDO.
+        const urlGateway = `${ipfsGatewayUri}/ipfs/${cid}`
+        const url = `ipfs://${cid}`
+
+        setMessage('Checking IPFS gateway URL')
+        await pingUrl(urlGateway)
+
+        // add IPFS url to file.url
+        addFile(url)
     }
 
     return (
@@ -84,7 +87,11 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
             {loading ? (
                 <Spinner message={message} />
             ) : (
-                <Dropzone handleOnDrop={handleOnDrop} disabled={!isIpfsReady} />
+                <Dropzone
+                    multiple={false}
+                    handleOnDrop={handleOnDrop}
+                    disabled={!isIpfsReady}
+                />
             )}
             {ipfsMessage !== '' && (
                 <div className={styles.message} title={ipfsVersion}>

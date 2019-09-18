@@ -1,6 +1,7 @@
 import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
 import axios from 'axios'
-import { Logger } from '@oceanprotocol/squid'
+import { Logger, File } from '@oceanprotocol/squid'
+import shortid from 'shortid'
 import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
 import ItemForm from './ItemForm'
@@ -10,17 +11,8 @@ import styles from './index.module.scss'
 
 import { serviceUri } from '../../../config'
 import cleanupContentType from '../../../utils/cleanupContentType'
-import shortid from 'shortid'
 
-export interface File {
-    url: string
-    contentType: string
-    checksum?: string
-    checksumType?: string
-    contentLength?: number
-    resourceId?: string
-    encoding?: string
-    compression?: string
+export interface FilePublish extends File {
     found: boolean // non-standard
 }
 
@@ -80,7 +72,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     private async getFile(url: string) {
-        const file: File = {
+        const file: FilePublish = {
             url,
             contentType: '',
             found: false // non-standard
@@ -124,7 +116,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
             })
         }
 
-        const file: File | undefined = await this.getFile(url)
+        const file: FilePublish | undefined = await this.getFile(url)
         file && this.props.files.push(file)
 
         const event = {

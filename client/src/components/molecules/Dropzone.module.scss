@@ -35,3 +35,11 @@
     opacity: .5;
     pointer-events: none;
 }
+
+.dropzoneFiles {
+    padding: $spacer 0;
+
+    ul {
+        margin: 0;
+    }
+}
