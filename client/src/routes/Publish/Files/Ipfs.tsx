@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
-import useIpfsApi from '../../../../hooks/use-ipfs-api'
-import Label from '../../../../components/atoms/Form/Label'
-import Spinner from '../../../../components/atoms/Spinner'
-import Dropzone from '../../../../components/molecules/Dropzone'
-import { formatBytes, pingUrl, readFileAsync } from '../../../../utils/utils'
-import { ipfsGatewayUri } from '../../../../config'
-import styles from './index.module.scss'
+import useIpfsApi, { IpfsConfig } from '../../../hooks/use-ipfs-api'
+import Label from '../../../components/atoms/Form/Label'
+import Spinner from '../../../components/atoms/Spinner'
+import Dropzone from '../../../components/molecules/Dropzone'
+import { formatBytes, pingUrl, readFileAsync } from '../../../utils/utils'
+import { ipfsGatewayUri } from '../../../config'
+import styles from './Ipfs.module.scss'
 
-const config = {
+const config: IpfsConfig = {
     host: 'ipfs.infura.io',
     port: '5001',
     protocol: 'https'
@@ -76,7 +76,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
 
         // Ping gateway url to make it globally available,
         // but store native url in DDO.
-        const urlGateway = `${ipfsGatewayUri}/ipfs/${cid}`
+        const urlGateway = `${ipfsGatewayUri}/ipfs/${cid}/${name}`
         const url = `ipfs://${cid}/${name}`
 
         setMessage('Checking IPFS gateway URL')

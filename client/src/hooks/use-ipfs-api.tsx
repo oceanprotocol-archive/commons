@@ -7,7 +7,7 @@ let ipfs: any = null
 let ipfsMessage = ''
 let ipfsVersion = ''
 
-interface IpfsConfig {
+export interface IpfsConfig {
     host: string
     port: string
     protocol: string
