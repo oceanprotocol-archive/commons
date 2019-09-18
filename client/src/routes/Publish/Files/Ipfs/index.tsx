@@ -1,12 +1,10 @@
 /* eslint-disable no-console */
-
 import React, { useState, useEffect } from 'react'
 import useIpfsApi from '../../../../hooks/use-ipfs-api'
 import Label from '../../../../components/atoms/Form/Label'
 import Spinner from '../../../../components/atoms/Spinner'
 import Dropzone from '../../../../components/molecules/Dropzone'
-import { formatBytes } from '../../../../utils/utils'
-import { pingUrl, readFileAsync } from './utils'
+import { formatBytes, pingUrl, readFileAsync } from '../../../../utils/utils'
 import { ipfsGatewayUri } from '../../../../config'
 import styles from './index.module.scss'
 
@@ -57,6 +55,8 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     }
 
     async function handleOnDrop(acceptedFiles: File[]) {
+        if (!acceptedFiles[0]) return
+
         const { name, size } = acceptedFiles[0]
         const totalSize = formatBytes(size, 0)
 

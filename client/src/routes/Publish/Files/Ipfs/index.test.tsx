@@ -21,11 +21,12 @@ describe('Ipfs', () => {
         // wait for IPFS node
         await findByText(/Connected to /)
 
-        const fileContents = 'file contents'
-        const file = new Blob([fileContents], { type: 'text/plain' })
+        const file = new File(['(⌐□_□)'], 'chucknorris.png', {
+            type: 'image/png'
+        })
 
         // drop a file
-        const dropzoneInput = container.querySelector('input')
+        const dropzoneInput = container.querySelector('.dropzone input')
         dropzoneInput && fireEvent.change(dropzoneInput, { target: [file] })
     })
 })
