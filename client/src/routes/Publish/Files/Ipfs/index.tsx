@@ -36,16 +36,18 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
         )
     }, [received])
 
-    async function addToIpfs(data: Buffer | ArrayBuffer | File | File[]) {
+    async function addToIpfs(data: any) {
         try {
             const response = await ipfs.add(data, {
+                wrapWithDirectory: true,
                 progress: (length: number) => {
                     console.log(`Received: ${formatBytes(length, 0)}`)
                     setReceived(length)
                 }
             })
-            console.log(response)
-            const cid = response[0].hash
+
+            // CID of wrapping directory is returned last
+            const cid = response[response.length - 1].hash
             console.log(`File added: ${cid}`)
             return cid
         } catch (error) {
@@ -55,7 +57,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     }
 
     async function handleOnDrop(acceptedFiles: File[]) {
-        const { size } = acceptedFiles[0]
+        const { name, size } = acceptedFiles[0]
         const totalSize = formatBytes(size, 0)
 
         setLoading(true)
@@ -64,13 +66,18 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
         // Add file to IPFS node
         const content: any = await readFileAsync(acceptedFiles[0])
         const data = Buffer.from(content)
-        const cid = await addToIpfs(data)
+        const fileDetails = {
+            path: name,
+            content: data
+        }
+
+        const cid = await addToIpfs(fileDetails)
         if (!cid) return
 
         // Ping gateway url to make it globally available,
         // but store native url in DDO.
         const urlGateway = `${ipfsGatewayUri}/ipfs/${cid}`
-        const url = `ipfs://${cid}`
+        const url = `ipfs://${cid}/${name}`
 
         setMessage('Checking IPFS gateway URL')
         await pingUrl(urlGateway)
