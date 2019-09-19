@@ -25,14 +25,15 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
 
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
-    const [received, setReceived] = useState(0)
+    const [fileSize, setFileSize] = useState('')
+    const [fileSizeReceived, setFileSizeReceived] = useState('')
 
     useEffect(() => {
         setMessage(
             `Adding to IPFS<br />
-            <small>${formatBytes(received, 0)}</small><br />`
+             <small>${fileSizeReceived || 0}/${fileSize}</small><br />`
         )
-    }, [received])
+    })
 
     async function addToIpfs(data: any) {
         try {
@@ -40,7 +41,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
                 wrapWithDirectory: true,
                 progress: (length: number) => {
                     console.log(`Received: ${formatBytes(length, 0)}`)
-                    setReceived(length)
+                    setFileSizeReceived(formatBytes(length, 0))
                 }
             })
 
@@ -61,7 +62,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
         const totalSize = formatBytes(size, 0)
 
         setLoading(true)
-        setMessage(`Adding to IPFS<br /><small>0/${totalSize}</small><br />`)
+        setFileSize(totalSize)
 
         // Add file to IPFS node
         const content: any = await readFileAsync(acceptedFiles[0])

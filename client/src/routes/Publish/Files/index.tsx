@@ -169,9 +169,9 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                         <ul className={styles.itemsList}>
                             {files.map((item: any, index: number) => (
                                 <Item
-                                    key={item.url}
+                                    key={shortid.generate()}
                                     item={item}
-                                    removeItem={() => this.removeFile(index)}
+                                    removeFile={() => this.removeFile(index)}
                                 />
                             ))}
                         </ul>

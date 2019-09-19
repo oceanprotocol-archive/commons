@@ -32,12 +32,7 @@ describe('Publish', () => {
                 <MemoryRouter>
                     <Publish
                         history={history}
-                        location={{
-                            pathname: '/publish',
-                            search: '',
-                            hash: '',
-                            state: ''
-                        }}
+                        location={location}
                         match={{ params: '', path: '', url: '', isExact: true }}
                     />
                 </MemoryRouter>
