@@ -74,9 +74,6 @@ describe('Files', () => {
         await waitForElement(() => getByText('- Cancel'))
         expect(container.querySelector('.ipfsForm')).toBeInTheDocument()
 
-        // wait for IPFS node
-        await findByText(/Connected to /)
-
         // close
         fireEvent.click(getByText('- Cancel'))
         await waitForElement(() => getByText('+ Add to IPFS'))

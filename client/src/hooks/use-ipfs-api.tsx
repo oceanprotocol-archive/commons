@@ -15,7 +15,7 @@ export interface IpfsConfig {
 
 export default function useIpfsApi(config: IpfsConfig) {
     const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
-    const [ipfsError, setIpfsError] = useState(null)
+    const [ipfsError, setIpfsError] = useState('')
 
     useEffect(() => {
         async function initIpfs() {
@@ -49,7 +49,7 @@ export default function useIpfsApi(config: IpfsConfig) {
                 ipfs = null
                 ipfsMessage = ''
                 ipfsVersion = ''
-                setIpfsError(null)
+                setIpfsError('')
             }
         }
     }, [])
