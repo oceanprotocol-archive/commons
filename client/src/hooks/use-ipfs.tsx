@@ -11,7 +11,7 @@ let ipfsVersion = ''
 
 export default function useIpfs() {
     const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
-    const [ipfsError, setIpfsError] = useState(null)
+    const [ipfsError, setIpfsError] = useState('')
 
     useEffect(() => {
         async function startIpfs() {
@@ -64,7 +64,7 @@ export default function useIpfs() {
                 ipfs = null
                 ipfsMessage = ''
                 ipfsVersion = ''
-                setIpfsError(null)
+                setIpfsError('')
                 console.timeEnd('IPFS stopped')
             }
         }
