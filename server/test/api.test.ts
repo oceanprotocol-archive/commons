@@ -25,7 +25,8 @@ describe('POST /api/v1/urlcheck', () => {
         const response = await request(server)
             .post('/api/v1/urlcheck')
             .send({
-                url: 'ipfs://QmQfpdcMWnLTXKKW9GPV7NgtEugghgD6HgzSF6gSrp2mL9'
+                url:
+                    'ipfs://QmX5LRpEVocfks9FNDnRoK2imf2fy9mPpP4wfgaDVXWfYD/video.mp4'
             })
         expect(response.status).toBe(200)
         expect(response.body).toBeTruthy()

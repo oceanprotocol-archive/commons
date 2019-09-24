@@ -67,7 +67,7 @@ describe('Files', () => {
     })
 
     it('new IPFS file form can be opened and closed', async () => {
-        const { container, getByText, findByText } = renderComponent()
+        const { container, getByText } = renderComponent()
 
         // open
         fireEvent.click(getByText('+ Add to IPFS'))
