@@ -9,6 +9,7 @@ import Content from '../../atoms/Content'
 import CategoryImage from '../../atoms/CategoryImage'
 import styles from './index.module.scss'
 import withTracker from '../../../hoc/withTracker'
+import Web3message from '../../organisms/Web3message'
 
 interface AssetProps {
     match: {
@@ -61,7 +62,10 @@ class Asset extends Component<AssetProps, AssetState> {
                 <Spinner message="Loading asset..." />
             </div>
         ) : hasError ? (
-            <div className={styles.error}>{error}</div>
+            <Content>
+                <div className={styles.error}>{error}</div>
+                <Web3message />
+            </Content>
         ) : (
             <Route
                 title={metadata.base.name}
