@@ -3,11 +3,17 @@ import styles from './Status.module.scss'
 
 export default function Status({
     message,
-    error
+    error,
+    isIpfsReady
 }: {
     message: string
     error?: string
+    isIpfsReady: boolean
 }) {
-    const classes = error ? styles.error : styles.message
+    const classes = isIpfsReady
+        ? styles.success
+        : error
+        ? styles.error
+        : styles.message
     return <div className={classes}>{message}</div>
 }

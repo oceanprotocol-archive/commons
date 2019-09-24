@@ -10,10 +10,18 @@
         width: .5rem;
         height: .5rem;
         display: inline-block;
-        background: $green;
+        background: $yellow;
         border-radius: 50%;
-        margin-right: $spacer / 4;
-        margin-bottom: .05rem;
+        margin-right: $spacer / 6;
+        margin-bottom: .1rem;
+    }
+}
+
+.success {
+    composes: message;
+
+    &:before {
+        background: $green;
     }
 }
 

@@ -4,17 +4,19 @@ import useIpfsApi, { IpfsConfig } from '../../../../hooks/use-ipfs-api'
 import Spinner from '../../../../components/atoms/Spinner'
 import Dropzone from '../../../../components/molecules/Dropzone'
 import { formatBytes, pingUrl, readFileAsync } from '../../../../utils/utils'
-import { ipfsGatewayUri } from '../../../../config'
+import { ipfsGatewayUri, ipfsNodeUri } from '../../../../config'
 import Form from './Form'
 
-const config: IpfsConfig = {
-    host: 'ipfs.infura.io',
-    port: '5001',
-    protocol: 'https'
+const { hostname, port, protocol } = new URL(ipfsNodeUri)
+
+const ipfsConfig: IpfsConfig = {
+    host: hostname,
+    port,
+    protocol: protocol.replace(':', '')
 }
 
 export default function Ipfs({ addFile }: { addFile(url: string): void }) {
-    const { ipfs, isIpfsReady, ipfsError, ipfsMessage } = useIpfsApi(config)
+    const { ipfs, isIpfsReady, ipfsError, ipfsMessage } = useIpfsApi(ipfsConfig)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
     const [fileSize, setFileSize] = useState('')
@@ -80,7 +82,12 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     }
 
     return (
-        <Form error={error} ipfsMessage={ipfsMessage} ipfsError={ipfsError}>
+        <Form
+            error={error}
+            ipfsMessage={ipfsMessage}
+            ipfsError={ipfsError}
+            isIpfsReady={isIpfsReady}
+        >
             {loading ? (
                 <Spinner message={message} />
             ) : (

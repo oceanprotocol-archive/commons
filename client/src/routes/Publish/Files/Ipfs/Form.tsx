@@ -7,11 +7,13 @@ export default function Form({
     children,
     ipfsMessage,
     ipfsError,
+    isIpfsReady,
     error
 }: {
     children: any
     ipfsMessage: string
     ipfsError?: string
+    isIpfsReady: boolean
     error?: string
 }) {
     return (
@@ -20,7 +22,11 @@ export default function Form({
                 Add File To IPFS
             </Label>
             {children}
-            <Status message={ipfsMessage} error={ipfsError || error} />
+            <Status
+                message={ipfsMessage}
+                isIpfsReady={isIpfsReady}
+                error={ipfsError || error}
+            />
         </div>
     )
 }

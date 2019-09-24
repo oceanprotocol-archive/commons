@@ -22,7 +22,7 @@ export class UrlCheckRouter {
         // map native IPFS URLs to gateway URLs
         if (url.includes('ipfs://')) {
             const cid = url.split('ipfs://')[1]
-            url = `${config.ipfsGatewayUrl}/ipfs/${cid}`
+            url = `${config.ipfsGatewayUri}/ipfs/${cid}`
         }
 
         request(
