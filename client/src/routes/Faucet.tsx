@@ -28,7 +28,6 @@ class Faucet extends PureComponent<{}, FaucetState> {
     }
 
     private getTokens = async () => {
-
         const { ocean } = this.context
         const accounts = await ocean.accounts.list()
         const account = accounts[0]
@@ -126,9 +125,7 @@ class Faucet extends PureComponent<{}, FaucetState> {
             >
                 Request Tokens
             </Button>
-            <p>
-                You can request tokens every once in a while.
-            </p>
+            <p>You can request tokens every once in a while.</p>
         </>
     )
 
@@ -158,21 +155,19 @@ class Faucet extends PureComponent<{}, FaucetState> {
                                 )}
                             </div>
 
-                            {
-                                showRequestTokens ?
-                                    <div className={styles.action}>
-                                        {isLoading ? (
-                                            <Spinner message="Getting Tokens..."/>
-                                        ) : error ? (
-                                            <this.Error/>
-                                        ) : success ? (
-                                            <this.Success/>
-                                        ) : (
-                                            isLogged && <this.GetTokens />
-                                        )}
-                                    </div> : null
-                            }
-
+                            {showRequestTokens ? (
+                                <div className={styles.action}>
+                                    {isLoading ? (
+                                        <Spinner message="Getting Tokens..." />
+                                    ) : error ? (
+                                        <this.Error />
+                                    ) : success ? (
+                                        <this.Success />
+                                    ) : (
+                                        isLogged && <this.GetTokens />
+                                    )}
+                                </div>
+                            ) : null}
                         </Content>
                     </Route>
                 )}
