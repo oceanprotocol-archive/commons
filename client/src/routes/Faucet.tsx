@@ -31,9 +31,7 @@ class Faucet extends PureComponent<{}, FaucetState> {
 
         const { ocean } = this.context
         const accounts = await ocean.accounts.list()
-        console.log(accounts)
         const account = accounts[0]
-        console.log(account)
         await ocean.accounts.requestTokens(account, 10)
     }
 
