@@ -31,7 +31,7 @@ class Faucet extends PureComponent<{}, FaucetState> {
         const { ocean } = this.context
         const accounts = await ocean.accounts.list()
         const account = accounts[0]
-        await ocean.accounts.requestTokens(account, 10)
+        await ocean.accounts.requestTokens(account, 100)
     }
 
     private getEther = async (
@@ -123,7 +123,7 @@ class Faucet extends PureComponent<{}, FaucetState> {
                 disabled={!this.context.isLogged}
                 name="FaucetTokens"
             >
-                Request Tokens
+                Request OCEAN Tokens
             </Button>
             <p>You can request tokens every once in a while.</p>
         </>
@@ -151,23 +151,14 @@ class Faucet extends PureComponent<{}, FaucetState> {
                                 ) : success ? (
                                     <this.Success />
                                 ) : (
-                                    isLogged && <this.GetEther />
+                                    <>
+                                        {isLogged && <this.GetEther />}
+                                        {isLogged && showRequestTokens && (
+                                            <this.GetTokens />
+                                        )}
+                                    </>
                                 )}
                             </div>
-
-                            {showRequestTokens ? (
-                                <div className={styles.action}>
-                                    {isLoading ? (
-                                        <Spinner message="Getting Tokens..." />
-                                    ) : error ? (
-                                        <this.Error />
-                                    ) : success ? (
-                                        <this.Success />
-                                    ) : (
-                                        isLogged && <this.GetTokens />
-                                    )}
-                                </div>
-                            ) : null}
                         </Content>
                     </Route>
                 )}
