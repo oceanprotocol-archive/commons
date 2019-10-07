@@ -8,6 +8,7 @@ import Web3message from '../components/organisms/Web3message'
 import styles from './Faucet.module.scss'
 import Content from '../components/atoms/Content'
 import withTracker from '../hoc/withTracker'
+import { showRequestTokens } from '../config'
 
 interface FaucetState {
     isLoading: boolean
@@ -26,7 +27,14 @@ class Faucet extends PureComponent<{}, FaucetState> {
         trxHash: undefined
     }
 
-    private getTokens = async (
+    private getTokens = async () => {
+        const { ocean } = this.context
+        const accounts = await ocean.accounts.list()
+        const account = accounts[0]
+        await ocean.accounts.requestTokens(account, 100)
+    }
+
+    private getEther = async (
         requestFromFaucet: () => Promise<FaucetResponse>
     ) => {
         this.setState({ isLoading: true })
@@ -91,19 +99,33 @@ class Faucet extends PureComponent<{}, FaucetState> {
         </div>
     )
 
-    private Action = () => (
+    private GetEther = () => (
         <>
             <Button
                 primary
-                onClick={() => this.getTokens(this.context.requestFromFaucet)}
+                onClick={() => this.getEther(this.context.requestFromFaucet)}
                 disabled={!this.context.isLogged}
-                name="Faucet"
+                name="FaucetEther"
             >
                 Request Ether
             </Button>
             <p>
                 You can only request Ether once every 24 hours for your address.
             </p>
+        </>
+    )
+
+    private GetTokens = () => (
+        <>
+            <Button
+                primary
+                onClick={() => this.getTokens()}
+                disabled={!this.context.isLogged}
+                name="FaucetTokens"
+            >
+                Request OCEAN Tokens
+            </Button>
+            <p>You can request tokens every once in a while.</p>
         </>
     )
 
@@ -129,7 +151,12 @@ class Faucet extends PureComponent<{}, FaucetState> {
                                 ) : success ? (
                                     <this.Success />
                                 ) : (
-                                    isLogged && <this.Action />
+                                    <>
+                                        {isLogged && <this.GetEther />}
+                                        {isLogged && showRequestTokens && (
+                                            <this.GetTokens />
+                                        )}
+                                    </>
                                 )}
                             </div>
                         </Content>
