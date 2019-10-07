@@ -7,17 +7,15 @@ import { formatBytes, pingUrl, readFileAsync } from '../../../../utils/utils'
 import { ipfsGatewayUri, ipfsNodeUri } from '../../../../config'
 import Form from './Form'
 
-const { hostname, port, protocol } = new URL(ipfsNodeUri)
-
-const ipfsConfig: IpfsConfig = {
-    protocol: protocol.replace(':', ''),
-    host: hostname,
-    port: port || '443'
-}
-
-console.log(ipfsConfig)
-
 export default function Ipfs({ addFile }: { addFile(url: string): void }) {
+    const { hostname, port, protocol } = new URL(ipfsNodeUri)
+
+    const ipfsConfig: IpfsConfig = {
+        protocol: protocol.replace(':', ''),
+        host: hostname,
+        port: port || '443'
+    }
+
     const { ipfs, isIpfsReady, ipfsError, ipfsMessage } = useIpfsApi(ipfsConfig)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')

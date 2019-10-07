@@ -28,9 +28,9 @@ env:
     - REACT_APP_BRIZO_ADDRESS="0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0"
 
     # IPFS client & server config
-    - REACT_APP_IPFS_GATEWAY_URI="https://ipfs.dev-ocean.com"
-    # - REACT_APP_IPFS_NODE_URI="https://ipfs.dev-ocean.com:5050"
-    - IPFS_GATEWAY_URI="https://ipfs.dev-ocean.com"
+    - REACT_APP_IPFS_GATEWAY_URI="https://ipfs.kretschmann.io"
+    - REACT_APP_IPFS_NODE_URI="https://ipfs.kretschmann.io:443"
+    - IPFS_GATEWAY_URI="https://ipfs.kretschmann.io"
 
     # start Barge with these versions
     - BRIZO_VERSION=v0.4.4
