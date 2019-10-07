@@ -3,14 +3,14 @@ context('Faucet', () => {
     before(() => {
         cy.visit('/faucet')
         // Wait for end of loading
-        cy.get('button[name="Faucet"]', { timeout: 60000 }).should(
+        cy.get('button[name="FaucetEther"]', { timeout: 60000 }).should(
             'have.length',
             1
         )
     })
 
     beforeEach(() => {
-        cy.get('button[name="Faucet"]')
+        cy.get('button[name="FaucetEther"]')
             .first()
             .as('button')
     })
