@@ -8,9 +8,9 @@ let ipfsMessage = ''
 let ipfsVersion = ''
 
 export interface IpfsConfig {
+    protocol: string
     host: string
     port: string
-    protocol: string
 }
 
 export default function useIpfsApi(config: IpfsConfig) {

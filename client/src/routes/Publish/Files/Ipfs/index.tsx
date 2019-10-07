@@ -10,10 +10,12 @@ import Form from './Form'
 const { hostname, port, protocol } = new URL(ipfsNodeUri)
 
 const ipfsConfig: IpfsConfig = {
+    protocol: protocol.replace(':', ''),
     host: hostname,
-    port,
-    protocol: protocol.replace(':', '')
+    port: port || '443'
 }
+
+console.log(ipfsConfig)
 
 export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     const { ipfs, isIpfsReady, ipfsError, ipfsMessage } = useIpfsApi(ipfsConfig)
