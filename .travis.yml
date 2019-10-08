@@ -2,7 +2,7 @@ dist: xenial
 sudo: required
 language: node_js
 node_js:
-  - "11"
+  - '11'
 
 services:
   - docker
@@ -47,7 +47,7 @@ before_script:
   - ./cc-test-reporter before-build
   - git clone https://github.com/oceanprotocol/barge
   - cd barge
-  - bash -x start_ocean.sh --no-pleuston 2>&1 > start_ocean.log &
+  - bash -x start_ocean.sh --no-commons 2>&1 > start_ocean.log &
   - cd ..
 
 script:

@@ -77,7 +77,7 @@ git clone git@github.com:oceanprotocol/barge.git
 cd barge
 
 # startup with local Spree node
-./start_ocean.sh --latest --no-pleuston
+./start_ocean.sh --no-commons
 ```
 
 Then set [environment variables](#️-environment-variables) to use those local connections.
