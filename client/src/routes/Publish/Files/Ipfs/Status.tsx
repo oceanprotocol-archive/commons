@@ -15,5 +15,5 @@ export default function Status({
         : error
         ? styles.error
         : styles.message
-    return <div className={classes}>{message}</div>
+    return <div className={classes}>{error || message}</div>
 }

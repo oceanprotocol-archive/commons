@@ -21,10 +21,11 @@ export async function pingUrl(url: string) {
         if (response.status !== 200) console.error(`Not found: ${url}`)
 
         console.log(`File found: ${url}`)
-        return
+        return true
     } catch (error) {
         console.error(error.message)
     }
+    return false
 }
 
 export function readFileAsync(file: File) {

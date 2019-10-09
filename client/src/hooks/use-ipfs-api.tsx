@@ -24,18 +24,14 @@ export default function useIpfsApi(config: IpfsConfig) {
             ipfsMessage = 'Checking IPFS gateway...'
 
             try {
-                const message = `Connected to ${config.host}`
-                console.time(message)
                 ipfs = await ipfsClient(config)
-                console.timeEnd(message)
-                ipfsMessage = message
-
                 const version = await ipfs.version()
                 ipfsVersion = version.version
+                ipfsMessage = `Connected to ${config.host}`
             } catch (error) {
-                setIpfsError(error.message)
+                setIpfsError(`IPFS connection error: ${error.message}`)
             }
-            setIpfsReady(Boolean(ipfs))
+            setIpfsReady(Boolean(await ipfs.id()))
         }
 
         initIpfs()

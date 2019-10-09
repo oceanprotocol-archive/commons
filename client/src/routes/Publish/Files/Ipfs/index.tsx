@@ -75,10 +75,10 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
         const url = `ipfs://${cid}/${path}`
 
         setMessage('Checking IPFS gateway URL')
-        await pingUrl(urlGateway)
 
+        const isAvailable = await pingUrl(urlGateway)
         // add IPFS url to file.url
-        addFile(url)
+        isAvailable && addFile(url)
     }
 
     return (
