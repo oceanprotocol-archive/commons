@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from '@oceanprotocol/art/logo/logo.svg'
 import AccountStatus from '../molecules/AccountStatus'
 import styles from './Header.module.scss'
 
-import menu from '../../data/menu.json'
+import menu from '../../data/menu'
 import meta from '../../data/meta.json'
 
 const MenuItem = ({ item }: { item: any }) => (

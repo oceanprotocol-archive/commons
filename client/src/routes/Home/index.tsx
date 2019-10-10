@@ -12,6 +12,7 @@ import AssetsLatest from '../../components/organisms/AssetsLatest'
 import ChannelTeaser from '../../components/organisms/ChannelTeaser'
 import Search from './Search'
 import withTracker from '../../hoc/withTracker'
+import { showChannels } from '../../config'
 
 interface HomeProps {
     history: History
@@ -44,8 +45,12 @@ class Home extends PureComponent<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
-                    <h2 className={styles.title}>Featured Channel</h2>
-                    <ChannelTeaser channel="ai-for-good" />
+                    {showChannels && (
+                        <>
+                            <h2 className={styles.title}>Featured Channel</h2>
+                            <ChannelTeaser channel="ai-for-good" />
+                        </>
+                    )}
                     <AssetsLatest />
                 </Content>
 
