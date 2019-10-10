@@ -28,7 +28,10 @@ export const faucetUri =
 //
 export const verbose = true
 export const analyticsId = 'UA-60614729-11'
-export const showChannels = process.env.REACT_APP_SHOW_CHANNELS || false
-export const allowPricing = process.env.REACT_APP_ALLOW_PRICING || false
+
+export const showChannels =
+    process.env.REACT_APP_SHOW_CHANNELS === 'true' || false
+export const allowPricing =
+    process.env.REACT_APP_ALLOW_PRICING === 'true' || false
 export const showRequestTokens =
-    process.env.REACT_APP_SHOW_REQUEST_TOKENS_BUTTON || false
+    process.env.REACT_APP_SHOW_REQUEST_TOKENS_BUTTON === 'true' || false
