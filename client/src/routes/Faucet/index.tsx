@@ -14,7 +14,9 @@ function Faucet() {
     return (
         <Route
             title="Faucet"
-            description={`Shower yourself with some Ether for Ocean's ${network} network.`}
+            description={`Shower yourself with some ETH ${
+                showRequestTokens ? 'or OCEAN' : ''
+            } for Ocean's ${network} network.`}
         >
             <Content>
                 <Web3message />

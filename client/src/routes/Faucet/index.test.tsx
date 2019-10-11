@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { createMemoryHistory, createLocation } from 'history'
 import Faucet from '.'
-import { User } from '../../context'
+import { User, Market } from '../../context'
 import { userMockConnected } from '../../../__mocks__/user-mock'
 
 const history = createMemoryHistory()
@@ -12,13 +12,22 @@ const location = createLocation('/faucet')
 const setup = () => {
     const utils = render(
         <User.Provider value={userMockConnected}>
-            <MemoryRouter>
-                <Faucet
-                    history={history}
-                    location={location}
-                    match={{ params: '', path: '', url: '', isExact: true }}
-                />
-            </MemoryRouter>
+            <Market.Provider
+                value={{
+                    network: 'pacific',
+                    totalAssets: 100,
+                    categories: [''],
+                    networkMatch: true
+                }}
+            >
+                <MemoryRouter>
+                    <Faucet
+                        history={history}
+                        location={location}
+                        match={{ params: '', path: '', url: '', isExact: true }}
+                    />
+                </MemoryRouter>
+            </Market.Provider>
         </User.Provider>
     )
     const button = utils.getByText('Request ETH')
@@ -49,6 +58,6 @@ describe('Faucet', () => {
         fireEvent.click(button)
         expect(userMockConnected.requestFromFaucet).toHaveBeenCalledTimes(1)
         // check for spinner
-        expect(getByText('Getting Ether...')).toBeInTheDocument()
+        expect(getByText('Getting ETH...')).toBeInTheDocument()
     })
 })
