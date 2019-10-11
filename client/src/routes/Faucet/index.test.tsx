@@ -2,9 +2,9 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { createMemoryHistory, createLocation } from 'history'
-import Faucet from './Faucet'
-import { User } from '../context'
-import { userMockConnected } from '../../__mocks__/user-mock'
+import Faucet from '.'
+import { User } from '../../context'
+import { userMockConnected } from '../../../__mocks__/user-mock'
 
 const history = createMemoryHistory()
 const location = createLocation('/faucet')
@@ -21,7 +21,7 @@ const setup = () => {
             </MemoryRouter>
         </User.Provider>
     )
-    const button = utils.getByText('Request Ether')
+    const button = utils.getByText('Request ETH')
     const { container } = utils
     return {
         button,

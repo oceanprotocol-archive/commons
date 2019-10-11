@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.action {
+    text-align: center;
+    margin-top: $spacer;
+
+    p {
+        margin-top: $spacer / 2;
+        color: $brand-grey-light;
+        font-size: $font-size-small;
+    }
+}
