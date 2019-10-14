@@ -1,21 +1,8 @@
-@import '../styles/variables';
-
-.action {
-    text-align: center;
-    margin-top: $spacer * 2;
-
-    p {
-        margin-top: $spacer;
-        color: $brand-grey-light;
-    }
-}
+@import '../../styles/variables';
 
 .success {
     color: $green;
-
-    p {
-        margin-top: $spacer / 2;
-    }
+    margin-top: $spacer / 2;
 
     strong {
         display: block;
