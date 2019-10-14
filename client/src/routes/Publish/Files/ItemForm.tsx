@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react'
-import isUrl from 'is-url'
+import isUrl from 'is-url-superb'
 import Input from '../../../components/atoms/Form/Input'
 import Button from '../../../components/atoms/Button'
 import styles from './ItemForm.module.scss'
 
 interface ItemFormProps {
-    addItem(url: string): void
+    addFile(url: string): void
     placeholder: string
 }
 
@@ -37,12 +37,12 @@ export default class ItemForm extends PureComponent<
             return
         }
 
-        if (url && !isUrl(url)) {
+        if (url && !url.includes('ipfs://') && !isUrl(url)) {
             this.setState({ noUrl: true })
             return
         }
 
-        this.props.addItem(url)
+        this.props.addFile(url)
     }
 
     private onChangeUrl = (e: React.FormEvent<HTMLInputElement>) => {
@@ -68,6 +68,7 @@ export default class ItemForm extends PureComponent<
                     placeholder={this.props.placeholder}
                     value={url}
                     onChange={this.onChangeUrl}
+                    help="Supported protocols are http(s):// and ipfs://"
                 />
 
                 <Button onClick={(e: Event) => this.handleSubmit(e)}>

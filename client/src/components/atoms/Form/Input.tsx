@@ -30,6 +30,7 @@ interface InputProps {
     rows?: number
     group?: any
     multiple?: boolean
+    pattern?: string
 }
 
 interface InputState {

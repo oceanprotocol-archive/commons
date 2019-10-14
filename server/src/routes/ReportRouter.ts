@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express'
 import SendgridMail from '@sendgrid/mail'
-import 'dotenv/config'
+import config from '../config'
 
-SendgridMail.setApiKey(process.env.SENDGRID_API_KEY)
+SendgridMail.setApiKey(config.sendgridApiKey)
 
 export class ReportRouter {
     public router: Router

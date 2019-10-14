@@ -4,12 +4,12 @@
 
 This folder contains server component written in TypeScript using [Express](https://expressjs.com). The server provides various microservices.
 
-- [Get Started](#Get-Started)
-- [✨ API Documentation](#-API-Documentation)
-  - [Url Checker](#Url-Checker)
-  - [Report](#Report)
-- [🎁 Contributing](#-Contributing)
-- [🏛 License](#-License)
+- [Get Started](#get-started)
+- [✨ API Documentation](#-api-documentation)
+  - [Url Checker](#url-checker)
+  - [Report](#report)
+- [🎁 Contributing](#-contributing)
+- [🏛 License](#-license)
 
 ## Get Started
 
@@ -33,6 +33,12 @@ Url Checker returns size and additional information about requested file. This s
 ```json
 {
   "url": "https://oceanprotocol.com/tech-whitepaper.pdf"
+}
+```
+
+```json
+{
+  "url": "ipfs://QmQfpdcMWnLTXKKW9GPV7NgtEugghgD6HgzSF6gSrp2mL9"
 }
 ```
 

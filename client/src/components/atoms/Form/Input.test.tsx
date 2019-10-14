@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import Input from './Input'
 
 describe('Input', () => {
@@ -7,10 +7,10 @@ describe('Input', () => {
         const { container } = render(<Input name="my-input" label="My Input" />)
         expect(container.firstChild).toBeInTheDocument()
         expect(container.querySelector('.label')).toHaveTextContent('My Input')
-        expect(container.querySelector('.input')).toHaveAttribute(
-            'id',
-            'my-input'
-        )
+
+        const input = container.querySelector('.input')
+        expect(input).toHaveAttribute('id', 'my-input')
+        input && fireEvent.focus(input)
     })
 
     it('renders as text input by default', () => {
@@ -25,13 +25,13 @@ describe('Input', () => {
         const { container } = render(
             <Input name="my-input" label="My Input" type="search" />
         )
-        expect(container.querySelector('.input')).toHaveAttribute(
-            'type',
-            'search'
-        )
+        const input = container.querySelector('.input')
+        expect(input).toHaveAttribute('type', 'search')
         expect(container.querySelector('label + div')).toHaveClass(
             'inputWrapSearch'
         )
+
+        input && fireEvent.focus(input)
     })
 
     it('renders select', () => {

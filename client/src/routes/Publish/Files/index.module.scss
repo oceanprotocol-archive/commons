@@ -2,6 +2,10 @@
 
 .newItems {
     margin-top: $spacer / 2;
+
+    > button {
+        margin-right: $spacer;
+    }
 }
 
 .itemsList {

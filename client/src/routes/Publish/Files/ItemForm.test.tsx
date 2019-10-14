@@ -2,10 +2,10 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
 import ItemForm from './ItemForm'
 
-const addItem = jest.fn()
+const addFile = jest.fn()
 
 const setup = () => {
-    const utils = render(<ItemForm placeholder="Hello" addItem={addItem} />)
+    const utils = render(<ItemForm placeholder="Hello" addFile={addFile} />)
     const input = utils.getByPlaceholderText('Hello')
     const button = utils.getByText('Add File')
     const { container } = utils
@@ -23,17 +23,17 @@ describe('ItemForm', () => {
         expect(container.firstChild).toBeInTheDocument()
     })
 
-    it('fires addItem', async () => {
+    it('fires addFile', async () => {
         const { input, button } = setup()
 
         fireEvent.change(input, {
             target: { value: 'https://hello.com' }
         })
         fireEvent.click(button)
-        expect(addItem).toHaveBeenCalled()
+        expect(addFile).toHaveBeenCalled()
     })
 
-    it('does not fire addItem when no url present', () => {
+    it('does not fire addFile when no url present', () => {
         const { input, button, container } = setup()
 
         // empty url

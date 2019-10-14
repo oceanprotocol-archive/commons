@@ -1,0 +1,25 @@
+@import '../../../../styles/variables';
+
+.ipfsForm {
+    margin-top: $spacer / 2;
+    border: 1px solid $brand-grey-lighter;
+    border-radius: $border-radius;
+    padding: $spacer / 2;
+    background: $body-background;
+
+    input {
+        display: block;
+        width: 100%;
+        cursor: pointer;
+        border: .1rem solid $brand-grey-lighter;
+        border-radius: $border-radius;
+        padding: $spacer / 2 $spacer / 2;
+        margin-top: $spacer / 2;
+        background: $brand-white;
+        transition: border .2s ease-out;
+
+        &:hover {
+            border-color: $brand-grey-light;
+        }
+    }
+}

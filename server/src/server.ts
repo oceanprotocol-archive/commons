@@ -10,7 +10,7 @@ import UrlCheckRouter from './routes/UrlCheckRouter'
 import ReportRouter from './routes/ReportRouter'
 
 // config
-import config from './config/config'
+import config from './config'
 
 // debug
 const log = debug('server:index')
