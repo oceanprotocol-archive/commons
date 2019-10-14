@@ -7,7 +7,6 @@ import CategoryLink from '../../atoms/CategoryLink'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 import Report from './Report'
-import { allowPricing } from '../../../config'
 import Web3 from 'web3'
 
 interface AssetDetailsProps {

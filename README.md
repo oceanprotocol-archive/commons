@@ -30,6 +30,7 @@ If you're a developer and want to contribute to, or want to utilize this marketp
   - [⛵️ Environment Variables](#️-environment-variables)
     - [Client](#client)
     - [Server](#server)
+    - [Feature Switches](#feature-switches)
 - [👩‍🔬 Testing](#-testing)
   - [Unit Tests](#unit-tests)
   - [End-to-End Integration Tests](#end-to-end-integration-tests)
@@ -132,6 +133,16 @@ cp server/.env.example server/.env
 # edit variables
 vi server/.env
 ```
+
+#### Feature Switches
+
+Beside configuring the network endpopints, the client allows to activate some features with environment variables in `client/.env.local`:
+
+| Env Variable                           | Feature Description                                                                                                                                                      |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `REACT_APP_SHOW_CHANNELS`              | Show the channels feature which shows assets based on a certain tag in a prominent view. This is deeactivated by default and only activated in live Commons deployments. |
+| `REACT_APP_SHOW_REQUEST_TOKENS_BUTTON` | Shows a second button on the `/faucet` route to request Ocean Tokens in addition to Ether. Will only work in Ocean testnets.                                             |
+| `REACT_APP_ALLOW_PRICING`              | Activate pricing feature. Will show a price input during publish flow, and output prices for each data asset.                                                            |
 
 ## 👩‍🔬 Testing
 
