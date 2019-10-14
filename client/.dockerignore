@@ -1,2 +1,6 @@
 node_modules
 .env.local
+.env
+build
+coverage
+__mocks__
