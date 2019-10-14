@@ -11,10 +11,11 @@
     "extends": [
         "oceanprotocol",
         "oceanprotocol/react",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
         "prettier/react",
         "prettier/standard",
-        "plugin:prettier/recommended",
-        "plugin:@typescript-eslint/recommended",
         "prettier/@typescript-eslint",
         "plugin:cypress/recommended"
     ],
