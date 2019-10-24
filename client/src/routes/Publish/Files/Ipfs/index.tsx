@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import useIpfsApi, { IpfsConfig } from '../../../../hooks/use-ipfs-api'
 import Spinner from '../../../../components/atoms/Spinner'
 import Dropzone from '../../../../components/molecules/Dropzone'
-import { formatBytes, pingUrl } from '../../../../utils/utils'
+import { formatBytes, pingUrl, streamFiles } from '../../../../utils/utils'
 import { ipfsGatewayUri, ipfsNodeUri } from '../../../../config'
 import Form from './Form'
 
@@ -32,14 +32,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
 
     async function addToIpfs(data: any) {
         try {
-            const response = await ipfs.add(data, {
-                wrapWithDirectory: true
-                // progress: (length: number) =>
-                //     setFileSizeReceived(formatBytes(length, 0))
-            })
-
-            // CID of wrapping directory is returned last
-            const cid = response[response.length - 1].hash
+            const cid = await streamFiles(ipfs, data)
             console.log(`File added: ${cid}`)
             return cid
         } catch (error) {
@@ -60,10 +53,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
         setFileSize(totalSize)
 
         // Add file to IPFS node
-        const fileDetails = {
-            path,
-            content: file
-        }
+        const fileDetails = { path, content: file }
 
         const cid = await addToIpfs(fileDetails)
         if (!cid) return
