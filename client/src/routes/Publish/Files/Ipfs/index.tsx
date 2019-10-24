@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import useIpfsApi, { IpfsConfig } from '../../../../hooks/use-ipfs-api'
 import Spinner from '../../../../components/atoms/Spinner'
 import Dropzone from '../../../../components/molecules/Dropzone'
-import { formatBytes, pingUrl, readFileAsync } from '../../../../utils/utils'
+import { formatBytes, pingUrl } from '../../../../utils/utils'
 import { ipfsGatewayUri, ipfsNodeUri } from '../../../../config'
 import Form from './Form'
 
@@ -20,7 +20,7 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
     const [fileSize, setFileSize] = useState('')
-    const [fileSizeReceived, setFileSizeReceived] = useState('')
+    const [fileSizeReceived] = useState('')
     const [error, setError] = useState('')
 
     useEffect(() => {
@@ -33,9 +33,9 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
     async function addToIpfs(data: any) {
         try {
             const response = await ipfs.add(data, {
-                wrapWithDirectory: true,
-                progress: (length: number) =>
-                    setFileSizeReceived(formatBytes(length, 0))
+                wrapWithDirectory: true
+                // progress: (length: number) =>
+                //     setFileSizeReceived(formatBytes(length, 0))
             })
 
             // CID of wrapping directory is returned last
@@ -54,16 +54,15 @@ export default function Ipfs({ addFile }: { addFile(url: string): void }) {
         setLoading(true)
         setError('')
 
-        const { path, size } = acceptedFiles[0]
+        const file = acceptedFiles[0]
+        const { path, size } = file
         const totalSize = formatBytes(size, 0)
         setFileSize(totalSize)
 
         // Add file to IPFS node
-        const content: any = await readFileAsync(acceptedFiles[0])
-        const data = Buffer.from(content)
         const fileDetails = {
             path,
-            content: data
+            content: file
         }
 
         const cid = await addToIpfs(fileDetails)
