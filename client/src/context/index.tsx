@@ -8,12 +8,19 @@ export const User = React.createContext({
     account: '',
     web3: {},
     ocean: {},
+    box: {},
     balance: {
         eth: 0,
         ocn: 0
     },
     network: '',
+    openWallet: () => {
+        /* empty */
+    },
     requestFromFaucet: () => {
+        /* empty */
+    },
+    airdropOceanTokens: () => {
         /* empty */
     },
     loginMetamask: () => {

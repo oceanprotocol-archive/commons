@@ -57,6 +57,11 @@
     }
 }
 
+.buttonWallet {
+    composes: buttonPrimary;
+    border-radius: 15px;
+}
+
 .link {
     border: 0;
     outline: 0;

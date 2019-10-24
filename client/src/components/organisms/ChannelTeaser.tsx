@@ -34,7 +34,7 @@ export default class ChannelTeaser extends Component<
     }
 
     public async componentDidMount() {
-        this.getChannelAssets()
+        // this.getChannelAssets()
     }
 
     private getChannelAssets = async () => {
@@ -63,6 +63,39 @@ export default class ChannelTeaser extends Component<
         }
     }
 
+    // public render() {
+    //     const { channelAssets, isLoadingChannel } = this.state
+    //     const { title, tag, teaser } = this.channel
+
+    //     return (
+    //         <div className={styles.channel}>
+    //             <div>
+    //                 <header className={styles.channelHeader}>
+    //                     <Link to={`/channels/${tag}`}>
+    //                         <h2 className={styles.channelTitle}>{title}</h2>
+    //                         <CategoryImage category={title} />
+
+    //                         <p className={styles.channelTeaser}>{teaser}</p>
+    //                         <p>Browse the channel →</p>
+    //                     </Link>
+    //                 </header>
+    //             </div>
+    //             <div>
+    //                 {isLoadingChannel ? (
+    //                     <Spinner message="Loading..." />
+    //                 ) : channelAssets && channelAssets.length ? (
+    //                     <div className={styles.channelResults}>
+    //                         {channelAssets.map((asset: any) => (
+    //                             <AssetTeaser key={asset.id} asset={asset} />
+    //                         ))}
+    //                     </div>
+    //                 ) : (
+    //                     <div>No data sets found.</div>
+    //                 )}
+    //             </div>
+    //         </div>
+    //     )
+    // }
     public render() {
         const { channelAssets, isLoadingChannel } = this.state
         const { title, tag, teaser } = this.channel
@@ -79,19 +112,6 @@ export default class ChannelTeaser extends Component<
                             <p>Browse the channel →</p>
                         </Link>
                     </header>
-                </div>
-                <div>
-                    {isLoadingChannel ? (
-                        <Spinner message="Loading..." />
-                    ) : channelAssets && channelAssets.length ? (
-                        <div className={styles.channelResults}>
-                            {channelAssets.map((asset: any) => (
-                                <AssetTeaser key={asset.id} asset={asset} />
-                            ))}
-                        </div>
-                    ) : (
-                        <div>No data sets found.</div>
-                    )}
                 </div>
             </div>
         )

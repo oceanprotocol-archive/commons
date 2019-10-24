@@ -9,6 +9,7 @@ import AssetFilesDetails from './AssetFilesDetails'
 import Report from './Report'
 import { allowPricing } from '../../../config'
 import Web3 from 'web3'
+import ThreeBoxComments from '3box-comments-react'
 
 interface AssetDetailsProps {
     metadata: MetaData
@@ -57,6 +58,11 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
             show: price !== '0'
         }
     ]
+
+    const box = null
+    const myAddress = "0x2a0D29C819609Df18D8eAefb429AEC067269BBb6"
+
+
 
     return (
         <>
@@ -113,6 +119,26 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
             </div>
 
             <AssetFilesDetails files={base.files ? base.files : []} ddo={ddo} />
+            <ThreeBoxComments
+                // required
+                spaceName='3boxtestcomments'
+                threadName='freshcomments'
+                adminEthAddr="0x2a0D29C819609Df18D8eAefb429AEC067269BBb6"
+                // Required props for auth A. & B.
+                box={box}
+                currentUserAddr={myAddress}
+                // Required prop for auth B.
+                loginFunction={() => console.log('Handle login')}
+                // Required prop for auth C.
+                ethereum={null}
+                // optional
+                members={false}
+                showCommentCount={10}
+                threadOpts={{}}
+                useHovers={true}
+                currentUser3BoxProfile={null}
+                userProfileURL={(address: string) => `https://mywebsite.com/user/${address}`}
+            />
         </>
     )
 }

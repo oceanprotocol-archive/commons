@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react'
 import Web3 from 'web3'
 import { Ocean, Account } from '@oceanprotocol/squid'
 import { User } from '.'
-import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
+import { provideOcean, requestFromFaucet, FaucetResponse, airdropOceanTokens } from '../ocean'
+import { requestAccessTo3box } from '../3box'
 import { nodeUri } from '../config'
 import MarketProvider from './MarketProvider'
 import { MetamaskProvider } from './MetamaskProvider'
@@ -59,7 +60,10 @@ interface UserProviderState {
     network: string
     web3: Web3
     ocean: Ocean
+    box: any
+    openWallet(): Promise<void>
     requestFromFaucet(account: string): Promise<FaucetResponse>
+    airdropOceanTokens(): Promise<any>
     loginMetamask(): Promise<any>
     loginBurnerWallet(): Promise<any>
     logoutBurnerWallet(): Promise<any>
@@ -84,9 +88,11 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private loginBurnerWallet = async () => {
+        this.showLoadingMessage('Connecting to a Burner Wallet...')
         const burnerwalletProvider = new BurnerWalletProvider()
         await burnerwalletProvider.startLogin()
         const web3 = burnerwalletProvider.getProvider()
+        this.hideLoadingMessage()
         this.setState(
             {
                 isLogged: true,
@@ -104,11 +110,22 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         await burnerwalletProvider.logout()
     }
 
+    private airdropOceanTokens = async () => {
+        const { ocean } = this.state
+        const accounts = await ocean.accounts.list()
+        console.log('airdropOceanTokens', ocean, accounts)
+
+        if (accounts.length > 0) {
+            await airdropOceanTokens(ocean, accounts[0])
+            await this.fetchBalance(accounts[0])
+        }
+    }
+
     public state = {
         isLogged: false,
         isBurner: false,
         isWeb3Capable: Boolean(window.web3 || window.ethereum),
-        isLoading: true,
+        isLoading: false,
         balance: {
             eth: 0,
             ocn: 0
@@ -117,19 +134,30 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         web3: DEFAULT_WEB3,
         account: '',
         ocean: {} as any,
+        box: {} as any,
+        openWallet: () => this.openWallet(),
         requestFromFaucet: () => requestFromFaucet(''),
+        airdropOceanTokens: () => this.airdropOceanTokens(),
         loginMetamask: () => this.loginMetamask(),
         loginBurnerWallet: () => this.loginBurnerWallet(),
         logoutBurnerWallet: () => this.logoutBurnerWallet(),
-        message: 'Connecting to Ocean...'
+        message: 'Loading Marketplace...'
     }
 
     private accountsInterval: any = null
 
     private networkInterval: any = null
 
+    private defaultMessage: string = 'Loading Marketplace...'
+
+    // 0
     public async componentDidMount() {
+        // await this.bootstrap()
+    }
+
+    private async openWallet() {
         await this.bootstrap()
+
     }
 
     private initAccountsPoll() {
@@ -147,6 +175,14 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         }
     }
 
+    private showLoadingMessage(message: string) {
+        this.setState({ isLoading: true, message })
+    }
+
+    private hideLoadingMessage() {
+        this.setState({ isLoading: false, message: this.defaultMessage })
+    }
+
     private loadDefaultWeb3 = async () => {
         this.setState(
             {
@@ -160,9 +196,12 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         )
     }
 
+    // 2
     private loadOcean = async () => {
+        this.showLoadingMessage('Connecting to the Network...')
         const { ocean } = await provideOcean(this.state.web3)
-        this.setState({ ocean, isLoading: false }, () => {
+        this.setState({ ocean }, () => {
+            this.hideLoadingMessage()
             this.initNetworkPoll()
             this.initAccountsPoll()
             this.fetchNetwork()
@@ -170,6 +209,18 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         })
     }
 
+    // after fetchAccounts
+    private load3box = async () => {
+        this.showLoadingMessage('Getting 3box Profile...')
+        const { account, web3 } = this.state
+        console.log('===ACCOUNT===', account, web3)
+        const box = await requestAccessTo3box(account, web3)
+        console.log('===3box===', box)
+        this.setState({ box })
+        this.hideLoadingMessage()
+    }
+
+    // 1
     private bootstrap = async () => {
         const logType = localStorage.getItem('logType')
         const metamaskProvider = new MetamaskProvider()
@@ -229,7 +280,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                         account,
                         isLogged: true,
                         requestFromFaucet: () => requestFromFaucet(account)
-                    })
+                    }, () => this.load3box())
 
                     await this.fetchBalance(accounts[0])
                 }

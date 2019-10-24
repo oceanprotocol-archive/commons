@@ -53,3 +53,8 @@ export async function requestFromFaucet(account: string) {
         Logger.error('requestFromFaucet', error.message)
     }
 }
+
+export async function airdropOceanTokens(ocean: any, activeAccount: any) {
+    // const { ocean } = provider
+    await ocean.accounts.requestTokens(activeAccount, 10)
+}

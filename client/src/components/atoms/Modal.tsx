@@ -14,7 +14,7 @@ const Modal = ({
     onRequestClose,
     ...props
 }: {
-    title: string
+    title?: string
     description?: string
     isOpen: boolean
     toggleModal: () => void
@@ -41,7 +41,9 @@ const Modal = ({
             </button>
 
             <header className={styles.header}>
-                <h2 className={styles.title}>{title}</h2>
+                {title && (
+                    <h2 className={styles.title}>{title}</h2>
+                )}
                 {description && (
                     <p className={styles.description}>{description}</p>
                 )}

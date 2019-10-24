@@ -23,6 +23,8 @@ export const secretStoreUri =
 export const faucetUri =
     process.env.REACT_APP_FAUCET_URI || 'https://faucet.oceanprotocol.com'
 
+export const boxSpaceName = 'DecentramindsMkpl'
+
 //
 // APP CONFIG
 //

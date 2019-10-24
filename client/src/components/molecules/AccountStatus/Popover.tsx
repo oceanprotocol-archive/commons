@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import Button from '../../atoms/Button'
 import Account from '../../atoms/Account'
 import { User, Market } from '../../../context'
 import styles from './Popover.module.scss'
@@ -10,7 +11,7 @@ export default class Popover extends PureComponent<{
     public static contextType = User
 
     public render() {
-        const { account, balance, network } = this.context
+        const { account, balance, network, airdropOceanTokens } = this.context
 
         return (
             <div
@@ -45,20 +46,27 @@ export default class Popover extends PureComponent<{
 
                         <Market.Consumer>
                             {market => (
-                                <div className={styles.popoverInfoline}>
-                                    {network && !market.networkMatch
-                                        ? `Please connect to Custom RPC
-                                           ${
-                                               market.network === 'Pacific'
-                                                   ? 'https://pacific.oceanprotocol.com'
-                                                   : market.network === 'Nile'
-                                                   ? 'https://nile.dev-ocean.com'
-                                                   : market.network === 'Duero'
-                                                   ? 'https://duero.dev-ocean.com'
-                                                   : 'http://localhost:8545'
-                                           }`
-                                        : network &&
-                                          `Connected to ${network} network`}
+                                <div>
+                                    <div className={styles.popoverInfoline}>
+                                        {network && !market.networkMatch
+                                            ? `Please connect to Custom RPC
+                                               ${
+                                                   market.network === 'Pacific'
+                                                       ? 'https://pacific.oceanprotocol.com'
+                                                       : market.network === 'Nile'
+                                                       ? 'https://nile.dev-ocean.com'
+                                                       : market.network === 'Duero'
+                                                       ? 'https://duero.dev-ocean.com'
+                                                       : 'http://localhost:8545'
+                                               }`
+                                            : network &&
+                                              `Connected to ${network} network`}
+                                    </div>
+                                    {balance && balance.ocn == 0 && (
+                                        <div style={{'textAlign': 'center', 'marginTop': '5px'}}>
+                                            <Button link onClick={async () => airdropOceanTokens()}>Airdrop tokens</Button>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </Market.Consumer>

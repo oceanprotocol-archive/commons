@@ -36,7 +36,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                     type="search"
                     name="search"
                     label="Search for data sets"
-                    placeholder="e.g. shapes of plants"
+                    placeholder="e.g. mobility, land cover classification, market analysis, etc"
                     value={search}
                     onChange={this.inputChange}
                     group={

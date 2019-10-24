@@ -1,0 +1,23 @@
+{
+  "title": "New Channel",
+  "description": "Create a new channel",
+  "fields": {
+    "name": {
+      "label": "Channel name",
+      "placeholder": "e.g. Urban planning",
+      "type": "text",
+      "required": true,
+      "help": "Channel name"
+    },
+    "industry": {
+      "label": "Industry",
+      "type": "select",
+      "required": true,
+      "options": ["Academy", "Company"]
+    },
+    "submit": {
+      "type": "submit",
+      "value": "Create"
+    }
+  }
+}

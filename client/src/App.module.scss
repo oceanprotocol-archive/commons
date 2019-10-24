@@ -20,6 +20,11 @@
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 25vh;
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
 
     > div {
         width: 100%;

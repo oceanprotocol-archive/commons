@@ -1,32 +1,32 @@
 {
-  "title": "Commons",
-  "description": "A marketplace to find and publish open data sets in the Ocean Network.",
-  "company": "Ocean Protocol Foundation Ltd.",
-  "url": "https://commons.oceanprotocol.com",
+  "title": "R&D Marketplace",
+  "description": "A decentralized marketplace that connects Academia, Companies & Individuals to empower collaboration for better Data Science solutions",
+  "company": "Decentraminds",
+  "url": "https://marketplace.decentraminds.ai",
   "social": [
     {
       "title": "Site",
-      "url": "https://oceanprotocol.com"
+      "url": "https://decentraminds.ai"
     },
     {
       "title": "Blog",
-      "url": "https://blog.oceanprotocol.com"
+      "url": "https://decentraminds.ai/blog"
     },
     {
       "title": "Twitter",
-      "url": "https://twitter.com/oceanprotocol"
+      "url": "#"
     },
     {
       "title": "GitHub",
-      "url": "https://github.com/oceanprotocol"
+      "url": "#"
     },
     {
       "title": "Gitter",
-      "url": "https://gitter.im/oceanprotocol/Lobby"
+      "url": "#"
     },
     {
       "title": "Telegram",
-      "url": "https://t.me/OceanProtocol_Community"
+      "url": "#"
     }
   ]
 }

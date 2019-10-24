@@ -9,6 +9,36 @@ import './styles/global.scss'
 import styles from './App.module.scss'
 
 export default class App extends Component {
+    // public render() {
+    //     return (
+    //         <div className={styles.app}>
+    //             <Router>
+    //                 <>
+    //                     <Header />
+
+    //                     <main className={styles.main}>
+    //                         {this.context.isLoading ? (
+    //                             <div className={styles.loader}>
+    //                                 <Spinner message={this.context.message} />
+    //                             </div>
+    //                         ) : (
+    //                             <>
+    //                                 {this.context.isLoading && (
+    //                                     <div className={styles.loader}>
+    //                                         <Spinner message={this.context.message} />
+    //                                     </div>
+    //                                 )}
+    //                                 <Routes />
+    //                             </>
+    //                         )}
+    //                     </main>
+
+    //                     <Footer />
+    //                 </>
+    //             </Router>
+    //         </div>
+    //     )
+    // }
     public render() {
         return (
             <div className={styles.app}>
@@ -17,13 +47,14 @@ export default class App extends Component {
                         <Header />
 
                         <main className={styles.main}>
-                            {this.context.isLoading ? (
-                                <div className={styles.loader}>
-                                    <Spinner message={this.context.message} />
-                                </div>
-                            ) : (
+                            <>
                                 <Routes />
-                            )}
+                                {this.context.isLoading && (
+                                    <div className={styles.loader}>
+                                        <Spinner message={this.context.message} />
+                                    </div>
+                                )}
+                            </>
                         </main>
 
                         <Footer />

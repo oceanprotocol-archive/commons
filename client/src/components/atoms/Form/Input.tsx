@@ -160,6 +160,18 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         />
                     </div>
                 )
+            case 'submit':
+                return (
+                    <input
+                        id={name}
+                        type="submit"
+                        className={styles.input}
+                        onFocus={this.toggleFocus}
+                        onBlur={this.toggleFocus}
+                        value={value}
+                        {...this.props}
+                    />
+                )
             default:
                 return (
                     <div className={wrapClass}>

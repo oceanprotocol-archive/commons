@@ -44,13 +44,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
-                    <h2 className={styles.title}>Featured Channel</h2>
+                    <h2 className={styles.title}>Research Groups</h2>
                     <ChannelTeaser channel="ai-for-good" />
                     <AssetsLatest />
                 </Content>
 
                 <Content wide>
-                    <h2 className={styles.title}>Explore Categories</h2>
+                    <h2 className={styles.title}>Research Topics</h2>
                     <div className={styles.categories}>
                         {this.context.categories
                             .sort((a: any, b: any) => a.localeCompare(b)) // sort alphabetically

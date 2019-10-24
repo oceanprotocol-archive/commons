@@ -13,7 +13,8 @@ const userMock = {
     requestFromFaucet: jest.fn(),
     loginMetamask: jest.fn(),
     loginBurnerWallet: jest.fn(),
-    message: ''
+    message: '',
+    airdropOceanTokens: jest.fn()
 }
 
 const userMockConnected = {
@@ -29,7 +30,8 @@ const userMockConnected = {
     requestFromFaucet: jest.fn(),
     loginMetamask: jest.fn(),
     loginBurnerWallet: jest.fn(),
-    message: ''
+    message: '',
+    airdropOceanTokens: jest.fn()
 }
 
 export { userMock, userMockConnected }

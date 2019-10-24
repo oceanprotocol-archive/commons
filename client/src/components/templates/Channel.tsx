@@ -112,6 +112,8 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
                 title={title}
                 description={description}
                 image={<CategoryImage header category={title} />}
+                isSpace={true}
+                spaceId={"decentraminds_mpl_AI4Good"}
             >
                 <Content wide>
                     {this.renderResults()}
