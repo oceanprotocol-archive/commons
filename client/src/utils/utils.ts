@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 import axios from 'axios'
+import { Logger } from '@oceanprotocol/squid'
 
 export function formatBytes(a: number, b: number) {
     if (a === 0) return '0 Bytes'
@@ -15,15 +15,35 @@ export function arraySum(array: number[]) {
     return array.reduce((a, b) => a + b, 0)
 }
 
+export function streamFiles(ipfs: any, files: any) {
+    return new Promise((resolve, reject) => {
+        const stream = ipfs.addReadableStream({
+            wrapWithDirectory: true
+            // progress: (length: number) =>
+            //     setFileSizeReceived(formatBytes(length, 0))
+        })
+
+        stream.on('data', (data: any) => {
+            Logger.log(`Added ${data.path} hash: ${data.hash}`)
+            // The last data event will contain the directory hash
+            if (data.path === '') resolve(data.hash)
+        })
+
+        stream.on('error', reject)
+        stream.write(files)
+        stream.end()
+    })
+}
+
 export async function pingUrl(url: string) {
     try {
         const response = await axios(url)
-        if (response.status !== 200) console.error(`Not found: ${url}`)
+        if (response.status !== 200) Logger.error(`Not found: ${url}`)
 
-        console.log(`File found: ${url}`)
+        Logger.log(`File found: ${url}`)
         return true
     } catch (error) {
-        console.error(error.message)
+        Logger.error(error.message)
     }
     return false
 }

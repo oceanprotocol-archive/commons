@@ -1,4 +1,10 @@
-import React, { FormEvent, PureComponent, ChangeEvent } from 'react'
+import React, {
+    lazy,
+    Suspense,
+    FormEvent,
+    PureComponent,
+    ChangeEvent
+} from 'react'
 import axios from 'axios'
 import { Logger, File } from '@oceanprotocol/squid'
 import shortid from 'shortid'
@@ -6,11 +12,13 @@ import Button from '../../../components/atoms/Button'
 import Help from '../../../components/atoms/Form/Help'
 import ItemForm from './ItemForm'
 import Item from './Item'
-import Ipfs from './Ipfs'
 import styles from './index.module.scss'
 
 import { serviceUri } from '../../../config'
 import cleanupContentType from '../../../utils/cleanupContentType'
+import Spinner from '../../../components/atoms/Spinner'
+
+const Ipfs = lazy(() => import('./Ipfs'))
 
 export interface FilePublish extends File {
     found: boolean // non-standard
@@ -202,7 +210,11 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                         />
                     )}
 
-                    {isIpfsFormShown && <Ipfs addFile={this.addFile} />}
+                    {isIpfsFormShown && (
+                        <Suspense fallback={<Spinner message="Loading..." />}>
+                            <Ipfs addFile={this.addFile} />
+                        </Suspense>
+                    )}
                 </div>
             </>
         )
