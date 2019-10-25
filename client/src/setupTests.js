@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 import '@testing-library/jest-dom/extend-expect'
-import '@testing-library/react/cleanup-after-each'
 
 // this is just a little hack to silence a warning that we'll get until we
 // upgrade to 16.9: https://github.com/facebook/react/pull/14853
