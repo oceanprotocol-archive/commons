@@ -45,7 +45,7 @@
     "react-transition-group": "^4.2.1",
     "shortid": "^2.2.15",
     "truffle-hdwallet-provider": "1.0.14",
-    "web3": "1.2.0"
+    "web3": "^1.2.2"
   },
   "devDependencies": {
     "@react-mock/state": "^0.1.8",
