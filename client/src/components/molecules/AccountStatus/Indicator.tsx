@@ -55,7 +55,7 @@ const Indicator = ({
                         !user.isLogged || !market.networkMatch ? (
                             <Button 
                                 onClick={async () => {
-                                    await user.openWallet()
+                                    // await user.openWallet()
                                     togglePopover()
                                 }} 
                                 style={walletButonStyle}
