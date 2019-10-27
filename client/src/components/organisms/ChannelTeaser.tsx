@@ -107,9 +107,9 @@ export default class ChannelTeaser extends Component<
                         <Link to={`/channels/${tag}`}>
                             <h2 className={styles.channelTitle}>{title}</h2>
                             <CategoryImage category={title} />
-
+                            <a className="more-info">i</a>
                             <p className={styles.channelTeaser}>{teaser}</p>
-                            <p>Browse the channel →</p>
+                            <span>Browse the channel →</span>
                         </Link>
                     </header>
                 </div>

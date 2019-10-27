@@ -56,6 +56,43 @@
 
     a {
         display: block;
+        position: relative;
+
+        h2 {
+            position: absolute;
+            top: 80px;
+            left: 5px;
+        }
+
+        p {
+            position: absolute;
+            top: 0px;
+            text-align: center;
+            height: calc(100% - 25px);
+            padding-top: 25px;
+            margin-bottom: 0px;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        a {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #2a2d47;
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 14px;
+            line-height: 20px;
+            text-align: center;
+            z-index: 1;
+
+            &:hover + p {
+                display: block;
+            }
+        }
 
         &:hover,
         &:focus {

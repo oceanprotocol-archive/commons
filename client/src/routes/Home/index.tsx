@@ -62,6 +62,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
                                 >
                                     <CategoryImage category={category} />
                                     <h3>{category}</h3>
+                                    <a className="more-info">i</a>
                                 </CategoryLink>
                             ))}
                     </div>

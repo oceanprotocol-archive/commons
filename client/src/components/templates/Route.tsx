@@ -4,6 +4,7 @@ import styles from './Route.module.scss'
 import Markdown from '../atoms/Markdown'
 import Seo from '../atoms/Seo'
 import Button from '../atoms/Button'
+import CategoryImage from '../atoms/CategoryImage'
 
 interface RouteProps {
     title: string
@@ -67,19 +68,18 @@ export default class Route extends PureComponent<RouteProps, RouteState> {
                 <article>
                     <header className={styles.header}>
                         <Content wide={wide}>
-                            <h1 className={styles.title}>{titleSanitized}</h1>
-
-                            {image && image}
-
-                            {isSpace && (
-                                <Content>
+                            {image && isSpace ? (
+                                <div className={styles.imageheader}>
+                                {image}
+                                    <h1 className={styles.title}>{titleSanitized}</h1>
+                                    <div className={styles.followers}>{followers} followers</div>
                                     <Button onClick={() => this.followThread()} disabled={following} primary>
                                     {following == false ? "Follow":"Following"}
                                     </Button>
-                                    <div className={styles.followers}>{followers} followers</div>
-                                </Content>
+                                </div>
+                            ) : (
+                                <h1 className={styles.title}>{titleSanitized}</h1>
                             )}
-
                             {description && (
                                 <Markdown
                                     text={description}

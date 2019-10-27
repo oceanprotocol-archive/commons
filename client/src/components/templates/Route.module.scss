@@ -24,3 +24,30 @@
     font-size: $font-size-large;
     color: $brand-white;
 }
+
+.imageheader {
+    position: relative;
+
+    div {
+        margin-top: 0px;
+    }
+
+    h1 {
+        position: absolute;
+        bottom: 20px;
+        left: 10px;
+    }
+
+    button {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
+}
+
+.followers {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    margin-bottom: 0px !important;
+}

@@ -33,7 +33,7 @@ export default class AccountStatus extends PureComponent<
         })
         this.core.on("connect", props.onConnect);
         this.core.on("disconnect", props.onDisconnect);
-        this.core.on("close", props.onClose);
+        // this.core.on("close", props.onClose);
         this.core.on("error", props.onError);
 
     }

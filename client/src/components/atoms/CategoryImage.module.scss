@@ -1,21 +1,21 @@
 @import '../../styles/variables';
 
 .categoryImage {
-    height: 4rem;
+    height: 100px;
     background-size: 100%;
     background-position: center;
-    margin-bottom: $spacer / $line-height;
+    /* margin-bottom: $spacer / $line-height; */
     background-color: $body-background;
     border-radius: $border-radius;
     overflow: hidden;
-    opacity: .85;
+    opacity: 1;
     transition: .2s ease-out;
     border: 1px solid $brand-grey-lighter;
 }
 
 .header {
     composes: categoryImage;
-    height: 8rem;
+    height: 150px;
     margin-top: $spacer / $line-height;
 }
 
