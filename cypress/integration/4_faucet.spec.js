@@ -1,5 +1,5 @@
 /// <reference types="Cypress" />
-context('Faucet', () => {
+describe('Faucet', () => {
     before(() => {
         cy.visit('/faucet')
         // Wait for end of loading
@@ -21,7 +21,7 @@ context('Faucet', () => {
             .should('not.be.disabled')
     })
 
-    it('Execute faucet call', () => {
+    it('should execute faucet call', () => {
         // Execute call
         cy.get('@button')
             .contains('Request ETH')

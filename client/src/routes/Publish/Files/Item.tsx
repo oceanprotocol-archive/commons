@@ -5,7 +5,7 @@ import Dotdotdot from 'react-dotdotdot'
 
 const Item = ({
     item,
-    removeItem
+    removeFile
 }: {
     item: {
         url: string
@@ -13,7 +13,7 @@ const Item = ({
         contentType: string
         contentLength: number
     }
-    removeItem(): void
+    removeFile(): void
 }) => (
     <li>
         <a href={item.url} className={styles.linkUrl} title={item.url}>
@@ -36,7 +36,7 @@ const Item = ({
             type="button"
             className={styles.remove}
             title="Remove item"
-            onClick={removeItem}
+            onClick={removeFile}
         >
             &times;
         </button>

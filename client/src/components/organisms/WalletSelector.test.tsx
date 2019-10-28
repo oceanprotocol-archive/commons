@@ -7,7 +7,7 @@ import { userMockConnected } from '../../../__mocks__/user-mock'
 import { marketMock } from '../../../__mocks__/market-mock'
 
 describe('WalletSelector', () => {
-    it('renders without crashing', async () => {
+    it('renders without crashing', () => {
         ReactModal.setAppElement(document.createElement('div'))
 
         const { container, getByText } = render(
@@ -20,11 +20,11 @@ describe('WalletSelector', () => {
         expect(container.firstChild).toBeInTheDocument()
         fireEvent.click(getByText('Select wallet'))
 
-        const burnerButton = await getByText('Burner Wallet')
+        const burnerButton = getByText('Burner Wallet')
         fireEvent.click(burnerButton)
 
         fireEvent.click(getByText('Select wallet'))
-        // const metamaskButton = await getByText('MetaMask')
+        // const metamaskButton = getByText('MetaMask')
         // fireEvent.click(metamaskButton)
     })
 })

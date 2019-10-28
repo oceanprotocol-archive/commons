@@ -26,4 +26,5 @@ yarn-error.log*
 cypress/screenshots
 cypress/videos
 cypress/fixtures/did.txt
+cypress/fixtures/did-ipfs.txt
 artifacts

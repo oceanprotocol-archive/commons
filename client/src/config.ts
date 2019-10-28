@@ -32,4 +32,9 @@ export const verbose = true
 export const analyticsId = 'UA-60614729-11'
 export const allowPricing = process.env.REACT_APP_ALLOW_PRICING || false
 export const showRequestTokens =
-    process.env.REACT_APP_SHOW_REQUEST_TOKENS_BUTTON || false
+    process.env.REACT_APP_SHOW_REQUEST_TOKENS_BUTTON === 'true' || false
+// https://ipfs.github.io/public-gateway-checker/
+export const ipfsGatewayUri =
+    process.env.REACT_APP_IPFS_GATEWAY_URI || 'https://gateway.ipfs.io'
+export const ipfsNodeUri =
+    process.env.REACT_APP_IPFS_NODE_URI || 'https://ipfs.infura.io:5001'

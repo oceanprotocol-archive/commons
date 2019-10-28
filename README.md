@@ -10,6 +10,8 @@ If you're a developer and want to contribute to, or want to utilize this marketp
   - [⛵️ Environment Variables](#️-environment-variables)
     - [Client](#client)
     - [Server](#server)
+    - [Feature Switches](#feature-switches)
+    - [More Settings](#more-settings)
 - [👩‍🔬 Testing](#-testing)
   - [Unit Tests](#unit-tests)
   - [End-to-End Integration Tests](#end-to-end-integration-tests)
@@ -112,6 +114,24 @@ cp server/.env.example server/.env
 # edit variables
 vi server/.env
 ```
+
+#### Feature Switches
+
+Beside configuring the network endpopints, the client allows to activate some features with environment variables in `client/.env.local`:
+
+| Env Variable                           | Feature Description                                                                                                                                                      |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `REACT_APP_SHOW_CHANNELS`              | Show the channels feature which shows assets based on a certain tag in a prominent view. This is deeactivated by default and only activated in live Commons deployments. |
+| `REACT_APP_SHOW_REQUEST_TOKENS_BUTTON` | Shows a second button on the `/faucet` route to request Ocean Tokens in addition to Ether. Will only work in Ocean testnets.                                             |
+| `REACT_APP_ALLOW_PRICING`              | Activate pricing feature. Will show a price input during publish flow, and output prices for each data asset.                                                            |
+
+#### More Settings
+
+| Env Variable                                                          | Example                                | Feature Description                               |
+| --------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------- |
+| client: `REACT_APP_IPFS_GATEWAY_URI`<br /> server: `IPFS_GATEWAY_URI` | `"https://ipfs.oceanprotocol.com"`     | The IPFS gateway URI.                             |
+| `REACT_APP_IPFS_NODE_URI`                                             | `"https://ipfs.oceanprotocol.com:443"` | The IPFS node URI used to add files to IPFS.      |
+| `REACT_APP_REPORT_EMAIL`                                              | `"jelly@mcjellyfish.com"`              | The email used for the _report an asset_ feature. |
 
 ## 👩‍🔬 Testing
 

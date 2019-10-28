@@ -1,0 +1,36 @@
+@import '../../../../styles/variables';
+
+.message {
+    font-size: $font-size-small;
+    margin-top: $spacer / 2;
+    color: $brand-grey-light;
+
+    &:before {
+        content: '';
+        width: .5rem;
+        height: .5rem;
+        display: inline-block;
+        background: $yellow;
+        border-radius: 50%;
+        margin-right: $spacer / 6;
+        margin-bottom: .1rem;
+    }
+}
+
+.success {
+    composes: message;
+
+    &:before {
+        background: $green;
+    }
+}
+
+.error {
+    composes: message;
+    color: $red;
+
+    &:before {
+        border-radius: 0;
+        background: $red;
+    }
+}

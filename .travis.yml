@@ -26,8 +26,14 @@ env:
     - REACT_APP_SECRET_STORE_URI="http://localhost:12001"
     - REACT_APP_FAUCET_URI="http://localhost:3001"
     - REACT_APP_BRIZO_ADDRESS="0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0"
+
+    # IPFS client & server config
+    - REACT_APP_IPFS_GATEWAY_URI="https://ipfs.oceanprotocol.com"
+    - REACT_APP_IPFS_NODE_URI="https://ipfs.oceanprotocol.com:443"
+    - IPFS_GATEWAY_URI="https://ipfs.oceanprotocol.com"
+
     # start Barge with these versions
-    - BRIZO_VERSION=v0.4.2
+    - BRIZO_VERSION=v0.4.5
     - AQUARIUS_VERSION=v0.3.8
     - KEEPER_VERSION=v0.11.1
     - EVENTS_HANDLER_VERSION=v0.1.2
@@ -57,15 +63,13 @@ script:
   - ./scripts/keeper.sh
   - ./scripts/test.sh || travis_terminate 1
   - ./scripts/coverage.sh
+    # Pipe the coverage data to Code Climate
+  - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.client.json client/coverage/lcov.info
+  - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.server.json server/coverage/lcov.info
+  - ./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2
+  - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi
   - npm run test:e2e || travis_terminate 1
   - ./scripts/build.sh
-
-# Pipe the coverage data to Code Climate
-after_script:
-  - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.client.json client/coverage/lcov.info # Format client coverage
-  - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.server.json server/coverage/lcov.info # Format server coverage
-  - ./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2 # Sum both coverage parts into coverage/codeclimate.json
-  - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi # Upload coverage/codeclimate.json
 
 notifications:
   email: false

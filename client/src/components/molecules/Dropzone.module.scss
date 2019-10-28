@@ -1,0 +1,45 @@
+@import '../../styles/variables';
+
+.dropzone {
+    margin-top: $spacer;
+    margin-bottom: $spacer;
+    border: .2rem dashed $brand-grey-lighter;
+    border-radius: $border-radius * 2;
+    padding: $spacer;
+    background: $brand-white;
+    transition: .2s ease-out;
+    cursor: pointer;
+
+    p {
+        text-align: center;
+        margin-bottom: 0;
+        font-size: $font-size-small;
+        color: $brand-grey-light;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: $brand-grey-light;
+        outline: 0;
+    }
+}
+
+.dragover {
+    composes: dropzone;
+    border-color: $brand-pink;
+}
+
+.disabled {
+    composes: dropzone;
+    opacity: .5;
+    pointer-events: none;
+}
+
+.dropzoneFiles {
+    padding: $spacer 0;
+
+    ul {
+        margin: 0;
+    }
+}

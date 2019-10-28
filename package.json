@@ -25,8 +25,8 @@
   "dependencies": {},
   "devDependencies": {
     "@release-it/bumper": "^1.0.3",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
     "auto-changelog": "^1.16.0",
     "concurrently": "^4.1.2",
     "cypress": "^3.4.1",

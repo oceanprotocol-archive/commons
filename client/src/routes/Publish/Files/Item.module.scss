@@ -4,8 +4,9 @@
     font-size: $font-size-small;
     display: block;
     margin-bottom: $spacer / 8;
-
-    // TODO: truncate long urls with ellipsis
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .remove {

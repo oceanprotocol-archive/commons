@@ -2,7 +2,10 @@
 
 .itemForm {
     margin-top: $spacer / 2;
-    padding-left: $spacer / 2;
+    border: 1px solid $brand-grey-lighter;
+    border-radius: $border-radius;
+    padding: $spacer / 2;
+    background: $body-background;
 
     button {
         margin-top: -($spacer * 2);
