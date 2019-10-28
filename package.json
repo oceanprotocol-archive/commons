@@ -1,7 +1,7 @@
 {
   "name": "commons",
   "description": "Ocean Protocol marketplace to explore, download, and publish open data sets.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "Apache-2.0",
   "scripts": {
     "install": "./scripts/install.sh",
