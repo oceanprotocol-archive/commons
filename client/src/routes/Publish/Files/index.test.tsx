@@ -67,17 +67,17 @@ describe('Files', () => {
     })
 
     it('new IPFS file form can be opened and closed', async () => {
-        const { container, getByText } = renderComponent()
+        const { getByText } = renderComponent()
 
         // open
         fireEvent.click(getByText('+ Add to IPFS'))
-        await waitForElement(() => getByText('- Cancel'))
-        expect(container.querySelector('.ipfsForm')).toBeInTheDocument()
+        const text = await waitForElement(() => getByText(/Connected to /))
+        expect(text).toBeInTheDocument()
 
         // close
         fireEvent.click(getByText('- Cancel'))
         await waitForElement(() => getByText('+ Add to IPFS'))
-        expect(container.querySelector('.ipfsForm')).not.toBeInTheDocument()
+        expect(text).not.toBeInTheDocument()
     })
 
     it('item can be removed', async () => {
