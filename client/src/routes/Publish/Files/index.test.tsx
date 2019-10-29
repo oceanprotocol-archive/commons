@@ -71,7 +71,9 @@ describe('Files', () => {
 
         // open
         fireEvent.click(getByText('+ Add to IPFS'))
-        const text = await waitForElement(() => getByText(/Connected to /))
+        const text = await waitForElement(() =>
+            getByText(/Connected to / || /IPFS connection error/)
+        )
         expect(text).toBeInTheDocument()
 
         // close
