@@ -45,6 +45,9 @@
     "url": "https://github.com/oceanprotocol/commons"
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ]
   }
 }

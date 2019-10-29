@@ -61,7 +61,7 @@ script:
   # executing `npm test` scripts individually here, so first one failing will exit the build
   - npm run lint || travis_terminate 1
   - ./scripts/keeper.sh
-  - ./scripts/test.sh || travis_terminate 1
+  - ./scripts/test.sh
   - ./scripts/coverage.sh
     # Pipe the coverage data to Code Climate
   - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.client.json client/coverage/lcov.info
