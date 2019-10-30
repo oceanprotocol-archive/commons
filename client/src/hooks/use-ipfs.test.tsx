@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, wait, act } from '@testing-library/react'
 import useIpfs from './use-ipfs'
 
 export default function TestComponent() {
@@ -14,8 +14,14 @@ export default function TestComponent() {
 }
 
 describe('use-ipfs', () => {
-    it('renders without crashing', () => {
-        const { container } = render(<TestComponent />)
-        expect(container.firstChild).toBeInTheDocument()
+    it('renders without crashing', async () => {
+        let element: any
+
+        await act(async () => {
+            element = render(<TestComponent />)
+        })
+
+        expect(element.container.firstChild).toBeInTheDocument()
+        await wait(() => element.getByText('Ready'))
     })
 })

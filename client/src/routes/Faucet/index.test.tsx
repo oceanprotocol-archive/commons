@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, act, wait } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { createMemoryHistory, createLocation } from 'history'
 import Faucet from '.'
@@ -32,11 +32,7 @@ const setup = () => {
     )
     const button = utils.getByText('Request ETH')
     const { container } = utils
-    return {
-        button,
-        container,
-        ...utils
-    }
+    return { button, container, ...utils }
 }
 
 describe('Faucet', () => {
@@ -47,17 +43,15 @@ describe('Faucet', () => {
 
     it('shows actions when connected', () => {
         const { button } = setup()
-
         expect(button).toBeInTheDocument()
         expect(button).not.toHaveAttribute('disabled')
     })
 
-    it('fires requestFromFaucet', () => {
-        const { button, getByText } = setup()
-
-        fireEvent.click(button)
+    it('fires requestFromFaucet', async () => {
+        await act(async () => {
+            const { button } = setup()
+            fireEvent.click(button)
+        })
         expect(userMockConnected.requestFromFaucet).toHaveBeenCalledTimes(1)
-        // check for spinner
-        expect(getByText('Getting ETH...')).toBeInTheDocument()
     })
 })

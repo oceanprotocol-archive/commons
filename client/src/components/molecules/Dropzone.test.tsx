@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, act } from '@testing-library/react'
 import Dropzone from './Dropzone'
 
 function mockData(files: any) {
@@ -38,15 +38,17 @@ test('invoke onDragEnter when dragenter event occurs', async () => {
     const data = mockData([file])
     const handleOnDrop = jest.fn()
 
-    const ui = <Dropzone handleOnDrop={handleOnDrop} />
-    const { container } = render(ui)
+    await act(async () => {
+        const ui = <Dropzone handleOnDrop={handleOnDrop} />
+        const { container } = render(ui)
 
-    // drop a file
-    const dropzone = container.querySelector('div')
-    dispatchEvt(dropzone, 'dragenter', data)
-    dispatchEvt(dropzone, 'dragover', data)
-    dispatchEvt(dropzone, 'drop', data)
-    await flushPromises(ui, container)
+        // drop a file
+        const dropzone = container.querySelector('div')
+        dispatchEvt(dropzone, 'dragenter', data)
+        dispatchEvt(dropzone, 'dragover', data)
+        dispatchEvt(dropzone, 'drop', data)
+        await flushPromises(ui, container)
+    })
 
     expect(handleOnDrop).toHaveBeenCalled()
 })
