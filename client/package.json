@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "CI=false react-scripts --max_old_space_size=4096 build",
-    "test": "react-scripts test --coverage --watchAll=false",
+    "test": "react-scripts test --coverage --watchAll=false --silent",
     "test:watch": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "coverage": "cat coverage/lcov.info | codacy-coverage --token 8801f827fe1144ffa85cd7da94f2bbf7",

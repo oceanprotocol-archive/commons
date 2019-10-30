@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, act, wait } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { createMemoryHistory, createLocation } from 'history'
 import Faucet from '.'
