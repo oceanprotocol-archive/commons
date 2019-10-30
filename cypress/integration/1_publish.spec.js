@@ -25,7 +25,7 @@ describe('Publish', () => {
             .contains('Add File')
             .click()
         // Verify and nove to next step
-        cy.get('button')
+        cy.get('button', { timeout: 60000 })
             .contains('Next →')
             .should('not.be.disabled')
             .click()
@@ -93,7 +93,7 @@ describe('Publish', () => {
             .contains('Add File')
             .click()
         // Verify and nove to next step
-        cy.get('button')
+        cy.get('button', { timeout: 60000 })
             .contains('Next →')
             .should('not.be.disabled')
             .click()
