@@ -11,11 +11,11 @@ describe('IPFS', () => {
     })
 
     it('HTTP API: files can be dropped', async () => {
-        const { container, findByText, getByText } = render(ui)
+        const { container, getByText } = render(ui)
         expect(container).toBeInTheDocument()
 
         // wait for IPFS node
-        await findByText(/Connected to /)
+        await waitForElement(() => getByText(/Connected to /))
 
         // drop a file
         const dropzoneInput = container.querySelector('.dropzone')
