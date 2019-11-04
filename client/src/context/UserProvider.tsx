@@ -13,40 +13,6 @@ const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
 const DEFAULT_WEB3 = new Web3(new Web3.providers.HttpProvider(nodeUri)) // default web3
 
-// taken from
-// https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/web3/providers.d.ts
-interface JsonRPCRequest {
-    jsonrpc: string
-    method: string
-    params: any[]
-    id: number
-}
-
-interface JsonRPCResponse {
-    jsonrpc: string
-    id: number
-    result?: any
-    error?: string
-}
-
-interface Callback<ResultType> {
-    (error: Error): void
-    (error: null, val: ResultType): void
-}
-
-declare global {
-    interface Window {
-        web3: Web3
-        ethereum: {
-            enable(): void
-            send(
-                payload: JsonRPCRequest,
-                callback: Callback<JsonRPCResponse>
-            ): any
-        }
-    }
-}
-
 interface UserProviderState {
     isLogged: boolean
     isBurner: boolean
