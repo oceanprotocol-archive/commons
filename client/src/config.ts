@@ -38,3 +38,9 @@ export const ipfsGatewayUri =
     process.env.REACT_APP_IPFS_GATEWAY_URI || 'https://gateway.ipfs.io'
 export const ipfsNodeUri =
     process.env.REACT_APP_IPFS_NODE_URI || 'https://ipfs.infura.io:5001'
+
+//
+// OPWallet CONFIG
+export const portisEnabled = process.env.REACT_APP_PORTIS_APP_ID === 'true' || false
+export const portisAppId = process.env.REACT_APP_PORTIS_APP_ID
+export const torusEnabled = process.env.REACT_APP_TORUS_ENABLED === 'true' || false

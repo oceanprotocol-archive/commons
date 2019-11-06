@@ -48,15 +48,24 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
     public render() {
         const { networkMatch } = this.context
 
+        // return (
+        //     <div className={styles.message}>
+        //         <div className={styles.account}>
+        //             <Account />
+        //         </div>
+
+        //         {(!networkMatch || this.props.extended) && (
+        //             <div className={styles.text}>
+        //                 <AccountStatus className={styles.status} />
+        //                 <this.Message />
+        //             </div>
+        //         )}
+        //     </div>
+        // )
         return (
             <div className={styles.message}>
-                <div className={styles.account}>
-                    <Account />
-                </div>
-
                 {(!networkMatch || this.props.extended) && (
                     <div className={styles.text}>
-                        <AccountStatus className={styles.status} />
                         <this.Message />
                     </div>
                 )}

@@ -54,15 +54,18 @@ const Indicator = ({
                     {market =>
                         !user.isLogged || !market.networkMatch ? (
                             <Button 
-                                onClick={async () => {
-                                    // await user.openWallet()
-                                    togglePopover()
+                                onClick={() => {
+                                    user.openWallet()
+                                    // togglePopover()
                                 }} 
                                 style={walletButonStyle}
                             >Connect Wallet ⚠️</Button>
                         ) : user.isLogged ? (
                             <Button 
-                                onClick={togglePopover} 
+                                onClick={() => {
+                                    // togglePopover()
+                                    user.openWallet()
+                                }} 
                                 style={walletButonStyle}
                             >Open Wallet</Button>
                         ) : null
