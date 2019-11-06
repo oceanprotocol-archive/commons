@@ -71,4 +71,5 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
 }
 
-export default withTracker(Home)
+// export default withTracker(Home)
+export default Home

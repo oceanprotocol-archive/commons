@@ -162,4 +162,5 @@ class Search extends PureComponent<SearchProps, SearchState> {
     }
 }
 
-export default withTracker(Search)
+// export default withTracker(Search)
+export default Search

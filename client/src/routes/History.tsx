@@ -21,4 +21,5 @@ class History extends Component {
     }
 }
 
-export default withTracker(History)
+// export default withTracker(History)
+export default History

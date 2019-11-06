@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import ReactGA, { FieldsObject } from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
-import { analyticsId } from '../config'
+// import { analyticsId } from '../config'
 
-ReactGA.initialize(analyticsId, {
-    testMode: process.env.NODE_ENV === 'test',
-    debug: false
-})
+// ReactGA.initialize(analyticsId, {
+//     testMode: process.env.NODE_ENV === 'test',
+//     debug: false
+// })
 
 const withTracker = <P extends RouteComponentProps>(
     WrappedComponent: any,

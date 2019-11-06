@@ -89,4 +89,5 @@ class Channels extends Component {
     }
 }
 
-export default withTracker(Channels)
+// export default withTracker(Channels)
+export default Channels

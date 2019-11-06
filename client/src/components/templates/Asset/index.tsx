@@ -87,4 +87,5 @@ class Asset extends Component<AssetProps, AssetState> {
     }
 }
 
-export default withTracker(Asset)
+// export default withTracker(Asset)
+export default Asset

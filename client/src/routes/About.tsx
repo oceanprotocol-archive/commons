@@ -62,4 +62,5 @@ const About = () => {
     )
 }
 
-export default withTracker(About)
+// export default withTracker(About)
+export default About

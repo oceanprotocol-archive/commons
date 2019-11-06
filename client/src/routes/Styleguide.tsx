@@ -48,4 +48,5 @@ class Styleguide extends Component {
     }
 }
 
-export default withTracker(Styleguide)
+// export default withTracker(Styleguide)
+export default Styleguide

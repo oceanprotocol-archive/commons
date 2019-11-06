@@ -371,4 +371,5 @@ class Publish extends Component<{}, PublishState> {
     }
 }
 
-export default withTracker(Publish)
+// export default withTracker(Publish)
+export default Publish

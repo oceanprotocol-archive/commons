@@ -30,4 +30,5 @@ function Faucet() {
     )
 }
 
-export default withTracker(Faucet)
+// export default withTracker(Faucet)
+export default Faucet

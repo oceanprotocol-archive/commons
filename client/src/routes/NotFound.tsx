@@ -13,4 +13,5 @@ class NotFound extends Component {
     }
 }
 
-export default withTracker(NotFound)
+// export default withTracker(NotFound)
+export default NotFound
