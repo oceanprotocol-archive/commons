@@ -29,7 +29,7 @@ export default class AccountStatus extends PureComponent<
         return (
             <Manager>
                 <Reference>
-                    {({ ref }) => (
+                    {({ ref }: { ref: any }) => (
                         <AccountIndicator
                             togglePopover={() => this.togglePopover()}
                             className={this.props.className}
@@ -39,7 +39,15 @@ export default class AccountStatus extends PureComponent<
                 </Reference>
                 {this.state.isPopoverOpen && (
                     <Popper placement="auto">
-                        {({ ref, style, placement }) => (
+                        {({
+                            ref,
+                            style,
+                            placement
+                        }: {
+                            ref: any
+                            style: any
+                            placement: any
+                        }) => (
                             <AccountPopover
                                 forwardedRef={ref}
                                 style={style}
