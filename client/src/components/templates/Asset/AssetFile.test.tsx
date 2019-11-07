@@ -20,7 +20,7 @@ const file = {
 const ddo = ({
     id: 'xxx',
     findServiceByType: () => {
-        return { serviceDefinitionId: 'xxx' }
+        return { index: 'xxx' }
     }
 } as any) as DDO
 

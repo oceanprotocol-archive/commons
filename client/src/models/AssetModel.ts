@@ -1,24 +1,21 @@
-const AssetModel = {
-    assetId: null,
-    publisherId: null,
+import { MetaData } from '@oceanprotocol/squid'
 
+const AssetModel: MetaData = {
     // OEP-08 Attributes
     // https://github.com/oceanprotocol/OEPs/tree/master/8
-    base: {
-        name: null,
-        description: null,
-        dateCreated: null,
-        author: null,
-        type: '',
-        license: null,
-        copyrightHolder: null,
-        workExample: '',
-        files: [],
-        categories: [],
-        links: [],
-        inLanguage: '',
-        tags: [],
-        price: ''
+    main: {
+        type: 'dataset',
+        name: '',
+        dateCreated: '',
+        author: '',
+        license: '',
+        price: '',
+        files: []
+    },
+    additionalInformation: {
+        description: '',
+        copyrightHolder: '',
+        categories: []
     }
 }
 
