@@ -1,4 +1,4 @@
-import { Ocean, Logger } from '@oceanprotocol/squid'
+import { Ocean, Logger, Config } from '@oceanprotocol/squid'
 import Web3 from 'web3'
 
 import {
@@ -11,8 +11,10 @@ import {
     verbose
 } from './config'
 
-export async function provideOcean(web3Provider: Web3) {
-    const config = {
+const DEFAULT_WEB3 = new Web3(new Web3.providers.HttpProvider(nodeUri))
+
+export async function provideOcean(web3Provider?: Web3) {
+    let config: Config = {
         web3Provider,
         nodeUri,
         aquariusUri,
@@ -21,6 +23,10 @@ export async function provideOcean(web3Provider: Web3) {
         secretStoreUri,
         verbose
     }
+    if (!web3Provider) {
+        config.web3Provider = DEFAULT_WEB3
+    }
+
     const ocean: any = await Ocean.getInstance(config)
     return { ocean }
 }

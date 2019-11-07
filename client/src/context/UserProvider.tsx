@@ -13,7 +13,6 @@ import { BurnerWalletProvider } from './BurnerWalletProvider'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
-// const DEFAULT_WEB3 = new Web3(new Web3.providers.HttpProvider(nodeUri)) // default web3
 
 interface UserProviderState {
     isLogged: boolean
@@ -143,7 +142,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     // 0
     public async componentDidMount() {
-        // await this.bootstrap()
+        await this.bootstrap()
         this.mountWallet();
     }
 
@@ -224,7 +223,9 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     // }
 
     // 2
-    // private loadOcean = async () => {
+    private loadOcean = async () => {
+        const { ocean } = await provideOcean() // Loads an ocean client not attached to a wallet
+        this.setState({ ocean }, () => console.log('Loaded ocean client', ocean))
     //     this.showLoadingMessage('Connecting to the Network...')
     //     const { ocean } = await provideOcean(this.state.web3)
     //     this.setState({ ocean }, () => {
@@ -234,7 +235,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     //         this.fetchNetwork()
     //         this.fetchAccounts()
     //     })
-    // }
+    }
 
     // after fetchAccounts
     private load3box = async () => {
@@ -248,7 +249,9 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     // 1
-    // private bootstrap = async () => {
+    private bootstrap = async () => {
+        this.loadOcean()
+
     //     const logType = localStorage.getItem('logType')
     //     const metamaskProvider = new MetamaskProvider()
 
@@ -279,7 +282,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     //             this.loginBurnerWallet()
     //             break
     //     }
-    // }
+    }
 
     private fetchAccounts = async () => {
         const { ocean, isLogged } = this.state
