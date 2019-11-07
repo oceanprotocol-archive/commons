@@ -21,14 +21,14 @@ export default class Pagination extends PureComponent<
     private mq = window.matchMedia && window.matchMedia('(min-width: 600px)')
 
     public componentDidMount() {
-        if (window.matchMedia) {
+        if (window && window.matchMedia) {
             this.mq.addListener(this.viewportChange)
             this.viewportChange(this.mq)
         }
     }
 
     public componentWillUnmount() {
-        if (window.matchMedia) {
+        if (window && window.matchMedia) {
             this.mq.removeListener(this.viewportChange)
         }
     }
