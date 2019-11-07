@@ -9,7 +9,8 @@ import AssetFilesDetails from './AssetFilesDetails'
 import Report from './Report'
 import { allowPricing } from '../../../config'
 import Web3 from 'web3'
-import ThreeBoxComments from '3box-comments-react'
+// import ThreeBoxComments from '3box-comments-react'
+import BondingCurve from '../BondingCurve'
 
 interface AssetDetailsProps {
     metadata: MetaData
@@ -35,6 +36,10 @@ const MetaFixedItem = ({ name, value }: { name: string; value: string }) => (
 export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
     const { base } = metadata
     const price = base.price && Web3.utils.fromWei(base.price.toString())
+
+    const bondingCurveContractAddress = ''
+
+    const contractArtifact = {}
 
     const metaFixed = [
         {
@@ -119,7 +124,7 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
             </div>
 
             <AssetFilesDetails files={base.files ? base.files : []} ddo={ddo} />
-            <ThreeBoxComments
+            { /* <ThreeBoxComments
                 // required
                 spaceName='3boxtestcomments'
                 threadName='freshcomments'
@@ -138,6 +143,13 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
                 useHovers={true}
                 currentUser3BoxProfile={null}
                 userProfileURL={(address: string) => `https://mywebsite.com/user/${address}`}
+            /> */}
+            <BondingCurve
+                contractAddress={bondingCurveContractAddress}
+                contractArtifact={contractArtifact}
+                defaultTab="bonding-curve"
+                onError={(error: any) => console.log('ERROR in bonding curve', error)}
+                onLoaded={() => console.log('BondingCurve loaded')}
             />
         </>
     )

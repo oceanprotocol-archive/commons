@@ -1,0 +1,32 @@
+@import '../../../styles/variables';
+
+.ocean_chart {
+  position: relative;
+  overflow: hidden;
+  
+  .ocean_line {
+    stroke: $brand-pink !important;
+  }
+  .ocean_crosshair_dot {
+    :global {
+      circle {
+        fill: $brand-purple !important;
+        stroke: $brand-white !important;
+      }
+    }
+  }
+  :global {
+    .rv-xy-plot__grid-lines line {
+      opacity: .7;
+      stroke: $brand-grey;
+      stroke-dasharray: 2.5;
+    }
+    .rv-xy-plot__axis {
+      line,
+      text {
+        fill: $brand-grey-light;
+        opacity: .7;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import '../../../styles/variables';
+
+.error_component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error_component__message {
+  background: $red;
+  color: $brand-white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-family: $font-family-base;
+}

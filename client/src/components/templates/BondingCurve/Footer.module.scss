@@ -1,0 +1,44 @@
+@import '../../../styles/variables';
+
+.bondingcurve_module_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 .8rem .8rem .8rem;
+  min-height: 51.5px;
+
+  .bondingcurve_module_footer__left {
+    display: flex;
+    align-items: center;
+
+    .symbol {
+      background: $brand-black;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: .5rem;
+      color: $brand-white;
+      border-radius: 100%;
+      font-size: .6rem;
+    }
+  }
+
+  .data_point_detail {
+    text-align: left;
+
+    .data_point_detail__title {
+      font-family: $font-family-title;
+      font-size: $font-size-base;
+      color: $brand-black;
+    }
+    
+    .data_point_detail__sub {
+      font-family: $font-family-title;
+      font-size: $font-size-mini;
+      color: $brand-grey-light;
+      padding-bottom: .3rem;
+    }
+  }
+}
