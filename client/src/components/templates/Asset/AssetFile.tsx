@@ -59,7 +59,7 @@ export default class AssetFile extends PureComponent<
 
         try {
             const accounts = await ocean.accounts.list()
-            const service = ddo.findServiceByType('Access')
+            const service = ddo.findServiceByType('access')
 
             const agreements = await ocean.keeper.conditions.accessSecretStoreCondition.getGrantedDidByConsumer(
                 accounts[0].id
@@ -74,7 +74,7 @@ export default class AssetFile extends PureComponent<
                 ;({ agreementId } = agreement)
             } else {
                 agreementId = await ocean.assets
-                    .order(ddo.id, service.serviceDefinitionId, accounts[0])
+                    .order(ddo.id, service.index, accounts[0])
                     .next((step: number) => this.setState({ step }))
             }
 
@@ -84,7 +84,7 @@ export default class AssetFile extends PureComponent<
             const path = await ocean.assets.consume(
                 agreementId,
                 ddo.id,
-                service.serviceDefinitionId,
+                service.index,
                 accounts[0],
                 '',
                 index

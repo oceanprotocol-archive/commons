@@ -31,18 +31,18 @@ const MetaFixedItem = ({ name, value }: { name: string; value: string }) => (
 )
 
 export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
-    const { base } = metadata
-    const price = base.price && Web3.utils.fromWei(base.price.toString())
+    const { main, additionalInformation } = metadata
+    const price = main.price && Web3.utils.fromWei(main.price.toString())
 
     const metaFixed = [
         {
             name: 'Author',
-            value: base.author,
+            value: main.author,
             show: true
         },
         {
             name: 'License',
-            value: base.license,
+            value: main.license,
             show: true
         },
         {
@@ -60,36 +60,45 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
     return (
         <>
             <aside className={styles.metaPrimary}>
-                <h2 className={styles.copyrightHolder} title="Copyright Holder">
-                    {base.copyrightHolder}
-                </h2>
+                {additionalInformation &&
+                    additionalInformation.copyrightHolder && (
+                        <h2
+                            className={styles.copyrightHolder}
+                            title="Copyright Holder"
+                        >
+                            {additionalInformation.copyrightHolder}
+                        </h2>
+                    )}
                 <div className={styles.metaPrimaryData}>
                     <span
-                        title={`Date created, published on ${base.datePublished}`}
+                        title={`Date created, published on ${main.datePublished}`}
                     >
                         <Moment
-                            date={base.dateCreated}
+                            date={main.dateCreated}
                             format="L"
                             interval={0}
                         />
                     </span>
 
-                    {base.categories && (
-                        <CategoryLink category={base.categories[0]} />
-                    )}
+                    {additionalInformation &&
+                        additionalInformation.categories && (
+                            <CategoryLink
+                                category={additionalInformation.categories[0]}
+                            />
+                        )}
 
-                    {base.files && datafilesLine(base.files)}
+                    {main.files && datafilesLine(main.files)}
                 </div>
             </aside>
 
-            {base.description && (
+            {additionalInformation && additionalInformation.description && (
                 <Markdown
-                    text={base.description}
+                    text={additionalInformation.description}
                     className={styles.description}
                 />
             )}
 
-            <Report did={ddo.id} title={metadata.base.name} />
+            <Report did={ddo.id} title={main.name} />
 
             <div className={styles.metaFixed}>
                 <h2
@@ -111,7 +120,7 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
                 </ul>
             </div>
 
-            <AssetFilesDetails files={base.files ? base.files : []} ddo={ddo} />
+            <AssetFilesDetails files={main.files ? main.files : []} ddo={ddo} />
         </>
     )
 }
