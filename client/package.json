@@ -1,7 +1,7 @@
 {
   "name": "decentraminds-marketplace",
   "description": "Decentraminds marketplace frontend to explore, download, and publish data assets",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "license": "Apache-2.0",
   "scripts": {
     "start": "npm run link-wallet && NODE_OPTIONS=--max_old_space_size=4096 react-scripts start",
