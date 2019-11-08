@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { PureComponent, FormEvent, ChangeEvent } from 'react'
+import ReactTags from 'react-tag-autocomplete'
 import slugify from '@sindresorhus/slugify'
 import DatePicker from 'react-datepicker'
 import { ReactComponent as SearchIcon } from '../../../img/search.svg'
@@ -31,12 +32,29 @@ interface InputProps {
     group?: any
     multiple?: boolean
     pattern?: string
+    handleAddition?(tag: any): void
+    handleDelete?(i: number): void
+    tags?: Array<Tag>
+    suggestions?: Array<Tag>
 }
 
 interface InputState {
     isFocused: boolean
     dateCreated?: Date
 }
+
+interface Tag {
+    id: number,
+    name: string,
+    disabled?: boolean
+}
+
+const KeyCodes = {
+  comma: "188",
+  enter: "13",
+};
+
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 export default class Input extends PureComponent<InputProps, InputState> {
     public state: InputState = {
@@ -170,6 +188,15 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         onFocus={this.toggleFocus}
                         onBlur={this.toggleFocus}
                         value={value}
+                        {...this.props}
+                    />
+                )
+            case 'tags':
+                return (
+                    <ReactTags
+                        id={name}
+                        delimiterChars={delimiters}
+                        allowNew
                         {...this.props}
                     />
                 )

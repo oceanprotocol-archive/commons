@@ -40,6 +40,8 @@ interface StepProps {
     toStart(): void
     publishedDid?: string
     content?: string
+    handleAddition?(tag: any): void
+    handleDelete?(i: number): void
 }
 
 export default class Step extends PureComponent<StepProps, {}> {
@@ -95,7 +97,9 @@ export default class Step extends PureComponent<StepProps, {}> {
             totalSteps,
             tryAgain,
             toStart,
-            content
+            content,
+            handleAddition,
+            handleDelete
         } = this.props
 
         if (currentStep !== index + 1) {
@@ -143,6 +147,24 @@ export default class Step extends PureComponent<StepProps, {}> {
                                         onChange={inputChange}
                                     />
                                 </Row>
+                            )
+                        }
+
+                        if (key === 'tags') {
+                            return (
+                                <Input
+                                    key={key}
+                                    name={key}
+                                    label={value.label}
+                                    placeholder={value.placeholder}
+                                    required={value.required}
+                                    type={value.type}
+                                    help={value.help}
+                                    handleAddition={handleAddition}
+                                    handleDelete={handleDelete}
+                                    tags={(state as any)[key]}
+                                    suggestions={(state as any)['tagSuggestions']}
+                                />
                             )
                         }
 

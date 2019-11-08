@@ -15,6 +15,12 @@ import withTracker from '../../hoc/withTracker'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
+interface Tag {
+    id: number,
+    name: string,
+    disabled?: boolean
+}
+
 interface PublishState {
     name?: string
     dateCreated?: string
@@ -34,6 +40,8 @@ interface PublishState {
     publishedDid?: string
     publishingError?: string
     validationStatus?: any
+    tags?: Array<Tag>
+    tagSuggestions?: Array<Tag>
 }
 
 class Publish extends Component<{}, PublishState> {
@@ -58,8 +66,15 @@ class Publish extends Component<{}, PublishState> {
         publishingError: '',
         publishingStep: 0,
         validationStatus: {
-            1: { name: false, files: false, allFieldsValid: false },
+            1: {
+                assetType: false, 
+                name: false,
+                pricingMechanism: false,
+                price: false,
+                allFieldsValid: false
+            },
             2: {
+                files: false,
                 description: false,
                 categories: false,
                 allFieldsValid: false
@@ -70,7 +85,9 @@ class Publish extends Component<{}, PublishState> {
                 license: false,
                 allFieldsValid: false
             }
-        }
+        },
+        tags: [],
+        tagSuggestions: [{id: 1, name: 'opendata'}, {id: 2, name: 'timeseries'}]
     }
 
     private inputChange = (
@@ -81,6 +98,23 @@ class Publish extends Component<{}, PublishState> {
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value
         })
+    }
+
+    private handleAddition = (tag: any) => {
+        const { tags } = this.state
+        let newTags = []
+        if (tags) {
+            newTags = [].concat(tags, tag)
+        } else {
+            newTags.push(tag)
+        }
+        this.setState({ tags: newTags });
+    }
+
+    private handleDelete = (i: number) => {
+        const tags = this.state.tags.slice(0)
+        tags.splice(i, 1)
+        this.setState({ tags })
     }
 
     private next = () => {
@@ -169,7 +203,8 @@ class Publish extends Component<{}, PublishState> {
         //
         // Step 1
         //
-        if (validationStatus[1].name && validationStatus[1].files) {
+        if (validationStatus[1].assetType && validationStatus[1].name && 
+            validationStatus[1].pricingMechanism && validationStatus[1].price) {
             this.setState(prevState => ({
                 validationStatus: {
                     ...prevState.validationStatus,
@@ -194,7 +229,8 @@ class Publish extends Component<{}, PublishState> {
         //
         // Step 2
         //
-        if (validationStatus[2].description && validationStatus[2].categories) {
+        if (validationStatus[2].files && validationStatus[2].description && 
+            validationStatus[2].categories) {
             this.setState(prevState => ({
                 validationStatus: {
                     ...prevState.validationStatus,
@@ -350,6 +386,8 @@ class Publish extends Component<{}, PublishState> {
                                         tryAgain={this.tryAgain}
                                         toStart={this.toStart}
                                         content={step.content}
+                                        handleAddition={this.handleAddition}
+                                        handleDelete={this.handleDelete}
                                     />
                                 ))}
                             </Form>

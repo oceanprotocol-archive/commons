@@ -107,6 +107,13 @@
           "Other"
         ]
       },
+      "tags": {
+        "label": "Tags",
+        "help": "Choose approiate tags labels to help people discover your asset.",
+        "type": "tags",
+        "placeholder": "e.g. opendata, timeseries, etc",
+        "required": false
+      },
       "dateCreated": {
         "label": "Creation Date",
         "help": "Select the date the asset was created, or was updated for the last time.",
@@ -117,7 +124,7 @@
         "label": "Asset Samples",
         "placeholder": "e.g. https://file.com/sample.json",
         "type": "text",
-        "required": true,
+        "required": false,
         "help": "If you want, you can provide multiple urls with sample files to better describe your asset. (IMPORTANT: this information will be public)"
       }
     }
