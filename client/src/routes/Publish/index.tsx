@@ -36,16 +36,6 @@ interface PublishState {
     validationStatus?: any
 }
 
-if (allowPricing) {
-    ;(steps as any)[0].fields.price = {
-        label: 'Price',
-        placeholder: 'Price in Ocean tokens',
-        type: 'string',
-        required: true,
-        help: 'Enter the price of assets in Ocean tokens.'
-    }
-}
-
 class Publish extends Component<{}, PublishState> {
     public static contextType = User
 
@@ -335,7 +325,7 @@ class Publish extends Component<{}, PublishState> {
                 {market => (
                     <Route
                         title="Publish"
-                        description={`Publish a new data set into the Ocean Protocol ${market.network} Network.`}
+                        description={`Publish a new Data Asset`}
                     >
                         <Content>
                             <Progress

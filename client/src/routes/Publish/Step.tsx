@@ -62,11 +62,18 @@ export default class Step extends PureComponent<StepProps, {}> {
         const { currentStep, next, totalSteps, state } = this.props
 
         if (currentStep < totalSteps) {
+            // return (
+            //     <Button
+            //         disabled={
+            //             !state.validationStatus[currentStep].allFieldsValid
+            //         }
+            //         onClick={next}
+            //     >
+            //         Next →
+            //     </Button>
+            // )
             return (
                 <Button
-                    disabled={
-                        !state.validationStatus[currentStep].allFieldsValid
-                    }
                     onClick={next}
                 >
                     Next →
@@ -107,6 +114,22 @@ export default class Step extends PureComponent<StepProps, {}> {
                 {fields &&
                     Object.entries(fields).map(([key, value]) => {
                         if (key === 'files') {
+                            return (
+                                <Row key={key}>
+                                    <Label htmlFor={key} required>
+                                        {value.label}
+                                    </Label>
+                                    <Files
+                                        placeholder={value.placeholder}
+                                        name={key}
+                                        help={value.help}
+                                        files={state.files}
+                                        onChange={inputChange}
+                                    />
+                                </Row>
+                            )
+                        }
+                        if (key === 'links') {
                             return (
                                 <Row key={key}>
                                     <Label htmlFor={key} required>
