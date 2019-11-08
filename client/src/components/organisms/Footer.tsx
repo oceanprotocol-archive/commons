@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
-import { Market, User } from '../../context'
+// import { Market, User } from '../../context'
 import Content from '../atoms/Content'
-import { ReactComponent as AiCommons } from '../../img/aicommons.svg'
+// import { ReactComponent as AiCommons } from '../../img/aicommons.svg'
 import styles from './Footer.module.scss'
 
 import meta from '../../data/meta.json'
-import VersionNumbers from '../molecules/VersionNumbers'
+// import VersionNumbers from '../molecules/VersionNumbers'
 
 export default function Footer() {
-    const market = useContext(Market)
-    const user = useContext(User)
+    // const market = useContext(Market)
+    // const user = useContext(User)
 
     // return (
     //     <footer className={styles.footer}>

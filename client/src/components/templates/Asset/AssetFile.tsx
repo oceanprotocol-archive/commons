@@ -5,7 +5,7 @@ import Button from '../../atoms/Button'
 import Spinner from '../../atoms/Spinner'
 import { User, Market } from '../../../context'
 import styles from './AssetFile.module.scss'
-import ReactGA from 'react-ga'
+// import ReactGA from 'react-ga'
 import cleanupContentType from '../../../utils/cleanupContentType'
 
 export const messages: any = {
@@ -50,10 +50,10 @@ export default class AssetFile extends PureComponent<
     private purchaseAsset = async (ddo: DDO, index: number) => {
         this.resetState()
 
-        ReactGA.event({
-            category: 'Purchase',
-            action: 'purchaseAsset-start ' + ddo.id
-        })
+        // ReactGA.event({
+        //     category: 'Purchase',
+        //     action: 'purchaseAsset-start ' + ddo.id
+        // })
 
         const { ocean } = this.context
 
@@ -90,10 +90,10 @@ export default class AssetFile extends PureComponent<
                 index
             )
             Logger.log('path', path)
-            ReactGA.event({
-                category: 'Purchase',
-                action: 'purchaseAsset-end ' + ddo.id
-            })
+            // ReactGA.event({
+            //     category: 'Purchase',
+            //     action: 'purchaseAsset-end ' + ddo.id
+            // })
             this.setState({ isLoading: false })
         } catch (error) {
             Logger.error('error', error.message)
@@ -101,10 +101,10 @@ export default class AssetFile extends PureComponent<
                 isLoading: false,
                 error: `${error.message}. Sorry about that, can you try again?`
             })
-            ReactGA.event({
-                category: 'Purchase',
-                action: 'purchaseAsset-error ' + error.message
-            })
+            // ReactGA.event({
+            //     category: 'Purchase',
+            //     action: 'purchaseAsset-error ' + error.message
+            // })
         }
     }
 

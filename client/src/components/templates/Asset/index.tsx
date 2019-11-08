@@ -8,7 +8,7 @@ import stylesApp from '../../../App.module.scss'
 import Content from '../../atoms/Content'
 import CategoryImage from '../../atoms/CategoryImage'
 import styles from './index.module.scss'
-import withTracker from '../../../hoc/withTracker'
+// import withTracker from '../../../hoc/withTracker'
 import Web3message from '../../organisms/Web3message'
 
 interface AssetProps {

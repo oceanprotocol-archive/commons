@@ -59,7 +59,7 @@ const Indicator = ({
                                     // togglePopover()
                                 }} 
                                 style={walletButonStyle}
-                            >Connect Wallet ⚠️</Button>
+                            >{"Connect Wallet⚠️"}</Button>
                         ) : user.isLogged ? (
                             <Button 
                                 onClick={() => {

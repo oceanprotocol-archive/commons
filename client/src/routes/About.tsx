@@ -5,7 +5,7 @@ import Content from '../components/atoms/Content'
 import VersionNumbers from '../components/molecules/VersionNumbers'
 import Web3message from '../components/organisms/Web3message'
 import stylesVersionNumbers from '../components/molecules/VersionNumbers/index.module.scss'
-import withTracker from '../hoc/withTracker'
+// import withTracker from '../hoc/withTracker'
 
 const About = () => {
     const market = useContext(Market)

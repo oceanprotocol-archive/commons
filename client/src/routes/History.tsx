@@ -4,7 +4,7 @@ import AssetsUser from '../components/organisms/AssetsUser'
 import Web3message from '../components/organisms/Web3message'
 import { User } from '../context'
 import Content from '../components/atoms/Content'
-import withTracker from '../hoc/withTracker'
+// import withTracker from '../hoc/withTracker'
 
 class History extends Component {
     public static contextType = User

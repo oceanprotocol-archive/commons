@@ -8,8 +8,8 @@ import { requestAccessTo3box } from '../3box'
 import { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose,
         portisAppId, torusEnabled } from '../config'
 import MarketProvider from './MarketProvider'
-import { MetamaskProvider } from './MetamaskProvider'
-import { BurnerWalletProvider } from './BurnerWalletProvider'
+// import { MetamaskProvider } from './MetamaskProvider'
+// import { BurnerWalletProvider } from './BurnerWalletProvider'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min

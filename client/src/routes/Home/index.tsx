@@ -11,7 +11,7 @@ import Content from '../../components/atoms/Content'
 import AssetsLatest from '../../components/organisms/AssetsLatest'
 import ChannelTeaser from '../../components/organisms/ChannelTeaser'
 import Search from './Search'
-import withTracker from '../../hoc/withTracker'
+// import withTracker from '../../hoc/withTracker'
 
 interface HomeProps {
     history: History

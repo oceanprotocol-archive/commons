@@ -62,7 +62,7 @@ export default class Popover extends PureComponent<{
                                             : network &&
                                               `Connected to ${network} network`}
                                     </div>
-                                    {balance && balance.ocn == 0 && (
+                                    {balance && balance.ocn === 0 && (
                                         <div style={{'textAlign': 'center', 'marginTop': '5px'}}>
                                             <Button link onClick={async () => airdropOceanTokens()}>Airdrop tokens</Button>
                                         </div>

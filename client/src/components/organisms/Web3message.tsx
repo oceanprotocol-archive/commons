@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
-import Account from '../atoms/Account'
-import AccountStatus from '../molecules/AccountStatus'
+// import Account from '../atoms/Account'
+// import AccountStatus from '../molecules/AccountStatus'
 import styles from './Web3message.module.scss'
 import { User, Market } from '../../context'
 import content from '../../data/web3message.json'

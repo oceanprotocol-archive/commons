@@ -74,7 +74,7 @@ export default class Route extends PureComponent<RouteProps, RouteState> {
                                     <h1 className={styles.title}>{titleSanitized}</h1>
                                     <div className={styles.followers}>{followers} followers</div>
                                     <Button onClick={() => this.followThread()} disabled={following} primary>
-                                    {following == false ? "Follow":"Following"}
+                                    {following === false ? "Follow":"Following"}
                                     </Button>
                                 </div>
                             ) : (

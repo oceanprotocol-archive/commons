@@ -8,7 +8,7 @@ import Input from '../components/atoms/Form/Input'
 import channels from '../data/channels.json'
 import form from '../data/form-channel-thread.json'
 import ChannelTeaser from '../components/organisms/ChannelTeaser'
-import withTracker from '../hoc/withTracker'
+// import withTracker from '../hoc/withTracker'
 
 interface IChannelsState {
     modalIsOpen: boolean

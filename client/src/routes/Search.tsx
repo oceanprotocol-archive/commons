@@ -10,7 +10,7 @@ import AssetTeaser from '../components/molecules/AssetTeaser'
 import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
 import Content from '../components/atoms/Content'
-import withTracker from '../hoc/withTracker'
+// import withTracker from '../hoc/withTracker'
 
 interface SearchProps {
     location: Location

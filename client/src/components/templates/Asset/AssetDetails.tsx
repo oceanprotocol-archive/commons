@@ -7,7 +7,7 @@ import CategoryLink from '../../atoms/CategoryLink'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 import Report from './Report'
-import { allowPricing } from '../../../config'
+// import { allowPricing } from '../../../config'
 import Web3 from 'web3'
 // import ThreeBoxComments from '3box-comments-react'
 import BondingCurve from '../BondingCurve'
@@ -64,8 +64,8 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
         }
     ]
 
-    const box = null
-    const myAddress = "0x2a0D29C819609Df18D8eAefb429AEC067269BBb6"
+    // const box = null
+    // const myAddress = "0x2a0D29C819609Df18D8eAefb429AEC067269BBb6"
 
 
 

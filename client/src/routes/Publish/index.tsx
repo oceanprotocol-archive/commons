@@ -7,11 +7,11 @@ import AssetModel from '../../models/AssetModel'
 import { User, Market } from '../../context'
 import Step from './Step'
 import Progress from './Progress'
-import ReactGA from 'react-ga'
+// import ReactGA from 'react-ga'
 import { allowPricing } from '../../config'
 import { steps } from '../../data/form-publish.json'
 import Content from '../../components/atoms/Content'
-import withTracker from '../../hoc/withTracker'
+// import withTracker from '../../hoc/withTracker'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
 
@@ -124,10 +124,10 @@ class Publish extends Component<{}, PublishState> {
         currentStep =
             currentStep >= totalSteps - 1 ? totalSteps : currentStep + 1
 
-        ReactGA.event({
-            category: 'Publish',
-            action: 'nextStep ' + currentStep
-        })
+        // ReactGA.event({
+        //     category: 'Publish',
+        //     action: 'nextStep ' + currentStep
+        // })
 
         this.setState({ currentStep })
     }
@@ -285,7 +285,7 @@ class Publish extends Component<{}, PublishState> {
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
-        ReactGA.event({ category: 'Publish', action: 'registerAsset-start' })
+        // ReactGA.event({ category: 'Publish', action: 'registerAsset-start' })
 
         this.setState({
             publishingError: '',
@@ -337,19 +337,19 @@ class Publish extends Component<{}, PublishState> {
                 isPublished: true
             })
 
-            ReactGA.event({
-                category: 'Publish',
-                action: `registerAsset-end ${asset.id}`
-            })
+            // ReactGA.event({
+            //     category: 'Publish',
+            //     action: `registerAsset-end ${asset.id}`
+            // })
         } catch (error) {
             // make readable errors
             Logger.error('error:', error.message)
             this.setState({ publishingError: error.message })
 
-            ReactGA.event({
-                category: 'Publish',
-                action: `registerAsset-error ${error.message}`
-            })
+            // ReactGA.event({
+            //     category: 'Publish',
+            //     action: `registerAsset-error ${error.message}`
+            // })
         }
 
         this.setState({ isPublishing: false })
