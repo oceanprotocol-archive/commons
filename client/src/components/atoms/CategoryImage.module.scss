@@ -1,8 +1,8 @@
 @import '../../styles/variables';
 
 .categoryImage {
-    height: 100px;
-    background-size: 100%;
+    height: 120px;
+    background-size: cover;
     background-position: center;
     /* margin-bottom: $spacer / $line-height; */
     background-color: $body-background;

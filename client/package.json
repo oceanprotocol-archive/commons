@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "npm run link-wallet && NODE_OPTIONS=--max_old_space_size=4096 react-scripts start",
-    "link-wallet": "npm link ../../../../widget-connect",
+    "link-wallet": "npm link ../../op-web3-wallet",
     "build": "CI=false react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test --coverage --watchAll=false --silent",
     "test:watch": "react-scripts test --coverage",

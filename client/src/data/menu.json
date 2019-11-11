@@ -18,5 +18,9 @@
   {
     "title": "About",
     "link": "/about"
+  },
+  {
+    "title": "Topics",
+    "link": "/topics"
   }
 ]

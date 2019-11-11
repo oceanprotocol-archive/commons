@@ -43,7 +43,7 @@
     color: $brand-white;
 
     @media (min-width: $break-point--medium) {
-        margin-top: -($spacer / 4);
+        // margin-top: -($spacer / 4);
     }
 }
 
@@ -60,7 +60,7 @@
 
         h2 {
             position: absolute;
-            top: 80px;
+            top: 50px;
             left: 5px;
         }
 

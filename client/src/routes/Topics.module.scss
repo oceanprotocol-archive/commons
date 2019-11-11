@@ -1,0 +1,70 @@
+@import '../styles/variables';
+
+.title {
+    font-size: $font-size-h4;
+    text-align: center;
+    color: $brand-grey-light;
+    border-bottom: 1px solid $brand-grey-lighter;
+    padding-bottom: $spacer / 3;
+    margin-top: $spacer * 3;
+    margin-bottom: $spacer;
+
+    @media (min-width: $break-point--small) {
+        text-align: left;
+    }
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-gap: $spacer;
+}
+
+.category {
+    position: relative;
+
+    h3 {
+        font-size: $font-size-base;
+        color: $brand-light-blue;
+        margin-bottom: 0;
+        margin-top: -40px;
+        margin-left: 5px;
+        color: #fff;
+        min-width: 170px;
+        text-align: left;
+    }
+
+    a {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: #2a2d47;
+        color: #fff;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    &:hover,
+    &:focus {
+        transform: none;
+
+        h3 {
+            bottom: 5px;
+        }
+
+        a {
+            color: #fff;
+        }
+
+        > div {
+            opacity: .3;
+            background-size: 105%;
+        }
+    }
+
+
+}

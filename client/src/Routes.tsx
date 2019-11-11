@@ -10,6 +10,7 @@ import Faucet from './routes/Faucet'
 import History from './routes/History'
 import Channels from './routes/Channels'
 import Styleguide from './routes/Styleguide'
+import Topics from './routes/Topics'
 
 import Asset from './components/templates/Asset'
 import Channel from './components/templates/Channel'
@@ -24,6 +25,7 @@ const Routes = () => (
         <Route component={Asset} path="/asset/:did" />
         <Route component={Faucet} path="/faucet" />
         <Route component={History} path="/history" />
+        <Route component={Topics} path="/topics" />
         <Route component={Channels} exact path="/channels" />
         <Route component={Channel} path="/channels/:channel" />
         <Route component={NotFound} />
