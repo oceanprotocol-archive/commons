@@ -192,11 +192,16 @@ export default class Input extends PureComponent<InputProps, InputState> {
                     />
                 )
             case 'tags':
+                const tagStyles = {
+                    root: styles.input,
+                    selectedTag: styles.selectedTag
+                }
                 return (
                     <ReactTags
                         id={name}
                         delimiterChars={delimiters}
                         allowNew
+                        classNames={tagStyles}
                         {...this.props}
                     />
                 )

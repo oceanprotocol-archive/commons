@@ -12,6 +12,7 @@ class Topics extends Component {
     public static contextType = Market
 
     render() {
+        console.log(this.context.categories)
         return (
             <Route
             title="Topics"

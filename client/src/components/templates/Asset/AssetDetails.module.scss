@@ -132,3 +132,74 @@
         width: 70%;
     }
 }
+
+.tabs {
+    height: auto;
+    overflow: hidden;
+}
+
+.tabLinks {
+    height: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.tabLink {
+    padding: 10px;
+    border: 1px solid #f30068;
+    border-bottom-width: 0px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: inline-block;
+    margin-right: 1px;
+
+    &:last-child::after {
+        position: absolute;
+        width: 348px;
+        content: '';
+        border-bottom: 1px solid #f30068;
+        bottom: 0px;
+        right: 0px;
+    }
+
+    &:hover {
+        transform: none;
+    }
+}
+
+.activetabLink {
+    padding: 10px;
+    border: 1px solid #f30068;
+    border-bottom-width: 0px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: inline-block;
+    margin-right: 1px;
+    background-color: rgba(255,255,255,0.1);
+
+    &:last-child::after {
+        position: absolute;
+        width: 348px;
+        content: '';
+        border-bottom: 1px solid #f30068;
+        bottom: 0px;
+        right: 0px;
+    }
+
+    &:hover {
+        transform: none;
+    }
+}
+
+.tab {
+    display: none;
+    border: 1px solid #f30068;
+    border-top-width: 0px;
+}
+
+.activeTab {
+    display: block;
+    border: 1px solid #f30068;
+    border-top-width: 0px;
+    padding: 20px;
+}

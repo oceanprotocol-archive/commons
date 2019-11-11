@@ -188,3 +188,13 @@
     background-position: calc(100% - 14px) 1rem, calc(100% - 9px) 1rem, 100% 0;
     background-size: 5px 5px, 5px 5px, 2rem 3rem;
 }
+
+.selectedTag {
+    background-color: #2a2d47;
+    color: #fff;
+    padding: 10px 20px;
+    margin-right: 2px;
+    border-radius: 5px;
+    box-sizing: unset;
+    border-width: 0px;
+}
