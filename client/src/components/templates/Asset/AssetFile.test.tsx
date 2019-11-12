@@ -14,7 +14,7 @@ const file = {
     index: 0,
     url: 'https://hello.com',
     contentType: 'application/x-zip',
-    contentLength: 100
+    contentLength: '100'
 }
 
 const ddo = ({

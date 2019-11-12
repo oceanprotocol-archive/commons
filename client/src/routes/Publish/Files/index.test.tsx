@@ -14,7 +14,7 @@ const files = [
         url: 'https://hello.com',
         checksum: 'cccccc',
         checksumType: 'MD5',
-        contentLength: 100,
+        contentLength: '100',
         contentType: 'application/zip',
         resourceId: 'xxx',
         encoding: 'UTF-8',
