@@ -8,7 +8,7 @@ describe('Item', () => {
             url: 'https://hello.com/hello.zip',
             found: true,
             contentType: 'application/zip',
-            contentLength: 10
+            contentLength: '10'
         }
         const { container } = render(
             <Item item={item} removeItem={() => null} />
@@ -21,7 +21,7 @@ describe('Item', () => {
             url: 'https://hello.com/hello.zip',
             found: false,
             contentType: '',
-            contentLength: 10
+            contentLength: '10'
         }
         const { container } = render(
             <Item item={item} removeItem={() => null} />

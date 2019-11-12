@@ -42,9 +42,7 @@ export class UrlCheckRouter {
                     result.found = true
 
                     if (headers['content-length']) {
-                        result.contentLength = parseInt(
-                            headers['content-length']
-                        ) // convert to number
+                        result.contentLength = headers['content-length']
                     }
 
                     // sometimes servers send content-range header,
@@ -54,7 +52,7 @@ export class UrlCheckRouter {
                         !headers['content-length']
                     ) {
                         const size = headers['content-range'].split('/')[1]
-                        result.contentLength = parseInt(size) // convert to number
+                        result.contentLength = size
                     }
 
                     if (headers['content-type']) {
