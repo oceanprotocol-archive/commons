@@ -11,7 +11,7 @@ const Item = ({
         url: string
         found: boolean
         contentType: string
-        contentLength: number
+        contentLength: string
     }
     removeFile(): void
 }) => (

@@ -119,11 +119,9 @@ export default class AssetFile extends PureComponent<
                 <ul key={index} className={styles.file}>
                     {contentType || contentLength ? (
                         <>
+                            <li>{cleanupContentType(contentType)}</li>
                             <li>
-                                {contentType && cleanupContentType(contentType)}
-                            </li>
-                            <li>
-                                {contentLength && contentLength > 0
+                                {contentLength && contentLength !== '0'
                                     ? filesize(contentLength)
                                     : ''}
                             </li>
