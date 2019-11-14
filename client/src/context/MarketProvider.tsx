@@ -59,7 +59,7 @@ export default class MarketProvider extends PureComponent<
 
         try {
             const { ocean } = this.props
-            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            const search = await ocean.assets.query(searchQuery)
             this.setState({ totalAssets: search.totalResults })
         } catch (error) {
             Logger.error('Error', error.message)
