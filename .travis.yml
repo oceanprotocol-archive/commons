@@ -33,7 +33,7 @@ env:
     - IPFS_GATEWAY_URI="https://ipfs.oceanprotocol.com"
 
     # start Barge with these versions
-    - BRIZO_VERSION=v0.6.0
+    - BRIZO_VERSION=v0.7.0
     - AQUARIUS_VERSION=v1.0.2
     - KEEPER_VERSION=v0.12.7
     - EVENTS_HANDLER_VERSION=v0.3.0
