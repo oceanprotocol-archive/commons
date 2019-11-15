@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@oceanprotocol/art": "^2.2.0",
-    "@oceanprotocol/squid": "1.0.0-beta.5",
+    "@oceanprotocol/squid": "1.0.0-beta.6",
     "@oceanprotocol/typographies": "^0.1.0",
     "@sindresorhus/slugify": "^0.9.1",
     "@truffle/hdwallet-provider": "^1.0.25",
