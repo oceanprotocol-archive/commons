@@ -17,7 +17,7 @@
     "3box": "^1.13.1",
     "3box-comments-react": "0.0.1-beta.11",
     "@oceanprotocol/art": "^2.2.0",
-    "@oceanprotocol/squid": "^0.8.2",
+    "@oceanprotocol/squid": "^0.8.3",
     "@oceanprotocol/typographies": "^0.1.0",
     "@sindresorhus/slugify": "^0.9.1",
     "@truffle/hdwallet-provider": "^1.0.23",
