@@ -7,6 +7,8 @@ export const serviceUri =
 //
 // OCEAN REMOTE CONNECTIONS
 //
+export const networkId =
+    process.env.REACT_APP_NETWORK || 'pacific'
 export const nodeUri =
     process.env.REACT_APP_NODE_URI || 'https://pacific.oceanprotocol.com'
 export const aquariusUri =

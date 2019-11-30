@@ -5,7 +5,7 @@ import OPWallet from 'op-web3-wallet'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse, airdropOceanTokens } from '../ocean'
 import { requestAccessTo3box } from '../3box'
-import { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose,
+import { networkId, nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose,
         portisAppId, torusEnabled } from '../config'
 import MarketProvider from './MarketProvider'
 // import { MetamaskProvider } from './MetamaskProvider'
@@ -148,6 +148,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private mountWallet() {
         const wallet = new OPWallet.Core({
+            network: networkId,
             walletOptions: {
               portisEnabled: portisAppId != null && portisAppId.length > 0,
               portisAppId,
@@ -160,7 +161,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         })
         wallet.on("web3connected", this.connectToWeb3Provider);
         wallet.on("oceanconnected", this.connectToOceanNetwork);
-        wallet.on("disconnect", this.onDisconnect);
+        wallet.on("disconnect", () => {
+            console.log('onDisconnect')
+            this.setState({ web3: {} as any, ocean: {} as any, isLogged: false })    
+        });
         wallet.on("close", this.onClose);
         wallet.on("error", this.onError);
         this.setState({ wallet })
@@ -168,14 +172,15 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private onDisconnect() {
         console.log('onDisconnect')
+        this.setState({ web3: {} as any, ocean: {} as any, isLogged: false })
     }
 
     private onClose() {
         console.log('onClose')
     }
 
-    private onError() {
-        console.log('onError')
+    private onError(error: any) {
+        console.log('onError', error)
     }
 
     private async openWallet() {
