@@ -1,8 +1,8 @@
 @import '../../styles/variables';
 
 .categoryImage {
-    height: 120px;
-    background-size: cover;
+    height: 91px;
+    background-size: 100%;
     background-position: center;
     /* margin-bottom: $spacer / $line-height; */
     background-color: $body-background;
@@ -11,6 +11,7 @@
     opacity: 1;
     transition: .2s ease-out;
     border: 1px solid $brand-grey-lighter;
+    background-repeat: no-repeat;
 }
 
 .header {

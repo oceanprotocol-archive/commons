@@ -9,6 +9,7 @@ import Content from '../../components/atoms/Content'
 import AssetsLatest from '../../components/organisms/AssetsLatest'
 import ChannelTeaser from '../../components/organisms/ChannelTeaser'
 import Search from './Search'
+import { Link } from 'react-router-dom'
 // import withTracker from '../../hoc/withTracker'
 
 interface HomeProps {
@@ -39,6 +40,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
             >
                 <Content>
                     <Search searchAssets={this.searchAssets} />
+                    <Link to="/topics">Browse by topic →</Link>
                 </Content>
 
                 <Content wide>
