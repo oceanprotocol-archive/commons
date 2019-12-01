@@ -1,4 +1,5 @@
 import React from 'react'
+import { DDO } from '@oceanprotocol/squid'
 
 export const User = React.createContext({
     isLogged: false,
@@ -7,8 +8,8 @@ export const User = React.createContext({
     isLoading: false,
     account: '',
     wallet: null,
-    web3: {},
-    ocean: {},
+    web3: null as any,
+    ocean: null as any,
     box: {},
     balance: {
         eth: 0,
@@ -31,5 +32,16 @@ export const Market = React.createContext({
     totalAssets: 0,
     categories: [''],
     network: '',
-    networkMatch: false
+    networkMatch: false,
+    aquarius: {
+        queryMetadata: (query: any):Promise<any> => {
+            /* empty */
+            return [] as any;
+        },
+        retrieveDDO: (did: string):Promise<DDO> => {
+            /* empty */
+            return null as any
+        }
+    },
+    ocean: null as any
 })

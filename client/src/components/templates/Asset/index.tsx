@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { DDO, MetaData, Logger } from '@oceanprotocol/squid'
 import Route from '../Route'
 import Spinner from '../../atoms/Spinner'
-import { User } from '../../../context'
+import { Market } from '../../../context'
 import AssetDetails from './AssetDetails'
 import stylesApp from '../../../App.module.scss'
 import Content from '../../atoms/Content'
@@ -26,7 +26,7 @@ interface AssetState {
 }
 
 class Asset extends Component<AssetProps, AssetState> {
-    public static contextType = User
+    public static contextType = Market
 
     public state = {
         ddo: ({} as any) as DDO,
@@ -40,8 +40,10 @@ class Asset extends Component<AssetProps, AssetState> {
 
     private async getData() {
         try {
-            const { ocean } = this.context
-            const ddo = await ocean.assets.resolve(this.props.match.params.did)
+            const { ocean, aquarius } = this.context
+            const ddo = ocean ? 
+                await ocean.assets.resolve(this.props.match.params.did)
+                :await aquarius.retrieveDDO(this.props.match.params.did)
             const { metadata } = ddo.findServiceByType('Metadata')
             this.setState({ ddo, metadata })
         } catch (error) {

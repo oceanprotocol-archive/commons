@@ -5,7 +5,7 @@ import { History, Location } from 'history'
 import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../components/atoms/Spinner'
 import Route from '../components/templates/Route'
-import { User } from '../context'
+import { Market } from '../context'
 import AssetTeaser from '../components/molecules/AssetTeaser'
 import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
@@ -29,7 +29,7 @@ interface SearchState {
 }
 
 class Search extends PureComponent<SearchProps, SearchState> {
-    public static contextType = User
+    public static contextType = Market
 
     public state = {
         results: [],
@@ -68,7 +68,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
     }
 
     private searchAssets = async () => {
-        const { ocean } = this.context
+        const { ocean, aquarius } = this.context
         const { offset, currentPage, searchTerm, searchCategories } = this.state
 
         const queryValues =
@@ -90,7 +90,9 @@ class Search extends PureComponent<SearchProps, SearchState> {
         }
 
         try {
-            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            const search = ocean ? 
+                await ocean.aquarius.queryMetadata(searchQuery)
+                :await aquarius.queryMetadata(searchQuery)
             this.setState({
                 results: search.results,
                 totalResults: search.totalResults,

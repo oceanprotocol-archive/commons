@@ -4,7 +4,7 @@ import { Ocean, Account } from '@oceanprotocol/squid'
 import OPWallet from 'op-web3-wallet'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse, airdropOceanTokens } from '../ocean'
-import { requestAccessTo3box } from '../3box'
+// import { requestAccessTo3box } from '../3box'
 import { networkId, nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose,
         portisAppId, torusEnabled } from '../config'
 import MarketProvider from './MarketProvider'
@@ -26,8 +26,8 @@ interface UserProviderState {
     }
     network: string
     wallet: any
-    web3: Web3
-    ocean: Ocean
+    web3: Web3 | undefined
+    ocean: Ocean | undefined
     box: any
     openWallet(): Promise<void>
     requestFromFaucet(account: string): Promise<FaucetResponse>
@@ -122,8 +122,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         },
         network: '',
         wallet: {} as any,
-        web3: {} as any,
-        ocean: {} as any,
+        web3: null as any,
+        ocean: null as any,
         box: {} as any,
         openWallet: () => this.openWallet(),
         requestFromFaucet: () => requestFromFaucet(''),
@@ -163,7 +163,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         wallet.on("oceanconnected", this.connectToOceanNetwork);
         wallet.on("disconnect", () => {
             console.log('onDisconnect')
-            this.setState({ web3: {} as any, ocean: {} as any, isLogged: false })    
+            this.setState({ web3: null as any, ocean: null as any, isLogged: false })    
         });
         wallet.on("close", this.onClose);
         wallet.on("error", this.onError);
@@ -172,7 +172,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private onDisconnect() {
         console.log('onDisconnect')
-        this.setState({ web3: {} as any, ocean: {} as any, isLogged: false })
+        this.setState({ web3: null as any, ocean: null as any, isLogged: false })
     }
 
     private onClose() {
@@ -244,13 +244,13 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     // after fetchAccounts
     private load3box = async () => {
-        this.showLoadingMessage('Getting 3box Profile...')
-        const { account, web3 } = this.state
-        console.log('===ACCOUNT===', account, web3)
-        const box = await requestAccessTo3box(account, web3)
-        console.log('===3box===', box)
-        this.setState({ box })
-        this.hideLoadingMessage()
+        // this.showLoadingMessage('Getting 3box Profile...')
+        // const { account, web3 } = this.state
+        // console.log('===ACCOUNT===', account, web3)
+        // const box = await requestAccessTo3box(account, web3)
+        // console.log('===3box===', box)
+        // this.setState({ box })
+        // this.hideLoadingMessage()
     }
 
     // 1

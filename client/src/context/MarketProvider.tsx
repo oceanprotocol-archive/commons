@@ -1,13 +1,24 @@
 import React, { PureComponent } from 'react'
-import { Logger, Ocean } from '@oceanprotocol/squid'
+import { Logger, Ocean, DDO } from '@oceanprotocol/squid'
+import OPWallet from 'op-web3-wallet'
 import { Market, User } from '.'
 import formPublish from '../data/form-publish.json'
+import { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose } from '../config'
 
 const categories =
     (formPublish.steps[1].fields &&
         formPublish.steps[1].fields.categories &&
         formPublish.steps[1].fields.categories.options) ||
     []
+
+const oceanOpts = {
+    nodeUri,
+    aquariusUri,
+    brizoUri,
+    brizoAddress,
+    secretStoreUri,
+    verbose
+}
 
 interface MarketProviderProps {
     ocean: Ocean
@@ -18,6 +29,11 @@ interface MarketProviderState {
     categories: string[]
     network: string
     networkMatch: boolean
+    aquarius: {
+        queryMetadata: (query: any) => Promise<any>
+        retrieveDDO: (did: string) => Promise<DDO>
+    },
+    ocean: Ocean | undefined
 }
 
 export default class MarketProvider extends PureComponent<
@@ -26,15 +42,26 @@ export default class MarketProvider extends PureComponent<
 > {
     public static contextType = User
 
-    public state = {
-        totalAssets: 0,
-        categories,
-        network: 'Pacific',
-        networkMatch: false
+    constructor(props: MarketProviderProps) {
+        super(props);
+        this.state = {
+            totalAssets: 0,
+            categories,
+            network: 'Pacific',
+            networkMatch: false,
+            aquarius: {
+                queryMetadata: this.queryMetadata,
+                retrieveDDO: this.retrieveDDO
+            },
+            ocean: undefined
+
+        }
     }
 
     public async componentDidMount() {
         await this.checkCorrectUserNetwork()
+        const { ocean } = this.context
+        this.setState({ ocean })
     }
 
     public async componentDidUpdate(prevProps: any) {
@@ -84,6 +111,27 @@ export default class MarketProvider extends PureComponent<
             this.setState({ networkMatch: true })
         } else {
             this.setState({ networkMatch: false })
+        }
+    }
+
+    private queryMetadata = async (query: any): Promise<any> => {
+        try {
+            const result = await OPWallet.OceanUtils.queryMetadata(query, oceanOpts);
+            console.log('query Metadata result', result)
+            return result;
+        } catch(error) {
+            throw new Error(`ERROR in retrieveDDO ${error}`)
+        }
+
+    }
+
+    private retrieveDDO = async (did: string): Promise<DDO> => {
+        try {
+            const ddo = await OPWallet.OceanUtils.retrieveDDO(did, oceanOpts);
+            console.log('DDO result', ddo)
+            return ddo as DDO;
+        } catch(error) {
+            throw new Error(`ERROR in retrieveDDO ${error}`)
         }
     }
 
