@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import Web3 from 'web3'
 import { Ocean, Account } from '@oceanprotocol/squid'
-import OPWallet from 'op-web3-wallet'
+// import OPWallet from 'op-web3-wallet'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse, airdropOceanTokens } from '../ocean'
 // import { requestAccessTo3box } from '../3box'
@@ -147,27 +147,29 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private mountWallet() {
-        const wallet = new OPWallet.Core({
-            network: networkId,
-            walletOptions: {
-              portisEnabled: portisAppId != null && portisAppId.length > 0,
-              portisAppId,
-              torusEnabled
-            },
-            oceanOptions: {
-              enabled: true,
-              settings: { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose }
-            }
+        import('op-web3-wallet').then((OPWallet) => {
+            const wallet = new OPWallet.default.Core({
+                network: networkId,
+                walletOptions: {
+                  portisEnabled: portisAppId != null && portisAppId.length > 0,
+                  portisAppId,
+                  torusEnabled
+                },
+                oceanOptions: {
+                  enabled: false,
+                  settings: { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose }
+                }
+            })
+            wallet.on("web3connected", this.connectToWeb3Provider);
+            wallet.on("oceanconnected", this.connectToOceanNetwork);
+            wallet.on("disconnect", () => {
+                console.log('onDisconnect')
+                this.setState({ web3: null as any, ocean: null as any, isLogged: false })    
+            });
+            wallet.on("close", this.onClose);
+            wallet.on("error", this.onError);
+            this.setState({ wallet })
         })
-        wallet.on("web3connected", this.connectToWeb3Provider);
-        wallet.on("oceanconnected", this.connectToOceanNetwork);
-        wallet.on("disconnect", () => {
-            console.log('onDisconnect')
-            this.setState({ web3: null as any, ocean: null as any, isLogged: false })    
-        });
-        wallet.on("close", this.onClose);
-        wallet.on("error", this.onError);
-        this.setState({ wallet })
     }
 
     private onDisconnect() {
