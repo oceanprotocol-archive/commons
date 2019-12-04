@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
-import { User } from '../../context'
+import { Market } from '../../context'
 import Spinner from '../atoms/Spinner'
 import AssetTeaser from '../molecules/AssetTeaser'
 import styles from './AssetsLatest.module.scss'
@@ -25,7 +25,7 @@ export default class AssetsLatest extends PureComponent<{}, AssetsLatestState> {
     }
 
     private getLatestAssets = async () => {
-        const { ocean } = this.context
+        const { ocean, aquarius } = this.context
 
         const searchQuery = {
             offset: 15,
@@ -37,7 +37,8 @@ export default class AssetsLatest extends PureComponent<{}, AssetsLatestState> {
         }
 
         try {
-            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            const search = ocean ? await ocean.aquarius.queryMetadata(searchQuery) 
+                :await aquarius.queryMetadata(searchQuery) 
             this.setState({
                 latestAssets: search.results,
                 isLoadingLatest: false
@@ -76,4 +77,4 @@ export default class AssetsLatest extends PureComponent<{}, AssetsLatestState> {
     }
 }
 
-AssetsLatest.contextType = User
+AssetsLatest.contextType = Market

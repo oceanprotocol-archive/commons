@@ -86,8 +86,10 @@ export default class MarketProvider extends PureComponent<
 
         try {
             const { ocean } = this.props
-            const search = await ocean.aquarius.queryMetadata(searchQuery)
-            this.setState({ totalAssets: search.totalResults })
+            if (ocean) {
+                const search = await ocean.aquarius.queryMetadata(searchQuery)
+                this.setState({ totalAssets: search.totalResults })
+            }
         } catch (error) {
             Logger.error('Error', error.message)
         }
@@ -96,11 +98,13 @@ export default class MarketProvider extends PureComponent<
     private getMarketNetwork = async () => {
         try {
             const { ocean } = this.props
-            // Set desired network to whatever Brizo is running in
-            const brizo = await ocean.brizo.getVersionInfo()
-            const network =
-                brizo.network.charAt(0).toUpperCase() + brizo.network.slice(1)
-            this.setState({ network })
+            if (ocean) {
+                // Set desired network to whatever Brizo is running in
+                const brizo = await ocean.brizo.getVersionInfo()
+                const network =
+                    brizo.network.charAt(0).toUpperCase() + brizo.network.slice(1)
+                this.setState({ network })
+            }
         } catch (error) {
             Logger.error('Error', error.message)
         }

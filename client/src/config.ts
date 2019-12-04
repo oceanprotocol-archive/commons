@@ -4,6 +4,9 @@
 export const serviceUri =
     process.env.REACT_APP_SERVICE_URI || 'http://localhost:4000'
 
+export const marketplaceId =
+    process.env.REACT_APP_MARKETPLACE_ID || 'decentramindsMkpl'
+
 //
 // OCEAN REMOTE CONNECTIONS
 //

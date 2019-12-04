@@ -2,6 +2,7 @@ import React from 'react'
 import { DDO } from '@oceanprotocol/squid'
 
 export const User = React.createContext({
+    mkplId: '',
     isLogged: false,
     isBurner: false,
     isWeb3Capable: false,

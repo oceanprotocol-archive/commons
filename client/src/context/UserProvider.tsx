@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react'
 import Web3 from 'web3'
 import { Ocean, Account } from '@oceanprotocol/squid'
-// import OPWallet from 'op-web3-wallet'
+import OPWallet from 'op-web3-wallet'
 import { User } from '.'
-import { provideOcean, requestFromFaucet, FaucetResponse, airdropOceanTokens } from '../ocean'
+// import { provideOcean, requestFromFaucet, FaucetResponse, airdropOceanTokens } from '../ocean'
 // import { requestAccessTo3box } from '../3box'
-import { networkId, nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose,
+import { marketplaceId, networkId, nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose,
         portisAppId, torusEnabled } from '../config'
 import MarketProvider from './MarketProvider'
 // import { MetamaskProvider } from './MetamaskProvider'
@@ -15,6 +15,7 @@ const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
 
 interface UserProviderState {
+    mkplId: string
     isLogged: boolean
     isBurner: boolean
     isWeb3Capable: boolean
@@ -30,7 +31,8 @@ interface UserProviderState {
     ocean: Ocean | undefined
     box: any
     openWallet(): Promise<void>
-    requestFromFaucet(account: string): Promise<FaucetResponse>
+    // requestFromFaucet(account: string): Promise<FaucetResponse>
+    requestFromFaucet(account: string): Promise<any>
     airdropOceanTokens(): Promise<any>
     // loginMetamask(): Promise<any>
     // loginBurnerWallet(): Promise<any>
@@ -104,13 +106,14 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         const accounts = await ocean.accounts.list()
         console.log('airdropOceanTokens', ocean, accounts)
 
-        if (accounts.length > 0) {
-            await airdropOceanTokens(ocean, accounts[0])
-            await this.fetchBalance(accounts[0])
-        }
+        // if (accounts.length > 0) {
+        //     await airdropOceanTokens(ocean, accounts[0])
+        //     await this.fetchBalance(accounts[0])
+        // }
     }
 
     public state = {
+        mkplId: marketplaceId,
         isLogged: false,
         isBurner: true, //TODO: set to true until full migration
         isWeb3Capable: Boolean(window.web3 || window.ethereum),
@@ -124,9 +127,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         wallet: {} as any,
         web3: null as any,
         ocean: null as any,
-        box: {} as any,
+        box: null as any,
         openWallet: () => this.openWallet(),
-        requestFromFaucet: () => requestFromFaucet(''),
+        // requestFromFaucet: () => requestFromFaucet(''),
+        requestFromFaucet: () => new Promise((resolve, reject) => { console.log('TODO: call faucet request'); resolve({})}),
         airdropOceanTokens: () => this.airdropOceanTokens(),
         // loginMetamask: () => this.loginMetamask(),
         // loginBurnerWallet: () => this.loginBurnerWallet(),
@@ -147,8 +151,11 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private mountWallet() {
-        import('op-web3-wallet').then((OPWallet) => {
-            const wallet = new OPWallet.default.Core({
+        const { mkplId } = this.state;
+        // import('op-web3-wallet').then((OPWallet) => {
+        //     const wallet = new OPWallet.default.Core({
+            const wallet = new OPWallet.Core({
+                mkplId,
                 network: networkId,
                 walletOptions: {
                   portisEnabled: portisAppId != null && portisAppId.length > 0,
@@ -156,20 +163,18 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                   torusEnabled
                 },
                 oceanOptions: {
-                  enabled: false,
+                  enabled: true,
                   settings: { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose }
                 }
             })
             wallet.on("web3connected", this.connectToWeb3Provider);
             wallet.on("oceanconnected", this.connectToOceanNetwork);
-            wallet.on("disconnect", () => {
-                console.log('onDisconnect')
-                this.setState({ web3: null as any, ocean: null as any, isLogged: false })    
-            });
+            wallet.on("boxconnected", this.setBoxInstance.bind(this));
+            wallet.on("disconnect", this.onDisconnect.bind(this));
             wallet.on("close", this.onClose);
             wallet.on("error", this.onError);
             this.setState({ wallet })
-        })
+        // })
     }
 
     private onDisconnect() {
@@ -183,6 +188,11 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private onError(error: any) {
         console.log('onError', error)
+    }
+
+    private setBoxInstance(box: any) {
+        console.log('boxconnected')
+        this.setState({ box })
     }
 
     private async openWallet() {
@@ -231,8 +241,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     // 2
     private loadOcean = async () => {
-        const { ocean } = await provideOcean() // Loads an ocean client not attached to a wallet
-        this.setState({ ocean }, () => console.log('Loaded ocean client', ocean))
+        // const { ocean } = await provideOcean() // Loads an ocean client not attached to a wallet
+        // this.setState({ ocean }, () => console.log('Loaded ocean client', ocean))
     //     this.showLoadingMessage('Connecting to the Network...')
     //     const { ocean } = await provideOcean(this.state.web3)
     //     this.setState({ ocean }, () => {
@@ -329,22 +339,22 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private fetchBalance = async (account: Account) => {
-        const balance = await account.getBalance()
-        const { eth, ocn } = balance
-        if (eth === 0) { //TODO: provisional faucet if account has no ETH
-            await requestFromFaucet(await account.getId())
-            const newBalance = await account.getBalance()
-            console.log('Faucet executed!', newBalance)
-        }
-        if (eth !== this.state.balance.eth || ocn !== this.state.balance.ocn) {
-            this.setState({ balance: { eth, ocn } })
-        }
+        // const balance = await account.getBalance()
+        // const { eth, ocn } = balance
+        // if (eth === 0) { //TODO: provisional faucet if account has no ETH
+        //     await requestFromFaucet(await account.getId())
+        //     const newBalance = await account.getBalance()
+        //     console.log('Faucet executed!', newBalance)
+        // }
+        // if (eth !== this.state.balance.eth || ocn !== this.state.balance.ocn) {
+        //     this.setState({ balance: { eth, ocn } })
+        // }
     }
 
     private fetchNetwork = async () => {
         const { ocean } = this.state
         let network = 'Unknown'
-        if (ocean.keeper) {
+        if (ocean) {
             network = await ocean.keeper.getNetworkName()
         }
         network !== this.state.network && this.setState({ network })

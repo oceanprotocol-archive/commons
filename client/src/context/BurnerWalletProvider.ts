@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import { nodeUri } from '../config'
 import HDWalletProvider from '@truffle/hdwallet-provider'
-import { requestFromFaucet } from '../ocean'
+// import { requestFromFaucet } from '../ocean'
 const bip39 = require('bip39') // eslint-disable-line @typescript-eslint/no-var-requires
 
 export class BurnerWalletProvider {
@@ -41,7 +41,7 @@ export class BurnerWalletProvider {
         const balance = await this.web3.eth.getBalance(accounts[0])
 
         // fill with Ether if account balance is empty
-        balance === '0' && (await requestFromFaucet(provider.getAddress(0)))
+        // balance === '0' && (await requestFromFaucet(provider.getAddress(0)))
     }
 
     public async logout() {
