@@ -8,6 +8,7 @@ import Input from '../components/atoms/Form/Input'
 import channels from '../data/channels.json'
 import form from '../data/form-channel-thread.json'
 import ChannelTeaser from '../components/organisms/ChannelTeaser'
+import { User } from '../context'
 // import withTracker from '../hoc/withTracker'
 
 interface IChannelsState {
@@ -17,6 +18,8 @@ interface IChannelsState {
 }
 
 class Channels extends Component {
+
+    public static contextType = User
 
     state: IChannelsState = {
         modalIsOpen: false,
@@ -59,6 +62,13 @@ class Channels extends Component {
         this.setState({modalIsOpen: false})
     }
 
+    openBox = () => {
+        const { wallet } = this.context;
+        console.log('wallet', wallet)
+        wallet.openBox().then((box: any) => console.log('BOX OPENED!!!', box));
+
+    }
+
     public render() {
 
         const  { modalIsOpen } = this.state;
@@ -76,6 +86,7 @@ class Channels extends Component {
                     </Form>
                 </Modal>
                 <Button onClick={() => this.openModal()} primary>Create New Channel</Button>
+                <Button onClick={() => this.openBox()} primary>Open Box</Button>
                 <Content wide>
                     {channels.items.map(channel => (
                         <ChannelTeaser
