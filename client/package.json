@@ -4,8 +4,9 @@
   "version": "1.3.2",
   "license": "Apache-2.0",
   "scripts": {
+    "dev": "NODE_OPTIONS=--max_old_space_size=4096 node scripts/start.js",
     "start": "npm run link-wallet && NODE_OPTIONS=--max_old_space_size=4096 node scripts/start.js",
-    "link-wallet": "npm link ../../op-web3-wallet",
+    "link-wallet": "npm link op-web3-wallet",
     "build": "CI=false react-scripts --max_old_space_size=4096 build",
     "test": "node scripts/test.js --coverage --watchAll=false --silent",
     "test:watch": "node scripts/test.js --coverage",
