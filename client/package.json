@@ -13,6 +13,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "dependencies": {
+    "3box-comments-react": "0.0.1-beta.20",
     "@babel/core": "7.4.3",
     "@oceanprotocol/art": "^2.2.0",
     "@oceanprotocol/squid": "^0.8.3",
@@ -69,6 +70,7 @@
     "postcss-normalize": "7.0.1",
     "postcss-preset-env": "6.6.0",
     "postcss-safe-parser": "4.0.1",
+    "profile-hover": "^1.1.1",
     "query-string": "^6.8.3",
     "react": "^16.11.0",
     "react-app-polyfill": "^1.0.1",
