@@ -52,7 +52,7 @@ export default class ChannelTeaser extends Component<
         }
 
         try {
-            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            const search = await ocean.assets.query(searchQuery)
             this.setState({
                 channelAssets: search.results,
                 isLoadingChannel: false

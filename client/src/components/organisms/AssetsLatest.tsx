@@ -37,7 +37,7 @@ export default class AssetsLatest extends PureComponent<{}, AssetsLatestState> {
         }
 
         try {
-            const search = ocean ? await ocean.aquarius.queryMetadata(searchQuery) 
+            const search = ocean ? await ocean.assets.query(searchQuery) 
                 :await aquarius.queryMetadata(searchQuery) 
             this.setState({
                 latestAssets: search.results,
