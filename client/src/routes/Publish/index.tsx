@@ -306,23 +306,28 @@ class Publish extends Component<{}, PublishState> {
         const newAsset = {
             // OEP-08 Attributes
             // https://github.com/oceanprotocol/OEPs/tree/master/8
-            base: Object.assign(AssetModel.base, {
+            main: Object.assign(AssetModel.main, {
+                type: this.state.type,
                 name: this.state.name,
-                description: this.state.description,
                 dateCreated:
                     new Date(this.state.dateCreated)
                         .toISOString()
                         .split('.')[0] + 'Z', // remove milliseconds
                 author: this.state.author,
                 license: this.state.license,
-                copyrightHolder: this.state.copyrightHolder,
-                files,
                 price: allowPricing
                     ? Web3.utils.toWei(this.state.price, 'ether')
                     : this.state.price,
-                type: this.state.type,
-                categories: [this.state.categories]
-            })
+                files
+            }),
+            additionalInformation: Object.assign(
+                AssetModel.additionalInformation,
+                {
+                    description: this.state.description,
+                    copyrightHolder: this.state.copyrightHolder,
+                    categories: [this.state.categories]
+                }
+            )
         }
 
         try {

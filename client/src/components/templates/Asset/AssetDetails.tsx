@@ -61,8 +61,8 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
 
     render(){
         const { metadata, ddo } = this. props;
-        const { base } = metadata
-        const price = base.price && Web3.utils.fromWei(base.price.toString())
+        const { main, additionalInformation } = metadata
+        const price = main.price && Web3.utils.fromWei(main.price.toString())
         const bondingCurveContractAddress = ''
 
         const contractArtifact = {}
@@ -70,12 +70,12 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
         const metaFixed = [
             {
                 name: 'Author',
-                value: base.author,
+                value: main.author,
                 show: true
             },
             {
                 name: 'License',
-                value: base.license,
+                value: main.license,
                 show: true
             },
             {
@@ -93,36 +93,58 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
         return (
             <>
                 <aside className={styles.metaPrimary}>
-                <h2 className={styles.copyrightHolder} title="Copyright Holder">
+                {/*<h2 className={styles.copyrightHolder} title="Copyright Holder">
                 {base.copyrightHolder}
-                </h2>
+                </h2>*/}
+                {additionalInformation &&
+                    additionalInformation.copyrightHolder && (
+                    <h2
+                        className={styles.copyrightHolder}
+                        title="Copyright Holder"
+                    >
+                        {additionalInformation.copyrightHolder}
+                    </h2>
+                )}
                 <div className={styles.metaPrimaryData}>
                 <span
-                title={`Date created, published on ${base.datePublished}`}
+                title={`Date created, published on ${main.datePublished}`}
                 >
                 <Moment
-                date={base.dateCreated}
+                date={main.dateCreated}
                 format="L"
                 interval={0}
                 />
                 </span>
 
-                {base.categories && (
+                {/*base.categories && (
                     <CategoryLink category={base.categories[0]} />
+                )*/}
+                {additionalInformation &&
+                    additionalInformation.categories && (
+                        <CategoryLink
+                            category={additionalInformation.categories[0]}
+                        />
                 )}
 
-                {base.files && datafilesLine(base.files)}
+                {main.files && datafilesLine(main.files)}
                 </div>
                 </aside>
 
-                {base.description && (
+                {/*base.description && (
                     <Markdown
                     text={base.description}
                     className={styles.description}
                     />
+                )*/}
+                {additionalInformation && additionalInformation.description && (
+                    <Markdown
+                        text={additionalInformation.description}
+                        className={styles.description}
+                    />
                 )}
 
-                <Report did={ddo.id} title={metadata.base.name} />
+
+                <Report did={ddo.id} title={main.name} />
 
                 <User.Consumer>
                 {user => (<div className={styles.tabs}>
@@ -159,7 +181,7 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                         </div>
                         </div>
                         <div className={this.state.active=='download' ? styles.activeTab : styles.tab} id="download">
-                        <AssetFilesDetails files={base.files ? base.files : []} ddo={ddo} />
+                        <AssetFilesDetails files={main.files ? main.files : []} ddo={ddo} />
                         </div>
                         <div className={this.state.active=='bonding' ? styles.activeTab : styles.tab} id="bonding">
                             <BondingCurve

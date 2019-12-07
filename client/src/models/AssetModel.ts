@@ -1,35 +1,21 @@
-// Metadata schema definitions
-// https://github.com/oceanprotocol/squid-js/blob/master/src/ddo/MetaData.ts
-const AssetModelBase = {
-    assetId: null,
-    publisherId: null,
+import { MetaData } from '@oceanprotocol/squid'
 
+const AssetModel: MetaData = {
     // OEP-08 Attributes
     // https://github.com/oceanprotocol/OEPs/tree/master/8
-    base: {
-        name: null,
-        dateCreated: null,
-        author: null,
-        license: null,
+    main: {
+        type: 'dataset',
+        name: '',
+        dateCreated: '',
+        author: '',
+        license: '',
         price: '',
-        files: [],
-        categories: [],
-        tags: [],
-        type: '',
-        description: null,
-        copyrightHolder: null,
-        workExample: '',
-        /*  [
-         *    {
-         *      anotherSample: "http://data.ceda.ac.uk/badc/ukcp09/data/gridded-land-obs/gridded-land-obs-daily/",
-         *    },
-         *    {
-         *      fieldsDescription: "http://data.ceda.ac.uk/badc/ukcp09/",
-         *    },
-         *  ]
-         */
-        links: [],
-        inLanguage: ''
+        files: []
+    },
+    additionalInformation: {
+        description: '',
+        copyrightHolder: '',
+        categories: []
     }
 }
 

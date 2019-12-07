@@ -23,6 +23,7 @@ interface AssetState {
     ddo: DDO
     metadata: MetaData
     error: string
+    isLoading: boolean
 }
 
 class Asset extends Component<AssetProps, AssetState> {
@@ -30,8 +31,9 @@ class Asset extends Component<AssetProps, AssetState> {
 
     public state = {
         ddo: ({} as any) as DDO,
-        metadata: ({ base: { name: '' } } as any) as MetaData,
-        error: ''
+        metadata: ({ main: { name: '' } } as any) as MetaData,
+        error: '',
+        isLoading: true
     }
 
     public async componentDidMount() {
@@ -44,8 +46,12 @@ class Asset extends Component<AssetProps, AssetState> {
             const ddo = ocean ? 
                 await ocean.assets.resolve(this.props.match.params.did)
                 :await aquarius.retrieveDDO(this.props.match.params.did)
-            const { metadata } = ddo.findServiceByType('Metadata')
-            this.setState({ ddo, metadata })
+            const { attributes } = ddo.findServiceByType('metadata')
+            this.setState({
+                ddo,
+                metadata: attributes,
+                isLoading: false
+            })
         } catch (error) {
             Logger.error(error.message)
             this.setState({
@@ -55,8 +61,9 @@ class Asset extends Component<AssetProps, AssetState> {
     }
 
     public render() {
-        const { metadata, ddo, error } = this.state
-        const isLoading = metadata.base.name === ''
+        const { metadata, ddo, error, isLoading } = this.state
+        const { main, additionalInformation } = metadata
+
         const hasError = error !== ''
 
         return isLoading && !hasError ? (
@@ -70,13 +77,14 @@ class Asset extends Component<AssetProps, AssetState> {
             </Content>
         ) : (
             <Route
-                title={metadata.base.name}
+                title={main.name}
                 image={
-                    metadata.base.categories && (
+                    additionalInformation &&
+                    additionalInformation.categories && (
                         <CategoryImage
                             header
                             dimmed
-                            category={metadata.base.categories[0]}
+                            category={additionalInformation.categories[0]}
                         />
                     )
                 }

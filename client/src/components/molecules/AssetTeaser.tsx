@@ -17,18 +17,18 @@ const AssetTeaser = ({
     list?: boolean
     minimal?: boolean
 }) => {
-    const { metadata } = asset.findServiceByType('Metadata')
-    const { base } = metadata
+    const { attributes } = asset.findServiceByType('metadata')
+    const { main, additionalInformation } = attributes
 
     return list ? (
         <article className={styles.assetList}>
             <Link to={`/asset/${asset.id}`}>
-                <h1>{base.name}</h1>
+                <h1>{main.name}</h1>
                 <div
                     className={styles.date}
-                    title={`Published on ${base.datePublished}`}
+                    title={`Published on ${main.datePublished}`}
                 >
-                    {moment(base.datePublished, 'YYYYMMDD').fromNow()}
+                    {moment(main.datePublished, 'YYYYMMDD').fromNow()}
                 </div>
             </Link>
         </article>
@@ -39,22 +39,29 @@ const AssetTeaser = ({
             }
         >
             <Link to={`/asset/${asset.id}`}>
-                {base.categories && !minimal && (
-                    <CategoryImage dimmed category={base.categories[0]} />
+                {additionalInformation.categories && !minimal && (
+                    <CategoryImage
+                        dimmed
+                        category={additionalInformation.categories[0]}
+                    />
                 )}
-                <h1>{base.name}</h1>
+                <h1>{main.name}</h1>
 
                 {!minimal && (
                     <div className={styles.description}>
-                        <Dotdotdot clamp={3}>{base.description}</Dotdotdot>
+                        <Dotdotdot clamp={3}>
+                            {additionalInformation.description}
+                        </Dotdotdot>
                     </div>
                 )}
                 <footer className={styles.assetFooter}>
-                    {base.categories && <div>{base.categories[0]}</div>}
+                    {additionalInformation.categories && (
+                        <div>{additionalInformation.categories[0]}</div>
+                    )}
                     {allowPricing && (
                         <div className={styles.price}>
                             <span>
-                                {Web3.utils.fromWei(base.price.toString())}
+                                {Web3.utils.fromWei(main.price.toString())}
                             </span>{' '}
                             OCEAN
                         </div>
