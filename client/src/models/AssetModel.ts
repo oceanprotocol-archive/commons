@@ -19,27 +19,4 @@ const AssetModel: MetaData = {
     }
 }
 
-export const AssetModelFull = {
-    ...AssetModelBase,
-    additionalInformation: {
-        // sla: null,
-        // industry: null,
-        updateFrequency: null,
-        // termsOfService: null,
-        // privacy: null,
-        // keywork: null,
-        structuredMarkup: {
-            uri: null,
-            mediaType: null
-        },
-        checksum: null
-    },
-    curation: {
-        rating: null,
-        numVotes: null,
-        schema: ''
-    }
-
-}
-
-export default AssetModelBase
+export default AssetModel
