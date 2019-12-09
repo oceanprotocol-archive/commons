@@ -22,6 +22,9 @@ const AssetModel: MetaData = {
         inLanguage: '',
         // industry: '', // suggested additional attribute
         // updateFrequency: 'seldom' // suggested additional attribute
+        // custom marketplace fields
+        // crowdsource: false,
+        // pricingMechanism: 'Flat'
     }
 }
 
