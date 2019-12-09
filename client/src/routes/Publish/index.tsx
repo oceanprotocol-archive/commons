@@ -310,13 +310,6 @@ class Publish extends Component<{}, PublishState> {
             ({ found, ...keepAttrs }: { found: boolean }) => keepAttrs
         )
 
-        const categories = [this.state.categories]
-        if (this.state.crowdsource) {
-            categories.push(`${marketplaceId}Crowdsource`)
-        }
-        categories.push(`${marketplaceId}Update${this.state.updateFrequency}`)
-        categories.push(`${marketplaceId}Pricing${this.state.pricingMechanism.replace(/\s+/g, '')}`)
-
         return {
             // OEP-08 Attributes
             // https://github.com/oceanprotocol/OEPs/tree/master/8
@@ -335,18 +328,34 @@ class Publish extends Component<{}, PublishState> {
                         : this.state.price,
                     files
                 }),
-                additionalInformation: Object.assign(
-                    AssetModel.additionalInformation,
-                    {
-                        description: this.state.description,
-                        copyrightHolder: this.state.copyrightHolder,
-                        categories: categories,
-                        tags: this.state.tags.map((tag: Tag) => tag.name.toLowerCase()),
-                        workExample: this.state.workExample,
-                        links: this.state.links,
-                        inLanguage: this.state.inLanguage
-                    }
-                )
+                // additionalInformation: Object.assign(
+                //     AssetModel.additionalInformation,
+                //     {
+                //         description: this.state.description,
+                //         copyrightHolder: this.state.copyrightHolder,
+                //         categories: categories,
+                //         tags: this.state.tags.map((tag: Tag) => tag.name.toLowerCase()),
+                //         workExample: this.state.workExample,
+                //         links: this.state.links,
+                //         inLanguage: this.state.inLanguage
+                //     }
+                // )
+                additionalInformation: {
+                    description: this.state.description,
+                    copyrightHolder: this.state.copyrightHolder,
+                    categories: [
+                        this.state.categories,
+                        marketplaceId
+                    ],
+                    tags: this.state.tags.map((tag: Tag) => tag.name.toLowerCase()),
+                    workExample: this.state.workExample,
+                    links: this.state.links,
+                    inLanguage: this.state.inLanguage,
+                    // Custom marketplace fields
+                    updateFrequency: this.state.updateFrequency,
+                    crowdsource: this.state.crowdsource,
+                    pricingMechanism: this.state.pricingMechanism
+                }
             }
         }
 
