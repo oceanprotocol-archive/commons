@@ -25,10 +25,15 @@ function getFilterMetadata(results: any[]) {
 
     results.map((asset: DDO) => {
         if (!asset.findServiceByType) return null
-        const { metadata } = asset.findServiceByType('Metadata')
-        const { categories, license } = metadata.base
-        categories && filterCategories.push(categories[0])
-        license && filterLicenses.push(license)
+        const { attributes } = asset.findServiceByType('metadata')
+        const { main, additionalInformation } = attributes
+        main.license && filterLicenses.push(main.license)
+
+        if (additionalInformation) {
+            const { categories } = additionalInformation
+            categories && filterCategories.push(categories[0])
+        }
+
         return null
     })
 

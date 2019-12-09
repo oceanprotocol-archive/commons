@@ -19,7 +19,7 @@ interface SearchProps {
 }
 
 interface SearchState {
-    results: any[]
+    results: DDO[]
     totalResults: number
     offset: number
     totalPages: number

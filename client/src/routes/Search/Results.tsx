@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import shortid from 'shortid'
+import { DDO } from '@oceanprotocol/squid'
 import AssetTeaser from '../../components/molecules/AssetTeaser'
 import Pagination from '../../components/molecules/Pagination'
 import styles from './Results.module.scss'
@@ -12,7 +13,7 @@ export default function Results({
     currentPage,
     handlePageClick
 }: {
-    results: any[]
+    results: DDO[]
     totalResults: number
     totalPages: number
     currentPage: number
