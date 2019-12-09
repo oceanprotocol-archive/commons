@@ -11,14 +11,21 @@ import Web3 from 'web3'
 const AssetTeaser = ({
     asset,
     list,
-    minimal
+    minimal,
+    readOnly
 }: {
     asset: any
     list?: boolean
     minimal?: boolean
+    readOnly?: boolean
 }) => {
-    const { attributes } = asset.findServiceByType('metadata')
+    const { attributes } = asset.findServiceByType ? asset.findServiceByType('metadata') : asset
     const { main, additionalInformation } = attributes
+    let tags = additionalInformation.tags || []
+    let hashtags = [ main.type ]
+    hashtags.push(...tags)
+    hashtags = hashtags.map((tag) => `#${tag}`)
+    const totalFiles = main.files.length
 
     return list ? (
         <article className={styles.assetList}>
@@ -38,14 +45,17 @@ const AssetTeaser = ({
                 minimal ? cx(styles.asset, styles.minimal) : styles.asset
             }
         >
-            <Link to={`/asset/${asset.id}`}>
+            <Link to={!readOnly ? `/asset/${asset.id}`:'#'}>
                 {additionalInformation.categories && !minimal && (
                     <CategoryImage
-                        dimmed
+                        dimmed={!readOnly}
                         category={additionalInformation.categories[0]}
                     />
                 )}
                 <h1>{main.name}</h1>
+                <div className={styles.hashtags}>
+                    <span>{hashtags.reduceRight((i: string, t: string) => `${i}, ${t}`)}</span>
+                </div>
 
                 {!minimal && (
                     <div className={styles.description}>
@@ -54,10 +64,11 @@ const AssetTeaser = ({
                         </Dotdotdot>
                     </div>
                 )}
+                {additionalInformation.categories && (
+                    <div>{additionalInformation.categories[0]}</div>
+                )}
                 <footer className={styles.assetFooter}>
-                    {additionalInformation.categories && (
-                        <div>{additionalInformation.categories[0]}</div>
-                    )}
+                    <div>{totalFiles} File{totalFiles > 1 ? 's':''}</div>
                     {allowPricing && (
                         <div className={styles.price}>
                             <span>

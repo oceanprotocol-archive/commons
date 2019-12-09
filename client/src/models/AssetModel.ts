@@ -15,7 +15,13 @@ const AssetModel: MetaData = {
     additionalInformation: {
         description: '',
         copyrightHolder: '',
-        categories: []
+        categories: [],
+        tags: [],
+        workExample: '',
+        links: [],
+        inLanguage: '',
+        // industry: '', // suggested additional attribute
+        // updateFrequency: 'seldom' // suggested additional attribute
     }
 }
 

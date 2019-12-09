@@ -4,6 +4,7 @@
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-all;
+    color: $brand-grey;
 
     > a {
         display: block;
@@ -104,4 +105,8 @@
         color: $brand-grey;
         font-size: $font-size-small;
     }
+}
+
+.hashtags {
+    color: $brand-pink;
 }
