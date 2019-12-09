@@ -36,6 +36,7 @@ interface InputProps {
     handleDelete?(i: number): void
     tags?: Array<Tag>
     suggestions?: Array<Tag>
+    disabled?: boolean
 }
 
 interface InputState {
@@ -98,7 +99,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
             name,
             required,
             onChange,
-            value
+            value,
+            disabled
         } = this.props
 
         const wrapClass = this.inputWrapClasses()

@@ -25,6 +25,7 @@ interface BondingCurveProps {
     contractAddress: string
     contractArtifact: any
     height: number
+    readOnly?: boolean
     onError: (error: string) => void
     onLoaded: () => void
 }
@@ -168,7 +169,7 @@ export default class BondingCurve extends PureComponent<BondingCurveProps, Bondi
 
     renderContent = () => {
         const { activeTab, error, loading, contract } = this.state
-        const { web3, contractAddress, height } = this.props
+        const { web3, contractAddress, height, readOnly } = this.props
 
         if (loading) return <Loader style={{ minHeight: height }} />
 
@@ -190,13 +191,16 @@ export default class BondingCurve extends PureComponent<BondingCurveProps, Bondi
                             Bonding Curve
                         </button>
                     </li>
-                    <li>
-                        <button
-                            className={isActive('timeline') ? styles.tab__active : styles.tab}
-                            onClick={this.toggleTab.bind(this, 'timeline')}>
-                            Stake History
-                        </button>
-                    </li>
+                    {!readOnly && (
+                        <li>
+                            <button
+                                className={isActive('timeline') ? styles.tab__active : styles.tab}
+                                onClick={this.toggleTab.bind(this, 'timeline')}>
+                                Stake History
+                            </button>
+                        </li>
+                    )}
+                    
                 </ul>
 
                 <ErrorBoundary

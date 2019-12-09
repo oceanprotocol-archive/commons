@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { User } from '../../context'
 import { Logger } from '@oceanprotocol/squid'
-import Spinner from '../atoms/Spinner'
-import AssetTeaser from '../molecules/AssetTeaser'
+// import Spinner from '../atoms/Spinner'
+// import AssetTeaser from '../molecules/AssetTeaser'
 import styles from './ChannelTeaser.module.scss'
 import channels from '../../data/channels.json'
 import CategoryImage from '../atoms/CategoryImage'
@@ -97,7 +97,7 @@ export default class ChannelTeaser extends Component<
     //     )
     // }
     public render() {
-        const { channelAssets, isLoadingChannel } = this.state
+        // const { channelAssets, isLoadingChannel } = this.state
         const { title, tag, teaser } = this.channel
 
         return (

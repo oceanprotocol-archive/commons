@@ -12,6 +12,7 @@ interface BondingCurveChartProps {
     bondingCurveContract: any
     web3?: Web3 //TODO make it required when contract is implemented
     height: number
+    tokenSymbol?: string
 }
 
 interface BondingCurvePrice {
@@ -151,7 +152,7 @@ export default class BondingCurveChart extends PureComponent<BondingCurveChartPr
 
     render() {
         const { data, loading, selectedItem, currentPrice, error } = this.state
-        const { height } = this.props
+        const { height, tokenSymbol } = this.props
 
         if (error) throw error
 
@@ -172,7 +173,7 @@ export default class BondingCurveChart extends PureComponent<BondingCurveChartPr
                 }
 
                 <Footer
-                    symbol="OCN"
+                    symbol={tokenSymbol || "OCEAN"}
                     detail={{
                         title: `${selectedItem.value ? selectedItem.value : currentPrice.value.toFixed(4)}`,
                         sub: selectedItem.supply ? `Supply: ${numeral(selectedItem.supply).format('0,0')}` : `Total supply: ${numeral(currentPrice.supply).format('0,0')}`

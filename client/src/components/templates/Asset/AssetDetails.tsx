@@ -60,7 +60,7 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
     }
 
     render(){
-        const { metadata, ddo } = this. props;
+        const { metadata, ddo } = this.props;
         const { main, additionalInformation } = metadata
         const price = main.price && Web3.utils.fromWei(main.price.toString())
         const bondingCurveContractAddress = ''
@@ -149,13 +149,13 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                 <User.Consumer>
                 {user => (<div className={styles.tabs}>
                 <div className={styles.tabLinks}>
-                <a href="#general" className={this.state.active=='general' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'general'}) }>General</a>
-                <a href="#download" className={this.state.active=='donwload' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'download'}) }>Download</a>
-                <a href="#bonding" className={this.state.active=='bonding' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'bonding'}) }>Bonding Curve</a>
-                <a href="#comments" className={this.state.active=='comments' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'comments'}) }>Comments</a>
+                <a href="#general" className={this.state.active === 'general' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'general'}) }>General</a>
+                <a href="#download" className={this.state.active === 'donwload' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'download'}) }>Download</a>
+                <a href="#bonding" className={this.state.active === 'bonding' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'bonding'}) }>Bonding Curve</a>
+                <a href="#comments" className={this.state.active === 'comments' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'comments'}) }>Comments</a>
                 </div>
 
-                <div className={this.state.active=='general' ? styles.activeTab : styles.tab} id="general">
+                <div className={this.state.active === 'general' ? styles.activeTab : styles.tab} id="general">
                 <div className={styles.metaFixed}>
                 <h2
                 className={styles.metaFixedTitle}
@@ -166,7 +166,7 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                 <ul>
                 {metaFixed
                     .filter(item => item.show)
-                    .map(item => (item.name=='Author' && user.account ?
+                    .map(item => (item.name === 'Author' && user.account ?
                     (<AuthorItem
                         key={shortid.generate()}
                         name={item.name}
@@ -180,10 +180,10 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                         </ul>
                         </div>
                         </div>
-                        <div className={this.state.active=='download' ? styles.activeTab : styles.tab} id="download">
+                        <div className={this.state.active === 'download' ? styles.activeTab : styles.tab} id="download">
                         <AssetFilesDetails files={main.files ? main.files : []} ddo={ddo} />
                         </div>
-                        <div className={this.state.active=='bonding' ? styles.activeTab : styles.tab} id="bonding">
+                        <div className={this.state.active === 'bonding' ? styles.activeTab : styles.tab} id="bonding">
                             <BondingCurve
                             contractAddress={bondingCurveContractAddress}
                             contractArtifact={contractArtifact}
@@ -193,7 +193,7 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                             />
                         </div>
 
-                        <div className={this.state.active=='comments' ? styles.activeTab : styles.tab} id="comments">
+                        <div className={this.state.active === 'comments' ? styles.activeTab : styles.tab} id="comments">
                         { user.box ? (<ThreeBoxComments
                             // required
                             spaceName='3boxtestcomments'

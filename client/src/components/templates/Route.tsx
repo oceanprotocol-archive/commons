@@ -4,7 +4,7 @@ import styles from './Route.module.scss'
 import Markdown from '../atoms/Markdown'
 import Seo from '../atoms/Seo'
 import Button from '../atoms/Button'
-import CategoryImage from '../atoms/CategoryImage'
+// import CategoryImage from '../atoms/CategoryImage'
 
 interface RouteProps {
     title: string

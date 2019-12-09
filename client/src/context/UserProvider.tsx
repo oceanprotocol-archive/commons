@@ -167,12 +167,12 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                   settings: { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose }
                 }
             })
-            wallet.on("web3connected", this.connectToWeb3Provider);
-            wallet.on("oceanconnected", this.connectToOceanNetwork);
+            wallet.on("web3connected", this.connectToWeb3Provider.bind(this));
+            wallet.on("oceanconnected", this.connectToOceanNetwork.bind(this));
             wallet.on("boxconnected", this.setBoxInstance.bind(this));
             wallet.on("disconnect", this.onDisconnect.bind(this));
-            wallet.on("close", this.onClose);
-            wallet.on("error", this.onError);
+            wallet.on("close", this.onClose.bind(this));
+            wallet.on("error", this.onError.bind(this));
             this.setState({ wallet })
         // })
     }

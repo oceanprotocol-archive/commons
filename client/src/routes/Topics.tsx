@@ -1,4 +1,4 @@
-import React, { useContext, Component } from 'react'
+import React, { /*useContext,*/ Component } from 'react'
 import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
 import Flipcard from '../components/atoms/Flipcard'

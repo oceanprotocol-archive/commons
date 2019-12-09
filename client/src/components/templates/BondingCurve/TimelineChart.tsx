@@ -13,6 +13,7 @@ interface TimelineChartProps {
     web3?: Web3 //TODO make it required when contract is implemented
     height: number
     contractAddress: string
+    tokenSymbol?: string
 }
 
 interface TimelineChartState {
@@ -148,7 +149,7 @@ export default class TimelineChart extends PureComponent<TimelineChartProps, Tim
 
     render() {
         const { activeFilter, selectedItem, minDomain, maxValue, data } = this.state
-        const { height } = this.props
+        const { height, tokenSymbol } = this.props
 
         if (this.state.error) throw this.state.error
 
@@ -169,7 +170,7 @@ export default class TimelineChart extends PureComponent<TimelineChartProps, Tim
                 </div>
 
                 <Footer
-                    symbol="OCN"
+                    symbol={tokenSymbol || "OCEAN"}
                     detail={detail ? {
                         title: `${detail.y.toFixed(4)}`,
                         sub: moment(detail.x).format('lll')
