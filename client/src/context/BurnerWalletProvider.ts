@@ -1,8 +1,10 @@
 import Web3 from 'web3'
-import { nodeUri } from '../config'
 import HDWalletProvider from '@truffle/hdwallet-provider'
+import { nodeUri } from '../config'
 import { requestFromFaucet } from '../ocean'
-const bip39 = require('bip39') // eslint-disable-line @typescript-eslint/no-var-requires
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const bip39 = require('bip39')
 
 export class BurnerWalletProvider {
     private web3: Web3
@@ -10,10 +12,6 @@ export class BurnerWalletProvider {
     public constructor() {
         // Default
         this.web3 = null as any
-    }
-
-    public async isAvailable() {
-        return true
     }
 
     public async isLogged() {
@@ -35,7 +33,7 @@ export class BurnerWalletProvider {
         }
 
         localStorage.setItem('logType', 'BurnerWallet')
-        const provider = new HDWalletProvider(mnemonic, `${nodeUri}`, 0, 1)
+        const provider = new HDWalletProvider(mnemonic, nodeUri, 0, 1)
         this.web3 = new Web3(provider as any)
         const accounts = await this.web3.eth.getAccounts()
         const balance = await this.web3.eth.getBalance(accounts[0])

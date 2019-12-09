@@ -90,7 +90,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
         }
 
         try {
-            const search = await ocean.aquarius.queryMetadata(searchQuery)
+            const search = await ocean.assets.query(searchQuery)
             this.setState({
                 results: search.results,
                 totalResults: search.totalResults,

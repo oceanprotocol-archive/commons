@@ -2,7 +2,7 @@ dist: xenial
 sudo: required
 language: node_js
 node_js:
-  - '11'
+  - '12'
 
 services:
   - docker
@@ -33,10 +33,10 @@ env:
     - IPFS_GATEWAY_URI="https://ipfs.oceanprotocol.com"
 
     # start Barge with these versions
-    - BRIZO_VERSION=v0.4.6
-    - AQUARIUS_VERSION=v0.3.9
+    - BRIZO_VERSION=v0.7.2
+    - AQUARIUS_VERSION=v1.0.5
     - KEEPER_VERSION=v0.12.7
-    - EVENTS_HANDLER_VERSION=v0.1.2
+    - EVENTS_HANDLER_VERSION=v0.3.4
     - KEEPER_OWNER_ROLE_ADDRESS="0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
     - FAUCET_TIMESPAN=0
 

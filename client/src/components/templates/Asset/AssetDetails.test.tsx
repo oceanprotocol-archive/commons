@@ -9,7 +9,7 @@ describe('AssetDetails', () => {
     it('renders loading without crashing', () => {
         const { container } = render(
             <AssetDetails
-                metadata={({ base: { name: '' } } as any) as MetaData}
+                metadata={({ main: { name: '' } } as any) as MetaData}
                 ddo={({} as any) as DDO}
             />
         )
@@ -22,11 +22,13 @@ describe('AssetDetails', () => {
                 <AssetDetails
                     metadata={
                         ({
-                            base: {
+                            main: {
                                 name: 'Hello',
-                                description: 'Description',
-                                categories: ['Category'],
                                 files: [{ index: 0 }]
+                            },
+                            additionalInformation: {
+                                description: 'Description',
+                                categories: ['Category']
                             }
                         } as any) as MetaData
                     }

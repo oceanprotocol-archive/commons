@@ -13,6 +13,16 @@ const oceanMock = {
             }
         },
         assets: {
+            query: () => {
+                return {
+                    results: [],
+                    page: 1,
+                    /* eslint-disable @typescript-eslint/camelcase */
+                    total_pages: 1611,
+                    total_results: 1611
+                    /* eslint-enable @typescript-eslint/camelcase */
+                }
+            },
             resolve: jest.fn(),
             order: () => {
                 return {

@@ -14,13 +14,13 @@ const file = {
     index: 0,
     url: 'https://hello.com',
     contentType: 'application/x-zip',
-    contentLength: 100
+    contentLength: '100'
 }
 
 const ddo = ({
     id: 'xxx',
     findServiceByType: () => {
-        return { serviceDefinitionId: 'xxx' }
+        return { index: 'xxx' }
     }
 } as any) as DDO
 
