@@ -3,14 +3,18 @@ import { Logger, File } from '@oceanprotocol/squid'
 import Web3 from 'web3'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
+import Input from '../../components/atoms/Form/Input'
 import AssetModel from '../../models/AssetModel'
 import { User, Market } from '../../context'
 import Step from './Step'
 import Progress from './Progress'
 // import ReactGA from 'react-ga'
-import { allowPricing } from '../../config'
+import { allowPricing, marketplaceId } from '../../config'
 import { steps } from '../../data/form-publish.json'
 import Content from '../../components/atoms/Content'
+import BondingCurve from '../../components/templates/BondingCurve'
+import { BondingCurveTypes, BondingCurveSettings } from '../../components/templates/BondingCurve/Settings'
+
 // import withTracker from '../../hoc/withTracker'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
@@ -32,6 +36,14 @@ interface PublishState {
     type?: AssetType
     copyrightHolder?: string
     categories?: string
+    workExample?: string
+    links?: File[]
+    inLanguage?: string
+
+    crowdsource?: boolean
+    updateFrequency?: string
+    pricingMechanism?: string
+    bondingCurve?: string
 
     currentStep?: number
     publishingStep?: number
@@ -58,6 +70,14 @@ class Publish extends Component<{}, PublishState> {
         license: '',
         copyrightHolder: '',
         categories: '',
+        workExample: undefined,
+        links: [],
+        inLanguage: 'English',
+
+        crowdsource: false,
+        updateFrequency: 'Seldom',
+        pricingMechanism: 'Flat',
+        bondingCurve: BondingCurveTypes[0],
 
         currentStep: 1,
         isPublishing: false,
@@ -282,6 +302,56 @@ class Publish extends Component<{}, PublishState> {
         }
     }
 
+    private buildAssetSchema = () => {
+        // remove `found` attribute from all File objects
+        // in a new array
+        const files = this.state.files.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ found, ...keepAttrs }: { found: boolean }) => keepAttrs
+        )
+
+        const categories = [this.state.categories]
+        if (this.state.crowdsource) {
+            categories.push(`${marketplaceId}Crowdsource`)
+        }
+        categories.push(`${marketplaceId}Update${this.state.updateFrequency}`)
+        categories.push(`${marketplaceId}Pricing${this.state.pricingMechanism.replace(/\s+/g, '')}`)
+
+        return {
+            // OEP-08 Attributes
+            // https://github.com/oceanprotocol/OEPs/tree/master/8
+            attributes: {
+                main: Object.assign(AssetModel.main, {
+                    type: this.state.type.toLowerCase(),
+                    name: this.state.name,
+                    dateCreated:
+                        new Date(this.state.dateCreated)
+                            .toISOString()
+                            .split('.')[0] + 'Z', // remove milliseconds
+                    author: this.state.author,
+                    license: this.state.license,
+                    price: allowPricing
+                        ? Web3.utils.toWei(this.state.price, 'ether')
+                        : this.state.price,
+                    files
+                }),
+                additionalInformation: Object.assign(
+                    AssetModel.additionalInformation,
+                    {
+                        description: this.state.description,
+                        copyrightHolder: this.state.copyrightHolder,
+                        categories: categories,
+                        tags: this.state.tags.map((tag: Tag) => tag.name.toLowerCase()),
+                        workExample: this.state.workExample,
+                        links: this.state.links,
+                        inLanguage: this.state.inLanguage
+                    }
+                )
+            }
+        }
+
+    }
+
     private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
@@ -293,60 +363,33 @@ class Publish extends Component<{}, PublishState> {
             publishingStep: 0
         })
 
-        const { ocean } = this.context
-        const account = await ocean.accounts.list()
+        // const { ocean } = this.context
+        // const account = await ocean.accounts.list()
+        const { wallet } = this.context
 
-        // remove `found` attribute from all File objects
-        // in a new array
-        const files = this.state.files.map(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ({ found, ...keepAttrs }: { found: boolean }) => keepAttrs
-        )
+        const newAsset = this.buildAssetSchema().attributes
 
-        const newAsset = {
-            // OEP-08 Attributes
-            // https://github.com/oceanprotocol/OEPs/tree/master/8
-            main: Object.assign(AssetModel.main, {
-                type: this.state.type,
-                name: this.state.name,
-                dateCreated:
-                    new Date(this.state.dateCreated)
-                        .toISOString()
-                        .split('.')[0] + 'Z', // remove milliseconds
-                author: this.state.author,
-                license: this.state.license,
-                price: allowPricing
-                    ? Web3.utils.toWei(this.state.price, 'ether')
-                    : this.state.price,
-                files
-            }),
-            additionalInformation: Object.assign(
-                AssetModel.additionalInformation,
-                {
-                    description: this.state.description,
-                    copyrightHolder: this.state.copyrightHolder,
-                    categories: [this.state.categories]
-                }
-            )
-        }
-
+        wallet.toggleModal()
         try {
-            const asset = await this.context.ocean.assets
-                .create(newAsset, account[0])
-                .next((publishingStep: number) =>
-                    this.setState({ publishingStep })
-                )
+            // const asset = await this.context.ocean.assets
+            //     .create(newAsset, account[0])
+            //     .next((publishingStep: number) =>
+            //         this.setState({ publishingStep })
+            //     )
+            const asset = await wallet.publishAsset(newAsset)
 
             this.setState({
                 publishedDid: asset.id,
                 isPublished: true
             })
+            wallet.toggleModal()
 
             // ReactGA.event({
             //     category: 'Publish',
             //     action: `registerAsset-end ${asset.id}`
             // })
         } catch (error) {
+            wallet.toggleModal()
             // make readable errors
             Logger.error('error:', error.message)
             this.setState({ publishingError: error.message })
@@ -358,6 +401,37 @@ class Publish extends Component<{}, PublishState> {
         }
 
         this.setState({ isPublishing: false })
+    }
+
+    private renderPricingMechanismSettings = () => {
+        const { pricingMechanism } = this.state
+        return (
+            <>
+                {pricingMechanism === 'Bonding Curve' && (
+                    <div>
+                        <Input
+                            name="bondingCurve"
+                            label="Bonding Curve Type"
+                            required
+                            type="select"
+                            help="Select a Bonding Curve Setting"
+                            options={BondingCurveTypes}
+                            onChange={this.inputChange}
+                            value={this.state.bondingCurve}
+                        />
+                        <BondingCurve
+                            contractAddress={BondingCurveSettings[this.state.bondingCurve].contractAddress}
+                            contractArtifact={BondingCurveSettings[this.state.bondingCurve].artifact}
+                            defaultTab="bonding-curve"
+                            readOnly
+                            onError={(error: any) => console.log('ERROR in bonding curve', error)}
+                            onLoaded={() => console.log('BondingCurve loaded')}
+                        />
+                    </div>
+                )}
+                <br />
+            </>
+        )
     }
 
     public render() {
@@ -393,6 +467,8 @@ class Publish extends Component<{}, PublishState> {
                                         content={step.content}
                                         handleAddition={this.handleAddition}
                                         handleDelete={this.handleDelete}
+                                        getAssetSchema={this.buildAssetSchema}
+                                        renderPricingMechanismSettings={this.renderPricingMechanismSettings}
                                     />
                                 ))}
                             </Form>

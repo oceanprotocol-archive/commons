@@ -25,6 +25,7 @@ interface StepRegisterContentProps {
         isPublished: boolean
         publishingStep: number
     }
+    web3Enabled: boolean
     content?: string
 }
 
@@ -64,10 +65,19 @@ export default class StepRegisterContent extends PureComponent<
     public render() {
         return (
             <>
-                <Web3message />
-                {this.props.state.isPublishing ? (
+                {!this.props.web3Enabled && (
+                    <Web3message />
+                )}
+                {/*this.props.state.isPublishing ? (
                     this.publishingState()
                 ) : this.props.state.publishingError ? (
+                    this.errorState()
+                ) : this.props.state.isPublished ? (
+                    this.publishedState()
+                ) : (
+                    <p>{this.props.content}</p>
+                )*/}
+                {this.props.state.publishingError ? (
                     this.errorState()
                 ) : this.props.state.isPublished ? (
                     this.publishedState()

@@ -3,16 +3,16 @@
     "title": "Basics",
     "description": "What kind of data asset do you want to publish?",
     "fields": {
-      "assetType": {
+      "type": {
         "label": "Asset Type",
         "type": "select",
         "required": true,
         "options": [
-          "Dataset",
-          "Algorithm",
-          "Container",
-          "Workflow",
-          "Other"
+          "dataset",
+          "algorithm",
+          "workflow",
+          "service",
+          "other"
         ]
       },
       "name": {
@@ -22,22 +22,27 @@
         "required": true,
         "help": "Enter a concise title. You will be able to enter a more thorough description in the next step."
       },
-      "pricingMechanism": {
-        "label": "Pricing Mechanism",
+      "description": {
+        "label": "Description",
+        "help": "Add a thorough description with as much detail as possible.",
+        "placeholder": "e.g. Shapes of 23 common desert plants.",
+        "type": "textarea",
+        "required": true,
+        "rows": 5
+      },
+      "inLanguage": {
+        "label": "Language",
+        "help": "Pick the language your data asset is for.",
         "type": "select",
         "required": true,
         "options": [
-          "Royalty Free",
-          "Flat",
-          "Bonding Curve"
+          "English",
+          "Spanish",
+          "German",
+          "French",
+          "Cantonese",
+          "Other"
         ]
-      },
-      "price": {
-        "label": "Price",
-        "placeholder": "Price in Ocean tokens",
-        "type": "string",
-        "required": true,
-        "help": "Enter the price of assets in Ocean tokens."
       },
       "crowdsource": {
         "label": "Do you want to crowdsource the creation of your asset?",
@@ -58,13 +63,30 @@
         "required": true,
         "help": "Provide one or multiple urls to your asset files."
       },
-      "description": {
-        "label": "Description",
-        "help": "Add a thorough description with as much detail as possible.",
-        "placeholder": "e.g. Shapes of 23 common desert plants.",
-        "type": "textarea",
+      "links": {
+        "label": "Asset Samples",
+        "placeholder": "e.g. https://file.com/sample.json",
+        "type": "text",
+        "required": false,
+        "help": "If you want, you can provide multiple urls with sample files to better describe your asset. (IMPORTANT: this information will be public)"
+      },
+      "dateCreated": {
+        "label": "Creation Date",
+        "help": "Select the date the asset was created, or was updated for the last time.",
+        "type": "date",
+        "required": true
+      },
+      "updateFrequency": {
+        "label": "Update Frequency",
+        "help": "",
+        "type": "select",
         "required": true,
-        "rows": 5
+        "options": [
+          "Seldom",
+          "Annually",
+          "Quarterly",
+          "Streaming"
+        ]
       },
       "categories": {
         "label": "Category",
@@ -101,19 +123,6 @@
         "type": "tags",
         "placeholder": "e.g. opendata, timeseries, etc",
         "required": false
-      },
-      "dateCreated": {
-        "label": "Creation Date",
-        "help": "Select the date the asset was created, or was updated for the last time.",
-        "type": "date",
-        "required": true
-      },
-      "links": {
-        "label": "Asset Samples",
-        "placeholder": "e.g. https://file.com/sample.json",
-        "type": "text",
-        "required": false,
-        "help": "If you want, you can provide multiple urls with sample files to better describe your asset. (IMPORTANT: this information will be public)"
       }
     }
   },
@@ -156,8 +165,31 @@
     }
   },
   {
+    "title": "Asset Pricing",
+    "description": "Let's set the pricing mechanism for your asset",
+    "fields": {
+      "pricingMechanism": {
+        "label": "Pricing Mechanism",
+        "type": "select",
+        "required": true,
+        "options": [
+          "Royalty Free",
+          "Flat",
+          "Bonding Curve"
+        ]
+      },
+      "price": {
+        "label": "Price",
+        "placeholder": "Price in Ocean tokens",
+        "type": "string",
+        "required": true,
+        "help": "Enter the price of assets in Ocean tokens."
+      }
+    }
+  },
+  {
     "title": "Register",
-    "description": "Splendid, we got all the required information. Now let's register your data asset.",
-    "content": "After clicking the button below you will be asked by your wallet to sign this request."
+    "description": "You're almost there! We got all the required information. Now let's register your data asset.",
+    "content": "Here's a teaser of how your asset will be publihsed. After clicking the button below you will be asked by your wallet to sign this request."
   }]
 }

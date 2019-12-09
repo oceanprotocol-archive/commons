@@ -1,4 +1,5 @@
 import React, { PureComponent, FormEvent, ChangeEvent } from 'react'
+import { MetaData } from '@oceanprotocol/squid'
 import Input from '../../components/atoms/Form/Input'
 import Label from '../../components/atoms/Form/Label'
 import Row from '../../components/atoms/Form/Row'
@@ -8,6 +9,7 @@ import Files from './Files/'
 import StepRegisterContent from './StepRegisterContent'
 import styles from './Step.module.scss'
 import Web3message from '../../components/organisms/Web3message'
+import AssetTeaser from '../../components/molecules/AssetTeaser'
 
 interface Fields {
     label: string
@@ -42,6 +44,10 @@ interface StepProps {
     content?: string
     handleAddition?(tag: any): void
     handleDelete?(i: number): void
+    getAssetSchema(): {
+        attributes: MetaData
+    }
+    renderPricingMechanismSettings(): any 
 }
 
 export default class Step extends PureComponent<StepProps, {}> {
@@ -99,7 +105,9 @@ export default class Step extends PureComponent<StepProps, {}> {
             toStart,
             content,
             handleAddition,
-            handleDelete
+            handleDelete,
+            getAssetSchema,
+            renderPricingMechanismSettings
         } = this.props
 
         if (currentStep !== index + 1) {
@@ -143,7 +151,7 @@ export default class Step extends PureComponent<StepProps, {}> {
                                         placeholder={value.placeholder}
                                         name={key}
                                         help={value.help}
-                                        files={state.files}
+                                        files={state.links}
                                         onChange={inputChange}
                                     />
                                 </Row>
@@ -168,30 +176,59 @@ export default class Step extends PureComponent<StepProps, {}> {
                             )
                         }
 
+                        if (key === 'price') {
+                            return (
+                                <Input
+                                    key={key}
+                                    name={key}
+                                    label={value.label}
+                                    placeholder={value.placeholder}
+                                    required={value.required}
+                                    type={value.type}
+                                    help={value.help}
+                                    options={value.options}
+                                    onChange={inputChange}
+                                    rows={value.rows}
+                                    value={(state as any)[key]}
+                                    disabled={(state as any)['pricingMechanism'] === 'Royalty Free'}
+                                />
+                            )
+
+                        }
+
                         return (
-                            <Input
-                                key={key}
-                                name={key}
-                                label={value.label}
-                                placeholder={value.placeholder}
-                                required={value.required}
-                                type={value.type}
-                                help={value.help}
-                                options={value.options}
-                                onChange={inputChange}
-                                rows={value.rows}
-                                value={(state as any)[key]}
-                            />
+                            <>
+                                <Input
+                                    key={key}
+                                    name={key}
+                                    label={value.label}
+                                    placeholder={value.placeholder}
+                                    required={value.required}
+                                    type={value.type}
+                                    help={value.help}
+                                    options={value.options}
+                                    onChange={inputChange}
+                                    rows={value.rows}
+                                    value={(state as any)[key]}
+                                />
+                                {key === 'pricingMechanism' && (
+                                    renderPricingMechanismSettings()
+                                )}
+                            </>
                         )
                     })}
 
                 {lastStep && (
-                    <StepRegisterContent
-                        tryAgain={tryAgain}
-                        toStart={toStart}
-                        state={state}
-                        content={content}
-                    />
+                    <>
+                        <StepRegisterContent
+                            tryAgain={tryAgain}
+                            toStart={toStart}
+                            state={state}
+                            content={content}
+                            web3Enabled={this.context.isLogged}
+                        />
+                        <AssetTeaser asset={getAssetSchema()} readOnly />
+                    </>
                 )}
 
                 <div className={styles.actions}>
@@ -216,7 +253,7 @@ export default class Step extends PureComponent<StepProps, {}> {
                     )}
                 </div>
                 <div className={styles.account}>
-                    {!lastStep && <Web3message />}
+                    {!lastStep && !this.context.isLogged && <Web3message />}
                 </div>
             </>
         )
