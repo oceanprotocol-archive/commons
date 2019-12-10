@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import HDWalletProvider from '@truffle/hdwallet-provider'
+import { nodeUri } from '../config'
 // import { requestFromFaucet } from '../ocean'
-const bip39 = require('bip39') // eslint-disable-line @typescript-eslint/no-var-requires
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bip39 = require('bip39')
