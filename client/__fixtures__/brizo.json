@@ -1,0 +1,21 @@
+{
+  "contracts": {
+    "AccessSecretStoreCondition": "0x7FC6520Af3F0800d76A3e2FfE7b838c945ADBFE4",
+    "AgreementStoreManager": "0x44665ee68779eC83202702C091279661336F5F8a",
+    "ConditionStoreManager": "0xbD1dEd7ef05c31F81C54e913a23Da69E77d3e0EE",
+    "DIDRegistry": "0x1f0E059a50356D8617980F8fa21a53F723072712",
+    "EscrowAccessSecretStoreTemplate": "0x9BF43606d833489fbD568ace13f535fC41130c28",
+    "EscrowReward": "0x656Aa3D9b37A6eA770701ae2c612f760d9254A66",
+    "HashLockCondition": "0x5Eef92d570996ED20Cb60fE41475f594299Ec21C",
+    "LockRewardCondition": "0x7bf64DaCc7929A1e5466f7d9E575128abf1875f8",
+    "OceanToken": "0x012578f9381e876A9E2a9111Dfd436FF91A451ae",
+    "SignCondition": "0xB74172078ABb029FaD809335d82241371b998708",
+    "TemplateStoreManager": "0xF2Cf3761c166c6D85d07299427821D18A4329cd1"
+  },
+  "keeper-url": "http://keeper-node.pacific-ocean:8545",
+  "keeper-version": "v0.12.7",
+  "network": "pacific",
+  "provider-address": "0x008C25ED3594E094db4592F4115D5FA74C4f41eA",
+  "software": "Brizo",
+  "version": "0.7.2"
+}

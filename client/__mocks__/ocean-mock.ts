@@ -1,4 +1,5 @@
 import searchMock from '../__fixtures__/search.json'
+import brizoMock from '../__fixtures__/brizo.json'
 
 const oceanMock = {
     ocean: {
@@ -8,17 +9,11 @@ const oceanMock = {
         aquarius: {
             queryMetadata: () => searchMock
         },
+        brizo: {
+            getVersionInfo: () => brizoMock
+        },
         assets: {
-            query: () => {
-                return {
-                    results: [],
-                    page: 1,
-                    /* eslint-disable @typescript-eslint/camelcase */
-                    total_pages: 1611,
-                    total_results: 1611
-                    /* eslint-enable @typescript-eslint/camelcase */
-                }
-            },
+            query: () => searchMock,
             resolve: jest.fn(),
             order: () => {
                 return {
