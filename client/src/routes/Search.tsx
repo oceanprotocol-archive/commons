@@ -41,13 +41,13 @@ class Search extends PureComponent<SearchProps, SearchState> {
         const { text, page, categories } = queryString.parse(search)
 
         if (text) {
-            this.setState({
+            await this.setState({
                 searchTerm: decodeURIComponent(`${text}`)
             })
         }
 
         if (categories) {
-            this.setState({
+            await this.setState({
                 searchCategories: decodeURIComponent(`${categories}`)
             })
         }
@@ -55,7 +55,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
         // switch to respective page if query string is present
         if (page) {
             const currentPage = Number(page)
-            this.setState({ currentPage })
+            await this.setState({ currentPage })
         }
 
         this.searchAssets()
