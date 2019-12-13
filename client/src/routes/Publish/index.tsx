@@ -14,6 +14,8 @@ import { steps } from '../../data/form-publish.json'
 import Content from '../../components/atoms/Content'
 import BondingCurve from '../../components/templates/BondingCurve'
 import { BondingCurveTypes, BondingCurveSettings } from '../../components/templates/BondingCurve/Settings'
+import { ReactComponent as Caret } from '../../img/caret.svg'
+import styles from './index.module.scss'
 
 // import withTracker from '../../hoc/withTracker'
 
@@ -44,6 +46,7 @@ interface PublishState {
     updateFrequency?: string
     pricingMechanism?: string
     bondingCurve?: string
+    showPricingConfig?: boolean
 
     currentStep?: number
     publishingStep?: number
@@ -78,6 +81,7 @@ class Publish extends Component<{}, PublishState> {
         updateFrequency: 'Seldom',
         pricingMechanism: 'Flat',
         bondingCurve: BondingCurveTypes[0],
+        showPricingConfig: false,
 
         currentStep: 1,
         isPublishing: false,
@@ -149,13 +153,13 @@ class Publish extends Component<{}, PublishState> {
         //     action: 'nextStep ' + currentStep
         // })
 
-        this.setState({ currentStep })
+        this.setState({ currentStep, showPricingConfig: false })
     }
 
     private prev = () => {
         let { currentStep } = this.state
         currentStep = currentStep <= 1 ? 1 : currentStep - 1
-        this.setState({ currentStep })
+        this.setState({ currentStep, showPricingConfig: false })
     }
 
     private tryAgain = () => {
@@ -177,7 +181,8 @@ class Publish extends Component<{}, PublishState> {
             isPublishing: false,
             isPublished: false,
             publishingStep: 0,
-            currentStep: 1
+            currentStep: 1,
+            showPricingConfig: false
         })
     }
 
@@ -413,11 +418,11 @@ class Publish extends Component<{}, PublishState> {
     }
 
     private renderPricingMechanismSettings = () => {
-        const { pricingMechanism } = this.state
+        const { pricingMechanism, showPricingConfig } = this.state
         return (
             <>
                 {pricingMechanism === 'Bonding Curve' && (
-                    <div>
+                    <>
                         <Input
                             name="bondingCurve"
                             label="Bonding Curve Type"
@@ -428,15 +433,29 @@ class Publish extends Component<{}, PublishState> {
                             onChange={this.inputChange}
                             value={this.state.bondingCurve}
                         />
-                        <BondingCurve
-                            contractAddress={BondingCurveSettings[this.state.bondingCurve].contractAddress}
-                            contractArtifact={BondingCurveSettings[this.state.bondingCurve].artifact}
-                            defaultTab="bonding-curve"
-                            readOnly
-                            onError={(error: any) => console.log('ERROR in bonding curve', error)}
-                            onLoaded={() => console.log('BondingCurve loaded')}
-                        />
-                    </div>
+                       <button
+                            className={styles.toggle}
+                            onClick={event => this.setState({ showPricingConfig: !this.state.showPricingConfig })}
+                            title="Show Advance Config Settings"
+                        >
+                            <Caret
+                                className={showPricingConfig ? styles.open : ''}
+                            />{' '}
+                            Bonding Curve Advance Settings
+                        </button>
+                        {showPricingConfig && (
+                            <div>
+                                <BondingCurve
+                                    contractAddress={BondingCurveSettings[this.state.bondingCurve].contractAddress}
+                                    contractArtifact={BondingCurveSettings[this.state.bondingCurve].artifact}
+                                    defaultTab="bonding-curve"
+                                    readOnly
+                                    onError={(error: any) => console.log('ERROR in bonding curve', error)}
+                                    onLoaded={() => console.log('BondingCurve loaded')}
+                                />
+                            </div>
+                        )}
+                    </>
                 )}
                 <br />
             </>

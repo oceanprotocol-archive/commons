@@ -1,0 +1,24 @@
+@import '../../styles/variables';
+
+.toggle {
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: $brand-pink;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-bottom: 2rem;
+
+    svg {
+        display: inline-block;
+        fill: currentColor;
+        margin-right: $spacer / 8;
+        transition: .2s ease-out;
+    }
+}
+
+.open {
+    transform: rotate(90deg);
+}

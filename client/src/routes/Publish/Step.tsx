@@ -178,20 +178,24 @@ export default class Step extends PureComponent<StepProps, {}> {
 
                         if (key === 'price') {
                             return (
-                                <Input
-                                    key={key}
-                                    name={key}
-                                    label={value.label}
-                                    placeholder={value.placeholder}
-                                    required={value.required}
-                                    type={value.type}
-                                    help={value.help}
-                                    options={value.options}
-                                    onChange={inputChange}
-                                    rows={value.rows}
-                                    value={(state as any)[key]}
-                                    disabled={(state as any)['pricingMechanism'] === 'Royalty Free'}
-                                />
+                                <>
+                                {state['pricingMechanism'] != 'Bonding Curve' && (
+                                    <Input
+                                        key={key}
+                                        name={key}
+                                        label={value.label}
+                                        placeholder={value.placeholder}
+                                        required={value.required}
+                                        type={value.type}
+                                        help={value.help}
+                                        options={value.options}
+                                        onChange={inputChange}
+                                        rows={value.rows}
+                                        value={(state as any)[key]}
+                                        disabled={(state as any)['pricingMechanism'] === 'Royalty Free'}
+                                    />
+                                )}
+                                </>
                             )
 
                         }
