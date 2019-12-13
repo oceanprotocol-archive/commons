@@ -74,13 +74,3 @@
 .channelTeaser {
     color: $brand-grey;
 }
-
-.channelResults {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: $spacer;
-
-    @media (min-width: $break-point--small) {
-        grid-template-columns: 1fr 1fr;
-    }
-}
