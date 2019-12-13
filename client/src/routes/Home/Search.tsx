@@ -16,7 +16,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
         search: ''
     }
 
-    private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    private handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             search: event.target.value
         })
@@ -38,7 +38,7 @@ export default class Search extends PureComponent<SearchProps, SearchState> {
                     label="Search for data sets"
                     placeholder="e.g. shapes of plants"
                     value={search}
-                    onChange={this.inputChange}
+                    onChange={this.handleInputChange}
                     group={
                         <Button primary disabled={!search}>
                             Search
