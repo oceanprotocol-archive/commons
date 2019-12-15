@@ -4,6 +4,7 @@ import Spinner from './components/atoms/Spinner'
 
 // import About from './routes/About'
 // import Home from './routes/Home'
+// import Playground from './routes/Playground'
 // import NotFound from './routes/NotFound'
 // import Publish from './routes/Publish/'
 // import Search from './routes/Search'
@@ -17,6 +18,7 @@ import Spinner from './components/atoms/Spinner'
 // import Channel from './components/templates/Channel'
 const About = lazy(() => import('./routes/About'))
 const Home = lazy(() => import('./routes/Home'))
+const Playground = lazy(() => import('./routes/Playground'))
 const NotFound = lazy(() => import('./routes/NotFound'))
 const Publish = lazy(() => import('./routes/Publish/'))
 const Search = lazy(() => import('./routes/Search'))
@@ -43,6 +45,7 @@ const Routes = () => (
         <Route component={Topics} path="/topics" />
         <Route component={Channels} exact path="/channels" />
         <Route component={Channel} path="/channels/:channel" />
+        <Route component={Playground} path="/playground" />
         <Route component={NotFound} />
     </Switch>
     </Suspense>

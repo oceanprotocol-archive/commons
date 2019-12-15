@@ -1,4 +1,5 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { Logger, File } from '@oceanprotocol/squid'
 import Web3 from 'web3'
 import Route from '../../components/templates/Route'
@@ -445,6 +446,15 @@ class Publish extends Component<{}, PublishState> {
                         </button>
                         {showPricingConfig && (
                             <div>
+                                <div className={styles.link}>
+                                    <span>
+                                        Not sure about the pricing model?
+                                        <Link
+                                            to={`/playground`}
+                                            target="_blank"
+                                        >  Open the Economics Playground</Link>
+                                    </span>
+                                </div>
                                 <BondingCurve
                                     contractAddress={BondingCurveSettings[this.state.bondingCurve].contractAddress}
                                     contractArtifact={BondingCurveSettings[this.state.bondingCurve].artifact}
