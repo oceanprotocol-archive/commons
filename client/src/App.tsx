@@ -5,11 +5,8 @@ import Footer from './components/organisms/Footer'
 import Spinner from './components/atoms/Spinner'
 import { User } from './context'
 import Routes from './Routes'
-import {commonsNetwork} from './components/molecules/NetworkSwitcher'
 import './styles/global.scss'
 import styles from './App.module.scss'
-
-console.log(commonsNetwork)
 
 export default class App extends Component {
   public render() {
@@ -35,6 +32,5 @@ export default class App extends Component {
     )
   }
 }
-
 
 App.contextType = User

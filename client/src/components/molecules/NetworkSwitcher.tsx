@@ -1,12 +1,15 @@
+import React, { useState } from 'react'
 import { CONNECTIONS } from '../../config'
 
-/* TEMP NETWORK SWITCHER */
+/* NETWORK SWITCHER */
 
 const urlParams = new URLSearchParams(window.location.search)
-const network = urlParams.get('network') || 'pacific'
-const idx = Object.keys(CONNECTIONS).indexOf(network)
-const commonsNetwork = Object.values(CONNECTIONS)[idx]
+const networkFromParam = urlParams.get('network') || 'pacific'
+const idx = Object.keys(CONNECTIONS).indexOf(networkFromParam)
+const commonsNetwork = Object.values(CONNECTIONS)[idx] // TypeScript won't let me access CONNECTIONS[networkFromParam] directly
 
+console.log(commonsNetwork)
 
-
-export { commonsNetwork }
+export function NetworkSwitcher() {
+  return null
+}

@@ -7,47 +7,47 @@ import { requestFromFaucet } from '../ocean'
 const bip39 = require('bip39')
 
 export class BurnerWalletProvider {
-    private web3: Web3
+  private web3: Web3
 
-    public constructor() {
-        // Default
-        this.web3 = null as any
+  public constructor() {
+    // Default
+    this.web3 = null as any
+  }
+
+  public async isLogged() {
+    if (localStorage.getItem('seedphrase') !== null) {
+      return true
+    }
+    return false
+  }
+
+  public async startLogin() {
+    let mnemonic
+    const isLogged = await this.isLogged()
+
+    if (isLogged) {
+      mnemonic = localStorage.getItem('seedphrase')
+    } else {
+      mnemonic = bip39.generateMnemonic()
+      localStorage.setItem('seedphrase', mnemonic)
     }
 
-    public async isLogged() {
-        if (localStorage.getItem('seedphrase') !== null) {
-            return true
-        }
-        return false
-    }
+    localStorage.setItem('logType', 'BurnerWallet')
+    const provider = new HDWalletProvider(mnemonic, nodeUri, 0, 1)
+    this.web3 = new Web3(provider as any)
+    const accounts = await this.web3.eth.getAccounts()
+    const balance = await this.web3.eth.getBalance(accounts[0])
 
-    public async startLogin() {
-        let mnemonic
-        const isLogged = await this.isLogged()
+    // fill with Ether if account balance is empty
+    balance === '0' && (await requestFromFaucet(provider.getAddress(0)))
+  }
 
-        if (isLogged) {
-            mnemonic = localStorage.getItem('seedphrase')
-        } else {
-            mnemonic = bip39.generateMnemonic()
-            localStorage.setItem('seedphrase', mnemonic)
-        }
+  public async logout() {
+    // localStorage.removeItem('seedphrase')
+    localStorage.removeItem('logType')
+  }
 
-        localStorage.setItem('logType', 'BurnerWallet')
-        const provider = new HDWalletProvider(mnemonic, nodeUri, 0, 1)
-        this.web3 = new Web3(provider as any)
-        const accounts = await this.web3.eth.getAccounts()
-        const balance = await this.web3.eth.getBalance(accounts[0])
-
-        // fill with Ether if account balance is empty
-        balance === '0' && (await requestFromFaucet(provider.getAddress(0)))
-    }
-
-    public async logout() {
-        // localStorage.removeItem('seedphrase')
-        localStorage.removeItem('logType')
-    }
-
-    public getProvider() {
-        return this.web3
-    }
+  public getProvider() {
+    return this.web3
+  }
 }
