@@ -1,43 +1,49 @@
 {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "project": [
-            "./tsconfig.json",
-            "./client/tsconfig.json",
-            "./server/tsconfig.json",
-            "./cypress/tsconfig.json"
-        ]
-    },
-    "extends": [
-        "oceanprotocol",
-        "oceanprotocol/react",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-        "prettier/react",
-        "prettier/standard",
-        "prettier/@typescript-eslint",
-        "plugin:cypress/recommended"
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": [
+      "./tsconfig.json",
+      "./client/tsconfig.json",
+      "./server/tsconfig.json",
+      "./cypress/tsconfig.json"
+    ]
+  },
+  "extends": [
+    "oceanprotocol",
+    "oceanprotocol/react",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier/react",
+    "prettier/standard",
+    "prettier/@typescript-eslint",
+    "plugin:cypress/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "prettier", "cypress"],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      { "multiline": { "delimiter": "none" } }
     ],
-    "plugins": ["@typescript-eslint", "prettier", "cypress"],
-    "rules": {
-        "@typescript-eslint/explicit-function-return-type": 0,
-        "@typescript-eslint/member-delimiter-style": [
-            "error",
-            { "multiline": { "delimiter": "none" } }
-        ],
-        "@typescript-eslint/no-explicit-any": "off"
-    },
-    "env": {
-        "es6": true,
-        "browser": true,
-        "node": true,
-        "jest": true,
-        "cypress/globals": true
-    },
-    "settings": {
-        "react": {
-            "version": "16.10"
-        }
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/no-unescaped-entities": 0,
+    "react/self-closing-comp": 0,
+    "react/void-dom-elements-no-children": 0,
+    "react/jsx-indent": 0,
+    "react/jsx-indent-props": 0,
+    "react/jsx-max-props-per-line": 0
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "cypress/globals": true
+  },
+  "settings": {
+    "react": {
+      "version": "16.10"
     }
+  }
 }
