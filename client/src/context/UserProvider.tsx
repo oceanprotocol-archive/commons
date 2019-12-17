@@ -1,14 +1,22 @@
 import React, { PureComponent } from 'react'
 import Web3 from 'web3'
-import { Ocean, Account } from '@oceanprotocol/squid'
+import { Ocean, Account, Config } from '@oceanprotocol/squid'
 import { User } from '.'
 import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
-import { nodeUri } from '../config'
 import MarketProvider from './MarketProvider'
 import { MetamaskProvider } from './MetamaskProvider'
 import { BurnerWalletProvider } from './BurnerWalletProvider'
 
 import { NetworkSwitcher } from '../components/molecules/NetworkSwitcher'
+
+import {
+  aquariusUri,
+  brizoUri,
+  brizoAddress,
+  nodeUri,
+  secretStoreUri,
+  verbose
+} from '../config'
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
@@ -31,7 +39,17 @@ interface UserProviderState {
   loginMetamask(): Promise<any>
   loginBurnerWallet(): Promise<any>
   logoutBurnerWallet(): Promise<any>
+  loadOcean: (config: Config) => Promise<Ocean | void>
   message: string
+}
+
+const oceanConfig = {
+  nodeUri,
+  aquariusUri,
+  brizoUri,
+  brizoAddress,
+  secretStoreUri,
+  verbose
 }
 
 export default class UserProvider extends PureComponent<{}, UserProviderState> {
@@ -46,7 +64,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         web3
       },
       () => {
-        this.loadOcean()
+        this.loadOcean({
+          web3Provider: this.state.web3,
+          ...oceanConfig
+        })
       }
     )
   }
@@ -62,7 +83,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         web3
       },
       () => {
-        this.loadOcean()
+        this.loadOcean({
+          web3Provider: this.state.web3,
+          ...oceanConfig
+        })
       }
     )
   }
@@ -89,6 +113,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     loginMetamask: () => this.loginMetamask(),
     loginBurnerWallet: () => this.loginBurnerWallet(),
     logoutBurnerWallet: () => this.logoutBurnerWallet(),
+    loadOcean: (config: Config) => this.loadOcean(config),
     message: 'Connecting to Ocean...'
   }
 
@@ -120,13 +145,19 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         web3: DEFAULT_WEB3
       },
       () => {
-        this.loadOcean()
+        this.loadOcean({
+          web3Provider: this.state.web3,
+          ...oceanConfig
+        })
       }
     )
   }
 
-  private loadOcean = async () => {
-    const { ocean } = await provideOcean(this.state.web3)
+  private loadOcean = async (config: Config) => {
+    const { ocean } = await provideOcean({
+      web3Provider: this.state.web3,
+      ...config
+    })
     this.setState({ ocean, isLoading: false }, () => {
       this.initNetworkPoll()
       this.initAccountsPoll()
@@ -152,7 +183,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
               web3
             },
             () => {
-              this.loadOcean()
+              this.loadOcean({
+                web3Provider: this.state.web3,
+                ...oceanConfig
+              })
             }
           )
         } else {

@@ -1,30 +1,8 @@
-import { Ocean, Logger } from '@oceanprotocol/squid'
-import Web3 from 'web3'
-import { User } from './context'
+import { Ocean, Logger, Config } from '@oceanprotocol/squid'
+import { faucetUri } from './config'
 
-import {
-  aquariusUri,
-  brizoUri,
-  brizoAddress,
-  faucetUri,
-  nodeUri,
-  secretStoreUri,
-  verbose
-} from './config'
-
-
-
-export async function provideOcean(web3Provider: Web3) {
-  const config = {
-    web3Provider,
-    nodeUri,
-    aquariusUri,
-    brizoUri,
-    brizoAddress,
-    secretStoreUri,
-    verbose
-  }
-  const ocean: any = await Ocean.getInstance(config)
+export async function provideOcean(config: Config) {
+  const ocean: Ocean = await Ocean.getInstance(config)
   return { ocean }
 }
 
