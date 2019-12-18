@@ -30,6 +30,7 @@ If you're a developer and want to contribute to, or want to utilize this marketp
   - [⛵️ Environment Variables](#️-environment-variables)
     - [Client](#client)
     - [Server](#server)
+    - [Network &amp; Endpoint Switches](#network-amp-endpoint-switches)
     - [Feature Switches](#feature-switches)
     - [More Settings](#more-settings)
 - [👩‍🔬 Testing](#-testing)
@@ -64,7 +65,7 @@ To make use of all the functionality, you need to connect to an Ocean network.
 
 By default, the client will connect to Ocean components running within [Ocean's Pacific network](https://docs.oceanprotocol.com/concepts/pacific-network/) remotely.
 
-By default, the client uses a burner wallet connected to the correct network automatically. If you choose to use MetaMask, you need to connect to the Pacific network. To do this:
+By default, the client uses a burner wallet connected to the correct network automatically. If you choose to use MetaMask, you need to connect to the Pacific network with it too. To do this:
 
 1. select Custom RPC in the network dropdown in MetaMask
 2. under New Network, enter `https://pacific.oceanprotocol.com` as the custom RPC URL
@@ -134,6 +135,23 @@ cp server/.env.example server/.env
 # edit variables
 vi server/.env
 ```
+
+#### Network & Endpoint Switches
+
+| Env Variable              | Feature Description                                                                                                                           |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `REACT_APP_OCEAN_NETWORK` | This env var is a shortcut for a predefined set of Ocean network component endpoints. Possible values are `pacific`, `nile`, `duero`, `spree` |
+
+This shortcut provides a unified place to switch a combination of Ocean component endpoints. This shortcut can also be triggered by using a `network` URL query parameter, e.g. `?network=nile`.
+
+For more control, you can overwrite individual endpoints in addition to the above network selection:
+
+- `REACT_APP_NODE_URI`
+- `REACT_APP_AQUARIUS_URI`
+- `REACT_APP_BRIZO_URI`
+- `REACT_APP_BRIZO_ADDRESS`
+- `REACT_APP_SECRET_STORE_URI`
+- `REACT_APP_FAUCET_URI`
 
 #### Feature Switches
 
