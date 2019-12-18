@@ -1,7 +1,6 @@
 version: '3.4'
 
 services:
-
   client:
     build:
       context: ./client
@@ -21,4 +20,3 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 4000:4000
-
