@@ -8,6 +8,7 @@ import meta from '../../data/meta.json'
 import Content from '../../components/atoms/Content'
 import AssetsLatest from '../../components/organisms/AssetsLatest'
 import ChannelTeaser from '../../components/organisms/ChannelTeaser'
+import Button from '../../components/atoms/Button'
 import Search from './Search'
 import { Link } from 'react-router-dom'
 // import withTracker from '../../hoc/withTracker'
@@ -39,8 +40,10 @@ class Home extends PureComponent<HomeProps, HomeState> {
                 className={styles.home}
             >
                 <Content>
-                    <Search searchAssets={this.searchAssets} />
-                    <Link to="/topics">Browse by topic →</Link>
+                    <div className={styles.mainButtons}>
+                        <Button to="/topics">Browse by topic →</Button>
+                        <Search searchAssets={this.searchAssets} />
+                    </div>
                 </Content>
 
                 <Content wide>

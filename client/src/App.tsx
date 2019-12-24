@@ -43,6 +43,9 @@ export default class App extends Component {
         return (
             <div className={styles.app}>
                 <Router>
+                    <video autoPlay muted loop className={styles.bgVideo}>
+                        <source src="/home-bg.mp4" type="video/mp4" />
+                    </video>
                     <>
                         <Header />
 

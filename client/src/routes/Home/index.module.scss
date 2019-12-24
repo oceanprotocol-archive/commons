@@ -18,4 +18,38 @@
     article > div > h2 + div {
         padding-top: $spacer / 2;
     }
+
+    .mainButtons {
+        overflow: hidden;
+    }
+
+    .mainButtons a {
+        float: left;
+        width: 35%;
+    }
+
+    .mainButtons form {
+        float: left;
+        width: 64%;
+        margin-left: 1%;
+    }
+
+    .mainButtons form input {
+        width: 100%;
+    }
+
+    .mainButtons form button {
+        display: none;
+        -webkit-transition: .2s ease-out;
+        transition: .2s ease-out;
+    }
+
+    .mainButtons form input:focus {
+        width: 75%;
+    }
+
+    .mainButtons form input:focus + button,
+    .mainButtons form input + button:hover {
+        display: block;
+    }
 }
