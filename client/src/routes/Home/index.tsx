@@ -7,7 +7,7 @@ import styles from './index.module.scss'
 import meta from '../../data/meta.json'
 import Content from '../../components/atoms/Content'
 import AssetsLatest from '../../components/organisms/AssetsLatest'
-import ChannelTeaser from '../../components/organisms/ChannelTeaser'
+import UnionTeaser from '../../components/organisms/UnionTeaser'
 import Button from '../../components/atoms/Button'
 import Search from './Search'
 import { Link } from 'react-router-dom'
@@ -18,11 +18,16 @@ interface HomeProps {
 }
 
 interface HomeState {
-    search?: string
+    search?: string,
+    fixedSearch: boolean
 }
 
 class Home extends PureComponent<HomeProps, HomeState> {
     public static contextType = Market
+
+    public state = {
+        fixedSearch: false
+    }
 
     public searchAssets = (
         search: string,
@@ -32,23 +37,43 @@ class Home extends PureComponent<HomeProps, HomeState> {
         this.props.history.push(`/search?text=${search}`)
     }
 
+    handleScroll = () => {
+        if(window.pageYOffset > 400) {
+            this.setState({fixedSearch: true})
+        } else {
+            this.setState({fixedSearch: false})
+        }
+    }
+
+    componentDidMount = () => {
+        window.addEventListener('scroll', this.handleScroll);
+    }
+
     public render() {
+        const { fixedSearch } = this.state;
         return (
             <Route
                 title={meta.title}
                 description={meta.description}
                 className={styles.home}
             >
+                <video autoPlay muted loop className={styles.bgVideo}>
+                    <source src="/home-bg.mp4" type="video/mp4" />
+                </video>
                 <Content>
                     <div className={styles.mainButtons}>
-                        <Button to="/topics">Browse by topic →</Button>
-                        <Search searchAssets={this.searchAssets} />
+                        <div className={fixedSearch ? styles.fixed : ''}>
+                            <Search searchAssets={this.searchAssets} />
+                        </div>
+                        <Link to="/topics">Browse by topic →</Link>
                     </div>
                 </Content>
 
                 <Content wide>
                     <h2 className={styles.title}>Research Groups</h2>
-                    <ChannelTeaser channel="ai-for-good" />
+                    <div className={styles.groups}>
+                        <UnionTeaser channel="ai-for-good" />
+                    </div>
                     <AssetsLatest />
                 </Content>
 

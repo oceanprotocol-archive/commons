@@ -23,15 +23,13 @@
         overflow: hidden;
     }
 
-    .mainButtons a {
-        float: left;
-        width: 35%;
-    }
-
-    .mainButtons form {
-        float: left;
-        width: 64%;
-        margin-left: 1%;
+    .mainButtons .fixed {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 50px;
+        left: 0;
+        z-index: 1;
     }
 
     .mainButtons form input {
@@ -51,5 +49,18 @@
     .mainButtons form input:focus + button,
     .mainButtons form input + button:hover {
         display: block;
+    }
+
+    .bgVideo {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+
+    .groups {
+        height: auto;
+        overflow: hidden;
     }
 }
