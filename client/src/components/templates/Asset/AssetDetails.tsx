@@ -4,6 +4,7 @@ import { DDO, MetaData, File } from '@oceanprotocol/squid'
 import shortid from 'shortid'
 import Markdown from '../../atoms/Markdown'
 import CategoryLink from '../../atoms/CategoryLink'
+import Button from '../../atoms/Button'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 import Report from './Report'
@@ -213,7 +214,7 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                             useHovers={true}
                             currentUser3BoxProfile={null}
                             userProfileURL={(address: string) => `https://mywebsite.com/user/${address}`}
-                            />) : (<p>Please login to 3box to share comments</p>) }
+                            />) : (<><p>Please login to 3box to share comments</p><Button>Login</Button></>) }
                         </div>
                         </div>
                         )}</User.Consumer>

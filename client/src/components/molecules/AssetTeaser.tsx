@@ -53,6 +53,9 @@ const AssetTeaser = ({
                     />
                 )}
                 <h1>{main.name}</h1>
+                {additionalInformation.categories && (
+                    <div>{additionalInformation.categories[0]}</div>
+                )}
                 <div className={styles.hashtags}>
                     <span>{hashtags.reduceRight((i: string, t: string) => `${i}, ${t}`)}</span>
                 </div>
@@ -63,9 +66,6 @@ const AssetTeaser = ({
                             {additionalInformation.description}
                         </Dotdotdot>
                     </div>
-                )}
-                {additionalInformation.categories && (
-                    <div>{additionalInformation.categories[0]}</div>
                 )}
                 <footer className={styles.assetFooter}>
                     <div>{totalFiles} File{totalFiles > 1 ? 's':''}</div>

@@ -1,12 +1,13 @@
 import React, { /*useContext,*/ Component } from 'react'
 import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
-import Flipcard from '../components/atoms/Flipcard'
+import SlideUpCard from '../components/atoms/SlideUpCard'
 import CategoryImage from '../components/atoms/CategoryImage'
 import CategoryLink from '../components/atoms/CategoryLink'
 import { Market } from '../context'
 import styles from './Topics.module.scss'
 // import withTracker from '../hoc/withTracker'
+import Fade from 'react-reveal/Fade'
 
 class Topics extends Component {
     public static contextType = Market
@@ -24,7 +25,7 @@ class Topics extends Component {
             {this.context.categories
                 .sort((a: any, b: any) => a.localeCompare(b)) // sort alphabetically
                 .map((category: string) => (
-                    <Flipcard frontContent={
+                    <Fade><SlideUpCard frontContent={
                         <CategoryLink
                         category={category}
                         key={category}
@@ -38,7 +39,7 @@ class Topics extends Component {
                         category={category}
                         key={category}
                         ><h3>3 results</h3></CategoryLink>
-                    } ></Flipcard>
+                    } ></SlideUpCard></Fade>
                 ))}
                 </div>
                 </Content>

@@ -39,10 +39,11 @@
 .active {
     composes: item;
     font-weight: $font-weight-bold;
-    color: $brand-black;
+    color: $brand-white;
 
     .number {
-        background: $brand-black;
+        color: $brand-black;
+        background: $brand-white;
     }
 
     &:before {

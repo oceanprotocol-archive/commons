@@ -65,11 +65,12 @@
 .metaFixed {
     border: 1px solid $brand-grey-lighter;
     padding: $spacer;
-    border-radius: $border-radius;
+    border-radius: 10px;
     margin-top: $spacer;
     margin-bottom: $spacer * $line-height;
     font-size: $font-size-small;
     position: relative;
+    background-color: rgba(255,255,255,.1);
 
     ul {
         padding: 0;
@@ -179,7 +180,7 @@
 
     &:last-child::after {
         position: absolute;
-        width: 348px;
+        width: 275px;
         content: '';
         border-bottom: 1px solid #f30068;
         bottom: 0px;

@@ -88,6 +88,50 @@
     // }
 }
 
+.taginput {
+    font-size: $font-size-base;
+    font-family: $font-family-base;
+    font-weight: $font-weight-bold;
+    color: $brand-black;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    background: $brand-white;
+    padding: $spacer / 3;
+    margin: 0;
+    border-radius: $border-radius;
+    transition: .2s ease-out;
+    min-height: 43px;
+    appearance: none;
+
+    &:focus {
+        border: none;
+        box-shadow: none;
+        outline: 0;
+    }
+
+    &::placeholder {
+        font-family: $font-family-base;
+        font-size: $font-size-base;
+        color: $brand-grey-light;
+        font-weight: $font-weight-base;
+        transition: .2s ease-out;
+        opacity: .7;
+    }
+
+    &[readonly],
+    &[disabled] {
+        background-color: $brand-grey-lighter;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    input {
+        width: 100%;
+        border-width: 0px;
+    }
+}
+
 .select {
     composes: input;
     height: 43px;
@@ -159,7 +203,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    color: $brand-grey;
+    color: $brand-white;
     text-align: left;
     padding-left: 2.5rem;
     display: flex;
@@ -191,10 +235,10 @@
 
 .selectedTag {
     background-color: #2a2d47;
-    color: #fff;
-    padding: 10px 20px;
+    color: $brand-white;
+    padding: 5px 10px;
     margin-right: 2px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-sizing: unset;
     border-width: 0px;
 }

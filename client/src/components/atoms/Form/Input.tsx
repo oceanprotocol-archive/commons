@@ -195,7 +195,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
                 )
             case 'tags':
                 const tagStyles = {
-                    root: styles.input,
+                    root: styles.taginput,
                     selectedTag: styles.selectedTag
                 }
                 return (
