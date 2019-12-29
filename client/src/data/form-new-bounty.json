@@ -1,0 +1,86 @@
+{
+  "title": "New Data Bounty",
+  "description": "Create a new Data Bounty",
+  "fields": {
+    "name": {
+      "label": "Title",
+      "placeholder": "Daily Mobility",
+      "type": "text",
+      "required": true,
+      "help": "A title for the data crowdsourcing"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Capture your commute to work, home, etc",
+      "type": "text",
+      "required": true,
+      "help": "A brief description of the task"
+    },
+    "category": {
+      "label": "Category",
+      "help": "Pick a category which best fits your data set.",
+      "type": "select",
+      "required": true,
+      "options": [
+        "Image Recognition",
+        "Psychology",
+        "Politics",
+        "Economics & Finance",
+        "Demography",
+        "Biology",
+        "Chemistry",
+        "Physics & Energy",
+        "Earth & Climate",
+        "Space & Astronomy",
+        "Mathematics",
+        "Computer Science",
+        "Engineering",
+        "Agriculture & Bio Engineering",
+        "Transportation",
+        "Urban Planning",
+        "Health & Medicine",
+        "Business & Management",
+        "Communication & Journalism",
+        "Deep Learning",
+        "Other"
+      ]
+    },
+    "fulfillmentAmount": {
+      "label": "Prize",
+      "placeholder": "Reward amount",
+      "type": "text",
+      "required": true,
+      "help": "Amount of tokens to be paid per/record per/usage"
+    },
+    "difficulty": {
+      "label": "Difficulty",
+      "type": "select",
+      "required": true,
+      "options": ["Easy", "Medium", "Hard"]
+    },
+    "fulfillersNeedApproval": {
+      "label": "Fulfillers Need Approval?",
+      "type": "radio",
+      "required": true,
+      "options": ["Yes", "No"]
+    },
+    "dataSchemaURIs": {
+      "label": "Data Schema",
+      "placeholder": "e.g. https://file.com/file.json",
+      "type": "text",
+      "required": true,
+      "help": "Upload a sample file with the required data fields in CSV format"
+    },
+    "webReferenceURIs": {
+      "label": "Reference Link",
+      "placeholder": "e.g. https://site.com/crowdsourcing_info",
+      "type": "text",
+      "required": false,
+      "help": "Specify any other useful reference"
+    },
+    "submit": {
+      "type": "submit",
+      "value": "Create New Bounty"
+    }
+  }
+}

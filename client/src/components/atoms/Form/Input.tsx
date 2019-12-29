@@ -18,6 +18,8 @@ interface InputProps {
     help?: string
     tag?: string
     type?: string
+    sort?: boolean
+    keys?: string[]
     options?: string[]
     additionalComponent?: any
     value?: string
@@ -94,6 +96,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
     public InputComponent = () => {
         const {
             type,
+            sort,
+            keys,
             options,
             group,
             name,
@@ -107,6 +111,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
 
         switch (type) {
             case 'select':
+                const keyOpts = keys && sort !== false ? keys.sort((a, b) => a.localeCompare(b)):keys
+                const opts = options && sort !== false ? options.sort((a, b) => a.localeCompare(b)):options
                 return (
                     <div className={wrapClass}>
                         <select
@@ -120,11 +126,10 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             value={value}
                         >
                             <option value="">---</option>
-                            {options &&
-                                options
-                                    .sort((a, b) => a.localeCompare(b))
+                            {opts &&
+                                opts
                                     .map((option: string, index: number) => (
-                                        <option key={index} value={option}>
+                                        <option key={index} value={keyOpts ? keyOpts[index]:option}>
                                             {option}
                                         </option>
                                     ))}

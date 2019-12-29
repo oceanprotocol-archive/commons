@@ -1,6 +1,6 @@
 [
   {
-    "title": "Channels",
+    "title": "R&D Data Unions",
     "link": "/channels"
   },
   {
@@ -8,15 +8,11 @@
     "link": "/publish"
   },
   {
+    "title": "Bounties",
+    "link": "/bounties"
+  },
+  {
     "title": "History",
     "link": "/history"
-  },
-  {
-    "title": "Faucet",
-    "link": "/faucet"
-  },
-  {
-    "title": "About",
-    "link": "/about"
   }
 ]

@@ -337,3 +337,10 @@ pre {
     background: $brand-grey-light;
     color: #fff;
 }
+
+.toastMsg {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    z-index: 100;
+}
