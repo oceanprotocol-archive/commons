@@ -6,7 +6,7 @@ import { User } from '.'
 // import { provideOcean, requestFromFaucet, FaucetResponse, airdropOceanTokens } from '../ocean'
 // import { requestAccessTo3box } from '../3box'
 import { marketplaceId, networkId, nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose,
-        portisAppId, torusEnabled } from '../config'
+        faucetUri, portisAppId, torusEnabled } from '../config'
 import MarketProvider from './MarketProvider'
 // import { MetamaskProvider } from './MetamaskProvider'
 // import { BurnerWalletProvider } from './BurnerWalletProvider'
@@ -164,7 +164,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 },
                 oceanOptions: {
                   enabled: true,
-                  settings: { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose }
+                  settings: { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose },
+                  faucetURI: faucetUri
                 }
             })
             wallet.on("web3connected", this.connectToWeb3Provider.bind(this));
