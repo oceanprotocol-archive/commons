@@ -25,10 +25,10 @@
 
     .mainButtons .fixed {
         position: fixed;
-        top: 0;
-        width: 100%;
+        top: 85px;
+        width: calc(1140px - 4rem);
         height: 50px;
-        left: 0;
+        left: calc((100% - 1140px + 4rem) / 2);
         z-index: 1;
     }
 

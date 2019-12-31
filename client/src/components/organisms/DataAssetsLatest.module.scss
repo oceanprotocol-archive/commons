@@ -1,0 +1,42 @@
+@import '../../styles/variables';
+
+.latestAssetsWrap {
+    // full width break out of container
+    margin-right: 0;
+}
+
+.latestAssets {
+    width: 100%;
+    padding: $spacer / 2 0;
+
+
+    &::-webkit-scrollbar,
+    &::-moz-scrollbar {
+        display: none;
+    }
+
+    article {
+        width: 24%;
+        float: left;
+        margin: 10px 0.5%;
+
+        > a {
+            min-height: 270px;
+        }
+
+    }
+}
+
+.title {
+    font-size: $font-size-h4;
+    text-align: center;
+    color: $brand-grey-light;
+    border-bottom: 1px solid $brand-grey-lighter;
+    padding-bottom: $spacer / 3;
+    margin-top: $spacer * 3;
+    margin-bottom: $spacer / 2;
+
+    @media (min-width: $break-point--small) {
+        text-align: left;
+    }
+}

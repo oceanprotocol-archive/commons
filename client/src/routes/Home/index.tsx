@@ -6,7 +6,7 @@ import styles from './index.module.scss'
 
 import meta from '../../data/meta.json'
 import Content from '../../components/atoms/Content'
-import AssetsLatest from '../../components/organisms/AssetsLatest'
+import DataAssetsLatest from '../../components/organisms/DataAssetsLatest'
 import UnionTeaser from '../../components/organisms/UnionTeaser'
 import Button from '../../components/atoms/Button'
 import Search from './Search'
@@ -38,7 +38,8 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
 
     handleScroll = () => {
-        if(window.pageYOffset > 400) {
+        console.log(window.pageYOffset)
+        if(window.pageYOffset > 230) {
             this.setState({fixedSearch: true})
         } else {
             this.setState({fixedSearch: false})
@@ -74,7 +75,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
                     <div className={styles.groups}>
                         <UnionTeaser channel="ai-for-good" />
                     </div>
-                    <AssetsLatest />
+                    <DataAssetsLatest />
                 </Content>
 
             </Route>
