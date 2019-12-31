@@ -7,6 +7,7 @@ import CategoryLink from '../../atoms/CategoryLink'
 import Button from '../../atoms/Button'
 import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
+import AssetLinks from './AssetLinks'
 import Report from './Report'
 // import { allowPricing } from '../../../config'
 import Web3 from 'web3'
@@ -65,9 +66,15 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
         const { main, additionalInformation } = metadata
         const price = main.price && Web3.utils.fromWei(main.price.toString())
         const bondingCurveContractAddress = ''
-
         const contractArtifact = {}
 
+        let cats = '', lang = ''
+        if(additionalInformation && additionalInformation.categories) {
+            cats = additionalInformation.categories.join()
+        }
+        if(additionalInformation && additionalInformation.inLanguage) {
+            lang = additionalInformation.inLanguage
+        }
         const metaFixed = [
             {
                 name: 'Author',
@@ -83,6 +90,21 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                 name: 'DID',
                 value: ddo.id,
                 show: true
+            },
+            {
+                name: 'Type',
+                value: main.type,
+                show: true
+            },
+            {
+                name: 'Language',
+                value: lang,
+                show: lang !== ''
+            },
+            {
+                name: 'Categories',
+                value: cats,
+                show: cats !== ''
             },
             {
                 name: 'Price',
@@ -137,12 +159,22 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                     className={styles.description}
                     />
                 )*/}
+
+                {additionalInformation && additionalInformation.tags && (
+                    <div className={styles.tags}>
+                    {additionalInformation.tags.map(tag => (
+                        <span>{tag}</span>
+                    ))}
+                    </div>
+                )}
+
                 {additionalInformation && additionalInformation.description && (
                     <Markdown
                         text={additionalInformation.description}
                         className={styles.description}
                     />
                 )}
+
 
 
                 <Report did={ddo.id} title={main.name} />
@@ -152,7 +184,8 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                 <div className={styles.tabLinks}>
                 <a href="#general" className={this.state.active === 'general' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'general'}) }>General</a>
                 <a href="#download" className={this.state.active === 'donwload' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'download'}) }>Download</a>
-                <a href="#bonding" className={this.state.active === 'bonding' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'bonding'}) }>Bonding Curve</a>
+                <a href="#links" className={this.state.active === 'links' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'links'}) }>Links</a>
+                <a href="#bonding" className={this.state.active === 'bonding' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'bonding'}) }>Pricing</a>
                 <a href="#comments" className={this.state.active === 'comments' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'comments'}) }>Comments</a>
                 </div>
 
@@ -183,6 +216,9 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                         </div>
                         <div className={this.state.active === 'download' ? styles.activeTab : styles.tab} id="download">
                         <AssetFilesDetails files={main.files ? main.files : []} ddo={ddo} />
+                        </div>
+                        <div className={this.state.active === 'links' ? styles.activeTab : styles.tab} id="links">
+                        {additionalInformation && additionalInformation.links && (<AssetLinks files={additionalInformation.links ? additionalInformation.links : []} />)}
                         </div>
                         <div className={this.state.active === 'bonding' ? styles.activeTab : styles.tab} id="bonding">
                             <BondingCurve

@@ -38,7 +38,6 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
 
     handleScroll = () => {
-        console.log(window.pageYOffset)
         if(window.pageYOffset > 230) {
             this.setState({fixedSearch: true})
         } else {
