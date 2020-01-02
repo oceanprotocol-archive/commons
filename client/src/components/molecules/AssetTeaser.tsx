@@ -46,7 +46,7 @@ const AssetTeaser = ({
                     />
                 )}
                 <h1>{main.name}</h1>
-
+                <h2>test</h2>
                 {!minimal && (
                     <div className={styles.description}>
                         <Dotdotdot clamp={3}>
