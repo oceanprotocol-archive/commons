@@ -3,6 +3,7 @@ import { File } from '@oceanprotocol/squid'
 import { ToastMessage } from 'rimble-ui';
 import Route from '../../components/templates/Route'
 import AssetsUser from '../../components/organisms/AssetsUser'
+import BountiesList from '../../components/organisms/BountiesList'
 import Web3message from '../../components/organisms/Web3message'
 import { Market } from '../../context'
 import Content from '../../components/atoms/Content'
@@ -31,7 +32,7 @@ interface IBountiesState {
     dataSchemaURIs: File[] // bounty meta: ipfsHash & ipfsFilename
     webReferenceURIs: File[] // bounty meta
     expectedRevisions: number // bounty meta - set as a constant
-    privateFulfillments: boolean // bounty meta - set as a constant    
+    privateFulfillments: boolean // bounty meta - set as a constant
 }
 
 class Bounties extends Component {
@@ -51,7 +52,7 @@ class Bounties extends Component {
         webReferenceURIs: [],
         expectedRevisions: 1,
         privateFulfillments: false
-       
+
     }
 
     bountyMeta = {
@@ -114,7 +115,7 @@ class Bounties extends Component {
         const ipfsFilename = ipfsURI.match(/(?!=\/)([A-Z0-9\.]+)$/gi)
 
         const webReferenceURL = this.state.dataSchemaURIs[0].url
-        
+
 
         console.log('submit', this.state)
         this.setState({ doneProcessing: true })
@@ -148,7 +149,7 @@ class Bounties extends Component {
                       actionHref={"#!"}
                     />
                 )}
-                
+
                 <Modal
                     isOpen={modalIsOpen}
                     onAfterOpen={() => console.log('Modal has opened')}
@@ -160,7 +161,7 @@ class Bounties extends Component {
                 </Modal>
                 <Content>
                     {/* <AssetsUser list /> */}
-                    <div>Bounties</div>
+                    <BountiesList />
                     <Button onClick={() => this.openModal()} primary>Create a Data Bounty</Button>
                 </Content>
             </Route>

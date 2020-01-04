@@ -1,0 +1,57 @@
+@import '../../styles/variables';
+
+.bountiesContainer {
+    margin-top: $spacer;
+    margin-bottom: $spacer;
+    overflow: hidden;
+
+    .bounty {
+        width: 100%;
+        float: left;
+        border: 1px solid $brand-white;
+        border-radius: 10px;
+        padding: $spacer / 2;
+    }
+}
+
+.leftArea {
+    float: left;
+    width: 70%;
+}
+
+.rightArea {
+    float: right;
+    width: 30%;
+}
+
+span {
+    width: 100%;
+    display: block;
+}
+
+.tag {
+    background-color: $dark-pink;
+    border-radius: 10px;
+    padding: $spacer / 6;
+    display: inline-block;
+    width: auto;
+    font-size: $font-size-small;
+}
+
+.subTitle {
+    font-size: $font-size-h5;
+    color: $brand-grey-light;
+    padding-bottom: $spacer / 4;
+    margin-bottom: 0;
+}
+
+.link {
+    display: block;
+    margin-top: $spacer / 2;
+}
+
+.empty {
+    text-align: center;
+    margin-top: $spacer;
+    color: $brand-grey-light;
+}

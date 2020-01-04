@@ -3,6 +3,7 @@
 .latestAssetsWrap {
     // full width break out of container
     margin-right: 0;
+    overflow: hidden;
 }
 
 .latestAssets {
@@ -21,7 +22,7 @@
         margin: 10px 0.5%;
 
         > a {
-            min-height: 270px;
+            min-height: 285px;
         }
 
     }

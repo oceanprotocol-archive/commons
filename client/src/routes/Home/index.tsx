@@ -8,6 +8,7 @@ import meta from '../../data/meta.json'
 import Content from '../../components/atoms/Content'
 import DataAssetsLatest from '../../components/organisms/DataAssetsLatest'
 import UnionTeaser from '../../components/organisms/UnionTeaser'
+import BountiesList from '../../components/organisms/BountiesList'
 import Button from '../../components/atoms/Button'
 import Search from './Search'
 import { Link } from 'react-router-dom'
@@ -77,6 +78,10 @@ class Home extends PureComponent<HomeProps, HomeState> {
                     <DataAssetsLatest />
                 </Content>
 
+                <Content wide>
+                    <h2 className={styles.title}>Bounties</h2>
+                    <BountiesList />
+                </Content>
             </Route>
         )
     }
