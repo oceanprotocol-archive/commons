@@ -1,0 +1,123 @@
+@import '../../styles/variables';
+
+.searchModal {
+    height: 300px;
+    width: 685px;
+    max-width: 100%;
+    background: white;
+    border-radius: 10px;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: -30px;
+	animation: slideInDown .5s;
+	display: none;
+
+	.searchModalHeader {
+		display: flex;
+		padding: 10px;
+		border-bottom: 1px solid $brand-black;
+		& h3{
+            color: $brand-black;
+			font-size: 16px;
+			text-transform: uppercase;
+			font-weight: 500;
+			float: left;
+		}
+
+		& span {
+            border: 1px solid $brand-black;
+            color: $brand-black;
+            border-radius: 50%;
+		    float: right;
+			position: absolute;
+			right: 16px;
+			top: 25px;
+			margin: 0 auto;
+			cursor: pointer;
+			transition: .5s all;
+            padding: 0px 5px;
+            font-size: 10px;
+			&:hover{
+				transform: scale(1.1);
+			}
+		}
+	}
+	.searchModalBody{
+		padding: 20px;
+		height: 285px;
+		overflow-y:scroll;
+
+		& .message{
+		display: flex;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 10px;
+			.messageAvatar{
+				margin-right: 16px;
+				margin-top: 10px;
+				& img{
+					height: 60px;
+					width: 60px;
+					border-radius: 30px;
+					object-fit: cover;
+					box-shadow: 0 4px 8px rgba(0,0,0,.45);
+				}
+			}
+			.messageBody{
+				margin-left: 0;
+				margin-top: 8px;
+				& p{
+					margin-bottom:0;
+					font-size: 14px;
+					font-weight: 500;
+					color: #444;
+				}
+				& small{
+					font-weight: 400;
+					font-family: Dosis;
+					color: #777;
+				}
+			}
+
+			&:hover{
+				background-color: #2F94D817;
+			}
+		}
+
+		&::-webkit-scrollbar {
+	        width: 5px;
+		}
+
+
+		&::-webkit-scrollbar-track {
+	        background: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+	        background: #2F94D8;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+			box-shadow: -1px 0 5px rgba(0,0,0,.15);
+		}
+
+
+		&::-webkit-scrollbar-thumb:hover {
+             background: #555;
+		}
+	}
+}
+
+@keyframes slideInDown {
+  from {
+    -webkit-transform: translate3d(0, -15%, 0);
+    transform: translate3d(0, -15%, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}

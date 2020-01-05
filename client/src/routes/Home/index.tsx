@@ -11,6 +11,8 @@ import UnionTeaser from '../../components/organisms/UnionTeaser'
 import BountiesList from '../../components/organisms/BountiesList'
 import Button from '../../components/atoms/Button'
 import Search from './Search'
+import FixedSearch from './FixedSearch'
+import SearchResults from './SearchResults'
 import { Link } from 'react-router-dom'
 // import withTracker from '../../hoc/withTracker'
 
@@ -20,14 +22,16 @@ interface HomeProps {
 
 interface HomeState {
     search?: string,
-    fixedSearch: boolean
+    fixedSearch: boolean,
+    showSearch: boolean
 }
 
 class Home extends PureComponent<HomeProps, HomeState> {
     public static contextType = Market
 
     public state = {
-        fixedSearch: false
+        fixedSearch: false,
+        showSearch: false
     }
 
     public searchAssets = (
@@ -52,6 +56,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
 
     public render() {
         const { fixedSearch } = this.state;
+        const results:any = [];
         return (
             <Route
                 title={meta.title}
@@ -63,9 +68,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
                 </video>
                 <Content>
                     <div className={styles.mainButtons}>
-                        <div className={fixedSearch ? styles.fixed : ''}>
+                        {fixedSearch && (
+                            <FixedSearch searchAssets={this.searchAssets} />
+                        )}
+                        <div>
                             <Search searchAssets={this.searchAssets} />
                         </div>
+                        <SearchResults results={results}/>
                         <Link to="/topics">Browse by topic →</Link>
                     </div>
                 </Content>
