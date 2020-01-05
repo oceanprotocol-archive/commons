@@ -21,7 +21,7 @@ const AssetTeaser = ({
 }) => {
     const { attributes } = asset.findServiceByType ? asset.findServiceByType('metadata') : asset
     const { main, additionalInformation } = attributes
-    let tags = additionalInformation.tags || []
+    let tags = (additionalInformation && additionalInformation.tags) || []
     let hashtags = [ main.type ]
     hashtags.push(...tags)
     hashtags = hashtags.map((tag) => `#${tag}`)
@@ -46,21 +46,21 @@ const AssetTeaser = ({
             }
         >
             <Link to={!readOnly ? `/asset/${asset.id}`:'#'}>
-                {additionalInformation.categories && !minimal && (
+                {additionalInformation && additionalInformation.categories && !minimal && (
                     <CategoryImage
                         dimmed={!readOnly}
                         category={additionalInformation.categories[0]}
                     />
                 )}
                 <h1>{main.name}</h1>
-                {additionalInformation.categories && (
+                {additionalInformation && additionalInformation.categories && (
                     <div>{additionalInformation.categories[0]}</div>
                 )}
                 <div className={styles.hashtags}>
                     <span>{hashtags.reduceRight((i: string, t: string) => `${i}, ${t}`)}</span>
                 </div>
 
-                {!minimal && (
+                {additionalInformation && !minimal && (
                     <div className={styles.description}>
                         <Dotdotdot clamp={3}>
                             {additionalInformation.description}
