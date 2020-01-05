@@ -34,6 +34,7 @@ interface MarketProviderState {
         retrieveDDO: (did: string) => Promise<DDO>
     },
     ocean: Ocean | undefined
+    wallet: any | undefined
 }
 
 export default class MarketProvider extends PureComponent<
@@ -53,15 +54,14 @@ export default class MarketProvider extends PureComponent<
                 queryMetadata: this.queryMetadata,
                 retrieveDDO: this.retrieveDDO
             },
-            ocean: undefined
+            ocean: undefined,
+            wallet: undefined
 
         }
     }
 
     public async componentDidMount() {
         await this.checkCorrectUserNetwork()
-        const { ocean } = this.context
-        this.setState({ ocean })
     }
 
     public async componentDidUpdate(prevProps: any) {
@@ -140,6 +140,8 @@ export default class MarketProvider extends PureComponent<
     }
 
     public render() {
+        const { ocean, wallet } = this.context
+        this.setState({ ocean, wallet })
         return (
             <Market.Provider value={this.state}>
                 {this.props.children}

@@ -2,7 +2,7 @@
   "title": "New Data Bounty",
   "description": "Create a new Data Bounty",
   "fields": {
-    "name": {
+    "title": {
       "label": "Title",
       "placeholder": "Daily Mobility",
       "type": "text",
@@ -77,6 +77,12 @@
       "type": "text",
       "required": false,
       "help": "Specify any other useful reference"
+    },
+    "deadline": {
+      "label": "Contribution Deadline",
+      "help": "Select the max date to accept contributions.",
+      "type": "date",
+      "required": true
     },
     "submit": {
       "type": "submit",

@@ -36,6 +36,7 @@ interface FilesProps {
             | ChangeEvent<HTMLSelectElement>
             | ChangeEvent<HTMLTextAreaElement>
     ): void
+    excludeButtons?: Array<string>
 }
 
 interface FilesStates {
@@ -156,9 +157,10 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
     }
 
     public render() {
-        const { files, help, placeholder, name, onChange } = this.props
+        const { files, help, placeholder, name, onChange, excludeButtons } = this.props
         const { isFormShown, isIpfsFormShown } = this.state
 
+        const filter = excludeButtons || []
         return (
             <>
                 {help && <Help>{help}</Help>}
@@ -185,7 +187,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                         </ul>
                     )}
 
-                    {buttons.map(button => {
+                    {buttons.filter(button => !filter.includes(button.id)).map(button => {
                         const isActive =
                             (button.id === 'url' && isFormShown) ||
                             (button.id === 'ipfs' && isIpfsFormShown)

@@ -344,3 +344,7 @@ pre {
     top: 0;
     z-index: 100;
 }
+
+div.iconBox svg {
+    max-width: none;
+}
