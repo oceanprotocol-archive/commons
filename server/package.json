@@ -19,7 +19,7 @@
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-validator": "^6.3.0",
+    "express-validator": "^6.3.1",
     "morgan": "^1.9.1",
     "request": "^2.88.0"
   },
@@ -28,17 +28,17 @@
     "@types/compression": "^1.0.1",
     "@types/debug": "^4.1.5",
     "@types/express": "^4.17.2",
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^24.0.25",
     "@types/morgan": "^1.7.37",
-    "@types/node": "^12.12.17",
-    "@types/request": "^2.48.3",
+    "@types/node": "^13.1.4",
+    "@types/request": "^2.48.4",
     "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
     "nodemon": "^2.0.2",
     "supertest": "^4.0.2",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   },
   "repository": {
     "type": "git",
