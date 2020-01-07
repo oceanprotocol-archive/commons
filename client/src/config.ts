@@ -42,31 +42,31 @@ export const faucetUri =
     process.env.REACT_APP_FAUCET_URI || 'https://faucet.oceanprotocol.com'
 
 export const CONNECTIONS = {
-    Pacific: {
+    pacific: {
         nodeUri: 'https://pacific.oceanprotocol.com',
         aquariusUri: 'https://aquarius.commons.oceanprotocol.com',
         brizoUri: 'https://brizo.commons.oceanprotocol.com',
         brizoAddress: '0x008c25ed3594e094db4592f4115d5fa74c4f41ea',
         secretStoreUri: 'https://secret-store.oceanprotocol.com',
-        //faucetUri: 'https://faucet.oceanprotocol.com',
+        faucetUri: 'https://faucet.oceanprotocol.com',
         verbose: true
     },
-    Nile: {
+    nile: {
         nodeUri: 'https://nile.dev-ocean.com',
         aquariusUri: 'https://aquarius.nile.dev-ocean.com',
         brizoUri: 'https://brizo.nile.dev-ocean.com',
         brizoAddress: '0x4aaab179035dc57b35e2ce066919048686f82972',
         secretStoreUri: 'https://secret-store.nile.dev-ocean.com',
-        //faucetUri: 'https://faucet.nile.dev-ocean.com',
+        faucetUri: 'https://faucet.nile.dev-ocean.com',
         verbose: true
     },
-    Duero: {
+    duero: {
         nodeUri: 'https://duero.dev-ocean.com',
         aquariusUri: 'https://aquarius.duero.dev-ocean.com',
         brizoUri: 'https://brizo.duero.dev-ocean.com',
         brizoAddress: '0x9d4ed58293f71122ad6a733c1603927a150735d0',
         secretStoreUri: 'https://secret-store.duero.dev-ocean.com',
-        //faucetUri: 'https://faucet.duero.dev-ocean.com',
+        faucetUri: 'https://faucet.duero.dev-ocean.com',
         verbose: true
     }
 }

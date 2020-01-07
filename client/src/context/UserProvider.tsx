@@ -6,30 +6,20 @@ import { provideOcean, requestFromFaucet, FaucetResponse } from '../ocean'
 import MarketProvider from './MarketProvider'
 import { MetamaskProvider } from './MetamaskProvider'
 import { BurnerWalletProvider } from './BurnerWalletProvider'
-import { NetworkSwitcher } from '../components/molecules/NetworkSwitcher'
-
+import { urlq } from '../utils/utils'
 import {
-    aquariusUri,
-    brizoUri,
-    brizoAddress,
-    nodeUri,
-    secretStoreUri,
-    verbose,
-    CONNECTIONS
-} from '../config'
+    NetworkSwitcher,
+    oceanConfig
+} from '../components/molecules/NetworkSwitcher'
 
-const oceanConfig = {
-    nodeUri,
-    aquariusUri,
-    brizoUri,
-    brizoAddress,
-    secretStoreUri,
-    verbose
-}
+console.log({ oceanConfig })
+
+const { nodeUri } = oceanConfig
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
 const DEFAULT_WEB3 = new Web3(new Web3.providers.HttpProvider(nodeUri)) // default web3
+const networkUrlParam = urlq.get('network') || ''
 
 interface UserProviderState {
     isLogged: boolean
@@ -77,7 +67,11 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         message: 'Connecting to Ocean...'
     }
 
-    private switchNetwork = (network: string, config: Config) => {
+    public async componentDidMount() {
+        await this.bootstrap()
+    }
+
+    private switchNetwork = async (network: string, config: Config) => {
         console.log({ network, config, oceanConfig })
         const nodeUrl: any = config.nodeUri
         this.setState(
@@ -85,11 +79,12 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 network,
                 web3: new Web3(new Web3.providers.HttpProvider(nodeUrl))
             },
-            () =>
+            () => {
                 this.loadOcean({
                     web3Provider: this.state.web3,
                     ...config
                 })
+            }
         )
     }
 
@@ -114,7 +109,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private loginBurnerWallet = async () => {
-        console.log('loginMetamask')
         const burnerwalletProvider = new BurnerWalletProvider()
         await burnerwalletProvider.startLogin()
         const web3 = burnerwalletProvider.getProvider()
@@ -124,7 +118,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 isBurner: true,
                 web3
             },
-            () => {
+            async () => {
+                await this.switchNetwork(networkUrlParam, oceanConfig)
                 this.loadOcean({
                     web3Provider: this.state.web3,
                     ...oceanConfig
@@ -142,10 +137,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private networkInterval: any = null
 
-    public async componentDidMount() {
-        await this.bootstrap()
-    }
-
     private initAccountsPoll() {
         if (!this.accountsInterval) {
             this.accountsInterval = setInterval(
@@ -162,7 +153,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private loadDefaultWeb3 = async () => {
-        console.log('loadDefaultWeb3')
         this.setState(
             {
                 isLogged: false,
@@ -179,7 +169,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private loadOcean = async (config: Config) => {
-        console.log('load ocean', config)
         const { ocean } = await provideOcean({
             web3Provider: this.state.web3,
             ...config
@@ -195,8 +184,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     private bootstrap = async () => {
         const logType = localStorage.getItem('logType')
         const metamaskProvider = new MetamaskProvider()
-
-        console.log('BOOTSTRAP', { logType })
 
         switch (logType) {
             case 'Metamask':
@@ -280,17 +267,16 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private fetchNetwork = async () => {
         const { ocean } = this.state
-        console.log('1 this.state.network', this.state.network)
         let network = 'Unknown'
         if (ocean.keeper) {
             network = await ocean.keeper.getNetworkName()
         }
-
         network !== this.state.network && this.setState({ network })
-        console.log('2 this.state.network', this.state.network)
+        console.log(await ocean.keeper.getNetworkName())
     }
 
     public render() {
+        //console.log(this.state.network)
         return (
             <User.Provider value={this.state}>
                 <MarketProvider ocean={this.state.ocean}>

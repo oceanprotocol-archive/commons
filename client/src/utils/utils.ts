@@ -11,6 +11,8 @@ export function formatBytes(a: number, b: number) {
     return parseFloat((a / Math.pow(c, f)).toFixed(d)) + ' ' + e[f]
 }
 
+export const urlq = new URLSearchParams(window.location.search)
+
 export function arraySum(array: number[]) {
     return array.reduce((a, b) => a + b, 0)
 }
