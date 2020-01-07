@@ -12,7 +12,6 @@ import BountiesList from '../../components/organisms/BountiesList'
 import Button from '../../components/atoms/Button'
 import Search from './Search'
 import FixedSearch from './FixedSearch'
-import SearchResults from './SearchResults'
 import { Link } from 'react-router-dom'
 // import withTracker from '../../hoc/withTracker'
 
@@ -74,7 +73,6 @@ class Home extends PureComponent<HomeProps, HomeState> {
                         <div>
                             <Search searchAssets={this.searchAssets} />
                         </div>
-                        <SearchResults results={results}/>
                         <Link to="/topics">Browse by topic →</Link>
                     </div>
                 </Content>

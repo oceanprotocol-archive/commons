@@ -12,7 +12,7 @@
     margin: 0 auto;
     top: -30px;
 	animation: slideInDown .5s;
-	display: none;
+	// display: none;
 
 	.searchModalHeader {
 		display: flex;
@@ -46,45 +46,8 @@
 	}
 	.searchModalBody{
 		padding: 20px;
-		height: 285px;
+		height: 230px;
 		overflow-y:scroll;
-
-		& .message{
-		display: flex;
-    cursor: pointer;
-    padding: 10px 15px;
-    border-radius: 10px;
-			.messageAvatar{
-				margin-right: 16px;
-				margin-top: 10px;
-				& img{
-					height: 60px;
-					width: 60px;
-					border-radius: 30px;
-					object-fit: cover;
-					box-shadow: 0 4px 8px rgba(0,0,0,.45);
-				}
-			}
-			.messageBody{
-				margin-left: 0;
-				margin-top: 8px;
-				& p{
-					margin-bottom:0;
-					font-size: 14px;
-					font-weight: 500;
-					color: #444;
-				}
-				& small{
-					font-weight: 400;
-					font-family: Dosis;
-					color: #777;
-				}
-			}
-
-			&:hover{
-				background-color: #2F94D817;
-			}
-		}
 
 		&::-webkit-scrollbar {
 	        width: 5px;
