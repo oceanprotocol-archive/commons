@@ -46,7 +46,6 @@ describe('Files', () => {
 
     it('renders without crashing', () => {
         const { container } = render(ui)
-
         expect(container.firstChild).toBeInTheDocument()
         expect(container.querySelector('.itemForm')).not.toBeInTheDocument()
     })
@@ -82,22 +81,22 @@ describe('Files', () => {
     })
 
     it('item can be removed', () => {
-        const { getByTitle } = render(ui)
-
-        fireEvent.click(getByTitle('Remove item'))
+        const { getAllByTitle } = render(ui)
+        fireEvent.click(getAllByTitle('Remove item')[0])
         expect(files.length).toBe(0)
     })
 
     it('item can be added', async () => {
-        const { getByText, getByPlaceholderText } = render(ui)
+        const { getAllByText, getByText, getByPlaceholderText } = render(ui)
 
-        fireEvent.click(getByText('+ From URL'))
+        fireEvent.click(getAllByText('+ From URL')[0])
         await waitForElement(() => getByText('- Cancel'))
         fireEvent.change(getByPlaceholderText('Hello'), {
             target: { value: 'https://hello.com' }
         })
         fireEvent.click(getByText('Add File'))
+
         mockAxios.mockResponse(mockResponse)
-        expect(mockAxios).toHaveBeenCalled()
+        expect(mockAxios.get).toHaveBeenCalled()
     })
 })
