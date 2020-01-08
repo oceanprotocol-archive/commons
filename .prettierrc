@@ -1,5 +1,15 @@
 {
-  "semi": false,
-  "singleQuote": true,
-  "trailingComma": "none"
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "tabWidth": 4,
+    "endOfLine": "lf",
+    "overrides": [
+        {
+            "files": ["*.{json,yml,yaml,md}"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }

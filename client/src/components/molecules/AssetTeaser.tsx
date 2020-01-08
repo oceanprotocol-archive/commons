@@ -39,15 +39,17 @@ const AssetTeaser = ({
             }
         >
             <Link to={`/asset/${asset.id}`}>
-                {additionalInformation.categories && !minimal && (
-                    <CategoryImage
-                        dimmed
-                        category={additionalInformation.categories[0]}
-                    />
-                )}
+                {additionalInformation &&
+                    additionalInformation.categories &&
+                    !minimal && (
+                        <CategoryImage
+                            dimmed
+                            category={additionalInformation.categories[0]}
+                        />
+                    )}
                 <h1>{main.name}</h1>
-                <h2>test</h2>
-                {!minimal && (
+
+                {additionalInformation && !minimal && (
                     <div className={styles.description}>
                         <Dotdotdot clamp={3}>
                             {additionalInformation.description}
@@ -55,9 +57,10 @@ const AssetTeaser = ({
                     </div>
                 )}
                 <footer className={styles.assetFooter}>
-                    {additionalInformation.categories && (
-                        <div>{additionalInformation.categories[0]}</div>
-                    )}
+                    {additionalInformation &&
+                        additionalInformation.categories && (
+                            <div>{additionalInformation.categories[0]}</div>
+                        )}
                     {allowPricing && (
                         <div className={styles.price}>
                             <span>
