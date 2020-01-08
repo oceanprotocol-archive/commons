@@ -56,8 +56,15 @@ export function NetworkSwitcher() {
                 {Object.keys(CONNECTIONS).map((networkName, i) => (
                     <li
                         key={i}
-                        style={{ cursor: 'pointer' }}
                         onClick={() => switchNetwork(networkName)}
+                        style={{
+                            cursor: 'pointer',
+                            color:
+                                userContext.network.toUpperCase() ===
+                                networkName.toUpperCase()
+                                    ? 'red'
+                                    : ''
+                        }}
                     >
                         <span style={{ textTransform: 'capitalize' }}>
                             {networkName}
@@ -65,9 +72,6 @@ export function NetworkSwitcher() {
                     </li>
                 ))}
             </ul>
-            <em style={{ textTransform: 'capitalize' }}>
-                {userContext.network}
-            </em>
         </div>
     )
 }

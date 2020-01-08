@@ -16,6 +16,8 @@ console.log({ oceanConfig })
 
 const { nodeUri } = oceanConfig
 
+console.log(oceanConfig)
+
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
 const DEFAULT_WEB3 = new Web3(new Web3.providers.HttpProvider(nodeUri)) // default web3
