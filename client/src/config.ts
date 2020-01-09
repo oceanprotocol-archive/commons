@@ -25,22 +25,6 @@ export const ipfsNodeUri =
 //
 // OCEAN REMOTE CONNECTIONS
 //
-export const nodeUri =
-    process.env.REACT_APP_NODE_URI || 'https://pacific.oceanprotocol.com'
-export const aquariusUri =
-    process.env.REACT_APP_AQUARIUS_URI ||
-    'https://aquarius.commons.oceanprotocol.com'
-export const brizoUri =
-    process.env.REACT_APP_BRIZO_URI || 'https://brizo.commons.oceanprotocol.com'
-export const brizoAddress =
-    process.env.REACT_APP_BRIZO_ADDRESS ||
-    '0x008c25ed3594e094db4592f4115d5fa74c4f41ea'
-export const secretStoreUri =
-    process.env.REACT_APP_SECRET_STORE_URI ||
-    'https://secret-store.oceanprotocol.com'
-export const faucetUri =
-    process.env.REACT_APP_FAUCET_URI || 'https://faucet.oceanprotocol.com'
-
 export const CONNECTIONS = {
     pacific: {
         nodeUri: 'https://pacific.oceanprotocol.com',
@@ -48,8 +32,7 @@ export const CONNECTIONS = {
         brizoUri: 'https://brizo.commons.oceanprotocol.com',
         brizoAddress: '0x008c25ed3594e094db4592f4115d5fa74c4f41ea',
         secretStoreUri: 'https://secret-store.oceanprotocol.com',
-        faucetUri: 'https://faucet.oceanprotocol.com',
-        verbose: true
+        faucetUri: 'https://faucet.oceanprotocol.com'
     },
     nile: {
         nodeUri: 'https://nile.dev-ocean.com',
@@ -57,8 +40,7 @@ export const CONNECTIONS = {
         brizoUri: 'https://brizo.nile.dev-ocean.com',
         brizoAddress: '0x4aaab179035dc57b35e2ce066919048686f82972',
         secretStoreUri: 'https://secret-store.nile.dev-ocean.com',
-        faucetUri: 'https://faucet.nile.dev-ocean.com',
-        verbose: true
+        faucetUri: 'https://faucet.nile.dev-ocean.com'
     },
     duero: {
         nodeUri: 'https://duero.dev-ocean.com',
@@ -66,7 +48,6 @@ export const CONNECTIONS = {
         brizoUri: 'https://brizo.duero.dev-ocean.com',
         brizoAddress: '0x9d4ed58293f71122ad6a733c1603927a150735d0',
         secretStoreUri: 'https://secret-store.duero.dev-ocean.com',
-        faucetUri: 'https://faucet.duero.dev-ocean.com',
-        verbose: true
+        faucetUri: 'https://faucet.duero.dev-ocean.com'
     }
 }

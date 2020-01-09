@@ -1,54 +1,39 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { urlq } from '../../utils/utils'
-import {
-    aquariusUri,
-    brizoUri,
-    brizoAddress,
-    nodeUri,
-    secretStoreUri,
-    verbose,
-    CONNECTIONS
-} from '../../config'
+import { CONNECTIONS } from '../../config'
 import { User } from '../../context'
 
 const networkUrlParam = urlq.get('network') || ''
-const defaultNetworkConfig = {
-    nodeUri,
-    aquariusUri,
-    brizoUri,
-    brizoAddress,
-    secretStoreUri,
-    verbose
-}
 
 const getNetworkConfig = (network: string) => {
-    console.log(network)
     const index = Object.keys(CONNECTIONS).indexOf(network)
     // TypeScript doesn't let access CONNECTIONS[networkName] directly
     return index !== -1
         ? Object.values(CONNECTIONS)[index]
-        : CONNECTIONS.pacific // Use defaul config in case of mispelled URL params or
+        : CONNECTIONS.pacific // Use default config in case of mispelled URL params or
 }
 
 export const oceanConfig =
     networkUrlParam !== ''
         ? getNetworkConfig(networkUrlParam)
-        : defaultNetworkConfig
+        : getNetworkConfig('pacific')
 
 /* NETWORK SWITCHER */
 export function NetworkSwitcher() {
-    const userContext = useContext(User)
-
-    const switchNetwork = (networkName: string): any => {
-        const idx = Object.keys(CONNECTIONS).indexOf(networkName)
-        userContext.switchNetwork(networkName, getNetworkConfig(networkName))
-    }
-
+    /*    
     useEffect(() => {
         if (networkUrlParam !== '') {
             switchNetwork(networkUrlParam)
         }
-    }, [])
+    }, []) 
+    */
+
+    const userContext = useContext(User)
+
+    const switchNetwork = (networkName: string): any =>
+        // Force page to get refreshed
+        (window.location.href = `${window.location.origin}?network=${networkName}`)
+    //userContext.switchNetwork(networkName, getNetworkConfig(networkName))
 
     return (
         <div>
@@ -66,7 +51,11 @@ export function NetworkSwitcher() {
                                     : ''
                         }}
                     >
-                        <span style={{ textTransform: 'capitalize' }}>
+                        <span
+                            style={{
+                                textTransform: 'capitalize'
+                            }}
+                        >
                             {networkName}
                         </span>
                     </li>

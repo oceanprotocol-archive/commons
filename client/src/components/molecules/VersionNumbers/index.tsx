@@ -8,11 +8,16 @@ import axios from 'axios'
 import { version } from '../../../../package.json'
 import styles from './index.module.scss'
 
-import { nodeUri, faucetUri } from '../../../config'
+//import { nodeUri, faucetUri } from '../../../config'
+
+import { oceanConfig } from '../../molecules/NetworkSwitcher'
+
 import { User, Market } from '../../../context'
 
 import VersionTable from './VersionTable'
 import VersionStatus from './VersionStatus'
+
+const { nodeUri, faucetUri } = oceanConfig
 
 interface VersionNumbersProps {
     minimal?: boolean
@@ -91,8 +96,8 @@ export default class VersionNumbers extends PureComponent<
         // Workaround: Using account prop instead of getting it from
         // context to be able to compare. Cause there is no `prevContext`.
         if (prevProps.account !== this.props.account) {
-            this.getOceanVersions()
-            this.getFaucetVersion()
+            await this.getOceanVersions()
+            await this.getFaucetVersion()
         }
     }
 

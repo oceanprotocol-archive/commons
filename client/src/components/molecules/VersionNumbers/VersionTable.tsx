@@ -5,107 +5,99 @@ import styles from './VersionTable.module.scss'
 import VersionNumber from './VersionNumber'
 import { useParams } from 'react-router-dom'
 
-import {
-  serviceUri,
-  nodeUri,
-  aquariusUri,
-  brizoUri,
-  brizoAddress,
-  secretStoreUri,
-  faucetUri,
-  CONNECTIONS
-} from '../../../config'
+// const commonsConfig = {
+//   serviceUri,
+//   nodeUri,
+//   aquariusUri,
+//   brizoUri,
+//   brizoAddress,
+//   secretStoreUri,
+//   faucetUri
+// }
 
-
-const commonsConfig = {
-  serviceUri,
-  nodeUri,
-  aquariusUri,
-  brizoUri,
-  brizoAddress,
-  secretStoreUri,
-  faucetUri
-}
+import { NetworkSwitcher, oceanConfig } from '../../molecules/NetworkSwitcher'
 
 export const VersionTableContracts = ({
-  contracts,
-  network,
-  keeperVersion
+    contracts,
+    network,
+    keeperVersion
 }: {
-  contracts: {
-    [contractName: string]: string
-  }
-  network: string
-  keeperVersion?: string
+    contracts: { [contractName: string]: string }
+    network: string
+    keeperVersion?: string
 }) => (
-  <table>
-    <tbody>
-      <tr>
-        <td>
-          <strong>Keeper Contracts</strong>
-        </td>
-        <td>
-          <VersionNumber name="Keeper Contracts" version={keeperVersion} />
-        </td>
-      </tr>
-      {contracts &&
-        Object.keys(contracts)
-          // sort alphabetically
-          .sort((a, b) => a.localeCompare(b))
-          .map(key => {
-            const submarineLink = `https://submarine.${
-              network === 'pacific' ? 'oceanprotocol' : `${network}.dev-ocean`
-            }.com/address/${contracts[key]}`
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <strong>Keeper Contracts</strong>
+                </td>
+                <td>
+                    <VersionNumber
+                        name="Keeper Contracts"
+                        version={keeperVersion}
+                    />
+                </td>
+            </tr>
+            {contracts &&
+                Object.keys(contracts)
+                    // sort alphabetically
+                    .sort((a, b) => a.localeCompare(b))
+                    .map(key => {
+                        const submarineLink = `https://submarine.${
+                            network === 'pacific'
+                                ? 'oceanprotocol'
+                                : `${network}.dev-ocean`
+                        }.com/address/${contracts[key]}`
 
-            return (
-              
-              <tr key={key}>
-                <td>
-                  <code className={styles.label}>{key}</code>
-                </td>
-                <td>
-                  <a href={submarineLink}>
-                    <code>{contracts[key]}</code>
-                  </a>
-                </td>
-              </tr>
-            )
-          })}
-    </tbody>
-  </table>
+                        return (
+                            <tr key={key}>
+                                <td>
+                                    <code className={styles.label}>{key}</code>
+                                </td>
+                                <td>
+                                    <a href={submarineLink}>
+                                        <code>{contracts[key]}</code>
+                                    </a>
+                                </td>
+                            </tr>
+                        )
+                    })}
+        </tbody>
+    </table>
 )
 
 export const VersionTableCommons = () => (
-  <table>
-    <tbody>
-      {Object.entries(commonsConfig).map(([key, value]) => (
-        <tr key={key}>
-          <td>
-            <code className={styles.label}>{key}</code>
-          </td>
-          <td>
-            <code>{value}</code>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
+    <table>
+        <tbody>
+            {Object.entries(oceanConfig).map(([key, value]) => (
+                <tr key={key}>
+                    <td>
+                        <code className={styles.label}>{key}</code>
+                    </td>
+                    <td>
+                        <code>{value}</code>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
 )
 
 const VersionTable = ({ data }: { data: VersionNumbersState }) => {
-  return (
-    <div className={styles.tableWrap}>
-      <table className={styles.table}>
-        <tbody>
-          {Object.entries(data)
-            .filter(([key]) => key !== 'status')
-            .map(([key, value]) => (
-              <VersionTableRow key={key} value={value} />
-            ))}
-        </tbody>
-      </table>
-    </div>
-  )
+    return (
+        <div className={styles.tableWrap}>
+            <table className={styles.table}>
+                <tbody>
+                    {Object.entries(data)
+                        .filter(([key]) => key !== 'status')
+                        .map(([key, value]) => (
+                            <VersionTableRow key={key} value={value} />
+                        ))}
+                </tbody>
+            </table>
+        </div>
+    )
 }
 
 export default VersionTable

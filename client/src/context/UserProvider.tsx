@@ -12,16 +12,14 @@ import {
     oceanConfig
 } from '../components/molecules/NetworkSwitcher'
 
-console.log({ oceanConfig })
-
 const { nodeUri } = oceanConfig
-
-console.log(oceanConfig)
 
 const POLL_ACCOUNTS = 1000 // every 1s
 const POLL_NETWORK = POLL_ACCOUNTS * 60 // every 1 min
 const DEFAULT_WEB3 = new Web3(new Web3.providers.HttpProvider(nodeUri)) // default web3
 const networkUrlParam = urlq.get('network') || ''
+
+console.log({ nodeUri })
 
 interface UserProviderState {
     isLogged: boolean
@@ -74,20 +72,12 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     private switchNetwork = async (network: string, config: Config) => {
-        console.log({ network, config, oceanConfig })
-        const nodeUrl: any = config.nodeUri
-        this.setState(
-            {
-                network,
-                web3: new Web3(new Web3.providers.HttpProvider(nodeUrl))
-            },
-            () => {
-                this.loadOcean({
-                    web3Provider: this.state.web3,
-                    ...config
-                })
-            }
-        )
+        this.setState({ network }, async () => {
+            this.loadOcean({
+                web3Provider: this.state.web3,
+                ...config
+            })
+        })
     }
 
     private loginMetamask = async () => {
@@ -221,7 +211,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
     private fetchAccounts = async () => {
         const { ocean, isLogged } = this.state
-
         if (isLogged) {
             let accounts
 
@@ -237,9 +226,10 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
 
             accounts = await ocean.accounts.list()
 
+            //console.log('fetch', accounts)
+
             if (accounts.length > 0) {
                 const account = await accounts[0].getId()
-
                 if (account !== this.state.account) {
                     this.setState({
                         account,
@@ -278,7 +268,7 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     }
 
     public render() {
-        //console.log(this.state.network)
+        // console.log(this.state.network)
         return (
             <User.Provider value={this.state}>
                 <MarketProvider ocean={this.state.ocean}>

@@ -1,10 +1,11 @@
 import Web3 from 'web3'
 import HDWalletProvider from '@truffle/hdwallet-provider'
-import { nodeUri } from '../config'
+import { oceanConfig } from '../components/molecules/NetworkSwitcher'
 import { requestFromFaucet } from '../ocean'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bip39 = require('bip39')
+const { nodeUri } = oceanConfig
 
 export class BurnerWalletProvider {
     private web3: Web3
@@ -30,9 +31,9 @@ export class BurnerWalletProvider {
         } else {
             mnemonic = bip39.generateMnemonic()
             localStorage.setItem('seedphrase', mnemonic)
+            localStorage.setItem('logType', 'BurnerWallet')
         }
 
-        localStorage.setItem('logType', 'BurnerWallet')
         const provider = new HDWalletProvider(mnemonic, nodeUri, 0, 1)
         this.web3 = new Web3(provider as any)
         const accounts = await this.web3.eth.getAccounts()
