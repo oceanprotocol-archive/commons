@@ -7,10 +7,7 @@ import MarketProvider from './MarketProvider'
 import { MetamaskProvider } from './MetamaskProvider'
 import { BurnerWalletProvider } from './BurnerWalletProvider'
 import { urlq } from '../utils/utils'
-import {
-    NetworkSwitcher,
-    oceanConfig
-} from '../components/molecules/NetworkSwitcher'
+import { oceanConfig } from '../components/molecules/NetworkSwitcher'
 
 const { nodeUri } = oceanConfig
 
@@ -272,7 +269,6 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         return (
             <User.Provider value={this.state}>
                 <MarketProvider ocean={this.state.ocean}>
-                    <NetworkSwitcher />
                     {this.props.children}
                 </MarketProvider>
             </User.Provider>

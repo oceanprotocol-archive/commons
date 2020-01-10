@@ -8,14 +8,12 @@ import axios from 'axios'
 import { version } from '../../../../package.json'
 import styles from './index.module.scss'
 
-//import { nodeUri, faucetUri } from '../../../config'
-
-import { oceanConfig } from '../../molecules/NetworkSwitcher'
-
 import { User, Market } from '../../../context'
 
 import VersionTable from './VersionTable'
 import VersionStatus from './VersionStatus'
+
+import { NetworkSwitcher, oceanConfig } from '../../molecules/NetworkSwitcher'
 
 const { nodeUri, faucetUri } = oceanConfig
 
@@ -172,7 +170,10 @@ export default class VersionNumbers extends PureComponent<
         const { minimal } = this.props
 
         return minimal ? (
-            <this.MinimalOutput />
+            <div className={styles.versionsMinimalWrapper}>
+                <this.MinimalOutput />
+                <NetworkSwitcher />
+            </div>
         ) : (
             <>
                 <h2 className={styles.versionsTitle} id="#oceanversions">

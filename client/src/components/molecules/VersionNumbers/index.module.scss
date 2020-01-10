@@ -11,3 +11,10 @@
     font-size: $font-size-mini;
     margin-top: $spacer;
 }
+
+.versionsMinimalWrapper {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: baseline;
+}

@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+
+.networkListWrapper {
+    position: relative;
+    cursor: pointer;
+    font-size: $font-size-mini;
+}
+
+.networkList {
+    position: absolute;
+    border: 1px solid $brand-grey-lighter;
+    padding: 8px;
+    border-radius: $border-radius;
+    max-width: 200px;
+    display: none;
+}
+
+.networkListWrapper:hover .networkList {
+    display: block;
+}
+
+.networkList li {
+    cursor: pointer;
+    font-size: $font-size-mini;
+    text-align: left;
+}
+
+.networkList li span {
+    text-transform: capitalize;
+}
+
+.networkList li:hover {
+    color: $brand-violet;
+    font-size: $font-size-mini;
+}
+
+.networkList li:before {
+    display: none;
+}
+
+.selected {
+    color: $brand-violet;
+    font-weight: $font-weight-bold;
+}

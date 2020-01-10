@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Dotdotdot from 'react-dotdotdot'
@@ -7,6 +7,7 @@ import styles from './AssetTeaser.module.scss'
 import CategoryImage from '../atoms/CategoryImage'
 import { allowPricing } from '../../config'
 import Web3 from 'web3'
+import { User } from '../../context'
 
 const AssetTeaser = ({
     asset,
@@ -19,6 +20,7 @@ const AssetTeaser = ({
 }) => {
     const { attributes } = asset.findServiceByType('metadata')
     const { main, additionalInformation } = attributes
+    const { network } = useContext(User)
 
     return list ? (
         <article className={styles.assetList}>
@@ -38,7 +40,7 @@ const AssetTeaser = ({
                 minimal ? cx(styles.asset, styles.minimal) : styles.asset
             }
         >
-            <Link to={`/asset/${asset.id}`}>
+            <Link to={`/asset/${asset.id}?network=${network}`}>
                 {additionalInformation &&
                     additionalInformation.categories &&
                     !minimal && (

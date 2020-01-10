@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { urlq } from '../../utils/utils'
 import { CONNECTIONS } from '../../config'
 import { User } from '../../context'
+import styles from './NetworkSwitcher.module.scss'
 
 const networkUrlParam = urlq.get('network') || ''
 
@@ -28,7 +29,7 @@ export function NetworkSwitcher() {
     }, []) 
     */
 
-    const userContext = useContext(User)
+    const { network } = useContext(User)
 
     const switchNetwork = (networkName: string): any =>
         // Force page to get refreshed
@@ -36,28 +37,20 @@ export function NetworkSwitcher() {
     //userContext.switchNetwork(networkName, getNetworkConfig(networkName))
 
     return (
-        <div>
-            <ul>
+        <div className={styles.networkListWrapper}>
+            <em>Change</em>
+            <ul className={styles.networkList}>
                 {Object.keys(CONNECTIONS).map((networkName, i) => (
                     <li
                         key={i}
                         onClick={() => switchNetwork(networkName)}
-                        style={{
-                            cursor: 'pointer',
-                            color:
-                                userContext.network.toUpperCase() ===
-                                networkName.toUpperCase()
-                                    ? 'red'
-                                    : ''
-                        }}
+                        className={
+                            network.toUpperCase() === networkName.toUpperCase()
+                                ? styles.selected
+                                : ''
+                        }
                     >
-                        <span
-                            style={{
-                                textTransform: 'capitalize'
-                            }}
-                        >
-                            {networkName}
-                        </span>
+                        <span>{networkName}</span>
                     </li>
                 ))}
             </ul>

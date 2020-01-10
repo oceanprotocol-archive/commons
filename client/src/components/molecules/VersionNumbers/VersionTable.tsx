@@ -5,16 +5,6 @@ import styles from './VersionTable.module.scss'
 import VersionNumber from './VersionNumber'
 import { useParams } from 'react-router-dom'
 
-// const commonsConfig = {
-//   serviceUri,
-//   nodeUri,
-//   aquariusUri,
-//   brizoUri,
-//   brizoAddress,
-//   secretStoreUri,
-//   faucetUri
-// }
-
 import { NetworkSwitcher, oceanConfig } from '../../molecules/NetworkSwitcher'
 
 export const VersionTableContracts = ({
