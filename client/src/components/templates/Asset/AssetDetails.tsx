@@ -163,7 +163,7 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                 {additionalInformation && additionalInformation.tags && (
                     <div className={styles.tags}>
                     {additionalInformation.tags.map(tag => (
-                        <span>{tag}</span>
+                        <span key={tag}>{tag}</span>
                     ))}
                     </div>
                 )}

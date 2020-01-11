@@ -1,0 +1,108 @@
+@import '../../styles/variables';
+
+
+.bounty {
+    span {
+        width: 100%;
+        display: block;
+    }
+
+    .tag {
+        background-color: $dark-pink;
+        border-radius: 10px;
+        padding: $spacer / 6;
+        margin-right: $spacer / 8;
+        display: inline-block;
+        width: auto;
+        font-size: $font-size-small;
+    }
+
+    .info {
+        border: 1px solid $brand-white;
+        margin-top: $spacer / 2;
+        padding: $spacer / 4;
+    }
+
+    .button {
+        border: 0;
+        cursor: pointer;
+        outline: 0;
+        margin: $spacer / 8 0;
+        display: inline-block;
+        width: fit-content;
+        padding: $spacer / 4 $spacer;
+        font-size: $font-size-base;
+        font-family: $font-family-base;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        border-radius: 2px;
+        transition: .2s ease-out;
+        color: $brand-white;
+        background: $brand-gradient;
+        box-shadow: 0 9px 18px 0 rgba(0, 0, 0, .1);
+        min-height: 45px;
+        user-select: none;
+    }
+
+    .flexWrapper {
+        display: flex;
+        margin-top: $spacer / 2;
+    }
+
+    .centeredWrapper {
+        display: flex;
+        margin-top: $spacer / 2;
+        justify-content: center;
+    }
+
+    .fileWrap {
+        margin-right: $spacer / 4;
+    }
+
+    .file {
+        background: $brand-grey-dark
+            url('../../../node_modules/@oceanprotocol/art/jellyfish/jellyfish-grid.svg')
+            no-repeat -1rem 4.5rem;
+        background-size: 100%;
+        padding: $spacer $spacer / 2;
+        margin-bottom: $spacer / 2;
+        text-align: left;
+        position: relative;
+        height: 8.5rem;
+        width: 6.5rem;
+        margin: 0 auto;
+
+        &:before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 1rem solid $body-background;
+            border-left: 1rem solid transparent;
+        }
+
+        li {
+            font-size: $font-size-small;
+            font-weight: $font-weight-bold;
+            color: $brand-white;
+
+            &:before {
+                display: none;
+            }
+        }
+
+        .empty {
+            font-size: $font-size-mini;
+            font-weight: $font-weight-base;
+            opacity: .75;
+        }
+
+        // move spinner a bit up
+        + div {
+            margin-top: $spacer / 2;
+        }
+    }
+
+}

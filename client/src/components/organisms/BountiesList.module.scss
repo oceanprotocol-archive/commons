@@ -11,6 +11,7 @@
         border: 1px solid $brand-white;
         border-radius: 10px;
         padding: $spacer / 2;
+        margin-bottom: $spacer / 4;
 
         .leftArea {
             float: left;
@@ -31,6 +32,7 @@
             background-color: $dark-pink;
             border-radius: 10px;
             padding: $spacer / 6;
+            margin-right: $spacer / 8;
             display: inline-block;
             width: auto;
             font-size: $font-size-small;
@@ -52,6 +54,10 @@
             text-align: center;
             margin-top: $spacer;
             color: $brand-grey-light;
+        }
+
+        a {
+            color: #fff;
         }
     }
 }

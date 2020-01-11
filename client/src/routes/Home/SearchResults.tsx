@@ -1,7 +1,4 @@
-import React, { ChangeEvent, FormEvent, PureComponent } from 'react'
-import Button from '../../components/atoms/Button'
-import Form from '../../components/atoms/Form/Form'
-import Input from '../../components/atoms/Form/Input'
+import React, { PureComponent } from 'react'
 import AssetResult from '../../components/molecules/AssetResult'
 
 import styles from './SearchResults.module.scss'

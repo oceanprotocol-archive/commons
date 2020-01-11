@@ -67,14 +67,14 @@ class Home extends PureComponent<HomeProps, HomeState> {
                 </video>
                 <Content>
                     <div className={styles.mainButtons}>
-                        {fixedSearch && (
-                            <FixedSearch searchAssets={this.searchAssets} />
-                        )}
                         <div>
                             <Search searchAssets={this.searchAssets} />
                         </div>
                         <Link to="/topics">Browse by topic →</Link>
                     </div>
+                    {fixedSearch && (
+                        <FixedSearch searchAssets={this.searchAssets} />
+                    )}
                 </Content>
 
                 <Content wide>

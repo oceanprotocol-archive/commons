@@ -49,3 +49,6 @@ export const ipfsNodeUri =
 export const portisEnabled = process.env.REACT_APP_PORTIS_APP_ID === 'true' || false
 export const portisAppId = process.env.REACT_APP_PORTIS_APP_ID
 export const torusEnabled = process.env.REACT_APP_TORUS_ENABLED === 'true' || false
+
+export const subgraphGraphqlEndpoint = process.env.SUBGRAPH_GRAPHQL_ENDPOINT ||
+      'http://192.168.2.19:8000/subgraphs/name/santteegt/oceanprotocol-subgraph'

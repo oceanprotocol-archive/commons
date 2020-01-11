@@ -29,6 +29,7 @@ const Styleguide = lazy(() => import('./routes/Styleguide'))
 const Topics = lazy(() => import('./routes/Topics'))
 const Bounties = lazy(() => import('./routes/Bounty'))
 
+const Bounty = lazy(() => import('./components/templates/Bounty'))
 const Asset = lazy(() => import('./components/templates/Asset'))
 const Channel = lazy(() => import('./components/templates/Channel'))
 
@@ -48,6 +49,7 @@ const Routes = () => (
         <Route component={Channel} path="/channels/:channel" />
         <Route component={Playground} path="/playground" />
         <Route component={Bounties} path="/bounties" />
+        <Route component={Bounty} path="/bounty/:bountyId" />
         <Route component={NotFound} />
     </Switch>
     </Suspense>

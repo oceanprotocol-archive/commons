@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import AssetFile from './AssetFile'
 import { User } from '../../../context'
 import Web3message from '../../organisms/Web3message'
 import styles from './AssetLinks.module.scss'
@@ -15,7 +14,7 @@ export default class AssetLinks extends PureComponent<{
             <>
                 <div className={styles.links}>
                     {files.map(file => (
-                        <a href={file.url} target="_blank">{file.name}</a>
+                        <a key={file.url} href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
                     ))}
                 </div>
                 <Web3message />

@@ -1,13 +1,11 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { File } from '@oceanprotocol/squid'
 import { ToastMessage } from 'rimble-ui';
-import { ipfsGatewayUri, ipfsNodeUri } from '../../config'
-import { IpfsConfig, getIpfsInstance, uploadJSON, fetchJSON } from '../../utils/ipfs'
+import { ipfsNodeUri } from '../../config'
+import { IpfsConfig, getIpfsInstance } from '../../utils/ipfs'
 import { validNetwork, publishBounty } from '../../web3'
 import Route from '../../components/templates/Route'
-import AssetsUser from '../../components/organisms/AssetsUser'
 import BountiesList from '../../components/organisms/BountiesList'
-import Web3message from '../../components/organisms/Web3message'
 import { Market } from '../../context'
 import Content from '../../components/atoms/Content'
 import Form from '../../components/atoms/Form/Form'
@@ -38,7 +36,7 @@ interface IBountiesState {
     webReferenceURIs: File[] // bounty meta
     deadline: string,
     expectedRevisions: number // bounty meta - set as a constant
-    privateFulfillments: boolean // bounty meta - set as a constant    
+    privateFulfillments: boolean // bounty meta - set as a constant
     ipfs?: any
 }
 
@@ -92,7 +90,7 @@ class Bounties extends Component {
                 difficulty: "Easy",
                 fulfillersNeedApproval: "No"
             })
-            
+
         } catch(error) {
             console.log('Failed to get IPFS instance', error)
             this.setState({ error: error.message })
@@ -106,7 +104,7 @@ class Bounties extends Component {
 
             if (key === 'dataSchemaURIs' || key === 'webReferenceURIs') {
                 return (
-                    <>
+                    <div key={key}>
                         <Label htmlFor={key} required>
                             {value.label}
                         </Label>
@@ -118,7 +116,7 @@ class Bounties extends Component {
                             onChange={this.inputChange}
                             excludeButtons={key === 'dataSchemaURIs' ? ['url']:['ipfs']}
                         />
-                    </>
+                    </div>
                 )
             } else {
                 return (
@@ -167,7 +165,7 @@ class Bounties extends Component {
         if (ipfs) {
             console.log('IPFS FOUND!')
             try {
-            
+
                 const { title, description, fulfillmentAmount, difficulty, fulfillersNeedApproval } = this.state
                 const { privateFulfillments, expectedRevisions, deadline, dataSchemaURIs, webReferenceURIs } = this.state
                 const categories = [this.state.category, 'crowdsource']
@@ -175,14 +173,14 @@ class Bounties extends Component {
                 const ipfsURI = (dataSchemaURIs.length > 0 && dataSchemaURIs[0].url) || "ipfs://QmRkiAVsLaZS26Rmj8ke3jPBEqjJnX2KWPdcn1P7w2oBP6/schema.json"
                 const _ipfsHash = ipfsURI.match(/(?!=(\:\/\/))([A-Z0-9]+)(?=\/)/gi)
                 const _ipfsFilename = ipfsURI.match(/(?!=\/)([A-Z0-9\.]+)$/gi)
-                
+
                 // TODO: validate null values
                 const ipfsHash = _ipfsHash && _ipfsHash.length > 0 ? _ipfsHash[0]:"QmRkiAVsLaZS26Rmj8ke3jPBEqjJnX2KWPdcn1P7w2oBP6"
                 const ipfsFilename = _ipfsFilename && _ipfsFilename.length > 0 ? _ipfsFilename[0]:'schema.json'
 
                 // TODO: validate empty value
                 const webReferenceURL = (webReferenceURIs.length > 0 && webReferenceURIs[0].url) || "ipfs://QmRkiAVsLaZS26Rmj8ke3jPBEqjJnX2KWPdcn1P7w2oBP6/schema.json"
-                
+
                 const data = {
                     payload: {
                         title, description, fulfillmentAmount, categories, expectedRevisions, difficulty,
@@ -273,7 +271,7 @@ class Bounties extends Component {
                       secondaryMessage={error}
                     />
                 )}
-                
+
                 <Modal
                     isOpen={modalIsOpen}
                     onAfterOpen={() => console.log('Modal has opened')}
@@ -283,9 +281,9 @@ class Bounties extends Component {
                         {this.formFields(entries)}
                     </Form>
                 </Modal>
-                <Content wide>
+                <Content>
                     <Button onClick={() => this.toggleModal()} primary>Create a Data Bounty</Button>
-                </Content>    
+                </Content>
                 <Content>
                     <BountiesList />
                 </Content>

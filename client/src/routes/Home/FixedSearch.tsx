@@ -40,8 +40,8 @@ export default class FixedSearch extends PureComponent<FixedSearchProps, FixedSe
             >
                 <div className={!showSearch ? styles.searchWrapper : styles.searchWrapper + ' ' + styles.active}>
                     <div className={styles.inputHolder}>
-                        <input className={styles.searchInput} name="search" type="search" value={search} placeholder="e.g. mobility, land cover classification, market analysis, etc" onChange={this.inputChange}/>
-                        <a className={styles.searchIcon} onClick={() => this.searchToggle()}><span></span></a>
+                        <input className={styles.searchInput} name="search" type="text" value={search} placeholder="e.g. mobility, land cover classification, market analysis, etc" onChange={this.inputChange}/>
+                        <a className={styles.searchIcon} onClick={() => this.searchToggle()} ><span></span></a>
                     </div>
                     <span className={styles.close} onClick={() => this.searchToggle()}></span>
                 </div>

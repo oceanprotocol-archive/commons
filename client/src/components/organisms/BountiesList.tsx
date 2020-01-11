@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
-import { Link } from 'react-router-dom'
-import { Logger } from '@oceanprotocol/squid'
 import { User } from '../../context'
 import Spinner from '../atoms/Spinner'
-import AssetTeaser from '../molecules/AssetTeaser'
 import styles from './BountiesList.module.scss'
+import moment from 'moment'
+
+import { getBounties } from '../../graphql'
 
 export default class BountiesList extends PureComponent<
     { list?: boolean; recent?: number },
@@ -12,10 +12,18 @@ export default class BountiesList extends PureComponent<
 > {
     public static contextType = User
 
-    public state = { results: [{name: 'Bounty 1', categories: 'Categories',  fulfillmentAmount: '10.00', difficulty: 'Hard'}], isLoading: false }
+    public state = { results: [], isLoading: true }
 
     public componentDidMount() {
-
+        getBounties().then((rs) => {
+            if(rs) {
+                let results = rs.map((e: any) => { return { id: e.id, data: e.ipfsData.payload } })
+                this.setState({ results, isLoading: false })
+            }
+        }).catch((err) => {
+            console.log('error', err)
+            this.setState({ results: [], isLoading: false })
+        });
     }
 
     public componentWillUnmount() {
@@ -24,27 +32,27 @@ export default class BountiesList extends PureComponent<
 
 
     public render() {
-        const { account } = this.context
-        const { recent, list } = this.props
         const { isLoading, results } = this.state
 
         return (
             <div className={styles.bountiesContainer}>
                 {isLoading ? (
                     <Spinner />
-                ) : results.length ? (
+                ) : results.length > 0 ? (
                     <>
                         {results.map((bounty: any) => (
-                                <div className={styles.bounty}>
-                                    <div className={styles.leftArea}>
-                                        <span className={styles.subTitle}>{bounty.name}</span>
-                                        <span className={styles.tag}>{bounty.categories}</span>
-                                    </div>
-                                    <div className={styles.rightArea}>
-                                        <span><b>Reward:</b> {bounty.fulfillmentAmount} TOKEN</span>
-                                        <span><b>Difficulty:</b> {bounty.difficulty}</span>
-                                        <span><b>Deadline:</b></span>
-                                    </div>
+                                <div className={styles.bounty} key={bounty.id}>
+                                    <a href={`./bounty/${bounty.id}`}>
+                                        <div className={styles.leftArea}>
+                                            <span className={styles.subTitle}>{bounty.data.title}</span>
+                                            {bounty.data.categories.map((cat: string) => (<span className={styles.tag} key={cat}>{cat}</span>))}
+                                        </div>
+                                        <div className={styles.rightArea}>
+                                            <span><b>Reward:</b> {bounty.data.fulfillmentAmount} TOKEN</span>
+                                            <span><b>Difficulty:</b> {bounty.data.difficulty}</span>
+                                            <span><b>Deadline:</b> {moment(bounty.data.deadline).format('DD/MM/YYYY')}</span>
+                                        </div>
+                                    </a>
                                 </div>
                             ))}
                     </>
