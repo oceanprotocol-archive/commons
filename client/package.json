@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_OPTIONS=--max_old_space_size=4096 node scripts/start.js",
     "link-wallet": "npm link op-web3-wallet",
-    "build": "CI=false react-scripts --max_old_space_size=4096 build",
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 node scripts/build.js",
     "test": "node scripts/test.js --coverage --watchAll=false --silent",
     "test:watch": "node scripts/test.js --coverage",
     "coverage": "cat coverage/lcov.info | codacy-coverage --token 8801f827fe1144ffa85cd7da94f2bbf7",
@@ -16,7 +16,7 @@
     "3box-comments-react": "0.0.3",
     "@babel/core": "7.4.3",
     "@oceanprotocol/art": "^2.2.0",
-    "@oceanprotocol/squid": "^1.0.0",
+    "@oceanprotocol/squid": "v1.1.0-beta.0",
     "@oceanprotocol/typographies": "^0.1.0",
     "@sindresorhus/slugify": "^0.9.1",
     "@svgr/webpack": "4.1.0",
