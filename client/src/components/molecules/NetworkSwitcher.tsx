@@ -21,6 +21,7 @@ export const oceanConfig =
 
 /* NETWORK SWITCHER */
 export function NetworkSwitcher() {
+    const [isToggled, setIsToggled] = useState(false)
     /*    
     useEffect(() => {
         if (networkUrlParam !== '') {
@@ -28,6 +29,10 @@ export function NetworkSwitcher() {
         }
     }, []) 
     */
+
+    const handleTogle = () => {
+        setIsToggled(!isToggled)
+    }
 
     const { network } = useContext(User)
 
@@ -37,8 +42,14 @@ export function NetworkSwitcher() {
     //userContext.switchNetwork(networkName, getNetworkConfig(networkName))
 
     return (
-        <div className={styles.networkListWrapper}>
-            <em>Change</em>
+        <div
+            className={`${styles.networkListWrapper} ${
+                isToggled ? styles.on : ''
+            }`}
+        >
+            <em onClick={() => handleTogle()}>
+                <span>Change Network</span>
+            </em>
             <ul className={styles.networkList}>
                 {Object.keys(CONNECTIONS).map((networkName, i) => (
                     <li

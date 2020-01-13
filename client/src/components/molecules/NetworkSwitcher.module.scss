@@ -6,6 +6,25 @@
     font-size: $font-size-mini;
 }
 
+.networkListWrapper em {
+    display: inline-block;
+    border: 1px solid $brand-grey-lighter;
+    padding: 4px;
+    border-radius: $border-radius;
+    margin: 0 4px;
+    user-select: none;
+}
+
+.networkListWrapper em:after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-bottom: none;
+    border-top: 4px solid $brand-grey-light;
+}
+
 .networkList {
     position: absolute;
     border: 1px solid $brand-grey-lighter;
@@ -13,9 +32,22 @@
     border-radius: $border-radius;
     max-width: 200px;
     display: none;
+    margin: 0;
+    width: 100%;
 }
 
-.networkListWrapper:hover .networkList {
+.networkListWrapper em {
+    display: block;
+    border: 1px solid $brand-grey-lighter;
+}
+
+.networkListWrapper em span:after {
+    content: '';
+    border-right: 1px solid $brand-grey-lighter;
+    margin: 0 4px;
+}
+
+.networkListWrapper.on .networkList {
     display: block;
 }
 
