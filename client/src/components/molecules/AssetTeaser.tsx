@@ -57,7 +57,7 @@ const AssetTeaser = ({
                     <div>{additionalInformation.categories[0]}</div>
                 )}
                 <div className={styles.hashtags}>
-                    <span>{hashtags.reduceRight((i: string, t: string) => `${i}, ${t}`)}</span>
+                    {hashtags.map((el) => {return (<span key={el}>{el}</span>)})}
                 </div>
 
                 {additionalInformation && !minimal && (

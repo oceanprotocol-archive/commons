@@ -73,7 +73,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
                         <Link to="/topics">Browse by topic →</Link>
                     </div>
                     {fixedSearch && (
-                        <FixedSearch searchAssets={this.searchAssets} />
+                        <FixedSearch searchAssets={this.searchAssets} history={this.props.history}/>
                     )}
                 </Content>
 

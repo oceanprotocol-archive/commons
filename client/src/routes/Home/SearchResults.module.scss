@@ -72,6 +72,14 @@
 	}
 }
 
+.fixedResults {
+    position: fixed;
+    top: 205px;
+    right: 2rem;
+    width: 505px;
+    z-index: 2;
+}
+
 @keyframes slideInDown {
   from {
     -webkit-transform: translate3d(0, -15%, 0);

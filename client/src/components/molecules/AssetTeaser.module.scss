@@ -107,12 +107,13 @@
     }
 }
 
-.hashtags {
+.hashtags span {
     background-color: $brand-pink;
     color: $brand-white;
     display: inline-block;
     border-radius: 15px;
     padding: 5px;
     font-size: 12px;
-    margin: $spacer / 4 0;
+    margin-top: $spacer / 12;
+    margin-right: $spacer / 8;
 }

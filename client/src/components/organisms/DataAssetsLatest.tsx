@@ -62,8 +62,7 @@ export default class DataAssetsLatest extends PureComponent<{}, DataAssetsLatest
                     ) : latestAssets && latestAssets.length ? (
                         <div className={styles.latestAssets}>
                             {latestAssets.map((asset: any) => (
-                                <Fade><AssetTeaser
-                                    key={asset.id}
+                                <Fade key={asset.id}><AssetTeaser
                                     asset={asset}
                                     minimal
                                 /></Fade>
