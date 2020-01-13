@@ -51,4 +51,4 @@ export const portisAppId = process.env.REACT_APP_PORTIS_APP_ID
 export const torusEnabled = process.env.REACT_APP_TORUS_ENABLED === 'true' || false
 
 export const subgraphGraphqlEndpoint = process.env.SUBGRAPH_GRAPHQL_ENDPOINT ||
-      'http://192.168.2.19:8000/subgraphs/name/santteegt/oceanprotocol-subgraph'
+      'http://ec2-54-87-184-199.compute-1.amazonaws.com:8000/subgraphs/name/santteegt/oceanprotocol-subgraph'
