@@ -55,47 +55,21 @@ export default class AssetFile extends PureComponent<
         //     action: 'purchaseAsset-start ' + ddo.id
         // })
 
-        const { ocean } = this.context
+        const { wallet } = this.context
 
         try {
-            const accounts = await ocean.accounts.list()
-            const service = ddo.findServiceByType('access')
-
-            const agreements = await ocean.keeper.conditions.accessSecretStoreCondition.getGrantedDidByConsumer(
-                accounts[0].id
-            )
-            const agreement = agreements.find((element: any) => {
-                return element.did === ddo.id
-            })
-
-            let agreementId
-
-            if (agreement) {
-                ;({ agreementId } = agreement)
-            } else {
-                agreementId = await ocean.assets
-                    .order(ddo.id, service.index, accounts[0])
-                    .next((step: number) => this.setState({ step }))
-            }
-
-            // manually add another step here for better UX
-            this.setState({ step: 4 })
-
-            const path = await ocean.assets.consume(
-                agreementId,
-                ddo.id,
-                service.index,
-                accounts[0],
-                '',
-                index
-            )
+            wallet.toggleModal()
+            // console.log('To be consumed', ddo, index)
+            const path = await wallet.consumeAsset(ddo, index)
             Logger.log('path', path)
+            wallet.toggleModal()
             // ReactGA.event({
             //     category: 'Purchase',
             //     action: 'purchaseAsset-end ' + ddo.id
             // })
             this.setState({ isLoading: false })
         } catch (error) {
+            wallet.toggleModal()
             Logger.error('error', error.message)
             this.setState({
                 isLoading: false,
