@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ToastMessage } from 'rimble-ui';
+import { ToastMessage } from 'rimble-ui'
 import Route from '../components/templates/Route'
 import Content from '../components/atoms/Content'
 import Button from '../components/atoms/Button'

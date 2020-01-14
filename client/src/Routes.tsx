@@ -31,7 +31,8 @@ const Bounties = lazy(() => import('./routes/Bounty'))
 
 const Bounty = lazy(() => import('./components/templates/Bounty'))
 const Asset = lazy(() => import('./components/templates/Asset'))
-const Channel = lazy(() => import('./components/templates/Channel'))
+// const Channel = lazy(() => import('./components/templates/Channel'))
+const Union = lazy(() => import('./components/templates/Union'))
 
 const Routes = () => (
     <Suspense fallback={<Spinner message="Loading..." />}>
@@ -46,7 +47,7 @@ const Routes = () => (
         <Route component={History} path="/history" />
         <Route component={Topics} path="/topics" />
         <Route component={Channels} exact path="/channels" />
-        <Route component={Channel} path="/channels/:channel" />
+        <Route component={Union} path="/unions" />
         <Route component={Playground} path="/playground" />
         <Route component={Bounties} path="/bounties" />
         <Route component={Bounty} path="/bounty/:bountyId" />

@@ -33,6 +33,7 @@ interface MarketProviderState {
         queryMetadata: (query: any) => Promise<any>
         retrieveDDO: (did: string) => Promise<DDO>
     },
+    account: string
     ocean: Ocean | undefined
     wallet: any | undefined
 }
@@ -54,6 +55,7 @@ export default class MarketProvider extends PureComponent<
                 queryMetadata: this.queryMetadata,
                 retrieveDDO: this.retrieveDDO
             },
+            account: '',
             ocean: undefined,
             wallet: undefined
 
@@ -140,8 +142,8 @@ export default class MarketProvider extends PureComponent<
     }
 
     public render() {
-        const { ocean, wallet } = this.context
-        this.setState({ ocean, wallet })
+        const { account, ocean, wallet } = this.context
+        this.setState({ account, ocean, wallet })
         return (
             <Market.Provider value={this.state}>
                 {this.props.children}

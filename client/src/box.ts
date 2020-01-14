@@ -14,6 +14,27 @@ interface IDataUnion {
     description: string
 }
 
+interface IProperty {
+    '@type': string
+    name: string
+    value: string
+}
+
+export interface IUnion {
+    '@context': string
+    '@type': string
+    identifier: IProperty
+    founder: {
+        '@type': string
+        identifier: IProperty
+    }
+    legalName: IProperty
+    alternateName: IProperty
+    knowsAbout: IProperty
+    slogan: IProperty
+    description: IProperty
+}
+
 export const getDataUnionSchema = (union: IDataUnion) => {
     return {
         '@context': 'http://schema.org/',
@@ -83,6 +104,20 @@ export const getDataUnions = async () => {
 	return unions.map((union: any) => union.message)
 }
 
+export const getDataUnion = async (address: string) => {
+    const unions = await getDataUnions()
+    const union = unions.find((union: IUnion) => union.identifier.value === address)
+    const followers = await Box.getThreadByAddress(address)
+    if (union) {
+        return {
+            union,
+            followers: followers.length
+        }
+    } else {
+        throw new Error('Data Union not found')
+    }
+}
+
 export const getFollowingList = async (account: string) => {
 	return await Box.getThread(marketplaceId, FOLLOWING_LIST_THREAD, account, true)
 }
@@ -100,8 +135,12 @@ export const createDataUnion = async (space: any, unionId: string, unionData: ID
 	}
 }
 
-export const joinDataUnion = async (box: any, space: any, unionAddress: string) => {
-	const union = space.joinThreadByAddress(unionAddress)
+// export const joinDataUnion = async (box: any, space: any, unionAddress: string) => {
+export const joinDataUnion = async (box: any, space: any, unionSchema: IUnion) => {
+	const union = await space.joinThreadByAddress(unionSchema.identifier.value, {
+        firstModerator: unionSchema.founder.identifier.value,
+        members: false
+    })
 	if (union) {
 		const id = await box.public.all()
 		const personSchema = getPersonSchema(id.proof_did, box._3id.managementAddress)
@@ -110,9 +149,9 @@ export const joinDataUnion = async (box: any, space: any, unionAddress: string) 
         const followingList = await space.joinThread(FOLLOWING_LIST_THREAD, { members: true })
         const unions = await getDataUnions()
         // get joined union schema
-        const unionSchema = unions.find((union: any) => union.identifier.value === union._address)
+        const unionSchema = unions.find((_union: IUnion) => _union.identifier.value === union._address)
         // update user's following list
-        await followingList.post(unionSchema.message)
+        await followingList.post(unionSchema)
 	} else {
 		throw new Error('Data Union not found')
 	}

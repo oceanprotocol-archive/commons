@@ -5,24 +5,7 @@ import { Logger } from '@oceanprotocol/squid'
 import styles from './UnionTeaser.module.scss'
 import CategoryImage from '../atoms/CategoryImage'
 import Fade from 'react-reveal/Fade';
-
-interface IProperty {
-    '@type': string
-    name: string
-    value: string
-}
-
-interface IUnion {
-    '@context': string
-    '@type': string
-    identifier: IProperty
-    founder: IProperty
-    legalName: IProperty
-    alternateName: IProperty
-    knowsAbout: IProperty
-    slogan: IProperty
-    description: IProperty
-}
+import { IUnion } from '../../box'
 
 interface UnionTeaserProps {
     union: IUnion
