@@ -1,18 +1,18 @@
 [
   {
-    "title": "R&D Data Unions",
-    "link": "/channels"
+    "title": "Publish an Asset",
+    "link": "/publish"
   },
   {
-    "title": "Publish",
-    "link": "/publish"
+    "title": "R&D Data Unions",
+    "link": "/channels"
   },
   {
     "title": "Bounties",
     "link": "/bounties"
   },
   {
-    "title": "History",
-    "link": "/history"
+    "title": "Browse",
+    "link": "/topics"
   }
 ]
