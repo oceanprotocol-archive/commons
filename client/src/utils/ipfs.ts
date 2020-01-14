@@ -21,13 +21,15 @@ export async function uploadJSON(ipfs: any, _json: any) {
 
 export async function fetchJSON(ipfs: any, _hash: any) {
     try {
-      let response = await ipfs.get(`/ipfs/${_hash}`)
-      let content = response[0].content
-      return JSON.parse(content.toString())
-    } catch(error) {
-      console.log('Error while ipfs.get', error.message)
+      // let response = await ipfs.get(`/ipfs/${_hash}`)
+      // let content = response[0].content
+      // return JSON.parse(content.toString())
       const rs = await axios.get(`${ipfsGatewayUri}/ipfs/${_hash}`)
       return rs.data
+    } catch(error) {
+      console.log('Error while ipfs.get', error.message)
+      // const rs = await axios.get(`${ipfsGatewayUri}/ipfs/${_hash}`)
+      // return rs.data
     }
 
 }
