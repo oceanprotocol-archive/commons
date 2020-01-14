@@ -5,7 +5,8 @@ import Button from '../../atoms/Button'
 import styles from './Indicator.module.scss'
 
 const walletButonStyle = {
-    borderRadius: '15px'
+    borderRadius: '10px',
+    padding: '0.5rem 1rem'
 }
 // const Indicator = ({
 //     className,
@@ -59,7 +60,7 @@ const Indicator = ({
                                     // togglePopover()
                                 }} 
                                 style={walletButonStyle}
-                            >{"Connect Wallet⚠️"}</Button>
+                            >Connect Wallet 🔴</Button>
                         ) : user.isLogged ? (
                             <Button 
                                 onClick={() => {
@@ -67,7 +68,7 @@ const Indicator = ({
                                     user.openWallet()
                                 }} 
                                 style={walletButonStyle}
-                            >Open Wallet</Button>
+                            >Open Wallet 🔵</Button>
                         ) : null
                     }
                 </Market.Consumer>
