@@ -28,11 +28,11 @@
 .networkList {
     position: absolute;
     border: 1px solid $brand-grey-lighter;
-    padding: 8px;
     border-radius: $border-radius;
     max-width: 200px;
     display: none;
     margin: 0;
+    padding: 0;
     width: 100%;
 }
 
@@ -55,6 +55,7 @@
     cursor: pointer;
     font-size: $font-size-mini;
     text-align: left;
+    padding: 4px;
 }
 
 .networkList li span {
@@ -64,6 +65,7 @@
 .networkList li:hover {
     color: $brand-violet;
     font-size: $font-size-mini;
+    background-color: $brand-grey-lighter;
 }
 
 .networkList li:before {

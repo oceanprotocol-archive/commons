@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { urlq } from '../../utils/utils'
 import { CONNECTIONS } from '../../config'
 import { User } from '../../context'
@@ -21,8 +21,19 @@ export const oceanConfig =
 
 /* NETWORK SWITCHER */
 export function NetworkSwitcher() {
+    const node: any = useRef()
     const [isToggled, setIsToggled] = useState(false)
-    /*    
+
+    useEffect(() => {
+        // Handle click outside to collapse Network switcher dropdown
+        // add listener when mounted
+        document.addEventListener('mousedown', handleTogle)
+        // return function when unmounted
+        return () => {
+            document.removeEventListener('mousedown', handleTogle)
+        }
+    }, [])
+    /*  
     useEffect(() => {
         if (networkUrlParam !== '') {
             switchNetwork(networkUrlParam)
@@ -30,24 +41,30 @@ export function NetworkSwitcher() {
     }, []) 
     */
 
-    const handleTogle = () => {
-        setIsToggled(!isToggled)
+    const handleTogle = (e: any) => {
+        const isClickedInside = node.current.contains(e.target)
+        setIsToggled(isClickedInside)
     }
 
-    const { network } = useContext(User)
+    const { network, isBurner } = useContext(User)
 
-    const switchNetwork = (networkName: string): any =>
+    console.log(isBurner)
+
+    const switchNetwork = (networkName: string): any => {
         // Force page to get refreshed
-        (window.location.href = `${window.location.origin}?network=${networkName}`)
-    //userContext.switchNetwork(networkName, getNetworkConfig(networkName))
+        window.location.href = `${window.location.origin}?network=${networkName}`
+        //userContext.switchNetwork(networkName, getNetworkConfig(networkName))
+        setIsToggled(false) // for the case without force page refresh
+    }
 
-    return (
+    return !isBurner ? null : (
         <div
+            ref={node}
             className={`${styles.networkListWrapper} ${
                 isToggled ? styles.on : ''
             }`}
         >
-            <em onClick={() => handleTogle()}>
+            <em onClick={e => handleTogle(e)}>
                 <span>Change Network</span>
             </em>
             <ul className={styles.networkList}>
