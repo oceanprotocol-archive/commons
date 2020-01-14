@@ -1,19 +1,33 @@
 {
-  "title": "New Channel",
-  "description": "Create a new channel",
+  "title": "New Data Union",
+  "description": "Create a new Data Union",
   "fields": {
     "name": {
-      "label": "Channel name",
+      "label": "Union name",
       "placeholder": "e.g. Urban planning",
       "type": "text",
       "required": true,
-      "help": "Channel name"
+      "help": "Union name"
     },
     "industry": {
       "label": "Industry",
       "type": "select",
       "required": true,
       "options": ["Academy", "Company"]
+    },
+    "teaser": {
+      "label": "Teaser",
+      "placeholder": "e.g. Applied AI",
+      "type": "text",
+      "required": true,
+      "help": "A brief description of the Data Union"
+    },
+    "descripion": {
+      "label": "Union Description",
+      "placeholder": "e.g. The Department of AI at University of Cuenca focus on...",
+      "type": "text",
+      "required": true,
+      "help": "Describre the Vision of the Data Union"
     },
     "submit": {
       "type": "submit",

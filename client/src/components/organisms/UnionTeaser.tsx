@@ -2,20 +2,35 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { User } from '../../context'
 import { Logger } from '@oceanprotocol/squid'
-// import Spinner from '../atoms/Spinner'
-// import AssetTeaser from '../molecules/AssetTeaser'
 import styles from './UnionTeaser.module.scss'
-import channels from '../../data/channels.json'
 import CategoryImage from '../atoms/CategoryImage'
 import Fade from 'react-reveal/Fade';
 
+interface IProperty {
+    '@type': string
+    name: string
+    value: string
+}
+
+interface IUnion {
+    '@context': string
+    '@type': string
+    identifier: IProperty
+    founder: IProperty
+    legalName: IProperty
+    alternateName: IProperty
+    knowsAbout: IProperty
+    slogan: IProperty
+    description: IProperty
+}
+
 interface UnionTeaserProps {
-    channel: string
+    union: IUnion
 }
 
 interface UnionTeaserState {
-    channelAssets?: any[]
-    isLoadingChannel?: boolean
+    unionAssets?: any[]
+    isLoading?: boolean
 }
 
 export default class UnionTeaser extends Component<
@@ -24,14 +39,9 @@ export default class UnionTeaser extends Component<
 > {
     public static contextType = User
 
-    // Get channel content
-    public channel = channels.items
-        .filter(({ tag }) => tag === this.props.channel)
-        .map(channel => channel)[0]
-
     public state = {
-        channelAssets: [],
-        isLoadingChannel: true
+        unionAssets: [],
+        isLoading: true
     }
 
     public async componentDidMount() {
@@ -40,43 +50,48 @@ export default class UnionTeaser extends Component<
 
     private getChannelAssets = async () => {
         const { ocean } = this.context
+        const { union } = this.props
 
-        const searchQuery = {
-            offset: 2,
-            page: 1,
-            query: {
-                tags: [this.channel.tag]
-            },
-            sort: {
-                created: -1
+        if (union.alternateName) {
+
+            const searchQuery = {
+                offset: 2,
+                page: 1,
+                query: {
+                    tags: [union.alternateName.value]
+                },
+                sort: {
+                    created: -1
+                }
             }
-        }
 
-        try {
-            const search = await ocean.assets.query(searchQuery)
-            this.setState({
-                channelAssets: search.results,
-                isLoadingChannel: false
-            })
-        } catch (error) {
-            Logger.error(error.message)
-            this.setState({ isLoadingChannel: false })
+            try {
+                const search = await ocean.assets.query(searchQuery)
+                this.setState({
+                    unionAssets: search.results,
+                    isLoading: false
+                })
+            } catch (error) {
+                Logger.error(error.message)
+                this.setState({ isLoading: false })
+            }
+        } else {
+            this.setState({ isLoading: false })
         }
     }
 
 
     public render() {
-        const { title, tag, teaser } = this.channel
-
+        const { union } = this.props
         return (
             <Fade>
                 <div className={styles.channel}>
                     <header className={styles.channelHeader}>
-                        <Link to={`/channels/${tag}`}>
-                            <h2 className={styles.channelTitle}>{title}</h2>
-                            <CategoryImage category={title} />
-                            <p className={styles.channelTeaser}>{teaser}</p>
-                            <span>Browse the channel →</span>
+                        <Link to={`/unions?address=${union.identifier.value}`}>
+                            <h2 className={styles.channelTitle}>{union.legalName.value}</h2>
+                            <CategoryImage category={''} />
+                            <p className={styles.channelTeaser}>{union.slogan ? union.slogan.value:''}</p>
+                            <span>Browse Data Assets →</span>
                         </Link>
                     </header>
                 </div>
