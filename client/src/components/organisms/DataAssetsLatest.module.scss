@@ -25,6 +25,10 @@
             min-height: 285px;
         }
 
+        @media (max-width: $break-point--medium) {
+            width: 100%;
+        }
+
     }
 }
 

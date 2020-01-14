@@ -78,6 +78,11 @@
     right: 2rem;
     width: 505px;
     z-index: 2;
+
+    @media (max-width: $break-point--small) {
+        right: 4rem;
+        width: 300px;
+    }
 }
 
 @keyframes slideInDown {

@@ -9,6 +9,10 @@
     @media (min-width: $break-point--large) {
         right: calc((100vw - 1140px) / 2 + 2rem);
     }
+
+    @media (max-width: $break-point--medium) {
+        right: 4rem;
+    }
 }
 
 .searchWrapper .inputHolder {
@@ -26,6 +30,10 @@
     border-radius: 50px;
     background: rgba(0,0,0,0.5);
     transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+
+    @media (max-width: $break-point--medium) {
+        width: 300px;
+    }
 }
 .searchWrapper .inputHolder .searchInput {
     width:100%;

@@ -11,6 +11,10 @@
         display: flex;
     }
 
+    @media (max-width: $break-point--medium) {
+        width: 48.5%;
+    }
+
 }
 
 .channelHeader {
