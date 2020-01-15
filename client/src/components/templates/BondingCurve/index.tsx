@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import Web3 from 'web3'
+import { BigNumber as BN } from 'bignumber.js'
 import PropTypes from 'prop-types'
 import ErrorBoundary from 'react-error-boundary'
 // import { getWeb3 } from '../utils/getWeb3'
@@ -19,6 +20,16 @@ timeFormatDefaultLocale({
     months: english.shortMonths
 })
 
+export interface BondingCurveParams {
+    curveType: string
+    reserveRatio?: BN
+    curveHeight?: BN
+    inflectionSupply?: BN
+    steepness?: BN
+    totalSupply?: BN
+
+}
+
 interface BondingCurveProps {
     web3?: Web3 //TODO make it required when contract is implemented
     defaultTab: string
@@ -28,6 +39,7 @@ interface BondingCurveProps {
     readOnly?: boolean
     onError: (error: string) => void
     onLoaded: () => void
+    curveParams?: BondingCurveParams
 }
 
 interface BondingCurveState {
@@ -169,7 +181,7 @@ export default class BondingCurve extends PureComponent<BondingCurveProps, Bondi
 
     renderContent = () => {
         const { activeTab, error, loading, contract } = this.state
-        const { web3, contractAddress, height, readOnly } = this.props
+        const { web3, contractAddress, height, readOnly, curveParams } = this.props
 
         if (loading) return <Loader style={{ minHeight: height }} />
 
@@ -179,7 +191,7 @@ export default class BondingCurve extends PureComponent<BondingCurveProps, Bondi
 
         const isActive = (key: string) => activeTab === key
 
-        const Tab = isActive('timeline') ? TimelineChart : BondingCurveChart
+        // const Tab = isActive('timeline') ? TimelineChart : BondingCurveChart
 
         return (
             <>
@@ -223,13 +235,22 @@ export default class BondingCurve extends PureComponent<BondingCurveProps, Bondi
                             </div>
                         )*/
                         <div className={styles.Tab_content}>
-                            <Tab
-                                key={activeTab}
-                                web3={web3}
-                                height={height}
-                                contractAddress={contractAddress}
-                                bondingCurveContract={contract}
-                            />
+                            {isActive('timeline') ? (
+                                <TimelineChart
+                                    key={activeTab}
+                                    web3={web3}
+                                    height={height}
+                                    contractAddress={contractAddress}
+                                    bondingCurveContract={contract}
+                                />):(
+                                <BondingCurveChart
+                                    key={activeTab}
+                                    web3={web3}
+                                    height={height}
+                                    bondingCurveContract={contract}
+                                    curveParams={curveParams}
+                                />)
+                            }
                         </div>
                     }
                 </ErrorBoundary>

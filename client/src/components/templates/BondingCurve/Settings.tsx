@@ -1,21 +1,41 @@
+import { calculateBuyPrice, calculateSaleReturn, calculateSigmoidBuyPrice, calculateSigmoidSellReturn
+	} from '../../../utils/bondingcurveCalculator'
 
-export const BondingCurveTypes = [
-	"Continuous Bonding Curve",
-	"Equilibrium Bonding Curve",
-	"Short Selling Bonding Curve"
-]
+
+export const BondingCurveTypes = {
+	standard: "Standard Continouos Token (~66% Reserve Ratio)",
+	sigmoid: "Sigmoid (For Project Funding)",
+	equilibrium: "Equilibrium Bonding Curve",
+	shortSelling: "Short Selling Bonding Curve"
+}
 
 export const BondingCurveSettings = {
-	[BondingCurveTypes[0]]: {
+	standard: {
+		reserveRatio: 666666, // in ppm
+		calculateBuyPrice: calculateBuyPrice,
+		calculateSaleReturn: calculateSaleReturn,
 		contractAddress: '',
 		artifact: {}
 	},
-	[BondingCurveTypes[1]]: {
+	sigmoid: {
+		curveHeight: 5000, // a
+		inflectionSupply: 15000, // b 
+		steepness: 1000000, // c
+		calculateBuyPrice: calculateSigmoidBuyPrice,
+		calculateSaleReturn: calculateSigmoidSellReturn,
 		contractAddress: '',
 		artifact: {}
 	},
-	[BondingCurveTypes[2]]: {
+	equilibrium: {
+		calculateBuyPrice: () => 0,
+		calculateSaleReturn: () => 0,
 		contractAddress: '',
 		aArtifact: {}
-	}
+	},
+	shortSelling: {
+		calculateBuyPrice: () => 0,
+		calculateSaleReturn: () => 0,
+		contractAddress: '',
+		artifact: {}
+	},
 }

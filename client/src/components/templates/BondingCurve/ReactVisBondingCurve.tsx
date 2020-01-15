@@ -66,12 +66,12 @@ export default class ReactVisBondingCurve extends PureComponent<ReactVisBondingC
                     getY={this.getValue}
                     height={height}
                 >
-                    <GradientDefs>
+                    {/*<GradientDefs>
                         <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                             <stop offset="0%" stopColor="#ff4092" stopOpacity={0.8} />
                             <stop offset="70%" stopColor="white" stopOpacity={0} />
                         </linearGradient>
-                    </GradientDefs>
+                    </GradientDefs>*/}
 
                     <AreaSeries
                         color={'url(#oceanGradient)'}
@@ -87,14 +87,18 @@ export default class ReactVisBondingCurve extends PureComponent<ReactVisBondingC
                         data={data}
                     />
 
-                    {
+                    {/*
                         hoverValues[0].supply && (
                             <XAxis
                                 tickTotal={6}
                                 tickFormat={this.tickFormat}
                             />
                         )
-                    }
+                    */}
+                    <XAxis
+                        tickTotal={6}
+                        tickFormat={this.tickFormat}
+                    />
 
                     {
                         hoverValues[0].supply && (

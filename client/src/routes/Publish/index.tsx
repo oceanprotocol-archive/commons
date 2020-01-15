@@ -2,6 +2,8 @@ import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { Logger, File } from '@oceanprotocol/squid'
 import Web3 from 'web3'
+import { BigNumber as BN } from 'bignumber.js'
+import { Slider, Text } from 'rimble-ui'
 import Route from '../../components/templates/Route'
 import Form from '../../components/atoms/Form/Form'
 import Input from '../../components/atoms/Form/Input'
@@ -48,6 +50,7 @@ interface PublishState {
     pricingMechanism?: string
     bondingCurve?: string
     showPricingConfig?: boolean
+    reserveRatio?: string
 
     currentStep?: number
     publishingStep?: number
@@ -80,9 +83,11 @@ class Publish extends Component<{}, PublishState> {
 
         crowdsource: false,
         updateFrequency: 'Seldom',
-        pricingMechanism: 'Flat',
-        bondingCurve: BondingCurveTypes[0],
+        // pricingMechanism: 'Flat',
+        pricingMechanism: 'Bonding Curve',
+        bondingCurve: 'standard',
         showPricingConfig: false,
+        reserveRatio: "90",
 
         currentStep: 1,
         isPublishing: false,
@@ -419,7 +424,7 @@ class Publish extends Component<{}, PublishState> {
     }
 
     private renderPricingMechanismSettings = () => {
-        const { pricingMechanism, showPricingConfig } = this.state
+        const { pricingMechanism, showPricingConfig, reserveRatio } = this.state
         return (
             <>
                 {pricingMechanism === 'Bonding Curve' && (
@@ -430,23 +435,27 @@ class Publish extends Component<{}, PublishState> {
                             required
                             type="select"
                             help="Select a Bonding Curve Setting"
-                            options={BondingCurveTypes}
+                            keys={Object.keys(BondingCurveTypes)}
+                            sort={false}
+                            options={Object.values(BondingCurveTypes)}
                             onChange={this.inputChange}
                             value={this.state.bondingCurve}
                         />
-                       <button
+                       <input
+                            type="button"
                             className={styles.toggle}
                             onClick={event => this.setState({ showPricingConfig: !this.state.showPricingConfig })}
-                            title="Show Advance Config Settings"
-                        >
+                            // title="Show Advance Config Settings"
+                            value={!this.state.showPricingConfig ? "Show Bonding Curve Advance Settings >":"Hide Bonding Curve Advance Settings <"}
+                        />{/*
                             <Caret
                                 className={showPricingConfig ? styles.open : ''}
                             />{' '}
                             Bonding Curve Advance Settings
-                        </button>
+                        </input>*/}
                         {showPricingConfig && (
                             <div>
-                                <div className={styles.link}>
+                                {<div className={styles.link}>
                                     <span>
                                         Not sure about the pricing model?
                                         <Link
@@ -454,14 +463,29 @@ class Publish extends Component<{}, PublishState> {
                                             target="_blank"
                                         >  Open the Economics Playground</Link>
                                     </span>
+                                </div>}
+                                <div>
+                                    <Slider min={"1"} max={"100"} step={"1"} 
+                                        name="reserveRatio" 
+                                        value={reserveRatio} 
+                                        // onChange={this.inputChange}
+                                    />
+                                    <Text.span fontWeight={"bold"}>{reserveRatio} %</Text.span>
                                 </div>
                                 <BondingCurve
-                                    contractAddress={BondingCurveSettings[this.state.bondingCurve].contractAddress}
-                                    contractArtifact={BondingCurveSettings[this.state.bondingCurve].artifact}
+                                    contractAddress={(BondingCurveSettings as any)[this.state.bondingCurve].contractAddress}
+                                    contractArtifact={(BondingCurveSettings as any)[this.state.bondingCurve].artifact}
                                     defaultTab="bonding-curve"
                                     readOnly
                                     onError={(error: any) => console.log('ERROR in bonding curve', error)}
                                     onLoaded={() => console.log('BondingCurve loaded')}
+                                    curveParams={{
+                                        curveType: this.state.bondingCurve,
+                                        reserveRatio: (new BN(this.state.reserveRatio)).div(new BN(100)),
+                                        curveHeight: new BN(5000), // a
+                                        inflectionSupply: new BN(15000), // b 
+                                        steepness: new BN(1000000), // c
+                                    }}
                                 />
                             </div>
                         )}
