@@ -2,7 +2,7 @@ import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { File } from '@oceanprotocol/squid'
 import { ToastMessage } from 'rimble-ui';
 import { ipfsNodeUri } from '../../config'
-import { IpfsConfig, getIpfsInstance } from '../../utils/ipfs'
+import { IpfsConfig, getIpfsInstance, uploadJSON } from '../../utils/ipfs'
 import { validNetwork, publishBounty } from '../../web3'
 import Route from '../../components/templates/Route'
 import BountiesList from '../../components/organisms/BountiesList'
@@ -82,14 +82,14 @@ class Bounties extends Component {
             //     .then(rs => console.log('fetchJSON', rs))
             //     .catch(error => console.log('fetch error', error))
             // TODO: delete the code below
-            this.setState({
-                title: "title",
-                description: "description",
-                fulfillmentAmount: "10",
-                category: "Agriculture & Bio Engineering",
-                difficulty: "Easy",
-                fulfillersNeedApproval: "No"
-            })
+            // this.setState({
+            //     title: "title",
+            //     description: "description",
+            //     fulfillmentAmount: "10",
+            //     category: "Agriculture & Bio Engineering",
+            //     difficulty: "Easy",
+            //     fulfillersNeedApproval: "No"
+            // })
 
         } catch(error) {
             console.log('Failed to get IPFS instance', error)
@@ -131,7 +131,8 @@ class Bounties extends Component {
                         help={value.help}
                         value={(this.state as any)[key]}
                         onChange={this.inputChange}
-                        disabled={key === 'submit' ? false : (!this.context.ocean || this.state.processing)}
+                        // disabled={key === 'submit' ? false : (!this.context.ocean || this.state.processing)}
+                        disabled={this.state.processing}
                     />
                 )
             }
@@ -151,7 +152,6 @@ class Bounties extends Component {
         event.preventDefault()
         const { ipfs } = this.state
         const { ocean, network } = this.context
-        console.log(this.context)
         if (!ocean) {
             this.setState({ error: 'Please Connect to your Wallet' })
             setTimeout(() => this.setState({ error: '' }), 5000)
@@ -195,8 +195,8 @@ class Bounties extends Component {
                 console.log('onSubmit', data)
 
                 // TODO: enable IPFS upload
-                // const payloadHash = await uploadJSON(ipfs, data)
-                const payloadHash = 'QmeKjsdqqT5qfVmzNiyaQbx2mz9XFDs13eqwmnCuv6MzDU'
+                const payloadHash = await uploadJSON(ipfs, data)
+                // const payloadHash = 'QmeKjsdqqT5qfVmzNiyaQbx2mz9XFDs13eqwmnCuv6MzDU'
                 console.log('IPFS rs', payloadHash)
 
                 // TODO: create a new continuous token
@@ -228,7 +228,7 @@ class Bounties extends Component {
                 setTimeout(() => this.setState({ error: '' }), 5000)
             }
         } else {
-            this.setState({ error: 'No IPFS instance found' })
+            this.setState({ error: 'No IPFS instance available. Try again later' })
             setTimeout(() => this.setState({ error: '' }), 5000)
         }
     }
@@ -243,9 +243,9 @@ class Bounties extends Component {
         const entries = Object.entries(form.fields)
 
         return (
-            <Route title="Bounties">
+            <Route title="Data Challenge Bounties" description="The place where Industry, Academia and Indivuals unite together to create better data products. Collaborate/Contribute with your knowledge/data to enhance R&D projects">
                 {processing && (
-                    <ToastMessage.Success
+                    <ToastMessage.Processing
                       className="toastMsg"
                       my={3}
                       message={"New Data Bounty"}
@@ -253,7 +253,7 @@ class Bounties extends Component {
                     />
                 )}
                 {doneProcessing && (
-                    <ToastMessage.Processing
+                    <ToastMessage.Success
                       className="toastMsg"
                       my={3}
                       message={"Bounty Created"}
@@ -285,6 +285,7 @@ class Bounties extends Component {
                     <Button onClick={() => this.toggleModal()} primary>Create a Data Bounty</Button>
                 </Content>
                 <Content>
+                    <h2>Bounties available</h2>
                     <BountiesList />
                 </Content>
             </Route>

@@ -13,7 +13,7 @@
         "label": "Password",
         "type": "password",
         "required": true,
-        "help": "Type your policy decripting key"
+        "help": "Type your policy decripting key. At least 16 characters"
     },
     "encrypt": {
         "type": "button",

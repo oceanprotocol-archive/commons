@@ -6,6 +6,7 @@ import Content from '../../components/atoms/Content'
 import Button from '../../components/atoms/Button'
 import { IpfsConfig, getIpfsInstance, uploadJSON, fetchJSON } from '../../utils/ipfs'
 import { validNetwork, contributeBounty } from '../../web3'
+import { generateKeyPairs, uploadDocument } from '../../nucypher'
 import { ipfsNodeUri } from '../../config'
 import { getBounties } from '../../graphql'
 import moment from 'moment'
@@ -24,12 +25,16 @@ interface IBountyState {
     processing: boolean
     doneProcessing: boolean
     error: string
-    results?: any,
-    modalIsOpen: boolean,
+    results?: any
+    modalIsOpen: boolean
     files: File[]
+    password: string
     dataFile?: File
     encryptedData?: any
+    dataHash?: string
     ipfs?: any
+    box?: any
+    space?: any
 }
 
 class Bounty extends PureComponent<any, any> {
@@ -43,7 +48,8 @@ class Bounty extends PureComponent<any, any> {
         error: '',
         results: [],
         modalIsOpen: false,
-        files: []
+        files: [],
+        password: ''
     }
 
     bountyMeta = {
@@ -77,8 +83,29 @@ class Bounty extends PureComponent<any, any> {
         }
     }
 
-    toggleModal = () => {
-        this.setState({ modalIsOpen: !this.state.modalIsOpen })
+    toggleModal = async () => {
+        const { modalIsOpen } = this.state
+        if (!modalIsOpen) {
+            const { ocean, wallet } = this.context
+            if (!ocean) {
+                this.setState({ error: 'Please Connect to your Wallet' })
+                setTimeout(() => this.setState({ error: '' }), 5000)
+                return
+            } else {
+                if (!this.state.box || !this.state.space) {
+                    wallet.toggleModal()
+                    const rs = await wallet.openBox()
+                    wallet.toggleModal()
+                    const password = await rs.space.private.get('password')
+                    this.setState({ box: rs.box, space: rs.space, password: password ? password:'' })
+                    // await rs.space.private.remove('bobKey')
+                    // const data = await rs.space.private.all()
+                    // console.log('sdasdasdasd', data)
+                }
+                
+            }
+        }
+        this.setState({ modalIsOpen: !modalIsOpen })
     }
 
     private inputChange = (
@@ -94,19 +121,61 @@ class Bounty extends PureComponent<any, any> {
         })
     }
 
-    encryptData = () => {
-        const { files, dataFile } = this.state
-        if (dataFile) {
-            console.log('Files', files, dataFile)
-            const reader = new FileReader();
-            reader.onload = function () {
-                const data = reader.result ? (reader.result) as string:''
-                const records = data.split('\n')
-                const test = records[0]
-                
-            };
-            // start reading the file. When it is done, calls the onload event defined above.
-            reader.readAsBinaryString(dataFile);
+    encryptData = async () => {
+        const { ocean, wallet } = this.context
+        const { password, dataFile, ipfs } = this.state
+        if (dataFile && password) {
+            if (!ocean) {
+                this.setState({ error: 'Please Connect to your Wallet' })
+                setTimeout(() => this.setState({ error: '' }), 5000)
+                return
+            } else {
+                if (!this.state.box || !this.state.space) {
+                    wallet.toggleModal()
+                    const rs = await wallet.openBox()
+                    wallet.toggleModal()
+                    this.setState({ box: rs.box, space: rs.space })
+                }
+                let { box, space } = this.state
+
+                const id = await box.public.all()
+                console.log('USER', id.proof_did)
+                const userId = id.proof_did
+
+                const spaceData = await space.private.all()
+                console.log('space', spaceData)
+                console.log('Files', dataFile, password)
+                const reader = new FileReader();
+
+                reader.onload = async () => {
+                    const data = reader.result ? (reader.result) as string:''
+                    // const records = data.split('\n')
+                    this.setState({ processing: true })
+
+                    const records = JSON.parse(data)
+                    const test = records[0]
+
+                    const keys = Object.keys(spaceData)
+                    let aliceKey: string;
+                    if(!keys.includes('aliceKey')) {
+                       const rs = await generateKeyPairs(userId, password)
+                       console.log('Keys', rs)
+                       aliceKey = rs.aliceKey
+                       await space.private.setMultiple(['aliceKey', 'bobKey', 'password'], [rs.aliceKey, rs.bobKey, password])
+                    } else {
+                        aliceKey = spaceData['aliceKey']
+                    }
+                    const encryptedData = await Promise.all(records.map(async (record: any) => {
+                        return uploadDocument(record, userId, password, aliceKey)    
+                    }))
+                    console.log('encryptedDATA FINAL', encryptedData)
+                    const dataHash = await uploadJSON(ipfs, encryptedData)
+                    console.log('dataHash', dataHash)
+                    window.open(`https://ipfs.oceanprotocol.com/ipfs/${dataHash}`, '_blank')
+                    this.setState({ encryptedData, dataHash, processing: false })
+                };
+                reader.readAsBinaryString(dataFile);
+            }
         }
     }
 
@@ -137,7 +206,7 @@ class Bounty extends PureComponent<any, any> {
 
     sendContribution = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        const { ipfs, encryptedData } = this.state
+        const { ipfs, encryptedData, dataHash } = this.state
         const { ocean, network } = this.context
         const bountyId = this.props.match.params.bountyId
         if (!ocean) {
@@ -152,12 +221,14 @@ class Bounty extends PureComponent<any, any> {
         }
         if(!encryptedData) {
             // TOOD: handle error
-            // return
+            this.setState({ error: "You need to encrypt your data first" })
+            setTimeout(() => this.setState({ error: '' }), 5000)
+            return
         }
         if (ipfs) {
 
             // const dataHash = await uploadJSON(ipfs, encryptedData)
-            const dataHash = 'QmeKjsdqqT5qfVmzNiyaQbx2mz9XFDs13eqwmnCuv6MzDU'
+            // const dataHash = 'QmeKjsdqqT5qfVmzNiyaQbx2mz9XFDs13eqwmnCuv6MzDU'
 
             const sender = (await ocean.web3.eth.getAccounts())[0]
 
@@ -223,6 +294,14 @@ class Bounty extends PureComponent<any, any> {
                       actionHref={"#!"}
                     />
                 )}
+                {error && (
+                    <ToastMessage.Failure
+                      className="toastMsg"
+                      my={3}
+                      message={"Error!"}
+                      secondaryMessage={error}
+                    />
+                )}
                 {isLoading ? (
                     <Spinner message="Loading..." />
                 ) : (
@@ -233,7 +312,7 @@ class Bounty extends PureComponent<any, any> {
                                 <p>{results.ipfsData.payload.description}</p>
                                 { results.ipfsData.payload.categories.map((cat: string) => (<span className={styles.tag} key={cat}>{cat}</span>)) }
                                 <div className={styles.info}>
-                                    <span><b>Reward:</b> {results.ipfsData.payload.fulfillmentAmount} TOKEN</span>
+                                    <span><b>Reward:</b> {results.ipfsData.payload.fulfillmentAmount} OCEAN</span>
                                     <span><b>Difficulty:</b> {results.ipfsData.payload.difficulty}</span>
                                     <span><b>Deadline:</b> {moment(results.ipfsData.payload.deadline).format('DD/MM/YYYY')}</span>
                                     <span><b>Creator:</b> {results.creator}</span>
@@ -277,16 +356,8 @@ class Bounty extends PureComponent<any, any> {
                                 <ToastMessage.Processing
                                   className="toastMsg"
                                   my={3}
-                                  message={"New Data Contribution"}
-                                  secondaryMessage={"Submitting your Data Contribution..."}
-                                />
-                            )}
-                            {error && (
-                                <ToastMessage.Failure
-                                  className="toastMsg"
-                                  my={3}
-                                  message={"Error!"}
-                                  secondaryMessage={error}
+                                  message={"Processing"}
+                                  secondaryMessage={"Processing request..."}
                                 />
                             )}
                             <Form title={form.title} description={form.description} onSubmit={this.sendContribution}>
