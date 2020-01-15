@@ -40,17 +40,23 @@ export default class BountiesList extends PureComponent<
         const { issuer } = this.props
         const { isLoading, results } = this.state
 
-        const data = account && issuer ? results.filter((bounty: any) => account === bounty.bounty.issuers[0]):results
-
+        const owned = account && issuer ? results.filter((bounty: any) => account === bounty.bounty.issuers[0]):[]
+        const data = owned.length > 0 ? owned:results
         return (
+            <>
+            {owned.length > 0 ? (
+                <h2 className={styles.title}>Your Data Challenges</h2>
+                ):(
+                <h2 className={styles.title}>Data Challenges You Can Contribute</h2>
+            )}
             <div className={styles.bountiesContainer}>
                 {isLoading ? (
                     <Spinner />
-                ) : results.length > 0 ? (
+                ) : data.length > 0 ? (
                     <>
                         {data.map((bounty: any) => (
                             <div key={bounty.bounty.id}>
-                            { /*((account && account === bounty.bounty.issuers[0]) || !issuer) &&*/
+                            {
                                 (
                                     <div className={styles.bounty}>
                                         <a href={`./bounty/${bounty.bounty.id}`}>
@@ -59,7 +65,7 @@ export default class BountiesList extends PureComponent<
                                                 {bounty.data.categories.map((cat: string) => (<span className={styles.tag} key={cat}>{cat}</span>))}
                                             </div>
                                             <div className={styles.rightArea}>
-                                                <span><b>Reward:</b> {bounty.data.fulfillmentAmount} TOKEN</span>
+                                                <span><b>Reward:</b> {bounty.data.fulfillmentAmount} OCEAN</span>
                                                 <span><b>Difficulty:</b> {bounty.data.difficulty}</span>
                                                 <span><b>Deadline:</b> {moment(bounty.data.deadline).format('DD/MM/YYYY')}</span>
                                             </div>
@@ -76,6 +82,7 @@ export default class BountiesList extends PureComponent<
                     </div>
                 )}
             </div>
+            </>
         )
     }
 }
