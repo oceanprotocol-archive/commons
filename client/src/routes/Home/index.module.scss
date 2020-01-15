@@ -16,7 +16,7 @@
     // grab the channel teaser on front page
     // stylelint-disable-next-line
     article > div > h2 + div {
-        padding-top: $spacer / 2;
+        // padding-top: $spacer / 2;
     }
 
     .mainButtons {
@@ -27,7 +27,7 @@
         position: fixed;
         top: 85px;
         width: calc(1140px - 4rem);
-        height: 50px;
+        height: 60px;
         left: calc((100% - 1140px + 4rem) / 2);
         z-index: 1;
     }
@@ -67,6 +67,10 @@
     .bountiesContainer {
         width: 100%;
         overflow: hidden;
+    }
+
+    .homeSlider {
+        height: 60px;
     }
 
 }

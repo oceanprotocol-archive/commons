@@ -70,7 +70,7 @@ export default class Route extends PureComponent<RouteProps, RouteState> {
                         <Content wide={wide}>
                             {image && isSpace ? (
                                 <div className={styles.imageheader}>
-                                {image}
+                                    {image}
                                     <h1 className={styles.title}>{titleSanitized}</h1>
                                     <div className={styles.followers}>{followers} followers</div>
                                     <Button onClick={() => this.followThread()} disabled={following} primary>

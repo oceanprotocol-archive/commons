@@ -1,1 +1,1 @@
-declare module 'react-tag-autocomplete'
+declare module 'react-animated-slider'

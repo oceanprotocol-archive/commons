@@ -1,0 +1,17 @@
+{
+  "title": "Contribute",
+  "description": "Contribute to this Data Bounty",
+  "fields": {
+    "files": {
+        "label": "Files",
+        "placeholder": "e.g. https://file.com/file.json",
+        "type": "text",
+        "required": true,
+        "help": "Provide one or multiple urls to your asset files."
+    },
+    "submit": {
+        "type": "submit",
+        "value": "Contribute"
+    }
+  }
+}

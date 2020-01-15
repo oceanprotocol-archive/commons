@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { ChangeEvent, PureComponent } from 'react'
 import Spinner from '../../components/atoms/Spinner'
 import Route from '../../components/templates/Route'
 import Content from '../../components/atoms/Content'
@@ -8,20 +8,30 @@ import { getBounties } from '../../graphql'
 import moment from 'moment'
 import styles from './Bounty.module.scss'
 import { User } from '../../context'
+import Form from '../../components/atoms/Form/Form'
+import form from '../../data/form-contribute.json'
+import Modal from '../../components/atoms/Modal'
+import Input from '../../components/atoms/Form/Input'
+import Label from '../../components/atoms/Form/Label'
+import Files from '../../routes/Publish/Files'
 
 
 interface IBountyState {
     isLoading: boolean,
-    results: any
+    results?: any,
+    modalIsOpen: boolean,
+    files: File[]
 }
 
-class Bounty extends PureComponent<any, IBountyState> {
+class Bounty extends PureComponent<any, any> {
 
     public static contextType = User
 
     state: IBountyState = {
         isLoading: true,
-        results: []
+        results: [],
+        modalIsOpen: false,
+        files: []
     }
 
     componentDidMount() {
@@ -36,10 +46,59 @@ class Bounty extends PureComponent<any, IBountyState> {
         });
     }
 
+    toggleModal = () => {
+        this.setState({ modalIsOpen: !this.state.modalIsOpen })
+    }
+
+    private inputChange = (
+        event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+    ) => {
+        this.setState({
+            [event.currentTarget.name]: event.currentTarget.value
+        })
+    }
+
+    formFields = (entries: any[]) =>
+        entries.map(([key, value]) => {
+
+            if (key === 'files') {
+                return (
+                    <div key={key}>
+                        <Label htmlFor={key} required>
+                            {value.label}
+                        </Label>
+                        <Files
+                            placeholder={value.placeholder}
+                            name={key}
+                            help={value.help}
+                            files={(this.state as any)[key]}
+                            onChange={this.inputChange}
+                        />
+                    </div>
+                )
+            } else {
+                return (
+                    <Input
+                        key={key}
+                        name={key}
+                        label={value.label}
+                        placeholder={value.placeholder}
+                        required={value.required}
+                        type={value.type}
+                        options={value.options}
+                        help={value.help}
+                        value={(this.state as any)[key]}
+                        onChange={this.inputChange}
+                        disabled={key === 'submit' ? false : (!this.context.ocean)}
+                    />
+                )
+            }
+        })
 
     public render() {
         const { account } = this.context
-        const { isLoading, results } = this.state
+        const { isLoading, results, modalIsOpen } = this.state
+        const entries = Object.entries(form.fields)
 
         return (
             <Route title="Bounty">
@@ -74,7 +133,7 @@ class Bounty extends PureComponent<any, IBountyState> {
                                     </div>
                                 </div>
                                 <div className={styles.centeredWrapper}>
-                                    <a className={styles.button} onClick={() => {}}>Contribute</a>
+                                    <a className={styles.button} onClick={() => this.toggleModal()}>Contribute</a>
                                     { account === results.issuers[0] &&
                                         (<a className={styles.button} onClick={() => {}}>Publish</a>)
                                     }
@@ -83,7 +142,17 @@ class Bounty extends PureComponent<any, IBountyState> {
                         ):(
                             <p>Bounty does not exist.</p>
                         )}
-                    </Content>)
+                        <Modal
+                            isOpen={modalIsOpen}
+                            onAfterOpen={() => console.log('Modal has opened')}
+                            onRequestClose={this.toggleModal}
+                            toggleModal={() => this.toggleModal()}>
+                            <Form title={form.title} description={form.description} onSubmit={undefined}>
+                            {this.formFields(entries)}
+                            </Form>
+                        </Modal>
+                    </Content>
+                )
                 }
             </Route>
         )

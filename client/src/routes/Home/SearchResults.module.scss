@@ -75,13 +75,17 @@
 .fixedResults {
     position: fixed;
     top: 205px;
-    right: 2rem;
-    width: 505px;
+    right: 10rem;
+    width: 440px;
     z-index: 2;
 
     @media (max-width: $break-point--small) {
         right: 4rem;
         width: 300px;
+    }
+
+    @media (max-width: $break-point--large) {
+        right: 2rem;
     }
 }
 

@@ -8,6 +8,7 @@ import styles from './index.module.scss'
 import meta from '../../data/meta.json'
 import Spinner from '../../components/atoms/Spinner'
 import Content from '../../components/atoms/Content'
+import Markdown from '../../components/atoms/Markdown'
 import DataAssetsLatest from '../../components/organisms/DataAssetsLatest'
 import UnionTeaser from '../../components/organisms/UnionTeaser'
 import BountiesList from '../../components/organisms/BountiesList'
@@ -16,6 +17,8 @@ import Search from './Search'
 import FixedSearch from './FixedSearch'
 import { getDataUnions } from '../../box'
 // import withTracker from '../../hoc/withTracker'
+import Slider from 'react-animated-slider';
+import 'react-animated-slider/build/horizontal.css';
 
 interface HomeProps {
     history: History
@@ -26,7 +29,8 @@ interface HomeState {
     unions: Array<any>
     search?: string
     fixedSearch: boolean
-    showSearch: boolean
+    showSearch: boolean,
+    descriptions: Array<any>
 }
 
 class Home extends PureComponent<HomeProps, HomeState> {
@@ -36,7 +40,13 @@ class Home extends PureComponent<HomeProps, HomeState> {
         loadingUnions: true,
         unions: [],
         fixedSearch: false,
-        showSearch: false
+        showSearch: false,
+        descriptions: [
+            { description: meta.description },
+            { description: meta.description },
+            { description: meta.description }
+        ]
+
     }
 
     public searchAssets = (
@@ -61,17 +71,27 @@ class Home extends PureComponent<HomeProps, HomeState> {
     }
 
     public render() {
-        const { fixedSearch, loadingUnions, unions } = this.state;
+        const { account } = this.context
+        const { fixedSearch, loadingUnions, unions, descriptions } = this.state;
         const results:any = [];
         return (
             <Route
                 title={meta.title}
-                description={meta.description}
                 className={styles.home}
             >
                 <video autoPlay muted loop className={styles.bgVideo}>
                     <source src="/home-bg.mp4" type="video/mp4" />
                 </video>
+                <Content>
+                    <Slider autoplay="3000" className={`slider ${styles.homeSlider}`}>
+                      {descriptions.map((desc, index) => <div key={index}>
+                      <Markdown
+                          text={desc.description}
+                          className={styles.description}
+                      />
+                      </div>)}
+                    </Slider>
+                </Content>
                 <Content>
                     <div className={styles.mainButtons}>
                         <div>
@@ -85,8 +105,12 @@ class Home extends PureComponent<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
-                <h2 className={styles.title}>Data Challenges You Can Contribute</h2>
-                    <BountiesList />
+                {account ? (
+                    <h2 className={styles.title}>Your Data Challenges</h2>
+                ):(
+                    <h2 className={styles.title}>Data Challenges You Can Contribute</h2>
+                )}
+                    <BountiesList issuer={account}/>
                 </Content>
 
                 <Content wide>

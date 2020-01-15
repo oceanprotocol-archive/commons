@@ -4,6 +4,7 @@
     padding: 0 $spacer / 1.5;
     max-width: 47rem;
     margin: 0 auto;
+    overflow: hidden;
 
     @media (min-width: $break-point--small) {
         padding: 0 $spacer;

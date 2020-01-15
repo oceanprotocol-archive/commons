@@ -13,7 +13,7 @@ import Modal from '../../components/atoms/Modal'
 import Input from '../../components/atoms/Form/Input'
 import Button from '../../components/atoms/Button'
 import Label from '../../components/atoms/Form/Label'
-import Files from '../Publish/Files'
+import Files from '../../routes/Publish/Files'
 import form from '../../data/form-new-bounty.json'
 
 // import withTracker from '../hoc/withTracker'
