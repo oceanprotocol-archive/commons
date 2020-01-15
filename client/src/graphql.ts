@@ -39,7 +39,6 @@ export const getBounties = async (bountyId?: string) => {
                         hasPaidout
                         fulfillments {
                             id
-                            bounty
                             fulfillers
                             payouts
                             submitter
@@ -48,7 +47,6 @@ export const getBounties = async (bountyId?: string) => {
                         }
                         contributions {
                             id
-                            bounty
                             contributor
                             amount
                             refunded
@@ -75,7 +73,6 @@ export const getBounties = async (bountyId?: string) => {
                         hasPaidout
                         fulfillments {
                             id
-                            bounty
                             fulfillers
                             payouts
                             submitter
@@ -84,7 +81,6 @@ export const getBounties = async (bountyId?: string) => {
                         }
                         contributions {
                             id
-                            bounty
                             contributor
                             amount
                             refunded
