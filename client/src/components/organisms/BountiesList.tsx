@@ -15,6 +15,10 @@ export default class BountiesList extends PureComponent<
     public state = { results: [], isLoading: true }
 
     public componentDidMount() {
+        this.queryBounties();
+    }
+
+    private queryBounties() {
         getBounties().then((rs) => {
             if(rs) {
                 let results = rs.map((e: any) => { return { bounty: e, data: e.ipfsData.payload } })
@@ -36,15 +40,17 @@ export default class BountiesList extends PureComponent<
         const { issuer } = this.props
         const { isLoading, results } = this.state
 
+        const data = account && issuer ? results.filter((bounty: any) => account === bounty.bounty.issuers[0]):results
+
         return (
             <div className={styles.bountiesContainer}>
                 {isLoading ? (
                     <Spinner />
                 ) : results.length > 0 ? (
                     <>
-                        {results.map((bounty: any) => (
+                        {data.map((bounty: any) => (
                             <div key={bounty.bounty.id}>
-                            { ((account && issuer === bounty.bounty.issuers[0]) || !account) &&
+                            { /*((account && account === bounty.bounty.issuers[0]) || !issuer) &&*/
                                 (
                                     <div className={styles.bounty}>
                                         <a href={`./bounty/${bounty.bounty.id}`}>
