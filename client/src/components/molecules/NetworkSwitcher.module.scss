@@ -6,16 +6,30 @@
     font-size: $font-size-mini;
 }
 
-.networkListWrapper em {
+.networkSwitchButton {
+    color: #fff;
+}
+
+.networkSwitchButton {
     display: inline-block;
     border: 1px solid $brand-grey-lighter;
     padding: 4px;
     border-radius: $border-radius;
     margin: 0 4px;
     user-select: none;
+    cursor: pointer;
 }
 
-.networkListWrapper em:after {
+.networkSwitchButton:active {
+    outline: none;
+}
+
+.networkSwitchButton:focus {
+    outline: none;
+    //border: 1px solid #000;
+}
+
+.networkSwitchButton:after {
     content: '';
     display: inline-block;
     width: 0;
@@ -23,6 +37,16 @@
     border: 4px solid transparent;
     border-bottom: none;
     border-top: 4px solid $brand-grey-light;
+}
+
+.networkSwitchButton span {
+    color: $brand-grey-light;
+}
+
+.networkSwitchButton span:after {
+    content: '';
+    border-right: 1px solid $brand-grey-lighter;
+    margin: 0 4px;
 }
 
 .networkList {
@@ -36,17 +60,6 @@
     width: 100%;
 }
 
-.networkListWrapper em {
-    display: block;
-    border: 1px solid $brand-grey-lighter;
-}
-
-.networkListWrapper em span:after {
-    content: '';
-    border-right: 1px solid $brand-grey-lighter;
-    margin: 0 4px;
-}
-
 .networkListWrapper.on .networkList {
     display: block;
 }
@@ -58,14 +71,16 @@
     padding: 4px;
 }
 
-.networkList li span {
+.listButton {
+    display: block;
     text-transform: capitalize;
+    border: none;
+    width: inherit;
 }
 
 .networkList li:hover {
     color: $brand-violet;
     font-size: $font-size-mini;
-    background-color: $brand-grey-lighter;
 }
 
 .networkList li:before {

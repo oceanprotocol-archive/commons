@@ -27,10 +27,10 @@ export function NetworkSwitcher() {
     useEffect(() => {
         // Handle click outside to collapse Network switcher dropdown
         // add listener when mounted
-        document.addEventListener('mousedown', handleTogle)
+        document.addEventListener('mousedown', handleToggle)
         // return function when unmounted
         return () => {
-            document.removeEventListener('mousedown', handleTogle)
+            document.removeEventListener('mousedown', handleToggle)
         }
     }, [])
     /*  
@@ -41,7 +41,7 @@ export function NetworkSwitcher() {
     }, []) 
     */
 
-    const handleTogle = (e: any) => {
+    const handleToggle = (e: any) => {
         const isClickedInside = node.current.contains(e.target)
         setIsToggled(isClickedInside)
     }
@@ -64,21 +64,28 @@ export function NetworkSwitcher() {
                 isToggled ? styles.on : ''
             }`}
         >
-            <em onClick={e => handleTogle(e)}>
+            <button
+                className={styles.networkSwitchButton}
+                onClick={e => handleToggle(e)}
+            >
                 <span>Change Network</span>
-            </em>
+            </button>
             <ul className={styles.networkList}>
                 {Object.keys(CONNECTIONS).map((networkName, i) => (
                     <li
                         key={i}
-                        onClick={() => switchNetwork(networkName)}
                         className={
                             network.toUpperCase() === networkName.toUpperCase()
                                 ? styles.selected
                                 : ''
                         }
                     >
-                        <span>{networkName}</span>
+                        <button
+                            className={styles.listButton}
+                            onClick={() => switchNetwork(networkName)}
+                        >
+                            {networkName}
+                        </button>
                     </li>
                 ))}
             </ul>
