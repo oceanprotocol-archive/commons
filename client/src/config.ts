@@ -50,5 +50,7 @@ export const portisEnabled = process.env.REACT_APP_PORTIS_APP_ID === 'true' || f
 export const portisAppId = process.env.REACT_APP_PORTIS_APP_ID
 export const torusEnabled = process.env.REACT_APP_TORUS_ENABLED === 'true' || false
 
-export const subgraphGraphqlEndpoint = process.env.SUBGRAPH_GRAPHQL_ENDPOINT ||
-      'http://ec2-54-87-184-199.compute-1.amazonaws.com:8000/subgraphs/name/santteegt/oceanprotocol-subgraph'
+export const subgraphGraphqlEndpoint = process.env.REACT_APP_SUBGRAPH_GRAPHQL_ENDPOINT ||
+      'http://127.0.0.1:8000/subgraphs/name/santteegt/oceanprotocol-subgraph'
+
+export const nucypherAPI = process.env.REACT_APP_NUCYPHER_API || 'http://localhost:5000'
