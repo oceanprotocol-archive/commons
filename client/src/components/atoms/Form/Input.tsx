@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import React, { PureComponent, FormEvent, ChangeEvent } from 'react'
+import React, { PureComponent, FormEvent, ChangeEvent, MouseEvent } from 'react'
 import ReactTags from 'react-tag-autocomplete'
 import slugify from '@sindresorhus/slugify'
 import DatePicker from 'react-datepicker'
@@ -29,6 +29,7 @@ interface InputProps {
             | ChangeEvent<HTMLInputElement>
             | ChangeEvent<HTMLSelectElement>
             | ChangeEvent<HTMLTextAreaElement>
+            | MouseEvent<HTMLButtonElement>
     ): void
     rows?: number
     group?: any
@@ -196,6 +197,21 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         onBlur={this.toggleFocus}
                         value={value}
                         {...this.props}
+                    />
+                )
+            case 'button':
+                // return (
+                //     <button
+                //         className={styles.input}
+                //         onClick={this.props.onChange}
+                //     >{value}</button>
+                // )
+                return (
+                    <input
+                        type="button"
+                        className={styles.input}
+                        value={value}
+                        onClick={this.props.onChange}
                     />
                 )
             case 'tags':
