@@ -9,6 +9,12 @@
         "required": true,
         "help": "Provide one or multiple urls to your asset files."
     },
+    "password": {
+        "label": "Password",
+        "type": "password",
+        "required": true,
+        "help": "Type your policy decripting key"
+    },
     "submit": {
         "type": "submit",
         "value": "Contribute"
