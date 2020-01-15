@@ -50,8 +50,23 @@ const publishBounty = async (web3: Web3, params: Array<any>) => {
 
 }
 
+const contributeBounty = async (web3: Web3, params: Array<any>) => {
+	const networkId = (await web3.eth.net.getId()).toString()
+	if(contractDeployed(StandardBounties, networkId)) {
+		const accounts = await web3.eth.getAccounts()
+		const contract = new web3.eth.Contract(StandardBounties.abi, StandardBounties.networks[networkId].address)
+		const gasEstimate = await contract.methods.fulfillBounty(...params).estimateGas({from: accounts[0]})
+		console.log('gasEstimate', gasEstimate)
+		return await sendTx(contract.methods.fulfillBounty(...params), {from: accounts[0], gas: gasEstimate})
+	} else {
+		throw new Error("You're connected to the wrong network")
+	}
+
+}
+
 export {
 	validNetwork,
 	contractDeployed,
-	publishBounty
+	publishBounty,
+	contributeBounty
 }

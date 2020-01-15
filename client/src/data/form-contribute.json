@@ -3,17 +3,21 @@
   "description": "Contribute to this Data Bounty",
   "fields": {
     "files": {
-        "label": "Files",
+        "label": "Data File",
         "placeholder": "e.g. https://file.com/file.json",
-        "type": "text",
+        "type": "file",
         "required": true,
-        "help": "Provide one or multiple urls to your asset files."
+        "help": "Upload your records file. CSV FILE FORMAT"
     },
     "password": {
         "label": "Password",
         "type": "password",
         "required": true,
         "help": "Type your policy decripting key"
+    },
+    "encrypt": {
+        "type": "button",
+        "value": "Encrypt Data"
     },
     "submit": {
         "type": "submit",
