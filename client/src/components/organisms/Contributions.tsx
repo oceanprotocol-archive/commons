@@ -57,15 +57,15 @@ export default class Contributions extends PureComponent<
                             {
                                 (
                                     <div className={styles.fulfillment}>
-                                        <a href={`${fulfillment.ipfsData.payload.sourceDirectoryHash}${fulfillment.ipfsData.payload.sourceFileHash}`} target="_blank">
                                             <div className={styles.leftArea}>
                                                 <span className={styles.subTitle}>{fulfillment.ipfsData.payload.description}</span>
                                             </div>
                                             <div className={styles.rightArea}>
                                                 <span><b>Fulfillers:</b> {fulfillment.ipfsData.payload.fulfillers}</span>
-                                                <span><b>Payout:</b> {fulfillment.ipfsData.payload.payoutAmounts}</span>
+                                                <a href={`${fulfillment.ipfsData.payload.sourceDirectoryHash}${fulfillment.ipfsData.payload.sourceFileHash}`} target="_blank">
+                                                <b>See Data</b>
+                                                </a>
                                             </div>
-                                        </a>
                                     </div>
                                 )
                             }
