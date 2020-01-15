@@ -30,7 +30,7 @@ If you're a developer and want to contribute to, or want to utilize this marketp
   - [⛵️ Environment Variables](#️-environment-variables)
     - [Client](#client)
     - [Server](#server)
-    - [Network &amp; Endpoint Switches](#network-amp-endpoint-switches)
+    - [Network & Endpoint Switches](#network--endpoint-switches)
     - [Feature Switches](#feature-switches)
     - [More Settings](#more-settings)
 - [👩‍🔬 Testing](#-testing)
@@ -83,7 +83,12 @@ cd barge
 ./start_ocean.sh --no-commons
 ```
 
-Then set [environment variables](#️-environment-variables) to use those local connections.
+Then set the [`REACT_APP_OCEAN_NETWORK` environment variable](#️-environment-variables) to `spree` to use those local connections:
+
+```bash
+# in client/.env
+REACT_APP_OCEAN_NETWORK=spree
+```
 
 Finally, you need to copy the generated contract artifacts out of the Docker container. To do this, execute this script in another terminal:
 
@@ -116,13 +121,13 @@ The `./client/src/config.ts` file is setup to prioritize environment variables f
 
 By setting environment variables, you can easily switch between Ocean networks the commons client connects to, without directly modifying `./client/src/config.ts`. This is helpful e.g. for local development so you don't accidentially commit changes to the config file.
 
-For local development, you can use a `.env.local` file. There's an example file with the most common network configurations preconfigured:
+For local development, you can use a `.env` file. There's an example file with the most common network configurations preconfigured:
 
 ```bash
-cp client/.env.local.example client/.env.local
+cp client/.env.example client/.env
 
 # uncomment the config you need
-vi client/.env.local
+vi client/.env
 ```
 
 #### Server
@@ -152,6 +157,13 @@ For more control, you can overwrite individual endpoints in addition to the abov
 - `REACT_APP_BRIZO_ADDRESS`
 - `REACT_APP_SECRET_STORE_URI`
 - `REACT_APP_FAUCET_URI`
+
+A common use case for that is to switch between different Aquarius instances to get a different asset catalogue. In that case, you would use `REACT_APP_OCEAN_NETWORK` to select the network, but then overwrite only `REACT_APP_AQUARIUS_URI`, e.g.:
+
+```
+REACT_APP_OCEAN_NETWORK=pacific
+REACT_APP_AQUARIUS_URI=https://aquarius.test.oceanprotocol.com
+```
 
 #### Feature Switches
 
