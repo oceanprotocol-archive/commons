@@ -27,6 +27,7 @@ interface HomeProps {
 interface HomeState {
     loadingUnions: boolean
     unions: Array<any>
+    account: string
     search?: string
     fixedSearch: boolean
     showSearch: boolean,
@@ -39,6 +40,7 @@ class Home extends PureComponent<HomeProps, HomeState> {
     public state = {
         loadingUnions: true,
         unions: [],
+        account: '',
         fixedSearch: false,
         showSearch: false,
         descriptions: [
@@ -105,12 +107,16 @@ class Home extends PureComponent<HomeProps, HomeState> {
                 </Content>
 
                 <Content wide>
-                {account ? (
-                    <h2 className={styles.title}>Your Data Challenges</h2>
-                ):(
-                    <h2 className={styles.title}>Data Challenges You Can Contribute</h2>
-                )}
-                    <BountiesList issuer={account}/>
+                    <Market.Consumer>
+                        { market =>  (<>
+                            {/*market.account ? (
+                                <h2 className={styles.title}>Your Data Challenges</h2>
+                            ):(
+                                <h2 className={styles.title}>Data Challenges You Can Contribute</h2>
+                            )*/}
+                            <BountiesList issuer={market.account}/>
+                        </>)}
+                    </Market.Consumer>
                 </Content>
 
                 <Content wide>

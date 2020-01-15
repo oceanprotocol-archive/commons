@@ -339,7 +339,7 @@ pre {
 }
 
 .toastMsg {
-    position: absolute;
+    position: fixed;
     right: 10px;
     top: 100px;
     z-index: 100;
