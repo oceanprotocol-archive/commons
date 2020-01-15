@@ -20,12 +20,7 @@ addons:
 env:
   global:
     # run E2E tests against local Spree
-    - REACT_APP_NODE_URI="http://localhost:8545"
-    - REACT_APP_AQUARIUS_URI="http://aquarius:5000"
-    - REACT_APP_BRIZO_URI="http://localhost:8030"
-    - REACT_APP_SECRET_STORE_URI="http://localhost:12001"
-    - REACT_APP_FAUCET_URI="http://localhost:3001"
-    - REACT_APP_BRIZO_ADDRESS="0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0"
+    - REACT_APP_OCEAN_NETWORK=spree
 
     # IPFS client & server config
     - REACT_APP_IPFS_GATEWAY_URI="https://ipfs.oceanprotocol.com"
