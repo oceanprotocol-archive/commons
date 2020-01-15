@@ -109,3 +109,48 @@ export const getBounties = async (bountyId?: string) => {
       }
     }
 };
+
+
+export const getFulfillmentData = async (fullfimentId: string) => {
+    let graphqlClient;
+    const { hostname, port, protocol } = new URL(ipfsNodeUri)
+    const ipfsConfig: IpfsConfig = {
+        protocol: protocol.replace(':', ''),
+        host: hostname,
+        port: port || '443'
+    }
+    if (subgraphGraphqlEndpoint) {
+      graphqlClient = new ApolloClient({
+        uri: subgraphGraphqlEndpoint,
+        cache: new InMemoryCache(),
+      });
+    }
+
+    if (graphqlClient) {
+      const ipfs = getIpfsInstance(ipfsConfig)
+      let rs:any;
+      try {
+        rs = await graphqlClient.query({
+            query: gql`
+            {
+              fulfillments(where: {id: "${fullfimentId}"}) {
+                id
+                bounty {
+                  id
+                  data
+                }
+                fulfillers
+                payouts
+                submitter
+                data
+                accepted
+              }
+            }
+            `
+        });
+        return await fetchJSON(ipfs, rs.data.fulfillments[0].data);
+      } catch (error) {
+        console.log("Error with graphql", error);
+      }
+    }
+};

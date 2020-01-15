@@ -18,10 +18,11 @@ import Modal from '../../components/atoms/Modal'
 import Input from '../../components/atoms/Form/Input'
 import Label from '../../components/atoms/Form/Label'
 import Files from '../../routes/Publish/Files'
+import Contributions from '../organisms/Contributions'
 
 
 interface IBountyState {
-    isLoading: boolean,
+    isLoading: boolean
     processing: boolean
     doneProcessing: boolean
     error: string
@@ -61,7 +62,6 @@ class Bounty extends PureComponent<any, any> {
     componentDidMount() {
         getBounties(this.props.match.params.bountyId).then((rs) => {
             if(rs) {
-                console.log(rs[0])
                 this.setState({ results: rs[0], isLoading: false })
             }
         }).catch((err) => {
@@ -102,7 +102,7 @@ class Bounty extends PureComponent<any, any> {
                     // const data = await rs.space.private.all()
                     // console.log('sdasdasdasd', data)
                 }
-                
+
             }
         }
         this.setState({ modalIsOpen: !modalIsOpen })
@@ -121,61 +121,19 @@ class Bounty extends PureComponent<any, any> {
         })
     }
 
-    encryptData = async () => {
-        const { ocean, wallet } = this.context
-        const { password, dataFile, ipfs } = this.state
-        if (dataFile && password) {
-            if (!ocean) {
-                this.setState({ error: 'Please Connect to your Wallet' })
-                setTimeout(() => this.setState({ error: '' }), 5000)
-                return
-            } else {
-                if (!this.state.box || !this.state.space) {
-                    wallet.toggleModal()
-                    const rs = await wallet.openBox()
-                    wallet.toggleModal()
-                    this.setState({ box: rs.box, space: rs.space })
-                }
-                let { box, space } = this.state
+    encryptData = () => {
+        const { files, dataFile } = this.state
+        if (dataFile) {
+            console.log('Files', files, dataFile)
+            const reader = new FileReader();
+            reader.onload = function () {
+                const data = reader.result ? (reader.result) as string:''
+                const records = data.split('\n')
+                const test = records[0]
 
-                const id = await box.public.all()
-                console.log('USER', id.proof_did)
-                const userId = id.proof_did
-
-                const spaceData = await space.private.all()
-                console.log('space', spaceData)
-                console.log('Files', dataFile, password)
-                const reader = new FileReader();
-
-                reader.onload = async () => {
-                    const data = reader.result ? (reader.result) as string:''
-                    // const records = data.split('\n')
-                    this.setState({ processing: true })
-
-                    const records = JSON.parse(data)
-                    const test = records[0]
-
-                    const keys = Object.keys(spaceData)
-                    let aliceKey: string;
-                    if(!keys.includes('aliceKey')) {
-                       const rs = await generateKeyPairs(userId, password)
-                       console.log('Keys', rs)
-                       aliceKey = rs.aliceKey
-                       await space.private.setMultiple(['aliceKey', 'bobKey', 'password'], [rs.aliceKey, rs.bobKey, password])
-                    } else {
-                        aliceKey = spaceData['aliceKey']
-                    }
-                    const encryptedData = await Promise.all(records.map(async (record: any) => {
-                        return uploadDocument(record, userId, password, aliceKey)    
-                    }))
-                    console.log('encryptedDATA FINAL', encryptedData)
-                    const dataHash = await uploadJSON(ipfs, encryptedData)
-                    console.log('dataHash', dataHash)
-                    window.open(`https://ipfs.oceanprotocol.com/ipfs/${dataHash}`, '_blank')
-                    this.setState({ encryptedData, dataHash, processing: false })
-                };
-                reader.readAsBinaryString(dataFile);
-            }
+            };
+            // start reading the file. When it is done, calls the onload event defined above.
+            reader.readAsBinaryString(dataFile);
         }
     }
 
@@ -342,6 +300,9 @@ class Bounty extends PureComponent<any, any> {
                                         { account.toLowerCase() === results.issuers[0] &&
                                         (<a className={styles.button} onClick={() => {}}>Publish Asset</a>
                                     )}
+                                </div>
+                                <div className="contributions">
+                                    <Contributions fulfillments={results.fulfillments} />
                                 </div>
                             </div>
                         ):(

@@ -1,0 +1,58 @@
+@import '../../styles/variables';
+
+.fulfillmentsContainer {
+    margin-top: $spacer;
+    margin-bottom: $spacer;
+    overflow: hidden;
+
+    .fulfillment {
+        width: 100%;
+        float: left;
+        border: 1px solid $brand-white;
+        border-radius: 10px;
+        padding: $spacer / 2;
+        margin-bottom: $spacer / 4;
+
+        .leftArea {
+            float: left;
+            width: 100%;
+        }
+
+        span {
+            width: 100%;
+            display: block;
+        }
+
+        .tag {
+            background-color: $dark-pink;
+            border-radius: 10px;
+            padding: $spacer / 6;
+            margin-right: $spacer / 8;
+            display: inline-block;
+            width: auto;
+            font-size: $font-size-small;
+        }
+
+        .subTitle {
+            font-size: $font-size-h5;
+            color: $brand-grey-light;
+            padding-bottom: $spacer / 4;
+            margin-bottom: 0;
+        }
+
+        .link {
+            display: block;
+            margin-top: $spacer / 2;
+        }
+
+        .empty {
+            text-align: center;
+            margin-top: $spacer;
+            color: $brand-grey-light;
+        }
+
+        a {
+            color: #fff;
+        }
+    }
+}
