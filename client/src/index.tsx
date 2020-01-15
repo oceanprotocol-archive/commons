@@ -5,16 +5,16 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 function renderToDOM() {
-  const root = document.getElementById('root')
+    const root = document.getElementById('root')
 
-  if (root !== null) {
-    ReactDOM.render(
-      <UserProvider>
-        <App />
-      </UserProvider>,
-      root
-    )
-  }
+    if (root !== null) {
+        ReactDOM.render(
+            <UserProvider>
+                <App />
+            </UserProvider>,
+            root
+        )
+    }
 }
 
 export { renderToDOM }
