@@ -73,7 +73,7 @@ export function NetworkSwitcher() {
             <ul className={styles.networkList}>
                 {Object.keys(CONNECTIONS).map((networkName, i) => (
                     <li
-                        key={i}
+                        key={networkName}
                         className={
                             network.toUpperCase() === networkName.toUpperCase()
                                 ? styles.selected
