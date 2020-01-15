@@ -1,5 +1,7 @@
 @import '../../styles/variables';
 
+$localSpacer: $spacer / 6;
+
 .networkListWrapper {
     position: relative;
     cursor: pointer;
@@ -13,9 +15,9 @@
 .networkSwitchButton {
     display: inline-block;
     border: 1px solid $brand-grey-lighter;
-    padding: 4px;
+    padding: $localSpacer;
     border-radius: $border-radius;
-    margin: 0 4px;
+    margin: 0 $localSpacer;
     user-select: none;
     cursor: pointer;
 }
@@ -46,7 +48,7 @@
 .networkSwitchButton span:after {
     content: '';
     border-right: 1px solid $brand-grey-lighter;
-    margin: 0 4px;
+    margin: 0 $localSpacer;
 }
 
 .networkList {
@@ -68,7 +70,7 @@
     cursor: pointer;
     font-size: $font-size-mini;
     text-align: left;
-    padding: 4px;
+    padding: $localSpacer;
 }
 
 .listButton {
