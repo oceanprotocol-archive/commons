@@ -1,32 +1,42 @@
 <h1 align="center">Decentraminds Marketplace</h1>
 
-> 🏄‍♀️ Marketplace front-end and backend server to explore, download, and publish data assets.
+> 🏄‍♀️ Marketplace front-end
 
-If you're a developer and want to contribute to, or want to utilize this marketplace's code in your projects, then keep on reading.
+## Requirements for local deployment
 
-- [🏄 Get Started](#-get-started)
-  - [🏖 Remote Ocean: Pacific](#-remote-ocean-pacific)
-  - [🐳 Use with Barge](#-use-with-barge)
-  - [⛵️ Environment Variables](#️-environment-variables)
-    - [Client](#client)
-    - [Server](#server)
-    - [Feature Switches](#feature-switches)
-    - [More Settings](#more-settings)
-- [👩‍🔬 Testing](#-testing)
-  - [Unit Tests](#unit-tests)
-  - [End-to-End Integration Tests](#end-to-end-integration-tests)
-- [✨ Code Style](#-code-style)
-- [🛳 Production](#-production)
-- [⬆️ Releases](#️-releases)
-- [📜 Changelog](#-changelog)
-- [🎁 Contributing](#-contributing)
-- [🏛 License](#-license)
+* Clone the [op-web3-wallet](https://github.com/decentraminds/op-web3-wallet) project. More info in the project README
+
+```bash
+cd op-web3-wallet
+npm install
+```
+* Within the op-web3-wallet project dependencies, specify the .json in `require(multicodec/src/base-table)` under `node_modules/cids/src/index`
+
+* Link op-web3-wallet globally
+
+```bash
+npm link
+```
+
+* Install and link wallet project to the client
+
+```bash
+cd client
+npm install
+npm link op-web3-wallet
+```
+
+* Clone and deploy the [OceanProtocol subgraph](https://github.com/decentraminds/op-subgraph) See the README for info. A subgraph for the Nile testnet is deployed at http://54.87.184.199:8000/subgraphs/name/santteegt/oceanprotocol-subgraph
+
+* Deploy required contracts at this [repo](https://github.com/decentraminds/contracts)
+
+* Deploy the NuCypher API server at this [repo](https://github.com/decentraminds/umbral)
 
 ## 🏄 Get Started
 
 This repo contains a client and a server, both written in TypeScript:
 
-- **client**: React app setup with [squid-js](https://github.com/oceanprotocol/squid-js), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
+- **client**: React app setup with [op-web3-wallet](https://github.com/decentraminds/op-web3-wallet) for interacting with the Ocean Protocol
 - **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking. The endpoints are documented in [server Readme](server/).
 
 To spin up both, the client and the server in a watch mode for local development, execute:
@@ -40,15 +50,6 @@ Open [http://localhost:3000](http://localhost:3000) to view the client in the br
 
 ### 🏖 Remote Ocean: Pacific
 
-To make use of all the functionality, you need to connect to an Ocean network.
-
-By default, the client will connect to Ocean components running within [Ocean's Pacific network](https://docs.oceanprotocol.com/concepts/pacific-network/) remotely.
-
-By default, the client uses a burner wallet connected to the correct network automatically. If you choose to use MetaMask, you need to connect to the Pacific network. To do this:
-
-1. select Custom RPC in the network dropdown in MetaMask
-2. under New Network, enter `https://pacific.oceanprotocol.com` as the custom RPC URL
-3. Hit _Save_, and you’re now connected to Pacific
 
 ### 🐳 Use with Barge
 
@@ -132,6 +133,14 @@ Beside configuring the network endpopints, the client allows to activate some fe
 | client: `REACT_APP_IPFS_GATEWAY_URI`<br /> server: `IPFS_GATEWAY_URI` | `"https://ipfs.oceanprotocol.com"`     | The IPFS gateway URI.                             |
 | `REACT_APP_IPFS_NODE_URI`                                             | `"https://ipfs.oceanprotocol.com:443"` | The IPFS node URI used to add files to IPFS.      |
 | `REACT_APP_REPORT_EMAIL`                                              | `"jelly@mcjellyfish.com"`              | The email used for the _report an asset_ feature. |
+
+#### Decentraminds needed variables
+
+| REACT_APP_PORTIS_APP_ID | Enable Portis by specifying the API AppID |
+| REACT_APP_TORUS_ENABLED | Enable Torus |
+| REACT_APP_SUBGRAPH_GRAPHQL_ENDPOINT | Endpoint of the OceanProtocolSubgraph |
+| REACT_APP_SERVICE_URI | URL where the `server` is deployed |
+| REACT_APP_NUCYPHER_API | URL where the NuCypher API Server is deployed |
 
 ## 👩‍🔬 Testing
 
@@ -227,12 +236,9 @@ See the [CHANGELOG.md](./CHANGELOG.md) file. This file is auto-generated during 
 
 ## 🎁 Contributing
 
-See the page titled "[Ways to Contribute](https://docs.oceanprotocol.com/concepts/contributing/)" in the Ocean Protocol documentation.
-
 ## 🏛 License
 
 ```text
-Copyright 2018 Ocean Protocol Foundation Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
