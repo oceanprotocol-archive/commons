@@ -12,9 +12,10 @@ npm install
 ```
 * Within the op-web3-wallet project dependencies, specify the .json in `require(multicodec/src/base-table)` under `node_modules/cids/src/index`
 
-* Link op-web3-wallet globally
+* Build & Link op-web3-wallet locally
 
 ```bash
+npm run build
 npm link
 ```
 
