@@ -24,27 +24,22 @@ export function NetworkSwitcher() {
     const node: any = useRef()
     const [isToggled, setIsToggled] = useState(false)
 
+    const handleToggle = (e: any) => {
+        if (e.which === 1) {
+            const isClickedInside = node.current.contains(e.target)
+            setIsToggled(isClickedInside)
+        }
+    }
+
     useEffect(() => {
         // Handle click outside to collapse Network switcher dropdown
-        // add listener when mounted
+        // listener when mounted
         document.addEventListener('mousedown', handleToggle)
         // return function when unmounted
         return () => {
             document.removeEventListener('mousedown', handleToggle)
         }
-    }, [])
-    /*  
-    useEffect(() => {
-        if (networkUrlParam !== '') {
-            switchNetwork(networkUrlParam)
-        }
-    }, []) 
-    */
-
-    const handleToggle = (e: any) => {
-        const isClickedInside = node.current.contains(e.target)
-        setIsToggled(isClickedInside)
-    }
+    }, [handleToggle])
 
     const { network, isBurner } = useContext(User)
 
@@ -55,6 +50,7 @@ export function NetworkSwitcher() {
         window.location.href = `${window.location.origin}?network=${networkName}`
         //userContext.switchNetwork(networkName, getNetworkConfig(networkName))
         setIsToggled(false) // for the case without force page refresh
+        return
     }
 
     return !isBurner ? null : (
@@ -68,26 +64,25 @@ export function NetworkSwitcher() {
                 className={styles.networkSwitchButton}
                 onClick={e => handleToggle(e)}
             >
-                <span>Change Network</span>
+                <span>{network ? network : 'fetching ...'}</span>
+                <i />
             </button>
             <ul className={styles.networkList}>
-                {Object.keys(CONNECTIONS).map((networkName, i) => (
-                    <li
-                        key={networkName}
-                        className={
-                            network.toUpperCase() === networkName.toUpperCase()
-                                ? styles.selected
-                                : ''
-                        }
-                    >
-                        <button
-                            className={styles.listButton}
-                            onClick={() => switchNetwork(networkName)}
-                        >
-                            {networkName}
-                        </button>
-                    </li>
-                ))}
+                {Object.keys(CONNECTIONS)
+                    .filter(
+                        networkName =>
+                            network.toUpperCase() !== networkName.toUpperCase()
+                    )
+                    .map((networkName, i) => (
+                        <li key={networkName}>
+                            <button
+                                className={styles.listButton}
+                                onClick={() => switchNetwork(networkName)}
+                            >
+                                {networkName}
+                            </button>
+                        </li>
+                    ))}
             </ul>
         </div>
     )

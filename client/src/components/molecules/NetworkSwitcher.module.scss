@@ -1,6 +1,6 @@
 @import '../../styles/variables';
 
-$localSpacer: $spacer / 6;
+$localSpacer: $spacer / 8;
 
 .networkListWrapper {
     position: relative;
@@ -13,13 +13,18 @@ $localSpacer: $spacer / 6;
 }
 
 .networkSwitchButton {
+    all: unset;
+    padding: $localSpacer $localSpacer * 2;
     display: inline-block;
     border: 1px solid $brand-grey-lighter;
-    padding: $localSpacer;
     border-radius: $border-radius;
     margin: 0 $localSpacer;
     user-select: none;
     cursor: pointer;
+}
+
+.networkListWrapper.on .networkSwitchButton {
+    border-radius: $border-radius $border-radius 0 0;
 }
 
 .networkSwitchButton:active {
@@ -31,35 +36,44 @@ $localSpacer: $spacer / 6;
     //border: 1px solid #000;
 }
 
-.networkSwitchButton:after {
-    content: '';
+.networkSwitchButton i {
     display: inline-block;
     width: 0;
     height: 0;
     border: 4px solid transparent;
     border-bottom: none;
     border-top: 4px solid $brand-grey-light;
+    position: relative;
+}
+
+.networkSwitchButton i:before {
+    content: '';
+    border-left: 1px solid $brand-grey-lighter;
+    height: 100%;
+    top: -8px;
+    left: 0 - $spacer / 3; // simulate padding
+    position: absolute;
+    height: 12px;
 }
 
 .networkSwitchButton span {
+    display: inline-block;
     color: $brand-grey-light;
-}
-
-.networkSwitchButton span:after {
-    content: '';
-    border-right: 1px solid $brand-grey-lighter;
-    margin: 0 $localSpacer;
+    text-transform: capitalize;
+    min-width: 80px;
+    text-align: left;
 }
 
 .networkList {
     position: absolute;
+    border-radius: 0 0 $border-radius $border-radius;
     border: 1px solid $brand-grey-lighter;
-    border-radius: $border-radius;
-    max-width: 200px;
+    border-top: none;
     display: none;
     margin: 0;
     padding: 0;
-    width: 100%;
+    left: $localSpacer;
+    right: $localSpacer;
 }
 
 .networkListWrapper.on .networkList {
@@ -69,27 +83,36 @@ $localSpacer: $spacer / 6;
 .networkList li {
     cursor: pointer;
     font-size: $font-size-mini;
-    text-align: left;
-    padding: $localSpacer;
+    padding: $localSpacer / 2;
 }
 
 .listButton {
+    all: unset;
+    color: $brand-black;
+    text-align: left;
     display: block;
     text-transform: capitalize;
     border: none;
-    width: inherit;
+    width: 100%;
+    background: none;
+    cursor: pointer;
+    padding: $localSpacer $localSpacer * 2;
+}
+
+.selected .listButton,
+.networkList li:hover {
+    font-weight: $font-weight-bold;
 }
 
 .networkList li:hover {
-    color: $brand-violet;
-    font-size: $font-size-mini;
+    background-color: $brand-grey-lighter;
+}
+
+.listButton:active,
+.listButton:focus {
+    outline: none;
 }
 
 .networkList li:before {
     display: none;
-}
-
-.selected {
-    color: $brand-violet;
-    font-weight: $font-weight-bold;
 }

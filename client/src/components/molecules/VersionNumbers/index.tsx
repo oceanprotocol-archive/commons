@@ -158,7 +158,6 @@ export default class VersionNumbers extends PureComponent<
                             href="/about"
                         >
                             v{commons.version}{' '}
-                            {market.network && `(${market.network})`}
                         </a>
                     </p>
                 )}
