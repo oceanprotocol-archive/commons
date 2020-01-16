@@ -31,7 +31,7 @@ npm link op-web3-wallet
 
 * Deploy required contracts at this [repo](https://github.com/decentraminds/contracts)
 
-* Deploy the NuCypher API server at this [repo](https://github.com/decentraminds/umbral)
+* Deploy the NuCypher API server at this [repo](https://github.com/decentraminds/umbral). A public server is deployed at http://35.173.247.245:5000"
 
 ## 🏄 Get Started
 
@@ -40,9 +40,10 @@ This repo contains a client and a server, both written in TypeScript:
 - **client**: React app setup with [op-web3-wallet](https://github.com/decentraminds/op-web3-wallet) for interacting with the Ocean Protocol
 - **server**: Node.js app, utilizing [Express](https://expressjs.com). The server provides various microservices, like remote file checking. The endpoints are documented in [server Readme](server/).
 
-To spin up both, the client and the server in a watch mode for local development, execute:
+To spin up the server in a watch mode for local development, execute:
 
 ```bash
+cd server
 npm install
 npm start
 ```
