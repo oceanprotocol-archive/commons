@@ -135,10 +135,6 @@ export const getFulfillmentData = async (fullfimentId: string) => {
             {
               fulfillments(where: {id: "${fullfimentId}"}) {
                 id
-                bounty {
-                  id
-                  data
-                }
                 fulfillers
                 payouts
                 submitter
