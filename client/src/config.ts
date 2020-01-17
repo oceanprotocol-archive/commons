@@ -25,6 +25,34 @@ export const ipfsNodeUri =
 //
 // OCEAN REMOTE CONNECTIONS
 //
+
+console.log(process.env.REACT_APP_OCEAN_NETWORK)
+
+const altNetwork =
+    process.env.REACT_APP_OCEAN_NETWORK === 'spree'
+        ? {
+              spree: {
+                  nodeUri:
+                      process.env.REACT_APP_NODE_URI ||
+                      'https://pacific.oceanprotocol.com',
+                  aquariusUri:
+                      process.env.REACT_APP_AQUARIUS_URI ||
+                      'https://aquarius.commons.oceanprotocol.com',
+                  brizoUri:
+                      process.env.REACT_APP_BRIZO_URI ||
+                      'https://brizo.commons.oceanprotocol.com',
+                  brizoAddress:
+                      process.env.REACT_APP_BRIZO_ADDRESS ||
+                      '0x008c25ed3594e094db4592f4115d5fa74c4f41ea',
+                  secretStoreUri:
+                      process.env.REACT_APP_SECRET_STORE_URI ||
+                      'https://secret-store.oceanprotocol.com',
+                  faucetUri:
+                      process.env.REACT_APP_FAUCET_URI ||
+                      'https://faucet.oceanprotocol.com'
+              }
+          }
+        : null
 export const CONNECTIONS = {
     pacific: {
         nodeUri:
@@ -82,5 +110,6 @@ export const CONNECTIONS = {
         faucetUri:
             process.env.REACT_APP_FAUCET_URI ||
             'https://faucet.duero.dev-ocean.com'
-    }
+    },
+    ...altNetwork
 }

@@ -57,22 +57,22 @@ export const VersionTableContracts = ({
     </table>
 )
 
-export const VersionTableCommons = () => (
-    <table>
-        <tbody>
-            {Object.entries(oceanConfig).map(([key, value]) => (
-                <tr key={key}>
-                    <td>
-                        <code className={styles.label}>{key}</code>
-                    </td>
-                    <td>
-                        <code>{value}</code>
-                    </td>
-                </tr>
-            ))}
-        </tbody>
-    </table>
-)
+export const VersionTableCommons = () => {
+    return (
+        <table>
+            <tbody>
+                {Object.entries(oceanConfig).map(([key, val]) => (
+                    <tr key={key}>
+                        <td>
+                            <code className={styles.label}>{key}</code>
+                        </td>
+                        <td>{val}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    )
+}
 
 const VersionTable = ({ data }: { data: VersionNumbersState }) => {
     return (

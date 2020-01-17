@@ -7,17 +7,14 @@ import styles from './NetworkSwitcher.module.scss'
 const networkUrlParam = urlq.get('network') || ''
 
 const getNetworkConfig = (network: string) => {
-    const index = Object.keys(CONNECTIONS).indexOf(network)
     // TypeScript doesn't let access CONNECTIONS[networkName] directly
-    return index !== -1
-        ? Object.values(CONNECTIONS)[index]
-        : CONNECTIONS.pacific // Use default config in case of mispelled URL params or
+    const idx = Object.keys(CONNECTIONS).indexOf(network)
+    return idx !== -1 ? Object.values(CONNECTIONS)[idx] : CONNECTIONS.pacific // Use default config in case of mispelled URL params
 }
 
-export const oceanConfig =
-    networkUrlParam !== ''
-        ? getNetworkConfig(networkUrlParam)
-        : getNetworkConfig('pacific')
+export const oceanConfig = getNetworkConfig(
+    networkUrlParam !== '' ? networkUrlParam : 'pacific'
+)
 
 /* NETWORK SWITCHER */
 export function NetworkSwitcher() {
@@ -25,6 +22,7 @@ export function NetworkSwitcher() {
     const [isToggled, setIsToggled] = useState(false)
 
     const handleToggle = (e: any) => {
+        // avoid click event firing twice
         if (e.which === 1) {
             const isClickedInside = node.current.contains(e.target)
             setIsToggled(isClickedInside)
@@ -42,8 +40,6 @@ export function NetworkSwitcher() {
     }, [handleToggle])
 
     const { network, isBurner } = useContext(User)
-
-    console.log(isBurner)
 
     const switchNetwork = (networkName: string): any => {
         // Force page to get refreshed
@@ -65,7 +61,7 @@ export function NetworkSwitcher() {
                 onClick={e => handleToggle(e)}
             >
                 <span>{network ? network : 'fetching ...'}</span>
-                <i />
+                <i aria-hidden="true" />
             </button>
             <ul className={styles.networkList}>
                 {Object.keys(CONNECTIONS)
