@@ -26,8 +26,6 @@ export const ipfsNodeUri =
 // OCEAN REMOTE CONNECTIONS
 //
 
-console.log(process.env.REACT_APP_OCEAN_NETWORK)
-
 const altNetwork =
     process.env.REACT_APP_OCEAN_NETWORK === 'spree'
         ? {

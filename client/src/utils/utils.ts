@@ -13,6 +13,9 @@ export function formatBytes(a: number, b: number) {
 
 export const urlq = new URLSearchParams(window.location.search)
 
+export const getObjByKey = (obj: any, key: string) =>
+    Object.values(obj)[Object.keys(obj).indexOf(key)]
+
 export function arraySum(array: number[]) {
     return array.reduce((a, b) => a + b, 0)
 }

@@ -66,7 +66,7 @@ export const VersionTableCommons = () => {
                         <td>
                             <code className={styles.label}>{key}</code>
                         </td>
-                        <td>{val}</td>
+                        <td>${val}</td>
                     </tr>
                 ))}
             </tbody>

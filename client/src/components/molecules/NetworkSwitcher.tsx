@@ -1,20 +1,14 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { urlq } from '../../utils/utils'
+import { urlq, getObjByKey } from '../../utils/utils'
 import { CONNECTIONS } from '../../config'
 import { User } from '../../context'
 import styles from './NetworkSwitcher.module.scss'
 
-const networkUrlParam = urlq.get('network') || ''
+const defaultNetwork = process.env.REACT_APP_OCEAN_NETWORK || 'pacific'
+const netUrlParam: string = urlq.get('network') || defaultNetwork
+const getNetworkConfig = (network: string) => getObjByKey(CONNECTIONS, network)
 
-const getNetworkConfig = (network: string) => {
-    // TypeScript doesn't let access CONNECTIONS[networkName] directly
-    const idx = Object.keys(CONNECTIONS).indexOf(network)
-    return idx !== -1 ? Object.values(CONNECTIONS)[idx] : CONNECTIONS.pacific // Use default config in case of mispelled URL params
-}
-
-export const oceanConfig = getNetworkConfig(
-    networkUrlParam !== '' ? networkUrlParam : 'pacific'
-)
+export const oceanConfig: any = getNetworkConfig(netUrlParam)
 
 /* NETWORK SWITCHER */
 export function NetworkSwitcher() {
