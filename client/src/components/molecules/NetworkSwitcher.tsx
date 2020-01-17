@@ -75,7 +75,9 @@ export function NetworkSwitcher() {
                                 className={styles.listButton}
                                 onClick={() => switchNetwork(networkName)}
                             >
-                                {networkName}
+                                {networkName === 'spree'
+                                    ? `${networkName} (local)`
+                                    : networkName}
                             </button>
                         </li>
                     ))}

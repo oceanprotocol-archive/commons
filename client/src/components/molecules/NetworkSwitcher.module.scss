@@ -59,9 +59,12 @@ $localSpacer: $spacer / 7;
 .networkSwitchButton span {
     display: inline-block;
     color: $brand-grey-light;
-    text-transform: capitalize;
     min-width: 80px;
     text-align: left;
+}
+
+.networkSwitchButton span:first-letter {
+    text-transform: capitalize;
 }
 
 .networkList {
@@ -91,12 +94,15 @@ $localSpacer: $spacer / 7;
     color: $brand-black;
     text-align: left;
     display: block;
-    text-transform: capitalize;
     border: none;
     width: 100%;
     background: none;
     cursor: pointer;
     padding: $localSpacer $localSpacer * 2;
+}
+
+.listButton:first-letter {
+    text-transform: capitalize;
 }
 
 .selected .listButton,
