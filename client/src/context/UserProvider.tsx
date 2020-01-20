@@ -82,6 +82,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         const metamaskProvider = new MetamaskProvider()
         await metamaskProvider.startLogin()
         const web3 = metamaskProvider.getProvider()
+        console.log(web3.currentProvider)
+        console.log(web3)
         this.setState(
             {
                 isLogged: true,
@@ -260,7 +262,9 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         if (ocean.keeper) {
             network = await ocean.keeper.getNetworkName()
         }
-        network !== this.state.network && this.setState({ network })
+        if (network !== this.state.network) {
+            this.setState({ network })
+        }
         console.log(await ocean.keeper.getNetworkName())
     }
 

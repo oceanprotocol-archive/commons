@@ -43,7 +43,7 @@ export function NetworkSwitcher() {
         return
     }
 
-    return !isBurner ? null : (
+    return (
         <div
             ref={node}
             className={`${styles.networkListWrapper} ${

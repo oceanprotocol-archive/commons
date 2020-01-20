@@ -20,6 +20,8 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
     private Message = () => {
         const { networkMatch, network } = this.context
 
+        console.log(networkMatch)
+
         return (
             <User.Consumer>
                 {user => (
