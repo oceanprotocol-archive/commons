@@ -15,6 +15,8 @@ import VersionStatus from './VersionStatus'
 
 import { NetworkSwitcher, oceanConfig } from '../../molecules/NetworkSwitcher'
 
+console.log(oceanConfig)
+
 const { nodeUri, faucetUri } = oceanConfig
 
 interface VersionNumbersProps {

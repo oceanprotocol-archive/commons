@@ -1,8 +1,29 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
+import Web3 from 'web3'
 import { urlq, getObjByKey } from '../../utils/utils'
 import { CONNECTIONS } from '../../config'
+import { MetamaskProvider } from '../../context/MetamaskProvider'
 import { User } from '../../context'
 import styles from './NetworkSwitcher.module.scss'
+import { Ocean, Account, Config } from '@oceanprotocol/squid'
+
+const isMetaMask = localStorage.getItem('logType') === 'Metamask'
+
+export const getCurrentNetConfigFromMetamask: any = async () => {
+    const NETWORKS = {
+        2199: 'duero',
+        846353: 'pacific',
+        8995: 'nile'
+    }
+    const metamaskProvider = new MetamaskProvider()
+    const web3 = metamaskProvider.getProvider()
+    const netId = await web3.eth.net.getId()
+    const netName = (NETWORKS as any)[netId]
+    const netConfig = (CONNECTIONS as any)[netName]
+    return { netId, web3, netName, netConfig }
+}
+
+//getCurrentNetConfigFromMetamask().then((config: any) => console.log(config))
 
 const defaultNetwork = process.env.REACT_APP_OCEAN_NETWORK || 'pacific'
 const netUrlParam: string = urlq.get('network') || defaultNetwork
@@ -16,6 +37,7 @@ export function NetworkSwitcher() {
     const [isToggled, setIsToggled] = useState(false)
 
     const handleToggle = (e: any) => {
+        if (isMetaMask) return
         // avoid click event firing twice
         if (e.which === 1) {
             const isClickedInside = node.current.contains(e.target)
