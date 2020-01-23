@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { User } from '../../context'
-import { Logger } from '@oceanprotocol/squid'
-import Spinner from '../atoms/Spinner'
-import AssetTeaser from '../molecules/AssetTeaser'
+import { Logger, DDO } from '@oceanprotocol/squid'
+import CategoryImage from '../atoms/CategoryImage'
+import SearchResults from '../molecules/SearchResults'
 import styles from './ChannelTeaser.module.scss'
 import channels from '../../data/channels.json'
-import CategoryImage from '../atoms/CategoryImage'
 
 interface ChannelTeaserProps {
     channel: string
 }
 
 interface ChannelTeaserState {
-    channelAssets?: any[]
+    channelAssets?: DDO[]
     isLoadingChannel?: boolean
 }
 
@@ -81,17 +80,11 @@ export default class ChannelTeaser extends Component<
                     </header>
                 </div>
                 <div>
-                    {isLoadingChannel ? (
-                        <Spinner message="Loading..." />
-                    ) : channelAssets && channelAssets.length ? (
-                        <div className={styles.channelResults}>
-                            {channelAssets.map((asset: any) => (
-                                <AssetTeaser key={asset.id} asset={asset} />
-                            ))}
-                        </div>
-                    ) : (
-                        <div>No data sets found.</div>
-                    )}
+                    <SearchResults
+                        isLoading={isLoadingChannel}
+                        results={channelAssets}
+                        simpleGrid
+                    />
                 </div>
             </div>
         )
