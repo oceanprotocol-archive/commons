@@ -1,4 +1,5 @@
 import React from 'react'
+import { Ocean } from '@oceanprotocol/squid'
 
 export const User = React.createContext({
     isLogged: false,
@@ -7,7 +8,8 @@ export const User = React.createContext({
     isLoading: false,
     account: '',
     web3: {},
-    ocean: {},
+    // eslint-disable-next-line
+    ocean: {} as Ocean,
     balance: {
         eth: 0,
         ocn: 0
