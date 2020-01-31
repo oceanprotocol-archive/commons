@@ -97,6 +97,6 @@ describe('Files', () => {
         fireEvent.click(getByText('Add File'))
 
         mockAxios.mockResponse(mockResponse)
-        expect(mockAxios.get).toHaveBeenCalled()
+        expect(mockAxios).toHaveBeenCalled()
     })
 })

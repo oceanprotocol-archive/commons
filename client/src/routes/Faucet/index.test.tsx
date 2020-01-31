@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router'
 import { createMemoryHistory, createLocation } from 'history'
 import Faucet from '.'
 import { User, Market } from '../../context'
-import { userMockConnected } from '../../../__mocks__/user-mock'
+import { userMockConnected } from '../../__mocks__/user-mock'
 
 const history = createMemoryHistory()
 const location = createLocation('/faucet')

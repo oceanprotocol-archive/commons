@@ -3,7 +3,7 @@ import { Router } from 'react-router'
 import { createMemoryHistory, createLocation } from 'history'
 import { render } from '@testing-library/react'
 import Home from '.'
-import { userMock } from '../../../__mocks__/user-mock'
+import { userMock } from '../../__mocks__/user-mock'
 import { User } from '../../context'
 
 const history = createMemoryHistory()

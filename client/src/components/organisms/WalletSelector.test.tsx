@@ -3,8 +3,8 @@ import { render, fireEvent } from '@testing-library/react'
 import ReactModal from 'react-modal'
 import WalletSelector from './WalletSelector'
 import { User, Market } from '../../context'
-import { userMockConnected } from '../../../__mocks__/user-mock'
-import { marketMock } from '../../../__mocks__/market-mock'
+import { userMockConnected } from '../../__mocks__/user-mock'
+import { marketMock } from '../../__mocks__/market-mock'
 
 describe('WalletSelector', () => {
     it('renders without crashing', () => {
