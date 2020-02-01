@@ -256,7 +256,7 @@ class Publish extends Component<{}, PublishState> {
         }
     }
 
-    private registerAsset = async (event: FormEvent<HTMLFormElement>) => {
+    private handleRegisterAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
         ReactGA.event({ category: 'Publish', action: 'registerAsset-start' })
@@ -348,7 +348,7 @@ class Publish extends Component<{}, PublishState> {
                                 currentStep={this.state.currentStep}
                             />
 
-                            <Form onSubmit={this.registerAsset}>
+                            <Form onSubmit={this.handleRegisterAsset}>
                                 {steps.map((step: any, index: number) => (
                                     <Step
                                         key={index}

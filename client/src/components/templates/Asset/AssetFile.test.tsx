@@ -7,8 +7,8 @@ import { StateMock } from '@react-mock/state'
 import ReactGA from 'react-ga'
 import { User, Market } from '../../../context'
 import AssetFile, { messages } from './AssetFile'
-import { userMockConnected } from '../../../../__mocks__/user-mock'
-import { marketMock } from '../../../../__mocks__/market-mock'
+import { userMockConnected } from '../../../__mocks__/user-mock'
+import { marketMock } from '../../../__mocks__/market-mock'
 
 const file = {
     index: 0,

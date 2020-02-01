@@ -5,7 +5,7 @@ import { StateMock } from '@react-mock/state'
 import VersionNumbers from '.'
 
 import { User } from '../../../context'
-import { userMockConnected } from '../../../../__mocks__/user-mock'
+import { userMockConnected } from '../../../__mocks__/user-mock'
 
 afterEach(() => {
     mockAxios.reset()

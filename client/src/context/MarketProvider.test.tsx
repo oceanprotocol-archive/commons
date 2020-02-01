@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import MarketProvider from './MarketProvider'
 import { User, Market } from '../context'
-import { userMockConnected } from '../../__mocks__/user-mock'
+import { userMockConnected } from '../__mocks__/user-mock'
 
 describe('MarketProvider', () => {
     it('renders without crashing', () => {

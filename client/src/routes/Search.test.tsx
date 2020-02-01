@@ -4,7 +4,7 @@ import Search from './Search'
 import { User } from '../context'
 import { createMemoryHistory } from 'history'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { userMockConnected } from '../../__mocks__/user-mock'
+import { userMockConnected } from '../__mocks__/user-mock'
 
 const history = createMemoryHistory()
 

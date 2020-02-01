@@ -45,7 +45,7 @@ export default class ItemForm extends PureComponent<
         this.props.addFile(url)
     }
 
-    private onChangeUrl = (e: React.FormEvent<HTMLInputElement>) => {
+    private handleChangeUrl = (e: React.FormEvent<HTMLInputElement>) => {
         this.setState({ url: e.currentTarget.value })
         this.clearErrors()
     }
@@ -67,7 +67,7 @@ export default class ItemForm extends PureComponent<
                     type="url"
                     placeholder={this.props.placeholder}
                     value={url}
-                    onChange={this.onChangeUrl}
+                    onChange={this.handleChangeUrl}
                     help="Supported protocols are http(s):// and ipfs://"
                 />
 
