@@ -1,8 +1,8 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { User } from '../../context'
-import { userMockConnected } from '../../../__mocks__/user-mock'
-import searchMock from '../../../__fixtures__/search.json'
+import { userMockConnected } from '../../__mocks__/user-mock'
+import searchMock from '../../__fixtures__/search.json'
 import Sidebar from './Sidebar'
 
 describe('Sidebar', () => {

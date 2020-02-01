@@ -1,16 +1,19 @@
 import React, { PureComponent, ChangeEvent } from 'react'
 import queryString from 'query-string'
 import { History, Location } from 'history'
-import { Logger, DDO } from '@oceanprotocol/squid'
+import { Logger } from '@oceanprotocol/squid'
 import Spinner from '../../components/atoms/Spinner'
+import SearchResults, {
+    SearchResultsState
+} from '../../components/molecules/SearchResults'
 import Route from '../../components/templates/Route'
 import { User } from '../../context'
+import Pagination from '../../components/molecules/Pagination'
 import Content from '../../components/atoms/Content'
 import Button from '../../components/atoms/Button'
 import Input from '../../components/atoms/Form/Input'
 import withTracker from '../../hoc/withTracker'
 import Sidebar from './Sidebar'
-import Results from './Results'
 import styles from './index.module.scss'
 
 interface SearchProps {
@@ -18,22 +21,14 @@ interface SearchProps {
     history: History
 }
 
-interface SearchState {
-    results: DDO[]
-    totalResults: number
-    offset: number
-    totalPages: number
-    currentPage: number
-    isLoading: boolean
-    search: string
-    category: string
-    license: string
+interface SearchState extends SearchResultsState {
+    searchTerm: string
+    searchCategories: string
+    searchLicenses: string
 }
 
 class Search extends PureComponent<SearchProps, SearchState> {
     public static contextType = User
-
-    public timeout: any = false
 
     public state = {
         results: [],
@@ -42,61 +37,46 @@ class Search extends PureComponent<SearchProps, SearchState> {
         totalPages: 1,
         currentPage: 1,
         isLoading: true,
-        search: '',
-        category: '',
-        license: ''
+        searchTerm: '',
+        searchCategories: '',
+        searchLicenses: ''
     }
 
     public async componentDidMount() {
         const { search } = this.props.location
-        const { text, page, categories, license } = queryString.parse(search)
+        const { text, page, categories } = queryString.parse(search)
 
-        const update: any = {}
         if (text) {
-            update.search = decodeURIComponent(`${text}`)
-        }
-        if (categories) {
-            update.category = decodeURIComponent(`${categories}`)
-        }
-        if (license) {
-            update.license = decodeURIComponent(`${license}`)
-        }
-        if (page) {
-            update.currentPage = Number(page)
+            await this.setState({
+                searchTerm: decodeURIComponent(`${text}`)
+            })
         }
 
-        this.setState(update, () => this.searchAssets())
+        if (categories) {
+            await this.setState({
+                searchCategories: decodeURIComponent(`${categories}`)
+            })
+        }
+
+        // switch to respective page if query string is present
+        if (page) {
+            const currentPage = Number(page)
+            await this.setState({ currentPage })
+        }
+
+        this.handleSearchAssets()
     }
 
-    private searchAssets = async (event?: any) => {
-        event && event.preventDefault()
-
+    private handleSearchAssets = async () => {
         const { ocean } = this.context
-        const { offset, currentPage, search, category, license } = this.state
+        const { offset, currentPage, searchTerm, searchCategories } = this.state
 
-        let urlString = '?'
-        const queryValues: any = {}
-        if (search) {
-            queryValues.text = [search]
-            urlString += `text=${search}&`
-        }
-        if (category) {
-            queryValues.categories = [category]
-            urlString += `categories=${category}&`
-        }
-        if (license) {
-            queryValues.license = [license]
-            urlString += `license=${license}&`
-        }
-        if (currentPage !== 1) {
-            urlString += `page=${currentPage}&`
-        }
-
-        // update url
-        this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: urlString
-        })
+        const queryValues =
+            searchCategories !== '' && searchTerm !== ''
+                ? { text: [searchTerm], categories: [searchCategories] }
+                : searchCategories !== '' && searchTerm === ''
+                ? { categories: [searchCategories] }
+                : { text: [searchTerm] }
 
         const searchQuery = {
             offset,
@@ -123,53 +103,64 @@ class Search extends PureComponent<SearchProps, SearchState> {
         }
     }
 
-    private handlePageClick = async (data: { selected: number }) => {
+    private onPageClick = async (data: { selected: number }) => {
         // react-pagination starts counting at 0, we start at 1
         const toPage = data.selected + 1
 
-        this.setState({ currentPage: toPage, isLoading: true }, () =>
-            this.searchAssets()
-        )
+        this.props.history.push({
+            pathname: this.props.location.pathname,
+            search: `?text=${this.state.searchTerm}&page=${toPage}`
+        })
+
+        this.setState({ currentPage: toPage, isLoading: true })
+        await this.handleSearchAssets()
     }
 
-    private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (this.state.search !== event.target.value)
-            this.setState({ search: event.target.value })
+    private handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (this.state.searchTerm !== event.target.value)
+            this.setState({ searchTerm: event.target.value })
     }
 
     public setCategory = (category: string) => {
-        this.setState({ category, isLoading: true }, () => this.searchAssets())
+        this.setState({ searchCategories: category, isLoading: true }, () =>
+            this.handleSearchAssets()
+        )
     }
 
     public setLicense = (license: string) => {
-        this.setState({ license, isLoading: true }, () => this.searchAssets())
+        this.setState({ searchLicenses: license, isLoading: true }, () =>
+            this.handleSearchAssets()
+        )
     }
 
     public render() {
         const {
+            totalResults,
+            totalPages,
+            currentPage,
             isLoading,
             results,
-            totalResults,
-            search,
-            category,
-            license,
-            totalPages,
-            currentPage
+            searchTerm,
+            searchCategories,
+            searchLicenses
         } = this.state
 
         return (
-            <Route title="Search">
+            <Route title="Search" wide>
                 <Content>
-                    <form onSubmit={this.searchAssets}>
+                    <form onSubmit={this.handleSearchAssets}>
                         <Input
                             type="search"
                             name="search"
                             label=""
                             placeholder="e.g. shapes of plants"
-                            value={search}
-                            onChange={this.inputChange}
+                            value={searchTerm}
+                            onChange={this.handleInputChange}
                             group={
-                                <Button primary onClick={this.searchAssets}>
+                                <Button
+                                    primary
+                                    onClick={this.handleSearchAssets}
+                                >
                                     Search
                                 </Button>
                             }
@@ -182,24 +173,37 @@ class Search extends PureComponent<SearchProps, SearchState> {
                             {isLoading ? (
                                 <Spinner message="Searching..." />
                             ) : (
-                                <Results
-                                    results={results}
-                                    totalResults={totalResults}
-                                    totalPages={totalPages}
-                                    currentPage={currentPage}
-                                    handlePageClick={this.handlePageClick}
-                                />
+                                <>
+                                    <h2 className={styles.resultsTitle}>
+                                        {totalResults} results for{' '}
+                                        <span>
+                                            {decodeURIComponent(
+                                                searchTerm || searchCategories
+                                            )}
+                                        </span>
+                                    </h2>
+                                    <SearchResults
+                                        isLoading={isLoading}
+                                        results={results}
+                                    />
+                                </>
                             )}
                         </div>
 
                         <Sidebar
-                            category={category}
-                            license={license}
+                            category={searchCategories}
+                            license={searchLicenses}
                             results={results}
                             setCategory={this.setCategory}
                             setLicense={this.setLicense}
                         />
                     </div>
+
+                    <Pagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        handlePageClick={this.onPageClick}
+                    />
                 </Content>
             </Route>
         )
