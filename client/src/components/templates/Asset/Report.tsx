@@ -36,13 +36,13 @@ export default class Report extends PureComponent<
         this.signal.cancel()
     }
 
-    private inputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    private handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             comment: event.target.value
         })
     }
 
-    private toggleModal = () => {
+    private handleToggleModal = () => {
         this.setState({ isModalOpen: !this.state.isModalOpen })
         this.state.isModalOpen && this.reset()
     }
@@ -100,7 +100,7 @@ export default class Report extends PureComponent<
                 <Button
                     link
                     className={styles.openLink}
-                    onClick={this.toggleModal}
+                    onClick={this.handleToggleModal}
                 >
                     Report Data Set
                 </Button>
@@ -108,7 +108,7 @@ export default class Report extends PureComponent<
                     title="Report Data Set"
                     description="Found some faulty metadata, wrongly attributed data, or anything else wrong with this data set? Tell us about it and we will take a look."
                     isOpen={this.state.isModalOpen}
-                    toggleModal={this.toggleModal}
+                    onToggleModal={this.handleToggleModal}
                 >
                     <div className={styles.info}>
                         <h3>{this.props.title}</h3>
@@ -135,7 +135,7 @@ export default class Report extends PureComponent<
                                     help="Briefly describe what is wrong with this asset. If you want to get contacted by us, add your email at the end."
                                     required
                                     value={this.state.comment}
-                                    onChange={this.inputChange}
+                                    onChange={this.handleInputChange}
                                     rows={1}
                                 />
                                 <Button

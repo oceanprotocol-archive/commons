@@ -1,8 +1,8 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import Popover from './Popover'
-import { userMock, userMockConnected } from '../../../../__mocks__/user-mock'
-import { marketMock } from '../../../../__mocks__/market-mock'
+import { userMock, userMockConnected } from '../../../__mocks__/user-mock'
+import { marketMock } from '../../../__mocks__/market-mock'
 import { User, Market } from '../../../context'
 
 describe('Popover', () => {

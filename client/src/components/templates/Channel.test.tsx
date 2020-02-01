@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 import Channel from './Channel'
 import { User } from '../../context'
 import { createMemoryHistory } from 'history'
-import { userMockConnected } from '../../../__mocks__/user-mock'
+import { userMockConnected } from '../../__mocks__/user-mock'
 import { MemoryRouter } from 'react-router'
 
 describe('Channel', () => {

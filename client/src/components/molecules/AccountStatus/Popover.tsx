@@ -18,36 +18,32 @@ export default class Popover extends PureComponent<{
                 ref={this.props.forwardedRef}
                 style={this.props.style}
             >
-                {
-                    <>
+                <div className={styles.popoverInfoline}>
+                    <Account />
+                </div>
+
+                {account && balance && (
+                    <div className={styles.popoverInfoline}>
+                        <span
+                            className={styles.balance}
+                            title={(balance.eth / 1e18).toFixed(10)}
+                        >
+                            <strong>
+                                {(balance.eth / 1e18).toFixed(3).slice(0, -1)}
+                            </strong>{' '}
+                            ETH
+                        </span>
+                        <span className={styles.balance}>
+                            <strong>{balance.ocn}</strong> OCEAN
+                        </span>
+                    </div>
+                )}
+
+                <Market.Consumer>
+                    {market => (
                         <div className={styles.popoverInfoline}>
-                            <Account />
-                        </div>
-
-                        {account && balance && (
-                            <div className={styles.popoverInfoline}>
-                                <span
-                                    className={styles.balance}
-                                    title={(balance.eth / 1e18).toFixed(10)}
-                                >
-                                    <strong>
-                                        {(balance.eth / 1e18)
-                                            .toFixed(3)
-                                            .slice(0, -1)}
-                                    </strong>{' '}
-                                    ETH
-                                </span>
-                                <span className={styles.balance}>
-                                    <strong>{balance.ocn}</strong> OCEAN
-                                </span>
-                            </div>
-                        )}
-
-                        <Market.Consumer>
-                            {market => (
-                                <div className={styles.popoverInfoline}>
-                                    {network && !market.networkMatch
-                                        ? `Please connect to Custom RPC
+                            {network && !market.networkMatch
+                                ? `Please connect to Custom RPC
                                            ${
                                                market.network === 'Pacific'
                                                    ? 'https://pacific.oceanprotocol.com'
@@ -57,13 +53,10 @@ export default class Popover extends PureComponent<{
                                                    ? 'https://duero.dev-ocean.com'
                                                    : 'http://localhost:8545'
                                            }`
-                                        : network &&
-                                          `Connected to ${network} network`}
-                                </div>
-                            )}
-                        </Market.Consumer>
-                    </>
-                }
+                                : network && `Connected to ${network} network`}
+                        </div>
+                    )}
+                </Market.Consumer>
             </div>
         )
     }

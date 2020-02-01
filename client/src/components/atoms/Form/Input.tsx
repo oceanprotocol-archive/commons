@@ -56,7 +56,7 @@ export default class Input extends PureComponent<InputProps, InputState> {
         }
     }
 
-    public toggleFocus = () => {
+    public handleFocus = () => {
         this.setState({ isFocused: !this.state.isFocused })
     }
 
@@ -94,8 +94,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             className={styles.select}
                             name={name}
                             required={required}
-                            onFocus={this.toggleFocus}
-                            onBlur={this.toggleFocus}
+                            onFocus={this.handleFocus}
+                            onBlur={this.handleFocus}
                             onChange={onChange}
                             value={value}
                         >
@@ -117,8 +117,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
                         <textarea
                             id={name}
                             className={styles.input}
-                            onFocus={this.toggleFocus}
-                            onBlur={this.toggleFocus}
+                            onFocus={this.handleFocus}
+                            onBlur={this.handleFocus}
                             {...this.props}
                         />
                     </div>
@@ -154,8 +154,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
                             selected={this.state.dateCreated}
                             onChange={this.handleDateChange}
                             className={styles.input}
-                            onFocus={this.toggleFocus}
-                            onBlur={this.toggleFocus}
+                            onFocus={this.handleFocus}
+                            onBlur={this.handleFocus}
                             id={name}
                             name={name}
                         />
@@ -170,8 +170,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
                                     id={name}
                                     type={type || 'text'}
                                     className={styles.input}
-                                    onFocus={this.toggleFocus}
-                                    onBlur={this.toggleFocus}
+                                    onFocus={this.handleFocus}
+                                    onBlur={this.handleFocus}
                                     {...this.props}
                                 />
                                 {group}
@@ -181,8 +181,8 @@ export default class Input extends PureComponent<InputProps, InputState> {
                                 id={name}
                                 type={type || 'text'}
                                 className={styles.input}
-                                onFocus={this.toggleFocus}
-                                onBlur={this.toggleFocus}
+                                onFocus={this.handleFocus}
+                                onBlur={this.handleFocus}
                                 {...this.props}
                             />
                         )}

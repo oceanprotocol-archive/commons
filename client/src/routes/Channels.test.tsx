@@ -4,7 +4,7 @@ import { createMemoryHistory, createLocation } from 'history'
 import { render } from '@testing-library/react'
 import Channels from './Channels'
 import { User } from '../context'
-import { userMockConnected } from '../../__mocks__/user-mock'
+import { userMockConnected } from '../__mocks__/user-mock'
 
 const history = createMemoryHistory()
 const location = createLocation('/channels')
