@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react'
 import { createMemoryHistory, createLocation } from 'history'
 import Publish from '.'
 import { User } from '../../context'
-import { userMockConnected } from '../../../__mocks__/user-mock'
+import { userMockConnected } from '../../__mocks__/user-mock'
 
 const history = createMemoryHistory()
 const location = createLocation('/publish')

@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react'
 import { Logger } from '@oceanprotocol/squid'
 import { History } from 'history'
-import Spinner from '../../components/atoms/Spinner'
 import Route from '../../components/templates/Route'
 import { User } from '../../context'
-import AssetTeaser from '../molecules/AssetTeaser'
 import Pagination from '../../components/molecules/Pagination'
-import styles from './Channel.module.scss'
+import SearchResults, { SearchResultsState } from '../molecules/SearchResults'
 import Content from '../../components/atoms/Content'
 import channels from '../../data/channels.json'
 import CategoryImage from '../atoms/CategoryImage'
@@ -20,13 +18,7 @@ interface ChannelProps {
     }
 }
 
-interface ChannelState {
-    results: any[]
-    totalResults: number
-    offset: number
-    totalPages: number
-    currentPage: number
-    isLoading: boolean
+interface ChannelState extends SearchResultsState {
     title: string
     description: string
 }
@@ -81,31 +73,28 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
         }
     }
 
-    private handlePageClick = async (data: { selected: number }) => {
+    private onPageClick = async (data: { selected: number }) => {
         // react-pagination starts counting at 0, we start at 1
         const toPage = data.selected + 1
 
         this.props.history.push({ search: `?page=${toPage}` })
 
-        await this.setState({ currentPage: toPage, isLoading: true })
+        this.setState({
+            currentPage: toPage,
+            isLoading: true
+        })
         await this.getChannelAssets()
     }
 
-    public renderResults = () =>
-        this.state.isLoading ? (
-            <Spinner message="Searching..." />
-        ) : this.state.results && this.state.results.length ? (
-            <div className={styles.results}>
-                {this.state.results.map((asset: any) => (
-                    <AssetTeaser key={asset.id} asset={asset} />
-                ))}
-            </div>
-        ) : (
-            <div>No data sets found.</div>
-        )
-
     public render() {
-        const { title, description, totalPages, currentPage } = this.state
+        const {
+            title,
+            description,
+            totalPages,
+            currentPage,
+            isLoading,
+            results
+        } = this.state
 
         return (
             <Route
@@ -114,12 +103,12 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
                 image={<CategoryImage header category={title} />}
             >
                 <Content wide>
-                    {this.renderResults()}
+                    <SearchResults isLoading={isLoading} results={results} />
 
                     <Pagination
                         totalPages={totalPages}
                         currentPage={currentPage}
-                        handlePageClick={this.handlePageClick}
+                        handlePageClick={this.onPageClick}
                     />
                 </Content>
             </Route>

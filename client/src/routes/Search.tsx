@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
-import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 import { History, Location } from 'history'
 import { Logger } from '@oceanprotocol/squid'
-import Spinner from '../components/atoms/Spinner'
+import SearchResults, {
+    SearchResultsState
+} from '../components/molecules/SearchResults'
 import Route from '../components/templates/Route'
 import { User } from '../context'
-import AssetTeaser from '../components/molecules/AssetTeaser'
 import Pagination from '../components/molecules/Pagination'
 import styles from './Search.module.scss'
 import Content from '../components/atoms/Content'
@@ -17,13 +17,7 @@ interface SearchProps {
     history: History
 }
 
-interface SearchState {
-    results: any[]
-    totalResults: number
-    offset: number
-    totalPages: number
-    currentPage: number
-    isLoading: boolean
+interface SearchState extends SearchResultsState {
     searchTerm: string
     searchCategories: string
 }
@@ -103,7 +97,7 @@ class Search extends PureComponent<SearchProps, SearchState> {
         }
     }
 
-    private handlePageClick = async (data: { selected: number }) => {
+    private onPageClick = async (data: { selected: number }) => {
         // react-pagination starts counting at 0, we start at 1
         const toPage = data.selected + 1
 
@@ -112,49 +106,41 @@ class Search extends PureComponent<SearchProps, SearchState> {
             search: `?text=${this.state.searchTerm}&page=${toPage}`
         })
 
-        await this.setState({ currentPage: toPage, isLoading: true })
+        this.setState({ currentPage: toPage, isLoading: true })
         await this.searchAssets()
     }
 
-    public renderResults = () =>
-        this.state.isLoading ? (
-            <Spinner message="Searching..." />
-        ) : this.state.results && this.state.results.length ? (
-            <div className={styles.results}>
-                {this.state.results.map((asset: any) => (
-                    <AssetTeaser key={asset.id} asset={asset} />
-                ))}
-            </div>
-        ) : (
-            <div className={styles.empty}>
-                <p>No Data Sets Found.</p>
-                <Link to="/publish">+ Publish A Data Set</Link>
-            </div>
-        )
-
     public render() {
-        const { totalResults, totalPages, currentPage } = this.state
+        const {
+            totalResults,
+            totalPages,
+            currentPage,
+            isLoading,
+            results,
+            searchTerm,
+            searchCategories
+        } = this.state
 
         return (
             <Route title="Search" wide>
                 <Content wide>
-                    {!this.state.isLoading && (
+                    {!isLoading && (
                         <h2 className={styles.resultsTitle}>
                             {totalResults} results for{' '}
                             <span>
                                 {decodeURIComponent(
-                                    this.state.searchTerm ||
-                                        this.state.searchCategories
+                                    searchTerm || searchCategories
                                 )}
                             </span>
                         </h2>
                     )}
-                    {this.renderResults()}
+
+                    <SearchResults isLoading={isLoading} results={results} />
 
                     <Pagination
                         totalPages={totalPages}
                         currentPage={currentPage}
-                        handlePageClick={this.handlePageClick}
+                        handlePageClick={this.onPageClick}
                     />
                 </Content>
             </Route>

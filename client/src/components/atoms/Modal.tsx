@@ -8,7 +8,7 @@ const Modal = ({
     title,
     description,
     isOpen,
-    toggleModal,
+    onToggleModal,
     children,
     onAfterOpen,
     onRequestClose,
@@ -17,7 +17,7 @@ const Modal = ({
     title: string
     description?: string
     isOpen: boolean
-    toggleModal: () => void
+    onToggleModal: () => void
     children: any
     onAfterOpen?: () => void
     onRequestClose?: () => void
@@ -34,7 +34,7 @@ const Modal = ({
         >
             <button
                 className={styles.close}
-                onClick={toggleModal}
+                onClick={onToggleModal}
                 data-testid="closeModal"
             >
                 &times;

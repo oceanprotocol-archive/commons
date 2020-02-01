@@ -90,7 +90,7 @@ export default class WalletSelector extends PureComponent<
                     title={content.title}
                     description={content.description}
                     isOpen={this.state.isModalOpen}
-                    toggleModal={this.handleToggleModal}
+                    onToggleModal={this.handleToggleModal}
                 >
                     <div className={styles.info}>
                         {content.buttons.map(({ title, description, icon }) => (

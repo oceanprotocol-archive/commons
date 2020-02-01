@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import App from './App'
 import { User } from './context'
-import { userMock, userMockConnected } from '../__mocks__/user-mock'
+import { userMock, userMockConnected } from './__mocks__/user-mock'
 
 describe('App', () => {
     it('should be able to run tests', () => {
