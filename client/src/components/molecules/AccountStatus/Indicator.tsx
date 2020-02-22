@@ -4,10 +4,6 @@ import { User, Market } from '../../../context'
 import Button from '../../atoms/Button'
 import styles from './Indicator.module.scss'
 
-const walletButonStyle = {
-    borderRadius: '10px',
-    padding: '0.5rem 1rem'
-}
 // const Indicator = ({
 //     className,
 //     togglePopover,
@@ -54,20 +50,20 @@ const Indicator = ({
                 <Market.Consumer>
                     {market =>
                         !user.isLogged || !market.networkMatch ? (
-                            <Button 
+                            <Button
                                 onClick={() => {
                                     user.openWallet()
                                     // togglePopover()
-                                }} 
-                                style={walletButonStyle}
+                                }}
+                                className={styles.walletButonStyle}
                             >Connect Wallet 🔴</Button>
                         ) : user.isLogged ? (
-                            <Button 
+                            <Button
                                 onClick={() => {
                                     // togglePopover()
                                     user.openWallet()
-                                }} 
-                                style={walletButonStyle}
+                                }}
+                                className={styles.walletButonStyle}
                             >Open Wallet 🔵</Button>
                         ) : null
                     }
