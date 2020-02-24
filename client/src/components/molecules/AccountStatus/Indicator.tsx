@@ -52,7 +52,8 @@ const Indicator = ({
                         !user.isLogged || !market.networkMatch ? (
                             <Button
                                 onClick={() => {
-                                    user.openWallet()
+                                    console.log(user)
+                                    user.openWallet();
                                     // togglePopover()
                                 }}
                                 className={styles.walletButonStyle}
@@ -64,7 +65,7 @@ const Indicator = ({
                                     user.openWallet()
                                 }}
                                 className={styles.walletButonStyle}
-                            >Open Wallet 🔵</Button>
+                            >{user.account && ('🔵 ' + user.account.substring(0, 4) + '...' + user.account.substring(user.account.length-4, user.account.length))}</Button>
                         ) : null
                     }
                 </Market.Consumer>

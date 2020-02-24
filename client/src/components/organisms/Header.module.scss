@@ -113,8 +113,8 @@
     }
 
     .link:first-child {
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
     }
 }
 
@@ -126,7 +126,7 @@
     color: $brand-light-blue;
     color: #8DBAD3;
     background-color: $brand-black;
-    border: 1px solid $brand-white;
+    border: 1px solid $brand-pink;
     padding: $spacer / 4 $spacer / 2;
     font-size: 14px;
     border-right-width: 0;
