@@ -6,6 +6,5 @@ if [ "${LOCAL_CONTRACTS}" = "true" ]; then
     sleep 2
   done
 fi
-npm run build
 echo "Starting Commons..."
 serve -l tcp://"${LISTEN_ADDRESS}":"${LISTEN_PORT}" -s /app/frontend/build/
