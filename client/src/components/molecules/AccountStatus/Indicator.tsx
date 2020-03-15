@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import { Blockie } from "rimble-ui";
 import { User, Market } from '../../../context'
 import Button from '../../atoms/Button'
 import styles from './Indicator.module.scss'
@@ -59,13 +60,18 @@ const Indicator = ({
                                 className={styles.walletButonStyle}
                             >Connect Wallet 🔴</Button>
                         ) : user.isLogged ? (
-                            <Button
+                            <a
                                 onClick={() => {
                                     // togglePopover()
                                     user.openWallet()
                                 }}
-                                className={styles.walletButonStyle}
-                            >{user.account && ('🔵 ' + user.account.substring(0, 4) + '...' + user.account.substring(user.account.length-4, user.account.length))}</Button>
+                                className={styles.walletButonStyleLogged}
+                            >{user.account && (
+                                <span>
+                                    <Blockie opts={{seed: user.account, color: "#dfe", bgcolor: "#a71", size: 10, scale: 2, spotcolor: "#000"}} />
+                                    {user.account.substring(0, 4) + '...' + user.account.substring(user.account.length-4, user.account.length)}
+                                </span>
+                            )}</a>
                         ) : null
                     }
                 </Market.Consumer>

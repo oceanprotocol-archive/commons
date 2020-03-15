@@ -52,3 +52,31 @@
         -ms-transform: none;
     }
 }
+
+.walletButonStyleLogged {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: $brand-black;
+    border: 1px solid $brand-pink;
+    font-size: 14px;
+    text-transform: inherit;
+    min-height: unset;
+    padding: 0.65rem 1rem;
+    line-height: 1.6;
+    color: $brand-light-blue;
+    font-weight: $font-weight-base;
+
+    &:hover {
+        transform: none;
+        -webkit-transform: none;
+        -ms-transform: none;
+    }
+
+    canvas {
+        display: inline-block;
+        margin-right: 5px;
+        border-radius: 50%;
+        position: relative;
+        top: 5px;
+    }
+}
