@@ -24,7 +24,6 @@ export default function useIpfsApi(config: IpfsConfig) {
             ipfsMessage = 'Checking IPFS gateway...'
 
             try {
-                // eslint-disable-next-line require-atomic-updates
                 ipfs = await ipfsClient(config)
                 const version = await ipfs.version()
                 ipfsVersion = version.version
@@ -32,7 +31,7 @@ export default function useIpfsApi(config: IpfsConfig) {
             } catch (error) {
                 setIpfsError(`IPFS connection error: ${error.message}`)
             }
-            setIpfsReady(Boolean(await ipfs.id()))
+            setIpfsReady(Boolean(await (ipfs && ipfs.id())))
         }
 
         initIpfs()

@@ -19,7 +19,9 @@
 }
 
 .inputWrapSearch {
+    // stylelint-disable value-keyword-case
     composes: inputWrap;
+    // stylelint-enable value-keyword-case
 
     .input {
         padding-left: $spacer * 1.5;
