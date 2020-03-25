@@ -5,6 +5,7 @@ if [ "${LOCAL_CONTRACTS}" = "true" ]; then
   while [ ! -f "/app/frontend/node_modules/@oceanprotocol/keeper-contracts/artifacts/ready" ]; do
     sleep 2
   done
+  npm run build
 fi
 echo "Starting Commons..."
 serve -l tcp://"${LISTEN_ADDRESS}":"${LISTEN_PORT}" -s /app/frontend/build/
