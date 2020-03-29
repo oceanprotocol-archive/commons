@@ -8,9 +8,12 @@ import styles from './AssetDetails.module.scss'
 import AssetFilesDetails from './AssetFilesDetails'
 import Report from './Report'
 import Web3 from 'web3'
+import AssetsJob from './AssetJob'
 
 interface AssetDetailsProps {
+    ocean: any
     metadata: MetaData
+    computeMetadata?: MetaData
     ddo: DDO
 }
 
@@ -30,9 +33,18 @@ const MetaFixedItem = ({ name, value }: { name: string; value: string }) => (
     </li>
 )
 
-export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
+export default function AssetDetails({
+    metadata,
+    ddo,
+    computeMetadata,
+    ocean
+}: AssetDetailsProps) {
     const { main, additionalInformation } = metadata
     const price = main.price && Web3.utils.fromWei(main.price.toString())
+
+    console.log(computeMetadata)
+    const isCompute = computeMetadata ? true : false
+    console.log(isCompute)
 
     const metaFixed = [
         {
@@ -120,7 +132,18 @@ export default function AssetDetails({ metadata, ddo }: AssetDetailsProps) {
                 </ul>
             </div>
 
-            <AssetFilesDetails files={main.files ? main.files : []} ddo={ddo} />
+            {isCompute ? (
+                <AssetsJob
+                    ddo={ddo}
+                    ocean={ocean}
+                    computeMetadata={computeMetadata}
+                />
+            ) : (
+                <AssetFilesDetails
+                    files={main.files ? main.files : []}
+                    ddo={ddo}
+                />
+            )}
         </>
     )
 }

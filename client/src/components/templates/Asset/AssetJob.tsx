@@ -1,0 +1,159 @@
+import React, { ChangeEvent, useState } from 'react'
+import { DDO, MetaData } from '@oceanprotocol/squid'
+import Input from '../../atoms/Form/Input'
+import computeOptions from '../../../data/computeOptions.json'
+import styles from './AssetJob.module.scss'
+import Spinner from '../../atoms/Spinner'
+import Button from '../../atoms/Button'
+import { messages } from './AssetFile'
+import ReactDropzone from 'react-dropzone'
+
+interface JobsProps {
+    ocean: any
+    computeMetadata?: MetaData
+    ddo: DDO
+}
+
+export default function AssetsJobs({ ddo, computeMetadata, ocean }: JobsProps) {
+    let rawAlgorithmMeta = {
+        rawcode: `console.log('Hello world'!)`,
+        format: 'docker-image',
+        version: '0.1',
+        container: {}
+    }
+
+    const [isJobStarting, setIsJobStarting] = useState(false)
+    const [step, setStep] = useState(99)
+
+    const [computeType, setComputeType] = useState('')
+    const [computeValue, setComputeValue] = useState({})
+    const [algorithmRawCode, setAlgorithmRawCode] = useState('')
+
+    const [file, setFile] = useState(null)
+
+    const onDrop = async (files: any) => {
+        setFile(files[0])
+        const fileText = await readFileContent(files[0])
+        setAlgorithmRawCode(fileText)
+    }
+    const handleSelectChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const comType = event.target.value
+        setComputeType(comType)
+
+        const selectedComputeOption = computeOptions.find(
+            x => x.name === comType
+        )
+        if (selectedComputeOption !== undefined)
+            setComputeValue(selectedComputeOption.value)
+    }
+    const readFileContent = (file: File): Promise<string> => {
+        return new Promise(resolve => {
+            const reader = new FileReader()
+            reader.onload = function(e) {
+                resolve(reader.result as string)
+            }
+            reader.readAsText(file)
+        })
+    }
+
+    const startJob = async () => {
+        try {
+            setIsJobStarting(true)
+            const accounts = await ocean.accounts.list()
+            const ComputeOutput = {
+                publishAlgorithmLog: false,
+                publishOutput: false,
+                brizoAddress: ocean.config.brizoAddress,
+                brizoUri: ocean.config.brizoUri,
+                metadataUri: ocean.config.aquariusUri,
+                nodeUri: ocean.config.nodeUri,
+                owner: accounts[0].getId(),
+                secretStoreUri: ocean.config.secretStoreUri
+            }
+
+            const agreement = await ocean.compute
+                .order(accounts[0], ddo.id)
+                .next((step: number) => setStep(step))
+
+            rawAlgorithmMeta.container = computeValue
+            rawAlgorithmMeta.rawcode = algorithmRawCode
+
+            const status = await ocean.compute.start(
+                accounts[0],
+                agreement,
+                undefined,
+                encodeURIComponent(JSON.stringify(rawAlgorithmMeta)),
+                ComputeOutput
+            )
+
+            console.log(status)
+        } catch (error) {
+            console.error(error.message)
+        }
+        setIsJobStarting(false)
+    }
+
+    return (
+        <>
+            <div>
+                <div>
+                    <span className={styles.bold}>New job</span>
+                    <div className={styles.dataType}>
+                        <Input
+                            type="select"
+                            name="select"
+                            label="Select data type"
+                            placeholder=""
+                            value={computeType}
+                            options={computeOptions.map(x => x.name)}
+                            onChange={handleSelectChange}
+                        />
+                    </div>
+                    <div>
+                        <div className={styles.inputWrap}>
+                            <ReactDropzone
+                                onDrop={acceptedFiles => onDrop(acceptedFiles)}
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                    <div {...getRootProps()}>
+                                        <input {...getInputProps()} />
+                                        {file === null && (
+                                            <div className={styles.dragndrop}>
+                                                Click or drop your notebook here
+                                            </div>
+                                        )}
+                                        {file !== null && (
+                                            <div
+                                                className={
+                                                    styles.filleddragndrop
+                                                }
+                                            >
+                                                You selected:{' '}
+                                                {(file as any).path}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </ReactDropzone>
+                        </div>
+                        <div className={styles.jobButtonWrapper}>
+                            <Button
+                                primary
+                                onClick={() => startJob()}
+                                disabled={
+                                    isJobStarting ||
+                                    file === null ||
+                                    computeType === ''
+                                }
+                                name="Purchase access"
+                            >
+                                Start job
+                            </Button>
+                        </div>
+                    </div>
+                    {isJobStarting ? <Spinner message={messages[step]} /> : ''}
+                </div>
+            </div>
+        </>
+    )
+}

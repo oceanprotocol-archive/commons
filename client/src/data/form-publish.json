@@ -11,6 +11,16 @@
           "required": true,
           "help": "Enter a concise title. You will be able to enter a more thorough description in the next step."
         },
+        "datasetType":{
+          "label": "Dataset type",
+          "help": "Pick the type which best fits your data set.",
+          "type": "select",
+          "required": true,
+          "options": [
+            "access",
+            "compute"
+          ]
+        },
         "files": {
           "label": "Files",
           "placeholder": "e.g. https://file.com/file.json",

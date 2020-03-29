@@ -20,8 +20,10 @@ interface AssetProps {
 }
 
 interface AssetState {
+    ocean: any
     ddo: DDO
     metadata: MetaData
+    computeMetadata?: MetaData
     error: string
     isLoading: boolean
 }
@@ -30,8 +32,10 @@ class Asset extends Component<AssetProps, AssetState> {
     public static contextType = User
 
     public state = {
+        ocean: undefined,
         ddo: ({} as any) as DDO,
         metadata: ({ main: { name: '' } } as any) as MetaData,
+        computeMetadata: undefined,
         error: '',
         isLoading: true
     }
@@ -44,10 +48,19 @@ class Asset extends Component<AssetProps, AssetState> {
         try {
             const { ocean } = this.context
             const ddo = await ocean.assets.resolve(this.props.match.params.did)
+
             const { attributes } = ddo.findServiceByType('metadata')
+            let computeAttributes
+
+            try {
+                computeAttributes = ddo.findServiceByType('compute')
+            } catch (error) {}
+
             this.setState({
+                ocean,
                 ddo,
                 metadata: attributes,
+                computeMetadata: computeAttributes,
                 isLoading: false
             })
         } catch (error) {
@@ -59,7 +72,14 @@ class Asset extends Component<AssetProps, AssetState> {
     }
 
     public render() {
-        const { metadata, ddo, error, isLoading } = this.state
+        const {
+            metadata,
+            ddo,
+            error,
+            isLoading,
+            computeMetadata,
+            ocean
+        } = this.state
         const { main, additionalInformation } = metadata
 
         const hasError = error !== ''
@@ -88,7 +108,12 @@ class Asset extends Component<AssetProps, AssetState> {
                 }
             >
                 <Content>
-                    <AssetDetails metadata={metadata} ddo={ddo} />
+                    <AssetDetails
+                        metadata={metadata}
+                        ddo={ddo}
+                        computeMetadata={computeMetadata}
+                        ocean={ocean}
+                    />
                 </Content>
             </Route>
         )

@@ -1,0 +1,18 @@
+[
+  {
+    "name": "nodejs",
+    "value": {
+      "entrypoint": "node $ALGO",
+      "image": "node",
+      "tag": "10"
+    }
+  },
+  {
+    "name": "pyhton3.6",
+    "value": {
+      "entrypoint": "python3.6 $ALGO",
+      "image": "python",
+      "tag": "3.6"
+    }
+  }
+]

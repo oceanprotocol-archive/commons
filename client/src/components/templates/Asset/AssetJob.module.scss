@@ -1,0 +1,100 @@
+@import '../../../styles/variables';
+
+.box {
+    margin-bottom: $spacer / 2;
+    background: $brand-white;
+    border-radius: $border-radius;
+    border: 1px solid $brand-grey-lighter;
+    padding: $spacer / 2;
+}
+
+.dataType {
+    padding-top: 10px;
+}
+
+.buttonWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+}
+
+.error {
+    color: $red;
+    align-items: center;
+    justify-content: center;
+}
+
+.bold {
+    font-weight: 900;
+}
+
+.expiry {
+    color: $brand-grey-light;
+    float: right;
+}
+
+.job {
+    border-top: 1px solid #e2e2e2;
+}
+
+.dragndrop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 90px;
+    color: $brand-grey-light;
+    background-color: $brand-white;
+}
+
+.filleddragndrop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 900;
+    height: 90px;
+    color: $brand-grey;
+    background-color: $brand-white;
+}
+
+.inputWrap {
+    margin-top: $spacer / 4;
+    background: $brand-gradient;
+    border-radius: $border-radius;
+    padding: 2px;
+    display: flex;
+    position: relative;
+
+    &.isFocused {
+        background: $brand-black;
+    }
+
+    > div,
+    > div > div {
+        width: 100%;
+    }
+}
+
+.jobButtonWrapper {
+    text-align: right;
+    margin-top: $spacer / 4;
+}
+
+.table {
+    margin-top: $spacer / 2;
+    margin-bottom: 0;
+}
+
+.spinner {
+    padding-bottom: 30px;
+}
+
+.jobloading {
+    padding-left: 23px;
+}

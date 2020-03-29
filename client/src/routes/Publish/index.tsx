@@ -14,7 +14,7 @@ import Content from '../../components/atoms/Content'
 import withTracker from '../../hoc/withTracker'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
-
+type DatasetType = 'compute' | 'access'
 interface PublishState {
     name?: string
     dateCreated?: string
@@ -26,6 +26,7 @@ interface PublishState {
     type?: AssetType
     copyrightHolder?: string
     categories?: string
+    datasetType?: DatasetType
 
     currentStep?: number
     publishingStep?: number
@@ -60,6 +61,7 @@ class Publish extends Component<{}, PublishState> {
         license: '',
         copyrightHolder: '',
         categories: '',
+        datasetType: 'access' as DatasetType,
 
         currentStep: 1,
         isPublishing: false,
@@ -133,7 +135,8 @@ class Publish extends Component<{}, PublishState> {
             isPublishing: false,
             isPublished: false,
             publishingStep: 0,
-            currentStep: 1
+            currentStep: 1,
+            datasetType: 'access' as DatasetType
         })
     }
 
@@ -256,6 +259,32 @@ class Publish extends Component<{}, PublishState> {
         }
     }
 
+    private async createComputeService(
+        ocean: any,
+        publisher: any,
+        price: string,
+        datePublished: string
+    ) {
+        const { templates } = ocean.keeper
+        const serviceAgreementTemplate = await templates.escrowComputeExecutionTemplate.getServiceAgreementTemplate()
+        const name = 'dataAssetComputingServiceAgreement'
+        return {
+            type: 'compute',
+            serviceEndpoint: ocean.brizo.getComputeEndpoint(),
+            templateId: templates.escrowComputeExecutionTemplate.getId(),
+            attributes: {
+                main: {
+                    creator: publisher.getId(),
+                    datePublished,
+                    price,
+                    timeout: 3600,
+                    name
+                },
+                serviceAgreementTemplate
+            }
+        }
+    }
+
     private handleRegisterAsset = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
@@ -305,8 +334,21 @@ class Publish extends Component<{}, PublishState> {
         }
 
         try {
+            let computeService: any[] = []
+            console.log('dataset type ', this.state.datasetType)
+            if (this.state.datasetType === 'compute') {
+                const service = await this.createComputeService(
+                    ocean,
+                    account[0],
+                    this.state.price,
+                    this.state.dateCreated
+                )
+                computeService = [service]
+                console.log('compute ', computeService)
+            }
+
             const asset = await this.context.ocean.assets
-                .create(newAsset, account[0])
+                .create(newAsset, account[0], computeService)
                 .next((publishingStep: number) =>
                     this.setState({ publishingStep })
                 )

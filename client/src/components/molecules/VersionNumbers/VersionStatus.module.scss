@@ -24,11 +24,11 @@
 
 // stylelint-disable value-keyword-case
 .indicator {
-    composes: statusIndicator from '../AccountStatus/Indicator.module.scss';
+    composes: statusindicator from '../AccountStatus/Indicator.module.scss';
 }
 
 .indicatorActive {
-    composes: statusIndicatorActive from '../AccountStatus/Indicator.module.scss';
+    composes: statusindicatoractive from '../AccountStatus/Indicator.module.scss';
 }
 // stylelint-enable value-keyword-case
 
