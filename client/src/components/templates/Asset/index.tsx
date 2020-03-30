@@ -23,14 +23,12 @@ interface AssetState {
     ocean: any
     ddo: DDO
     metadata: MetaData
-    computeMetadata?: MetaData
     error: string
     isLoading: boolean
 }
 
 class Asset extends Component<AssetProps, AssetState> {
     public static contextType = User
-
     public state = {
         ocean: undefined,
         ddo: ({} as any) as DDO,
@@ -48,19 +46,12 @@ class Asset extends Component<AssetProps, AssetState> {
         try {
             const { ocean } = this.context
             const ddo = await ocean.assets.resolve(this.props.match.params.did)
-
             const { attributes } = ddo.findServiceByType('metadata')
-            let computeAttributes
-
-            try {
-                computeAttributes = ddo.findServiceByType('compute')
-            } catch (error) {}
 
             this.setState({
                 ocean,
                 ddo,
                 metadata: attributes,
-                computeMetadata: computeAttributes,
                 isLoading: false
             })
         } catch (error) {
@@ -108,12 +99,7 @@ class Asset extends Component<AssetProps, AssetState> {
                 }
             >
                 <Content>
-                    <AssetDetails
-                        metadata={metadata}
-                        ddo={ddo}
-                        computeMetadata={computeMetadata}
-                        ocean={ocean}
-                    />
+                    <AssetDetails metadata={metadata} ddo={ddo} ocean={ocean} />
                 </Content>
             </Route>
         )

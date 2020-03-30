@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { DDO, MetaData } from '@oceanprotocol/squid'
+import { DDO } from '@oceanprotocol/squid'
 import Input from '../../atoms/Form/Input'
 import computeOptions from '../../../data/computeOptions.json'
 import styles from './AssetJob.module.scss'
@@ -7,15 +7,15 @@ import Spinner from '../../atoms/Spinner'
 import Button from '../../atoms/Button'
 import { messages } from './AssetFile'
 import ReactDropzone from 'react-dropzone'
+import { readFileContent } from '../../../utils/utils'
 
 interface JobsProps {
     ocean: any
-    computeMetadata?: MetaData
     ddo: DDO
 }
 
-export default function AssetsJobs({ ddo, computeMetadata, ocean }: JobsProps) {
-    let rawAlgorithmMeta = {
+export default function AssetsJobs({ ddo, ocean }: JobsProps) {
+    const rawAlgorithmMeta = {
         rawcode: `console.log('Hello world'!)`,
         format: 'docker-image',
         version: '0.1',
@@ -24,6 +24,7 @@ export default function AssetsJobs({ ddo, computeMetadata, ocean }: JobsProps) {
 
     const [isJobStarting, setIsJobStarting] = useState(false)
     const [step, setStep] = useState(99)
+    const [error, setError] = useState('')
 
     const [computeType, setComputeType] = useState('')
     const [computeValue, setComputeValue] = useState({})
@@ -46,19 +47,11 @@ export default function AssetsJobs({ ddo, computeMetadata, ocean }: JobsProps) {
         if (selectedComputeOption !== undefined)
             setComputeValue(selectedComputeOption.value)
     }
-    const readFileContent = (file: File): Promise<string> => {
-        return new Promise(resolve => {
-            const reader = new FileReader()
-            reader.onload = function(e) {
-                resolve(reader.result as string)
-            }
-            reader.readAsText(file)
-        })
-    }
 
     const startJob = async () => {
         try {
             setIsJobStarting(true)
+            setError('')
             const accounts = await ocean.accounts.list()
             const ComputeOutput = {
                 publishAlgorithmLog: false,
@@ -78,17 +71,15 @@ export default function AssetsJobs({ ddo, computeMetadata, ocean }: JobsProps) {
             rawAlgorithmMeta.container = computeValue
             rawAlgorithmMeta.rawcode = algorithmRawCode
 
-            const status = await ocean.compute.start(
+            await ocean.compute.start(
                 accounts[0],
                 agreement,
                 undefined,
-                encodeURIComponent(JSON.stringify(rawAlgorithmMeta)),
+                rawAlgorithmMeta,
                 ComputeOutput
             )
-
-            console.log(status)
         } catch (error) {
-            console.error(error.message)
+            setError('Failed to start job!')
         }
         setIsJobStarting(false)
     }
@@ -152,6 +143,9 @@ export default function AssetsJobs({ ddo, computeMetadata, ocean }: JobsProps) {
                         </div>
                     </div>
                     {isJobStarting ? <Spinner message={messages[step]} /> : ''}
+                    {error !== '' && (
+                        <div className={styles.error}>{error}</div>
+                    )}
                 </div>
             </div>
         </>

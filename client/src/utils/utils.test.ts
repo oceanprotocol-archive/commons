@@ -1,5 +1,11 @@
 import mockAxios from 'jest-mock-axios'
-import { formatBytes, pingUrl, arraySum, readFileAsync } from './utils'
+import {
+    formatBytes,
+    pingUrl,
+    arraySum,
+    readFileAsync,
+    readFileContent
+} from './utils'
 
 describe('formatBytes', () => {
     it('outputs as expected', () => {
@@ -65,5 +71,17 @@ describe('readFileAsync', () => {
 
         const output = await readFileAsync(file)
         expect(output).toBeInstanceOf(ArrayBuffer)
+    })
+})
+
+describe('readFileContent', () => {
+    it('outputs as expected', async () => {
+        const file = new File(['ABC'], 'filename.txt', {
+            type: 'text/plain',
+            lastModified: Date.now()
+        })
+
+        const output = await readFileContent(file)
+        expect(output).toBeInstanceOf(String)
     })
 })

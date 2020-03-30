@@ -17,6 +17,7 @@
           "type": "select",
           "required": true,
           "options": [
+            "both",
             "access",
             "compute"
           ]

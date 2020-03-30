@@ -19,7 +19,6 @@ export default class AssetFilesDetails extends PureComponent<{
                         <AssetFile key={file.index} ddo={ddo} file={file} />
                     ))}
                 </div>
-                <Web3message />
             </>
         ) : (
             <div>No files attached.</div>
