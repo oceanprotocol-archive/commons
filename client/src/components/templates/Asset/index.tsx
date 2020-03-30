@@ -68,7 +68,6 @@ class Asset extends Component<AssetProps, AssetState> {
             ddo,
             error,
             isLoading,
-            computeMetadata,
             ocean
         } = this.state
         const { main, additionalInformation } = metadata

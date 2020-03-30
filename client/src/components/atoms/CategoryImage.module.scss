@@ -15,7 +15,7 @@
 
 .header {
     // stylelint-disable value-keyword-case
-    composes: categoryimage;
+    composes: categoryImage;
     // stylelint-enable value-keyword-case
     height: 8rem;
     margin-top: $spacer / $line-height;
@@ -23,7 +23,7 @@
 
 .dimmed {
     // stylelint-disable value-keyword-case
-    composes: categoryimage;
+    composes: categoryImage;
     // stylelint-enable value-keyword-case
     opacity: .6;
 }

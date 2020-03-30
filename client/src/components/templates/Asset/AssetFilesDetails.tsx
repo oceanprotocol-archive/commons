@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { DDO, File } from '@oceanprotocol/squid'
 import AssetFile from './AssetFile'
 import { User } from '../../../context'
-import Web3message from '../../organisms/Web3message'
 import styles from './AssetFilesDetails.module.scss'
 
 export default class AssetFilesDetails extends PureComponent<{
