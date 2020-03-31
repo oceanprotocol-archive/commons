@@ -17,7 +17,7 @@ class History extends Component {
                     {!this.context.isLogged && <Web3message />}
                     <div>Assets</div>
                     <AssetsUser list />
-                    <div>Jobs</div>
+                    <div>Compute Jobs</div>
                     <JobsUser />
                 </Content>
             </Route>

@@ -13,14 +13,12 @@ export default function JobsUser() {
     useEffect(() => {
         setIsLoading(true)
         async function getJobs() {
-            console.log(account)
             const userJobs = await getUserJobs(ocean, account)
-            console.log('user jobs', userJobs)
             setJobList(userJobs as any)
             setIsLoading(false)
         }
         getJobs()
-    }, [account])
+    }, [account,ocean])
 
 
     return (
@@ -30,7 +28,7 @@ export default function JobsUser() {
                 : jobList.length ?
                     jobList.map((job: any) => 
                         (
-                            <JobTeaser key={job.agreementId} />
+                            <JobTeaser key={job.jobId} job={job} />
                            
                         )
                     ) : ''
