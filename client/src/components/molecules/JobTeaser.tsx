@@ -1,29 +1,31 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { User } from '../../context';
-import moment from 'moment';
+import { User } from '../../context'
+import moment from 'moment'
 import styles from './JobTeaser.module.scss'
-
+import Dotdotdot from 'react-dotdotdot'
 
 export default function JobTeaser({ job }: { job: any }) {
-    const { ocean } = useContext(User);
+    const { ocean } = useContext(User)
     const [assetName, setAssetName] = useState()
     useEffect(() => {
         async function getAsset() {
             try {
-                const { did } = await (ocean as any).keeper.agreementStoreManager.getAgreement(job.agreementId)
+                const {
+                    did
+                } = await (ocean as any).keeper.agreementStoreManager.getAgreement(
+                    job.agreementId
+                )
                 const asset = await (ocean as any).assets.resolve(did)
                 const { attributes } = asset.findServiceByType('metadata')
                 const { main } = attributes
                 setAssetName(main.name)
-             
-
             } catch (error) {
                 console.log(error)
             }
         }
 
         getAsset()
-    }, [ocean,job.agreementId])
+    }, [ocean, job.agreementId])
 
     return (
         <article className={styles.assetList}>
@@ -37,10 +39,28 @@ export default function JobTeaser({ job }: { job: any }) {
                 </div>
             </div>
             <div className={styles.listRow}>
-            <div>Job status</div>
-            <div>{job.statusText}</div>
+                <div>Job status</div>
+                <div>{job.statusText}</div>
             </div>
-            <div>{job.resultsUrl}</div>
+            <div>
+                {job.algorithmLogUrl ? (
+                    <a href={job.algorithmLogUrl}> Algorithm log</a>
+                ) : (
+                    ''
+                )}
+            </div>
+            <div>
+                {job.resultsUrl ? (
+                    <>
+                        <div>Output URL</div>
+                        {job.resultsUrl.map((result: string) => (
+                            <a href={result}> {result.substring(0, 52)}...</a>
+                        ))}
+                    </>
+                ) : (
+                    ''
+                )}
+            </div>
         </article>
     )
 }

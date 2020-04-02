@@ -29,7 +29,7 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
     const [computeType, setComputeType] = useState('')
     const [computeValue, setComputeValue] = useState({})
     const [algorithmRawCode, setAlgorithmRawCode] = useState('')
-
+    const [isPublished, setIsPublished] = useState(false)
     const [file, setFile] = useState(null)
 
     const onDrop = async (files: any) => {
@@ -51,6 +51,7 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
     const startJob = async () => {
         try {
             setIsJobStarting(true)
+            setIsPublished(false)
             setError('')
             const accounts = await ocean.accounts.list()
             const ComputeOutput = {
@@ -78,8 +79,11 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
                 rawAlgorithmMeta,
                 ComputeOutput
             )
+            setIsPublished(true)
+            setFile(null)
         } catch (error) {
             setError('Failed to start job!')
+            console.log(error)
         }
         setIsJobStarting(false)
     }
@@ -145,6 +149,16 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
                     {isJobStarting ? <Spinner message={messages[step]} /> : ''}
                     {error !== '' && (
                         <div className={styles.error}>{error}</div>
+                    )}
+                    {isPublished ? (
+                        <div className={styles.success}>
+                            <p>Your job started!</p>
+                            <Button link to={'/history/'}>
+                                Watch the progress in the history page.
+                            </Button>
+                        </div>
+                    ) : (
+                        ''
                     )}
                 </div>
             </div>

@@ -63,13 +63,7 @@ class Asset extends Component<AssetProps, AssetState> {
     }
 
     public render() {
-        const {
-            metadata,
-            ddo,
-            error,
-            isLoading,
-            ocean
-        } = this.state
+        const { metadata, ddo, error, isLoading, ocean } = this.state
         const { main, additionalInformation } = metadata
 
         const hasError = error !== ''

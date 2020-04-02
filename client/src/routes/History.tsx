@@ -9,7 +9,7 @@ import JobsUser from '../components/organisms/JobsUser'
 
 class History extends Component {
     public static contextType = User
-    
+
     public render() {
         return (
             <Route title="History">
