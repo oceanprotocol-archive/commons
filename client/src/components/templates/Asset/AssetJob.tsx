@@ -97,7 +97,7 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
                         <Input
                             type="select"
                             name="select"
-                            label="Select data type"
+                            label="Select image to run the algorithm"
                             placeholder=""
                             value={computeType}
                             options={computeOptions.map(x => x.name)}
