@@ -7,6 +7,7 @@ import Dotdotdot from 'react-dotdotdot'
 export default function JobTeaser({ job }: { job: any }) {
     const { ocean } = useContext(User)
     const [assetName, setAssetName] = useState()
+    const [assetUrl, setAssetUrl] = useState()
     useEffect(() => {
         async function getAsset() {
             try {
@@ -18,7 +19,9 @@ export default function JobTeaser({ job }: { job: any }) {
                 const asset = await (ocean as any).assets.resolve(did)
                 const { attributes } = asset.findServiceByType('metadata')
                 const { main } = attributes
+                const link  = "/asset/did:op:" + did
                 setAssetName(main.name)
+                setAssetUrl(link as any)
             } catch (error) {
                 console.log(error)
             }
@@ -30,7 +33,7 @@ export default function JobTeaser({ job }: { job: any }) {
     return (
         <article className={styles.assetList}>
             <div className={styles.listRow}>
-                <h1>{assetName}</h1>
+                <h1><a href={assetUrl}>{assetName}</a></h1>
                 <div
                     className={styles.date}
                     title={`Created on ${job.dateCreated}`}
