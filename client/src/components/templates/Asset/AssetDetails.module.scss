@@ -70,7 +70,7 @@
     margin-bottom: $spacer * $line-height;
     font-size: $font-size-small;
     position: relative;
-    background-color: rgba(255,255,255,.1);
+    background-color: rgba(255, 255, 255, 0.1);
 
     ul {
         padding: 0;
@@ -90,6 +90,20 @@
         &:before {
             display: none;
         }
+    }
+}
+
+.authorHover {
+    cursor: pointer;
+
+    div > div > div:first-child > div {
+        color: #fff !important;
+    }
+
+    div > div > div:first-child > div:first-child,
+    div > div > div:first-child > div:first-child > img {
+        width: 30px !important;
+        height: 30px !important;
     }
 }
 
@@ -176,7 +190,7 @@
     border-top-right-radius: 5px;
     display: inline-block;
     margin-right: 1px;
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 
     &:last-child::after {
         position: absolute;

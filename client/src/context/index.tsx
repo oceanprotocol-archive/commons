@@ -20,6 +20,9 @@ export const User = React.createContext({
     openWallet: () => {
         /* empty */
     },
+    access3box: () => {
+        /* empty */
+    },
     requestFromFaucet: () => {
         /* empty */
     },
@@ -35,11 +38,11 @@ export const Market = React.createContext({
     network: '',
     networkMatch: false,
     aquarius: {
-        queryMetadata: (query: any):Promise<any> => {
+        queryMetadata: (query: any): Promise<any> => {
             /* empty */
-            return [] as any;
+            return [] as any
         },
-        retrieveDDO: (did: string):Promise<DDO> => {
+        retrieveDDO: (did: string): Promise<DDO> => {
             /* empty */
             return null as any
         }

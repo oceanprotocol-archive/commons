@@ -58,3 +58,15 @@
         margin-bottom: 0px !important;
     }
 }
+
+.followersThumbnails {
+    position: absolute;
+    top: 100px;
+    display: flex;
+    left: 10px;
+
+    canvas {
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+}

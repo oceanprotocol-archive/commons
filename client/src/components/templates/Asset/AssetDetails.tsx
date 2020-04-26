@@ -47,11 +47,16 @@ const AuthorItem = ({ name, value }: { name: string; value: string }) => (
         <span className={styles.metaLabel}>
             <strong>{name}</strong>
         </span>
-        <span className={styles.metaValue}><ProfileHover address={value} /></span>
+        <span className={`${styles.metaValue} ${styles.authorHover}`}>
+            <ProfileHover address={value} />
+        </span>
     </li>
 )
 
-export default class AssetDetails extends Component<AssetDetailsProps, AssetDetailsState> {
+export default class AssetDetails extends Component<
+    AssetDetailsProps,
+    AssetDetailsState
+> {
     // const box = null
     // const myAddress = "0x2a0D29C819609Df18D8eAefb429AEC067269BBb6"
 
@@ -61,20 +66,21 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
         active: 'general'
     }
 
-    render(){
-        const { metadata, ddo } = this.props;
+    render() {
+        const { metadata, ddo } = this.props
         const { main, additionalInformation } = metadata
         const price = main.price && Web3.utils.fromWei(main.price.toString())
         const bondingCurveContractAddress = ''
         const contractArtifact = {}
-
-        let cats = '', lang = ''
-        if(additionalInformation && additionalInformation.categories) {
+        let cats = '',
+            lang = ''
+        if (additionalInformation && additionalInformation.categories) {
             cats = additionalInformation.categories.join()
         }
-        if(additionalInformation && additionalInformation.inLanguage) {
+        if (additionalInformation && additionalInformation.inLanguage) {
             lang = additionalInformation.inLanguage
         }
+        const { wallet } = this.context
         const metaFixed = [
             {
                 name: 'Author',
@@ -116,41 +122,43 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
         return (
             <>
                 <aside className={styles.metaPrimary}>
-                {/*<h2 className={styles.copyrightHolder} title="Copyright Holder">
+                    {/*<h2 className={styles.copyrightHolder} title="Copyright Holder">
                 {base.copyrightHolder}
                 </h2>*/}
-                {additionalInformation &&
-                    additionalInformation.copyrightHolder && (
-                    <h2
-                        className={styles.copyrightHolder}
-                        title="Copyright Holder"
-                    >
-                        {additionalInformation.copyrightHolder}
-                    </h2>
-                )}
-                <div className={styles.metaPrimaryData}>
-                <span
-                title={`Date created, published on ${main.datePublished}`}
-                >
-                <Moment
-                date={main.dateCreated}
-                format="L"
-                interval={0}
-                />
-                </span>
+                    {additionalInformation &&
+                        additionalInformation.copyrightHolder && (
+                            <h2
+                                className={styles.copyrightHolder}
+                                title="Copyright Holder"
+                            >
+                                {additionalInformation.copyrightHolder}
+                            </h2>
+                        )}
+                    <div className={styles.metaPrimaryData}>
+                        <span
+                            title={`Date created, published on ${main.datePublished}`}
+                        >
+                            <Moment
+                                date={main.dateCreated}
+                                format="L"
+                                interval={0}
+                            />
+                        </span>
 
-                {/*base.categories && (
+                        {/*base.categories && (
                     <CategoryLink category={base.categories[0]} />
                 )*/}
-                {additionalInformation &&
-                    additionalInformation.categories && (
-                        <CategoryLink
-                            category={additionalInformation.categories[0]}
-                        />
-                )}
+                        {additionalInformation &&
+                            additionalInformation.categories && (
+                                <CategoryLink
+                                    category={
+                                        additionalInformation.categories[0]
+                                    }
+                                />
+                            )}
 
-                {main.files && datafilesLine(main.files)}
-                </div>
+                        {main.files && datafilesLine(main.files)}
+                    </div>
                 </aside>
 
                 {/*base.description && (
@@ -162,9 +170,9 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
 
                 {additionalInformation && additionalInformation.tags && (
                     <div className={styles.tags}>
-                    {additionalInformation.tags.map(tag => (
-                        <span key={tag}>{tag}</span>
-                    ))}
+                        {additionalInformation.tags.map(tag => (
+                            <span key={tag}>{tag}</span>
+                        ))}
                     </div>
                 )}
 
@@ -175,87 +183,227 @@ export default class AssetDetails extends Component<AssetDetailsProps, AssetDeta
                     />
                 )}
 
-
-
                 <Report did={ddo.id} title={main.name} />
 
                 <User.Consumer>
-                {user => (<div className={styles.tabs}>
-                <div className={styles.tabLinks}>
-                <a href="#general" className={this.state.active === 'general' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'general'}) }>General</a>
-                <a href="#download" className={this.state.active === 'donwload' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'download'}) }>Download</a>
-                <a href="#links" className={this.state.active === 'links' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'links'}) }>Links</a>
-                <a href="#bonding" className={this.state.active === 'bonding' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'bonding'}) }>Pricing</a>
-                <a href="#comments" className={this.state.active === 'comments' ? styles.activetabLink : styles.tabLink} onClick={ () => this.setState({active: 'comments'}) }>Comments</a>
-                </div>
+                    {user => (
+                        <div className={styles.tabs}>
+                            <div className={styles.tabLinks}>
+                                <a
+                                    href="#general"
+                                    className={
+                                        this.state.active === 'general'
+                                            ? styles.activetabLink
+                                            : styles.tabLink
+                                    }
+                                    onClick={() =>
+                                        this.setState({ active: 'general' })
+                                    }
+                                >
+                                    General
+                                </a>
+                                <a
+                                    href="#download"
+                                    className={
+                                        this.state.active === 'donwload'
+                                            ? styles.activetabLink
+                                            : styles.tabLink
+                                    }
+                                    onClick={() =>
+                                        this.setState({ active: 'download' })
+                                    }
+                                >
+                                    Download
+                                </a>
+                                <a
+                                    href="#links"
+                                    className={
+                                        this.state.active === 'links'
+                                            ? styles.activetabLink
+                                            : styles.tabLink
+                                    }
+                                    onClick={() =>
+                                        this.setState({ active: 'links' })
+                                    }
+                                >
+                                    Links
+                                </a>
+                                <a
+                                    href="#bonding"
+                                    className={
+                                        this.state.active === 'bonding'
+                                            ? styles.activetabLink
+                                            : styles.tabLink
+                                    }
+                                    onClick={() =>
+                                        this.setState({ active: 'bonding' })
+                                    }
+                                >
+                                    Pricing
+                                </a>
+                                <a
+                                    href="#comments"
+                                    className={
+                                        this.state.active === 'comments'
+                                            ? styles.activetabLink
+                                            : styles.tabLink
+                                    }
+                                    onClick={() =>
+                                        this.setState({ active: 'comments' })
+                                    }
+                                >
+                                    Comments
+                                </a>
+                            </div>
 
-                <div className={this.state.active === 'general' ? styles.activeTab : styles.tab} id="general">
-                <div className={styles.metaFixed}>
-                <h2
-                className={styles.metaFixedTitle}
-                title="This metadata can not be changed because it is used to generate the checksums for the DDO, and to encrypt the file urls."
-                >
-                Fixed Metadata
-                </h2>
-                <ul>
-                {metaFixed
-                    .filter(item => item.show)
-                    .map(item => (item.name === 'Author' && user.account ?
-                    (<AuthorItem
-                        key={shortid.generate()}
-                        name={item.name}
-                        value={user.account}
-                        />):(<MetaFixedItem
-                            key={shortid.generate()}
-                            name={item.name}
-                            value={item.value}
-                            />)
-                        ))}
-                        </ul>
-                        </div>
-                        </div>
-                        <div className={this.state.active === 'download' ? styles.activeTab : styles.tab} id="download">
-                        <AssetFilesDetails files={main.files ? main.files : []} ddo={ddo} />
-                        </div>
-                        <div className={this.state.active === 'links' ? styles.activeTab : styles.tab} id="links">
-                        {additionalInformation && additionalInformation.links && (<AssetLinks files={additionalInformation.links ? additionalInformation.links : []} />)}
-                        </div>
-                        <div className={this.state.active === 'bonding' ? styles.activeTab : styles.tab} id="bonding">
-                            <BondingCurve
-                            contractAddress={bondingCurveContractAddress}
-                            contractArtifact={contractArtifact}
-                            defaultTab="bonding-curve"
-                            onError={(error: any) => console.log('ERROR in bonding curve', error)}
-                            onLoaded={() => console.log('BondingCurve loaded')}
-                            />
-                        </div>
+                            <div
+                                className={
+                                    this.state.active === 'general'
+                                        ? styles.activeTab
+                                        : styles.tab
+                                }
+                                id="general"
+                            >
+                                <div className={styles.metaFixed}>
+                                    <h2
+                                        className={styles.metaFixedTitle}
+                                        title="This metadata can not be changed because it is used to generate the checksums for the DDO, and to encrypt the file urls."
+                                    >
+                                        Fixed Metadata
+                                    </h2>
+                                    <ul>
+                                        {metaFixed
+                                            .filter(item => item.show)
+                                            .map(item =>
+                                                item.name === 'Author' &&
+                                                ddo.proof.creator ? (
+                                                    <AuthorItem
+                                                        key={shortid.generate()}
+                                                        name={item.name}
+                                                        value={
+                                                            ddo.proof.creator
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <MetaFixedItem
+                                                        key={shortid.generate()}
+                                                        name={item.name}
+                                                        value={item.value}
+                                                    />
+                                                )
+                                            )}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div
+                                className={
+                                    this.state.active === 'download'
+                                        ? styles.activeTab
+                                        : styles.tab
+                                }
+                                id="download"
+                            >
+                                <AssetFilesDetails
+                                    files={main.files ? main.files : []}
+                                    ddo={ddo}
+                                />
+                            </div>
+                            <div
+                                className={
+                                    this.state.active === 'links'
+                                        ? styles.activeTab
+                                        : styles.tab
+                                }
+                                id="links"
+                            >
+                                {additionalInformation &&
+                                    additionalInformation.links && (
+                                        <AssetLinks
+                                            files={
+                                                additionalInformation.links
+                                                    ? additionalInformation.links
+                                                    : []
+                                            }
+                                        />
+                                    )}
+                            </div>
+                            <div
+                                className={
+                                    this.state.active === 'bonding'
+                                        ? styles.activeTab
+                                        : styles.tab
+                                }
+                                id="bonding"
+                            >
+                                <BondingCurve
+                                    contractAddress={
+                                        bondingCurveContractAddress
+                                    }
+                                    contractArtifact={contractArtifact}
+                                    defaultTab="bonding-curve"
+                                    onError={(error: any) =>
+                                        console.log(
+                                            'ERROR in bonding curve',
+                                            error
+                                        )
+                                    }
+                                    onLoaded={() =>
+                                        console.log('BondingCurve loaded')
+                                    }
+                                />
+                            </div>
 
-                        <div className={this.state.active === 'comments' ? styles.activeTab : styles.tab} id="comments">
-                        { user.box ? (<ThreeBoxComments
-                            // required
-                            spaceName='3boxtestcomments'
-                            threadName='freshcomments'
-                            adminEthAddr="0x2a0D29C819609Df18D8eAefb429AEC067269BBb6"
-                            // Required props for auth A. & B.
-                            box={user.box}
-                            currentUserAddr={user.account}
-                            // Required prop for auth B.
-                            loginFunction={() => console.log('Handle login')}
-                            // Required prop for auth C.
-                            ethereum={null}
-                            // optional
-                            members={false}
-                            showCommentCount={10}
-                            threadOpts={{}}
-                            useHovers={true}
-                            currentUser3BoxProfile={null}
-                            userProfileURL={(address: string) => `https://mywebsite.com/user/${address}`}
-                            />) : (<><p>Please login to 3box to share comments</p><Button>Login</Button></>) }
+                            <div
+                                className={
+                                    this.state.active === 'comments'
+                                        ? styles.activeTab
+                                        : styles.tab
+                                }
+                                id="comments"
+                            >
+                                {user.box ? (
+                                    <ThreeBoxComments
+                                        // required
+                                        spaceName="3boxtestcomments"
+                                        threadName="freshcomments"
+                                        adminEthAddr="0x2a0D29C819609Df18D8eAefb429AEC067269BBb6"
+                                        // Required props for auth A. & B.
+                                        box={user.box}
+                                        currentUserAddr={user.account}
+                                        // Required prop for auth B.
+                                        loginFunction={() =>
+                                            console.log('Handle login')
+                                        }
+                                        // Required prop for auth C.
+                                        ethereum={null}
+                                        // optional
+                                        members={false}
+                                        showCommentCount={10}
+                                        threadOpts={{}}
+                                        useHovers={true}
+                                        currentUser3BoxProfile={null}
+                                        userProfileURL={(address: string) =>
+                                            `https://mywebsite.com/user/${address}`
+                                        }
+                                    />
+                                ) : (
+                                    <>
+                                        <p>
+                                            Please login to 3box to share
+                                            comments
+                                        </p>
+                                        <Button
+                                            onClick={() => user.access3box()}
+                                        >
+                                            Open 3Box
+                                        </Button>
+                                    </>
+                                )}
+                            </div>
                         </div>
-                        </div>
-                        )}</User.Consumer>
-                        </>
-                )
+                    )}
+                </User.Consumer>
+            </>
+        )
     }
-
 }

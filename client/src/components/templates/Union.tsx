@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { ToastMessage } from 'rimble-ui';
+import { ToastMessage } from 'rimble-ui'
 import { Logger } from '@oceanprotocol/squid'
 import { History, Location } from 'history'
 import queryString from 'query-string'
@@ -11,7 +11,13 @@ import Pagination from '../../components/molecules/Pagination'
 import styles from './Channel.module.scss'
 import Content from '../../components/atoms/Content'
 import CategoryImage from '../atoms/CategoryImage'
-import { IUnion, getDataUnion, getFollowingList, joinDataUnion } from '../../box'
+import {
+    IUnion,
+    getDataUnion,
+    getFollowingList,
+    joinDataUnion,
+    leaveDataUnion
+} from '../../box'
 
 interface UnionDetail {
     union: IUnion
@@ -46,7 +52,6 @@ interface UnionState {
 }
 
 export default class Union extends PureComponent<UnionProps, UnionState> {
-
     public state = {
         unionAddress: '',
         unionDetail: undefined as any,
@@ -86,7 +91,9 @@ export default class Union extends PureComponent<UnionProps, UnionState> {
         const { account } = this.context
         if (account) {
             const followingList = await getFollowingList(account)
-            const foundUnion = followingList.find((f: any) => f.message.identifier.value === unionAddress)
+            const foundUnion = followingList.find(
+                (f: any) => f.message.identifier.value === unionAddress
+            )
             this.setState({ following: !!foundUnion })
         }
     }
@@ -98,13 +105,13 @@ export default class Union extends PureComponent<UnionProps, UnionState> {
             const { union } = unionDetail
 
             // const tag = union.alternateName.value
-            const tag = "ai-for-good"
+            const tag = 'ai-for-good'
 
             const searchQuery = {
                 offset,
                 page: currentPage,
                 query: {
-                    tags: [ tag ]
+                    tags: [tag]
                 },
                 sort: {
                     created: -1
@@ -112,9 +119,9 @@ export default class Union extends PureComponent<UnionProps, UnionState> {
             }
 
             try {
-                const search = ocean ? 
-                    await ocean.assets.query(searchQuery)
-                    :await aquarius.queryMetadata(searchQuery)
+                const search = ocean
+                    ? await ocean.assets.query(searchQuery)
+                    : await aquarius.queryMetadata(searchQuery)
                 this.setState({
                     results: search.results,
                     totalResults: search.totalResults,
@@ -129,13 +136,12 @@ export default class Union extends PureComponent<UnionProps, UnionState> {
     }
 
     public followUnion = async () => {
-        const { unionDetail, unionAddress } = this.state
+        const { unionDetail, unionAddress, following } = this.state
         const { ocean, wallet } = this.context
         if (!ocean) {
             this.setState({ error: 'Please connect to your wallet!' })
             setTimeout(() => this.setState({ error: '' }), 5000)
         } else {
-            
             if (!this.state.box || !this.state.space) {
                 setTimeout(() => this.setState({ processing: false }), 5000)
                 wallet.toggleModal()
@@ -147,9 +153,18 @@ export default class Union extends PureComponent<UnionProps, UnionState> {
                 this.setState({ processing: true })
                 let { box, space } = this.state
                 // await joinDataUnion(box, space, unionAddress)
-                await joinDataUnion(box, space, unionDetail.union)
-                this.setState({ following: true, processing: false, success: true })
+                if (following) {
+                    await leaveDataUnion(box, space, unionDetail.union)
+                } else {
+                    await joinDataUnion(box, space, unionDetail.union)
+                }
+                this.setState({
+                    following: true,
+                    processing: false,
+                    success: true
+                })
                 this.fetchUnion(unionAddress)
+                this.isFollowing()
                 setTimeout(() => this.setState({ success: false }), 5000)
             } catch (error) {
                 console.log(error)
@@ -157,7 +172,6 @@ export default class Union extends PureComponent<UnionProps, UnionState> {
                 setTimeout(() => this.setState({ error: '' }), 5000)
             }
         }
-        
     }
 
     private handlePageClick = async (data: { selected: number }) => {
@@ -184,7 +198,15 @@ export default class Union extends PureComponent<UnionProps, UnionState> {
         )
 
     public render() {
-        const { processing, success, error, unionDetail, following, totalPages, currentPage } = this.state
+        const {
+            processing,
+            success,
+            error,
+            unionDetail,
+            following,
+            totalPages,
+            currentPage
+        } = this.state
         const { account } = this.context
 
         this.isFollowing()
@@ -193,44 +215,52 @@ export default class Union extends PureComponent<UnionProps, UnionState> {
             <>
                 {processing && (
                     <ToastMessage.Processing
-                      className="toastMsg"
-                      my={3}
-                      message={"Processing"}
+                        className="toastMsg"
+                        my={3}
+                        message={'Processing'}
                     />
                 )}
                 {success && (
                     <ToastMessage.Success
-                      className="toastMsg"
-                      my={3}
-                      message={"Data Union"}
-                      secondaryMessage={"You have successfully joined this Data Union!"}
+                        className="toastMsg"
+                        my={3}
+                        message={'Data Union'}
+                        secondaryMessage={
+                            'You have successfully joined this Data Union!'
+                        }
                     />
                 )}
                 {error && (
                     <ToastMessage.Failure
-                      className="toastMsg"
-                      my={3}
-                      message={"Error!"}
-                      secondaryMessage={error}
+                        className="toastMsg"
+                        my={3}
+                        message={'Error!'}
+                        secondaryMessage={error}
                     />
                 )}
-                {unionDetail ? (<UnionHead
-                    unionDetail={unionDetail}
-                    isModerator={account && account === unionDetail.union.founder.identifier.value}
-                    following={following}
-                    followUnion={() => this.followUnion()}
-                    image={<CategoryImage header category={''} />}
-                >
-                    <Content wide>
-                        {this.renderResults()}
+                {unionDetail ? (
+                    <UnionHead
+                        unionDetail={unionDetail}
+                        isModerator={
+                            account &&
+                            account ===
+                                unionDetail.union.founder.identifier.value
+                        }
+                        following={following}
+                        followUnion={() => this.followUnion()}
+                        image={<CategoryImage header category={''} />}
+                    >
+                        <Content wide>
+                            {this.renderResults()}
 
-                        <Pagination
-                            totalPages={totalPages}
-                            currentPage={currentPage}
-                            handlePageClick={this.handlePageClick}
-                        />
-                    </Content>
-                </UnionHead>):(
+                            <Pagination
+                                totalPages={totalPages}
+                                currentPage={currentPage}
+                                handlePageClick={this.handlePageClick}
+                            />
+                        </Content>
+                    </UnionHead>
+                ) : (
                     <Content>
                         <h2>Not Found</h2>
                     </Content>

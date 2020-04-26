@@ -6,10 +6,11 @@ import Markdown from '../atoms/Markdown'
 import Button from '../atoms/Button'
 // import CategoryImage from '../atoms/CategoryImage'
 import { IUnion } from '../../box'
+import { Blockie } from 'rimble-ui'
 
 interface UnionDetail {
     union: IUnion
-    followers: number
+    followers: any
 }
 
 interface RouteProps {
@@ -24,17 +25,12 @@ interface RouteProps {
     className?: string
 }
 
-interface RouteState {
-}
+interface RouteState {}
 
 export default class Route extends PureComponent<RouteProps, RouteState> {
+    public state = {}
 
-    public state = {
-    }
-
-    public async componentDidMount() {
-
-    }
+    public async componentDidMount() {}
 
     public render() {
         const {
@@ -47,7 +43,7 @@ export default class Route extends PureComponent<RouteProps, RouteState> {
             children,
             wide,
             className
-        } = this.props;
+        } = this.props
 
         const { union, followers } = unionDetail
 
@@ -73,25 +69,87 @@ export default class Route extends PureComponent<RouteProps, RouteState> {
                             {image ? (
                                 <div className={styles.imageheader}>
                                     {image}
-                                    <h1 className={styles.title}>{titleSanitized}</h1>
-                                    <h3 className={styles.title}>{subtitleSanitized}</h3>
+                                    <h1 className={styles.title}>
+                                        {titleSanitized}
+                                    </h1>
+                                    <h3 className={styles.title}>
+                                        {subtitleSanitized}
+                                    </h3>
                                     <h4>{industry}</h4>
-                                    <div className={styles.followers}>{followers || 0} followers</div>
+                                    <div className={styles.followers}>
+                                        {followers.length || 0} followers
+                                    </div>
+                                    {followers.length > 0 && (
+                                        <div
+                                            className={
+                                                styles.followersThumbnails
+                                            }
+                                        >
+                                            {followers.map((follower: any) => (
+                                                <Blockie
+                                                    opts={{
+                                                        seed:
+                                                            follower.message
+                                                                .identifier[1]
+                                                                .value,
+                                                        color: '#dfe',
+                                                        bgcolor: '#a71',
+                                                        size: 10,
+                                                        scale: 2,
+                                                        spotcolor: '#000'
+                                                    }}
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
                                     {!isModerator ? (
-                                        <Button onClick={() => followUnion()} disabled={following} primary>
-                                        {!following ? "Follow":"Following"}
+                                        <Button
+                                            onClick={() => followUnion()}
+                                            primary
+                                        >
+                                            {!following ? 'Follow' : 'Unfollow'}
                                         </Button>
-                                        ):(
+                                    ) : (
                                         <h3>You're a Moderator</h3>
-                                        )
-                                    }
+                                    )}
                                 </div>
                             ) : (
                                 <div>
-                                    <h1 className={styles.title}>{titleSanitized}</h1>
-                                    <h3 className={styles.title}>{subtitleSanitized}</h3>
+                                    <h1 className={styles.title}>
+                                        {titleSanitized}
+                                    </h1>
+                                    <h3 className={styles.title}>
+                                        {subtitleSanitized}
+                                    </h3>
                                     <h4>{industry}</h4>
-                                    <div className={styles.followers}>{followers || 0} followers</div>
+                                    <div className={styles.followers}>
+                                        {followers.length || 0} followers
+                                    </div>
+                                    {followers.length > 0 && (
+                                        <div
+                                            className={
+                                                styles.followersThumbnails
+                                            }
+                                        >
+                                            {followers.map((follower: any) => (
+                                                <div>
+                                                    <Blockie
+                                                        opts={{
+                                                            seed:
+                                                                follower.message
+                                                                    .identifier[1]
+                                                                    .value,
+                                                            color: '#dfe',
+                                                            bgcolor: '#a71',
+                                                            size: 10,
+                                                            scale: 2,
+                                                            spotcolor: '#000'
+                                                        }}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                             {description && (

@@ -5,8 +5,19 @@ import OPWallet from 'op-web3-wallet'
 import { User } from '.'
 // import { provideOcean, requestFromFaucet, FaucetResponse, airdropOceanTokens } from '../ocean'
 // import { requestAccessTo3box } from '../3box'
-import { marketplaceId, networkId, nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose,
-        faucetUri, portisAppId, torusEnabled } from '../config'
+import {
+    marketplaceId,
+    networkId,
+    nodeUri,
+    aquariusUri,
+    brizoUri,
+    brizoAddress,
+    secretStoreUri,
+    verbose,
+    faucetUri,
+    portisAppId,
+    torusEnabled
+} from '../config'
 import MarketProvider from './MarketProvider'
 // import { MetamaskProvider } from './MetamaskProvider'
 // import { BurnerWalletProvider } from './BurnerWalletProvider'
@@ -41,26 +52,27 @@ interface UserProviderState {
 }
 
 export default class UserProvider extends PureComponent<{}, UserProviderState> {
-
     private connectToWeb3Provider = async (web3: Web3) => {
         this.setState({
-            web3    
+            web3
         })
     }
 
     private connectToOceanNetwork = async (ocean: any) => {
-        this.setState({
-            isLogged: true,
-            ocean 
-        }, () => {
-            this.hideLoadingMessage()
-            this.initNetworkPoll()
-            this.initAccountsPoll()
-            this.fetchNetwork()
-            this.fetchAccounts()
-        })
+        this.setState(
+            {
+                isLogged: true,
+                ocean
+            },
+            () => {
+                this.hideLoadingMessage()
+                this.initNetworkPoll()
+                this.initAccountsPoll()
+                this.fetchNetwork()
+                this.fetchAccounts()
+            }
+        )
     }
-
 
     // private loginMetamask = async () => {
     //     const metamaskProvider = new MetamaskProvider()
@@ -129,8 +141,13 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
         ocean: null as any,
         box: null as any,
         openWallet: () => this.openWallet(),
+        access3box: () => this.access3box(),
         // requestFromFaucet: () => requestFromFaucet(''),
-        requestFromFaucet: () => new Promise((resolve, reject) => { console.log('TODO: call faucet request'); resolve({})}),
+        requestFromFaucet: () =>
+            new Promise((resolve, reject) => {
+                console.log('TODO: call faucet request')
+                resolve({})
+            }),
         airdropOceanTokens: () => this.airdropOceanTokens(),
         // loginMetamask: () => this.loginMetamask(),
         // loginBurnerWallet: () => this.loginBurnerWallet(),
@@ -147,40 +164,51 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     // 0
     public async componentDidMount() {
         await this.bootstrap()
-        this.mountWallet();
+        this.mountWallet()
     }
 
     private mountWallet() {
-        const { mkplId } = this.state;
+        const { mkplId } = this.state
         // import('op-web3-wallet').then((OPWallet) => {
         //     const wallet = new OPWallet.default.Core({
-            const wallet = new OPWallet.Core({
-                mkplId,
-                network: networkId,
-                walletOptions: {
-                  portisEnabled: portisAppId != null && portisAppId.length > 0,
-                  portisAppId,
-                  torusEnabled
+        const wallet = new OPWallet.Core({
+            mkplId,
+            network: networkId,
+            walletOptions: {
+                portisEnabled: portisAppId != null && portisAppId.length > 0,
+                portisAppId,
+                torusEnabled
+            },
+            oceanOptions: {
+                enabled: true,
+                settings: {
+                    nodeUri,
+                    aquariusUri,
+                    brizoUri,
+                    brizoAddress,
+                    secretStoreUri,
+                    verbose
                 },
-                oceanOptions: {
-                  enabled: true,
-                  settings: { nodeUri, aquariusUri, brizoUri, brizoAddress, secretStoreUri, verbose },
-                  faucetURI: faucetUri
-                }
-            })
-            wallet.on("web3connected", this.connectToWeb3Provider.bind(this));
-            wallet.on("oceanconnected", this.connectToOceanNetwork.bind(this));
-            wallet.on("boxconnected", this.setBoxInstance.bind(this));
-            wallet.on("disconnect", this.onDisconnect.bind(this));
-            wallet.on("close", this.onClose.bind(this));
-            wallet.on("error", this.onError.bind(this));
-            this.setState({ wallet })
+                faucetURI: faucetUri
+            }
+        })
+        wallet.on('web3connected', this.connectToWeb3Provider.bind(this))
+        wallet.on('oceanconnected', this.connectToOceanNetwork.bind(this))
+        wallet.on('boxconnected', this.setBoxInstance.bind(this))
+        wallet.on('disconnect', this.onDisconnect.bind(this))
+        wallet.on('close', this.onClose.bind(this))
+        wallet.on('error', this.onError.bind(this))
+        this.setState({ wallet })
         // })
     }
 
     private onDisconnect() {
         console.log('onDisconnect')
-        this.setState({ web3: null as any, ocean: null as any, isLogged: false })
+        this.setState({
+            web3: null as any,
+            ocean: null as any,
+            isLogged: false
+        })
     }
 
     private onClose() {
@@ -199,9 +227,8 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     private async openWallet() {
         // await this.bootstrap()
         //TODO: open wallet widget
-        const { wallet } = this.state;
+        const { wallet } = this.state
         wallet.toggleModal()
-        
     }
 
     private initAccountsPoll() {
@@ -244,15 +271,15 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     private loadOcean = async () => {
         // const { ocean } = await provideOcean() // Loads an ocean client not attached to a wallet
         // this.setState({ ocean }, () => console.log('Loaded ocean client', ocean))
-    //     this.showLoadingMessage('Connecting to the Network...')
-    //     const { ocean } = await provideOcean(this.state.web3)
-    //     this.setState({ ocean }, () => {
-    //         this.hideLoadingMessage()
-    //         this.initNetworkPoll()
-    //         this.initAccountsPoll()
-    //         this.fetchNetwork()
-    //         this.fetchAccounts()
-    //     })
+        //     this.showLoadingMessage('Connecting to the Network...')
+        //     const { ocean } = await provideOcean(this.state.web3)
+        //     this.setState({ ocean }, () => {
+        //         this.hideLoadingMessage()
+        //         this.initNetworkPoll()
+        //         this.initAccountsPoll()
+        //         this.fetchNetwork()
+        //         this.fetchAccounts()
+        //     })
     }
 
     // after fetchAccounts
@@ -270,36 +297,36 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
     private bootstrap = async () => {
         this.loadOcean()
 
-    //     const logType = localStorage.getItem('logType')
-    //     const metamaskProvider = new MetamaskProvider()
+        //     const logType = localStorage.getItem('logType')
+        //     const metamaskProvider = new MetamaskProvider()
 
-    //     switch (logType) {
-    //         case 'Metamask':
-    //             if (
-    //                 (await metamaskProvider.isAvailable()) &&
-    //                 (await metamaskProvider.isLogged())
-    //             ) {
-    //                 const web3 = metamaskProvider.getProvider()
-    //                 this.setState(
-    //                     {
-    //                         isLogged: true,
-    //                         web3
-    //                     },
-    //                     () => {
-    //                         this.loadOcean()
-    //                     }
-    //                 )
-    //             } else {
-    //                 this.loadDefaultWeb3()
-    //             }
-    //             break
-    //         case 'BurnerWallet':
-    //             this.loginBurnerWallet()
-    //             break
-    //         default:
-    //             this.loginBurnerWallet()
-    //             break
-    //     }
+        //     switch (logType) {
+        //         case 'Metamask':
+        //             if (
+        //                 (await metamaskProvider.isAvailable()) &&
+        //                 (await metamaskProvider.isLogged())
+        //             ) {
+        //                 const web3 = metamaskProvider.getProvider()
+        //                 this.setState(
+        //                     {
+        //                         isLogged: true,
+        //                         web3
+        //                     },
+        //                     () => {
+        //                         this.loadOcean()
+        //                     }
+        //                 )
+        //             } else {
+        //                 this.loadDefaultWeb3()
+        //             }
+        //             break
+        //         case 'BurnerWallet':
+        //             this.loginBurnerWallet()
+        //             break
+        //         default:
+        //             this.loginBurnerWallet()
+        //             break
+        //     }
     }
 
     private fetchAccounts = async () => {
@@ -326,9 +353,9 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
                 if (account !== this.state.account) {
                     this.setState({
                         account,
-                        isLogged: true,
+                        isLogged: true
                         // requestFromFaucet: () => requestFromFaucet(account) //TODO: call faucet from wallet
-                    // }, () => this.load3box()) // TODO: think if 3box needs to be loaded here
+                        // }, () => this.load3box()) // TODO: think if 3box needs to be loaded here
                     })
 
                     await this.fetchBalance(accounts[0]) //TODO: fetch balance from wallet
@@ -359,6 +386,18 @@ export default class UserProvider extends PureComponent<{}, UserProviderState> {
             network = await ocean.keeper.getNetworkName()
         }
         network !== this.state.network && this.setState({ network })
+    }
+
+    private access3box = async () => {
+        const { wallet, web3 } = this.state
+        this.showLoadingMessage('Getting 3box Profile...')
+        if (web3) {
+            const openbox = await wallet.openBox()
+            this.setState({ box: openbox.box })
+        } else {
+            this.openWallet()
+        }
+        this.hideLoadingMessage()
     }
 
     public render() {
