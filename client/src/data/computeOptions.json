@@ -1,6 +1,6 @@
 [
   {
-    "name": "nodejs",
+    "name": "nodejs:10",
     "value": {
       "entrypoint": "node $ALGO",
       "image": "node",
@@ -8,11 +8,11 @@
     }
   },
   {
-    "name": "pyhton3.6",
+    "name": "pyhton with pandas",
     "value": {
-      "entrypoint": "python3.6 $ALGO",
-      "image": "python",
-      "tag": "3.6"
+      "entrypoint": "python $ALGO",
+      "image": "oceanprotocol/algo_dockers",
+      "tag": "python-panda"
     }
   }
 ]
