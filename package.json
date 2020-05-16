@@ -39,7 +39,7 @@
     "prettier": "^1.19.1",
     "prettier-stylelint": "^0.4.2",
     "release-it": "^13.6.0",
-    "start-server-and-test": "^1.10.10",
+    "start-server-and-test": "^1.11.0",
     "stylelint": "^13.2.1",
     "stylelint-config-bigchaindb": "^1.2.2",
     "stylelint-config-css-modules": "^2.2.0",
