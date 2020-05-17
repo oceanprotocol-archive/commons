@@ -30,7 +30,7 @@
     "@types/express": "^4.17.3",
     "@types/jest": "^25.1.4",
     "@types/morgan": "^1.9.0",
-    "@types/node": "^13.9.2",
+    "@types/node": "^14.0.1",
     "@types/request": "^2.48.4",
     "@types/supertest": "^2.0.8",
     "jest": "24.9.0",
