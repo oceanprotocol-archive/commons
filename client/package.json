@@ -28,7 +28,7 @@
     "is-url-superb": "^3.0.0",
     "moment": "^2.25.3",
     "node-sass": "^4.13.1",
-    "query-string": "^6.11.1",
+    "query-string": "^6.12.1",
     "react": "^16.13.1",
     "react-collapsed": "^3.0.0",
     "react-datepicker": "^2.16.0",
