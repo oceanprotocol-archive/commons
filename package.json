@@ -16,7 +16,7 @@
     "lint:css": "stylelint --ignore-path .gitignore './**/*.{css,scss}'",
     "lint:js": "eslint --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --ignore-path .gitignore --ignore-path .prettierignore --ext .ts,.tsx .",
-    "lint": "npm run lint:js && npm run lint:css",
+    "lint": "npm run lint:js",
     "release": "release-it --non-interactive",
     "changelog": "auto-changelog -p",
     "cypress:run": "cypress run --browser chrome",
