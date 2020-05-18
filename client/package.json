@@ -26,7 +26,7 @@
     "history": "^4.10.1",
     "ipfs-http-client": "39.0.2",
     "is-url-superb": "^3.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.25.3",
     "node-sass": "^4.13.1",
     "query-string": "^6.11.1",
     "react": "^16.13.1",
