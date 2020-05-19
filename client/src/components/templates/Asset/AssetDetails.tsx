@@ -40,8 +40,6 @@ export default function AssetDetails({
 }: AssetDetailsProps) {
     const { main, additionalInformation } = metadata
     const price = main.price && Web3.utils.fromWei(main.price.toString())
-    if (!ddo) return
-    console.log(ddo)
     const isCompute = !!ddo.findServiceByType('compute')
     const isAccess = !!ddo.findServiceByType('access')
 
