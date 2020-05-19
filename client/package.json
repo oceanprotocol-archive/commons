@@ -44,7 +44,7 @@
     "react-router-dom": "^5.1.2",
     "react-transition-group": "^4.3.0",
     "shortid": "^2.2.15",
-    "web3": "^1.2.6"
+    "web3": "^1.2.7"
   },
   "devDependencies": {
     "@react-mock/state": "^0.1.8",
