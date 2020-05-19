@@ -70,7 +70,7 @@
     &::-webkit-scrollbar {
         width: 3px;
         height: 3px;
-        transition: opacity .2s ease-out;
+        transition: opacity 0.2s ease-out;
     }
 }
 
@@ -99,5 +99,5 @@
 
 .accountStatus {
     margin-left: $spacer / 2;
-    margin-bottom: -.5rem;
+    margin-bottom: -0.5rem;
 }

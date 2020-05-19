@@ -39,7 +39,9 @@
     max-width: 16rem;
 }
 
-:global .react-datepicker-popper[data-placement^='top'] .react-datepicker__triangle:before,
+:global
+    .react-datepicker-popper[data-placement^='top']
+    .react-datepicker__triangle:before,
 :global .react-datepicker__year-read-view--down-arrow:before,
 :global .react-datepicker__month-read-view--down-arrow:before,
 :global .react-datepicker__month-year-read-view--down-arrow:before {

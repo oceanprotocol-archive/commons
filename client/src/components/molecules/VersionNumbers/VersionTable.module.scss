@@ -17,7 +17,6 @@
         td {
             padding: $spacer / 6 $spacer / 2;
 
-            // stylelint-disable-next-line selector-max-compound-selectors
             &,
             code {
                 font-size: $font-size-mini;
@@ -33,7 +32,6 @@
             text-align: right;
         }
 
-        // stylelint-disable-next-line selector-no-qualifying-type
         &[colspan] {
             padding: 0;
         }

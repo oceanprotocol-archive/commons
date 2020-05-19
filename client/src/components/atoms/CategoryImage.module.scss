@@ -8,22 +8,18 @@
     background-color: $body-background;
     border-radius: $border-radius;
     overflow: hidden;
-    opacity: .85;
-    transition: .2s ease-out;
+    opacity: 0.85;
+    transition: 0.2s ease-out;
     border: 1px solid $brand-grey-lighter;
 }
 
 .header {
-    // stylelint-disable value-keyword-case
     composes: categoryImage;
-    // stylelint-enable value-keyword-case
     height: 8rem;
     margin-top: $spacer / $line-height;
 }
 
 .dimmed {
-    // stylelint-disable value-keyword-case
     composes: categoryImage;
-    // stylelint-enable value-keyword-case
-    opacity: .6;
+    opacity: 0.6;
 }

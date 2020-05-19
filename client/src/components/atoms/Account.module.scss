@@ -21,7 +21,7 @@
 }
 
 .unlock {
-    font-size: $font-size-small !important; // stylelint-disable-line
+    font-size: $font-size-small !important;
     margin-left: $spacer / 2;
 }
 
@@ -47,7 +47,7 @@
         display: inline-block;
         fill: currentColor;
         margin-right: $spacer / 8;
-        transition: .2s ease-out;
+        transition: 0.2s ease-out;
     }
 }
 

@@ -20,7 +20,7 @@
         border-radius: 50%;
         border: 2px solid $brand-purple;
         border-top-color: $brand-violet;
-        animation: spinner .6s linear infinite;
+        animation: spinner 0.6s linear infinite;
     }
 }
 
@@ -39,7 +39,7 @@
         height: $font-size-small;
         margin-top: -($font-size-small);
         margin-left: -($font-size-small / 2);
-        border-width: .1rem;
+        border-width: 0.1rem;
     }
 }
 
