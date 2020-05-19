@@ -18,7 +18,7 @@
 /* yellow triangle */
 .statusIndicatorCloseEnough {
     // stylelint-disable value-keyword-case
-    composes: statusIndicator;
+    composes: statusindicator;
     // stylelint-enable value-keyword-case
     background: none;
     width: 0;
@@ -31,7 +31,7 @@
 /* green circle */
 .statusIndicatorActive {
     // stylelint-disable value-keyword-case
-    composes: statusIndicator;
+    composes: statusindicator;
     // stylelint-enable value-keyword-case
     border-radius: 50%;
     background: $green;

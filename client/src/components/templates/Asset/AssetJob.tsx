@@ -153,7 +153,7 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
                     {isPublished ? (
                         <div className={styles.success}>
                             <p>Your job started!</p>
-                            <Button link to={'/history/'}>
+                            <Button link to="/history/">
                                 Watch the progress in the history page.
                             </Button>
                         </div>

@@ -7,12 +7,12 @@ $popoverWidth: 18rem;
     width: $popoverWidth;
     padding: $spacer / 2;
     background: $brand-black;
-    border-radius: 0.1rem;
-    border: 0.1rem solid $brand-grey-light;
-    box-shadow: 0 6px 16px 0 rgba($brand-black, 0.3);
+    border-radius: .1rem;
+    border: .1rem solid $brand-grey-light;
+    box-shadow: 0 6px 16px 0 rgba($brand-black, .3);
     color: $brand-grey-light;
     font-size: $font-size-small;
-    animation: showPopup 0.2s ease-in forwards;
+    animation: showPopup .2s ease-in forwards;
     white-space: initial;
     text-align: left;
 }
@@ -28,7 +28,7 @@ $popoverWidth: 18rem;
 }
 
 .popoverInfoline {
-    border-bottom: 0.05rem solid $brand-grey;
+    border-bottom: .05rem solid $brand-grey;
     padding: $spacer / 3 0;
 
     &:first-child {

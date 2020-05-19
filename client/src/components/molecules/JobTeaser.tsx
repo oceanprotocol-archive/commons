@@ -3,6 +3,7 @@ import { User } from '../../context'
 import moment from 'moment'
 import styles from './JobTeaser.module.scss'
 import Dotdotdot from 'react-dotdotdot'
+import shortid from 'shortid'
 
 export default function JobTeaser({ job }: { job: any }) {
     const { ocean } = useContext(User)
@@ -54,7 +55,10 @@ export default function JobTeaser({ job }: { job: any }) {
                     <>
                         <div>Output URL</div>
                         {job.resultsUrl.map((result: string) => (
-                            <a href={result}> {result.substring(0, 52)}...</a>
+                            <a href={result} key={shortid.generate()}>
+                                {' '}
+                                {result.substring(0, 52)}...
+                            </a>
                         ))}
                     </>
                 ) : (
