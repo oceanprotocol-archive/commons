@@ -3,14 +3,17 @@ import { render } from '@testing-library/react'
 import { DDO, MetaData } from '@oceanprotocol/squid'
 import { BrowserRouter as Router } from 'react-router-dom'
 import AssetDetails, { datafilesLine } from './AssetDetails'
+import oceanMock from '../../../__mocks__/ocean-mock'
+import ddoMock from '../../../__mocks__/ddo-mock'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 describe('AssetDetails', () => {
     it('renders loading without crashing', () => {
         const { container } = render(
             <AssetDetails
+                ocean={oceanMock}
                 metadata={({ main: { name: '' } } as any) as MetaData}
-                ddo={({} as any) as DDO}
+                ddo={ddoMock}
             />
         )
         expect(container.firstChild).toBeInTheDocument()
@@ -20,6 +23,7 @@ describe('AssetDetails', () => {
         const { container } = render(
             <Router>
                 <AssetDetails
+                    ocean={oceanMock}
                     metadata={
                         ({
                             main: {
@@ -32,7 +36,7 @@ describe('AssetDetails', () => {
                             }
                         } as any) as MetaData
                     }
-                    ddo={({} as any) as DDO}
+                    ddo={ddoMock}
                 />
             </Router>
         )
@@ -46,7 +50,8 @@ describe('AssetDetails', () => {
         const files = [
             {
                 index: 0,
-                url: 'https://hello.com'
+                url: 'https://hello.com',
+                contentType: 'application/json'
             }
         ]
         const { container } = render(datafilesLine(files))
@@ -57,11 +62,13 @@ describe('AssetDetails', () => {
         const files = [
             {
                 index: 0,
-                url: 'https://hello.com'
+                url: 'https://hello.com',
+                contentType: 'application/json'
             },
             {
                 index: 1,
-                url: 'https://hello2.com'
+                url: 'https://hello2.com',
+                contentType: 'application/json'
             }
         ]
         const { container } = render(datafilesLine(files))

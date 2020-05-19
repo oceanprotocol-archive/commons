@@ -1,0 +1,102 @@
+@import '../../../styles/variables';
+
+.box {
+    margin-bottom: $spacer / 2;
+    background: $brand-white;
+    border-radius: $border-radius;
+    border: 1px solid $brand-grey-lighter;
+    padding: $spacer / 2;
+}
+
+.dataType {
+    padding-top: 10px;
+}
+
+.dragndrop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 90px;
+    color: $brand-grey-light;
+    background-color: $brand-white;
+}
+
+.filleddragndrop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 900;
+    height: 90px;
+    color: $brand-grey;
+    background-color: $brand-white;
+}
+
+.inputWrap {
+    margin-top: $spacer / 4;
+    background: $brand-gradient;
+    border-radius: $border-radius;
+    padding: 2px;
+    display: flex;
+    position: relative;
+
+    &.isFocused {
+        background: $brand-black;
+    }
+
+    > div,
+    > div > div {
+        width: 100%;
+    }
+}
+
+.jobButtonWrapper {
+    text-align: right;
+    margin-top: $spacer / 4;
+}
+
+.error {
+    text-align: center;
+    color: $red;
+    font-size: $font-size-small;
+}
+
+.message {
+    margin-bottom: $spacer;
+}
+
+.success {
+    margin-top: $spacer / 1.5;
+    composes: message;
+    background: $green;
+    padding: $spacer / 1.5;
+    border-radius: $border-radius;
+    color: $brand-white;
+    font-weight: $font-weight-bold;
+    text-align: center;
+
+    &,
+    a,
+    button {
+        color: $brand-white;
+    }
+
+    a,
+    button {
+        transition: color 0.2s ease-out;
+
+        &:hover,
+        &:focus {
+            color: $brand-pink;
+            transform: none;
+        }
+    }
+
+    a {
+        display: inline-block;
+        margin-right: $spacer;
+    }
+}

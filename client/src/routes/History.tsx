@@ -5,6 +5,7 @@ import Web3message from '../components/organisms/Web3message'
 import { User } from '../context'
 import Content from '../components/atoms/Content'
 import withTracker from '../hoc/withTracker'
+import JobsUser from '../components/organisms/JobsUser'
 
 class History extends Component {
     public static contextType = User
@@ -14,7 +15,10 @@ class History extends Component {
             <Route title="History">
                 <Content>
                     {!this.context.isLogged && <Web3message />}
+                    <div>Assets</div>
                     <AssetsUser list />
+                    <div>Compute Jobs</div>
+                    <JobsUser />
                 </Content>
             </Route>
         )

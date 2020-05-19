@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { DDO, File } from '@oceanprotocol/squid'
 import AssetFile from './AssetFile'
 import { User } from '../../../context'
-import Web3message from '../../organisms/Web3message'
 import styles from './AssetFilesDetails.module.scss'
 
 export default class AssetFilesDetails extends PureComponent<{
@@ -19,7 +18,6 @@ export default class AssetFilesDetails extends PureComponent<{
                         <AssetFile key={file.index} ddo={ddo} file={file} />
                     ))}
                 </div>
-                <Web3message />
             </>
         ) : (
             <div>No files attached.</div>

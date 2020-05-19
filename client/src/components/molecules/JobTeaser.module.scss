@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+
+.assetList {
+    color: $brand-grey-dark;
+    border-bottom: 1px solid $brand-grey-lighter;
+    padding-top: $spacer / 2;
+    padding-bottom: $spacer / 2;
+
+    h1 {
+        font-size: $font-size-base;
+        color: inherit;
+        margin: 0;
+    }
+}
+
+.listRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date {
+    font-size: $font-size-small;
+    color: $brand-grey-light;
+}

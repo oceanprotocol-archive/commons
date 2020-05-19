@@ -20,6 +20,7 @@ interface AssetProps {
 }
 
 interface AssetState {
+    ocean: any
     ddo: DDO
     metadata: MetaData
     error: string
@@ -28,10 +29,11 @@ interface AssetState {
 
 class Asset extends Component<AssetProps, AssetState> {
     public static contextType = User
-
     public state = {
+        ocean: undefined,
         ddo: ({} as any) as DDO,
         metadata: ({ main: { name: '' } } as any) as MetaData,
+        computeMetadata: undefined,
         error: '',
         isLoading: true
     }
@@ -45,7 +47,9 @@ class Asset extends Component<AssetProps, AssetState> {
             const { ocean } = this.context
             const ddo = await ocean.assets.resolve(this.props.match.params.did)
             const { attributes } = ddo.findServiceByType('metadata')
+
             this.setState({
+                ocean,
                 ddo,
                 metadata: attributes,
                 isLoading: false
@@ -59,7 +63,7 @@ class Asset extends Component<AssetProps, AssetState> {
     }
 
     public render() {
-        const { metadata, ddo, error, isLoading } = this.state
+        const { metadata, ddo, error, isLoading, ocean } = this.state
         const { main, additionalInformation } = metadata
 
         const hasError = error !== ''
@@ -88,7 +92,7 @@ class Asset extends Component<AssetProps, AssetState> {
                 }
             >
                 <Content>
-                    <AssetDetails metadata={metadata} ddo={ddo} />
+                    <AssetDetails metadata={metadata} ddo={ddo} ocean={ocean} />
                 </Content>
             </Route>
         )

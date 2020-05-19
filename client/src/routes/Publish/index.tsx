@@ -12,9 +12,10 @@ import { allowPricing } from '../../config'
 import { steps } from '../../data/form-publish.json'
 import Content from '../../components/atoms/Content'
 import withTracker from '../../hoc/withTracker'
+import { createComputeService } from '../../utils/createComputeService'
 
 type AssetType = 'dataset' | 'algorithm' | 'container' | 'workflow' | 'other'
-
+type DatasetType = 'both' | 'compute' | 'access'
 interface PublishState {
     name?: string
     dateCreated?: string
@@ -26,6 +27,7 @@ interface PublishState {
     type?: AssetType
     copyrightHolder?: string
     categories?: string
+    datasetType?: DatasetType
 
     currentStep?: number
     publishingStep?: number
@@ -60,6 +62,7 @@ class Publish extends Component<{}, PublishState> {
         license: '',
         copyrightHolder: '',
         categories: '',
+        datasetType: 'both' as DatasetType,
 
         currentStep: 1,
         isPublishing: false,
@@ -133,7 +136,8 @@ class Publish extends Component<{}, PublishState> {
             isPublishing: false,
             isPublished: false,
             publishingStep: 0,
-            currentStep: 1
+            currentStep: 1,
+            datasetType: 'access' as DatasetType
         })
     }
 
@@ -305,8 +309,36 @@ class Publish extends Component<{}, PublishState> {
         }
 
         try {
+            const services: any[] = []
+
+            if (
+                this.state.datasetType === 'compute' ||
+                this.state.datasetType === 'both'
+            ) {
+                const service = await createComputeService(
+                    ocean,
+                    account[0],
+                    this.state.price,
+                    this.state.dateCreated
+                )
+                services.push(service)
+            }
+
+            if (
+                this.state.datasetType === 'access' ||
+                this.state.datasetType === 'both'
+            ) {
+                const service = await ocean.assets.createAccessServiceAttributes(
+                    account[0],
+                    this.state.price,
+                    this.state.dateCreated
+                )
+                services.push(service)
+            }
+            console.log(services)
+
             const asset = await this.context.ocean.assets
-                .create(newAsset, account[0])
+                .create(newAsset, account[0], services)
                 .next((publishingStep: number) =>
                     this.setState({ publishingStep })
                 )
