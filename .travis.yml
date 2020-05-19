@@ -42,7 +42,6 @@ env:
 
 before_install:
   - npm install -g npm
-  - npm install -g codacy-coverage
   # Fixes an issue where the max file watch count is exceeded, triggering ENOSPC
   # https://stackoverflow.com/questions/22475849/node-js-error-enospc#32600959
   - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
@@ -62,7 +61,6 @@ script:
   - npm run lint || travis_terminate 1
   - ./scripts/keeper.sh
   - ./scripts/test.sh
-  - ./scripts/coverage.sh
     # Pipe the coverage data to Code Climate
   - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.client.json client/coverage/lcov.info
   - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.server.json server/coverage/lcov.info

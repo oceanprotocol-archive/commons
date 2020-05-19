@@ -1,5 +1,3 @@
-// stylelint-disable selector-no-qualifying-type, declaration-no-important, selector-no-vendor-prefix
-
 @import 'variables';
 @import 'animations';
 @import '../../node_modules/@oceanprotocol/typographies/sass/ocean-typo.scss';
@@ -10,14 +8,11 @@
     box-sizing: border-box;
 }
 
-/* stylelint-disable selector-max-id */
 html,
 body,
 #root {
     height: 100%;
 }
-
-/* stylelint-enable selector-max-id */
 
 html {
     font-size: $font-size-root;
@@ -44,13 +39,13 @@ body {
 a {
     text-decoration: none;
     color: $brand-pink;
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
 
     &:hover,
     &:focus {
         color: darken($brand-pink, 15%);
         text-decoration: none;
-        transform: translate3d(0, -.1rem, 0);
+        transform: translate3d(0, -0.1rem, 0);
     }
 
     &:active {
@@ -206,7 +201,7 @@ picture {
 hr {
     margin: $spacer 0;
     border: 0;
-    border-bottom: .1rem solid $brand-grey-lighter;
+    border-bottom: 0.1rem solid $brand-grey-lighter;
 }
 
 // Quotes
@@ -230,7 +225,7 @@ blockquote > p {
 blockquote {
     margin: 0 0 $spacer;
     padding-left: $spacer / 2;
-    border-left: .2rem solid $brand-grey-lighter;
+    border-left: 0.2rem solid $brand-grey-lighter;
 
     @media screen and (min-width: $break-point--small) {
         padding-left: $spacer / $line-height;
@@ -295,8 +290,8 @@ samp {
 :not(pre) > code {
     color: $brand-grey-dark;
     display: inline-block;
-    padding-left: .15rem;
-    padding-right: .15rem;
+    padding-left: 0.15rem;
+    padding-right: 0.15rem;
 }
 
 a > code {

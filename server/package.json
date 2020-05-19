@@ -9,8 +9,7 @@
     "serve": "node dist/src/server.js",
     "build": "tsc",
     "test": "jest --coverage --silent",
-    "test:watch": "jest --coverage --watch",
-    "coverage": "cat coverage/lcov.info | codacy-coverage --token 8801f827fe1144ffa85cd7da94f2bbf7"
+    "test:watch": "jest --coverage --watch"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.1.1",
