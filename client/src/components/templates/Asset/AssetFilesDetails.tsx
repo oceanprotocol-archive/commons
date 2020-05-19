@@ -15,7 +15,7 @@ export default class AssetFilesDetails extends PureComponent<{
         return files.length ? (
             <>
                 <div className={styles.files}>
-                    {files.map(file => (
+                    {files.map((file) => (
                         <AssetFile key={file.index} ddo={ddo} file={file} />
                     ))}
                 </div>

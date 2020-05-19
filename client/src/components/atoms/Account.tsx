@@ -62,7 +62,7 @@ export default class Account extends PureComponent<
                     {isBurner ? (
                         <button
                             className={styles.toggle}
-                            onClick={event => this.toggleAccountInfo(event)}
+                            onClick={(event) => this.toggleAccountInfo(event)}
                             title="Show More Account Info"
                         >
                             <Caret

@@ -52,7 +52,7 @@ export const VersionTableContracts = ({
                 Object.keys(contracts)
                     // sort alphabetically
                     .sort((a, b) => a.localeCompare(b))
-                    .map(key => {
+                    .map((key) => {
                         const submarineLink = `https://submarine.${
                             network === 'pacific'
                                 ? 'oceanprotocol'

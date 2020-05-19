@@ -54,7 +54,7 @@ export default class Pagination extends PureComponent<
                     // adapt based on media query match
                     marginPagesDisplayed={smallViewport ? 0 : 1}
                     pageRangeDisplayed={smallViewport ? 3 : 6}
-                    onPageChange={data => handlePageClick(data)}
+                    onPageChange={(data) => handlePageClick(data)}
                     disableInitialCallback
                     previousLabel="←"
                     nextLabel="→"

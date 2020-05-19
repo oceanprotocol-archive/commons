@@ -29,7 +29,7 @@ export default class Header extends PureComponent {
                     </NavLink>
 
                     <nav className={styles.headerMenu}>
-                        {menu.map(item => (
+                        {menu.map((item) => (
                             <MenuItem key={item.title} item={item} />
                         ))}
                         <AccountStatus className={styles.accountStatus} />

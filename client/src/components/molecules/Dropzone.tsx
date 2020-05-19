@@ -12,7 +12,7 @@ export default function Dropzone({
     disabled?: boolean
     multiple?: boolean
 }) {
-    const onDrop = useCallback(acceptedFiles => handleOnDrop(acceptedFiles), [
+    const onDrop = useCallback((acceptedFiles) => handleOnDrop(acceptedFiles), [
         handleOnDrop
     ])
 

@@ -10,7 +10,7 @@ class Channels extends Component {
         return (
             <Route title={channels.title} description={channels.description}>
                 <Content wide>
-                    {channels.items.map(channel => (
+                    {channels.items.map((channel) => (
                         <ChannelTeaser
                             key={channel.title}
                             channel={channel.tag}

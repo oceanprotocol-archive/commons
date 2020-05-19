@@ -22,7 +22,7 @@ export default class Web3message extends PureComponent<{ extended?: boolean }> {
 
         return (
             <User.Consumer>
-                {user => (
+                {(user) => (
                     <em
                         dangerouslySetInnerHTML={{
                             __html:
