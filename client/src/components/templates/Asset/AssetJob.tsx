@@ -14,14 +14,14 @@ interface JobsProps {
     ddo: DDO
 }
 
-export default function AssetsJobs({ ddo, ocean }: JobsProps) {
-    const rawAlgorithmMeta = {
-        rawcode: `console.log('Hello world'!)`,
-        format: 'docker-image',
-        version: '0.1',
-        container: {}
-    }
+const rawAlgorithmMeta = {
+    rawcode: `console.log('Hello world'!)`,
+    format: 'docker-image',
+    version: '0.1',
+    container: {}
+}
 
+export default function AssetsJobs({ ddo, ocean }: JobsProps) {
     const [isJobStarting, setIsJobStarting] = useState(false)
     const [step, setStep] = useState(99)
     const [error, setError] = useState('')
@@ -37,6 +37,7 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
         const fileText = await readFileContent(files[0])
         setAlgorithmRawCode(fileText)
     }
+
     const handleSelectChange = (event: ChangeEvent<HTMLInputElement>) => {
         const comType = event.target.value
         setComputeType(comType)
@@ -83,85 +84,72 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
             setFile(null)
         } catch (error) {
             setError('Failed to start job!')
-            console.log(error)
+            console.error(error)
         }
         setIsJobStarting(false)
     }
 
     return (
-        <>
+        <div>
+            <span className={styles.bold}>New job</span>
+            <div className={styles.dataType}>
+                <Input
+                    type="select"
+                    name="select"
+                    label="Select image to run the algorithm"
+                    placeholder=""
+                    value={computeType}
+                    options={computeOptions.map(x => x.name)}
+                    onChange={handleSelectChange}
+                />
+            </div>
             <div>
-                <div>
-                    <span className={styles.bold}>New job</span>
-                    <div className={styles.dataType}>
-                        <Input
-                            type="select"
-                            name="select"
-                            label="Select image to run the algorithm"
-                            placeholder=""
-                            value={computeType}
-                            options={computeOptions.map(x => x.name)}
-                            onChange={handleSelectChange}
-                        />
-                    </div>
-                    <div>
-                        <div className={styles.inputWrap}>
-                            <ReactDropzone
-                                onDrop={acceptedFiles => onDrop(acceptedFiles)}
-                            >
-                                {({ getRootProps, getInputProps }) => (
-                                    <div {...getRootProps()}>
-                                        <input {...getInputProps()} />
-                                        {file === null && (
-                                            <div className={styles.dragndrop}>
-                                                Click or drop your notebook here
-                                            </div>
-                                        )}
-                                        {file !== null && (
-                                            <div
-                                                className={
-                                                    styles.filleddragndrop
-                                                }
-                                            >
-                                                You selected:{' '}
-                                                {(file as any).path}
-                                            </div>
-                                        )}
+                <div className={styles.inputWrap}>
+                    <ReactDropzone
+                        onDrop={acceptedFiles => onDrop(acceptedFiles)}
+                    >
+                        {({ getRootProps, getInputProps }) => (
+                            <div {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                {file === null && (
+                                    <div className={styles.dragndrop}>
+                                        Click or drop your notebook here
                                     </div>
                                 )}
-                            </ReactDropzone>
-                        </div>
-                        <div className={styles.jobButtonWrapper}>
-                            <Button
-                                primary
-                                onClick={() => startJob()}
-                                disabled={
-                                    isJobStarting ||
-                                    file === null ||
-                                    computeType === ''
-                                }
-                                name="Purchase access"
-                            >
-                                Start job
-                            </Button>
-                        </div>
-                    </div>
-                    {isJobStarting ? <Spinner message={messages[step]} /> : ''}
-                    {error !== '' && (
-                        <div className={styles.error}>{error}</div>
-                    )}
-                    {isPublished ? (
-                        <div className={styles.success}>
-                            <p>Your job started!</p>
-                            <Button link to="/history/">
-                                Watch the progress in the history page.
-                            </Button>
-                        </div>
-                    ) : (
-                        ''
-                    )}
+                                {file !== null && (
+                                    <div className={styles.filleddragndrop}>
+                                        You selected: {(file as any).path}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </ReactDropzone>
+                </div>
+                <div className={styles.jobButtonWrapper}>
+                    <Button
+                        primary
+                        onClick={() => startJob()}
+                        disabled={
+                            isJobStarting || file === null || computeType === ''
+                        }
+                        name="Purchase access"
+                    >
+                        Start job
+                    </Button>
                 </div>
             </div>
-        </>
+            {isJobStarting ? <Spinner message={messages[step]} /> : ''}
+            {error !== '' && <div className={styles.error}>{error}</div>}
+            {isPublished ? (
+                <div className={styles.success}>
+                    <p>Your job started!</p>
+                    <Button link to="/history/">
+                        Watch the progress in the history page.
+                    </Button>
+                </div>
+            ) : (
+                ''
+            )}
+        </div>
     )
 }
