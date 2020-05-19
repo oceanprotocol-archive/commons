@@ -4,7 +4,6 @@ import moment from 'moment'
 import shortid from 'shortid'
 import styles from './JobTeaser.module.scss'
 import Dotdotdot from 'react-dotdotdot'
-import shortid from 'shortid'
 
 export default function JobTeaser({ job }: { job: any }) {
     const { ocean } = useContext(User)

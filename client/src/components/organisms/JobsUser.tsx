@@ -22,7 +22,7 @@ export default function JobsUser() {
         <>
             {isLoading ? (
                 <Spinner />
-            ) : jobList.length ? (
+            ) : jobList && jobList.length ? (
                 jobList
                     .reverse()
                     .map((job: any) => <JobTeaser key={job.jobId} job={job} />)

@@ -82,6 +82,6 @@ describe('readFileContent', () => {
         })
 
         const output = await readFileContent(file)
-        expect(output).toBeInstanceOf(String)
+        expect(output).toBe('ABC')
     })
 })

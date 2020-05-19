@@ -4,6 +4,7 @@ import { DDO, MetaData } from '@oceanprotocol/squid'
 import { BrowserRouter as Router } from 'react-router-dom'
 import AssetDetails, { datafilesLine } from './AssetDetails'
 import oceanMock from '../../../__mocks__/ocean-mock'
+import ddoMock from '../../../__mocks__/ddo-mock'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 describe('AssetDetails', () => {
@@ -12,7 +13,7 @@ describe('AssetDetails', () => {
             <AssetDetails
                 ocean={oceanMock}
                 metadata={({ main: { name: '' } } as any) as MetaData}
-                ddo={({} as any) as DDO}
+                ddo={ddoMock}
             />
         )
         expect(container.firstChild).toBeInTheDocument()
@@ -35,7 +36,7 @@ describe('AssetDetails', () => {
                             }
                         } as any) as MetaData
                     }
-                    ddo={({} as any) as DDO}
+                    ddo={ddoMock}
                 />
             </Router>
         )
