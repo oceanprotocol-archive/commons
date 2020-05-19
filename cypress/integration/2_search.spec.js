@@ -10,9 +10,7 @@ describe('Search', () => {
         // Fill search phrase
         cy.get('input#search').type('Commons Integration Test')
         // Start search
-        cy.get('button')
-            .contains('Search')
-            .click()
+        cy.get('button').contains('Search').click()
         // Verify there are results
         cy.get('article > a', { timeout: 60000 }).should(
             'have.length.greaterThan',

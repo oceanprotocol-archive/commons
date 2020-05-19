@@ -40,7 +40,7 @@ export default class Popover extends PureComponent<{
                 )}
 
                 <Market.Consumer>
-                    {market => (
+                    {(market) => (
                         <div className={styles.popoverInfoline}>
                             {network && !market.networkMatch
                                 ? `Please connect to Custom RPC

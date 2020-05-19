@@ -27,7 +27,7 @@ export default class Channel extends PureComponent<ChannelProps, ChannelState> {
     // get content data based on received channel param
     public channel = channels.items
         .filter(({ tag }) => tag === this.props.match.params.channel)
-        .map(channel => channel)[0]
+        .map((channel) => channel)[0]
 
     public state = {
         results: [],

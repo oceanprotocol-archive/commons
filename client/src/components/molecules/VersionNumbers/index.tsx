@@ -148,7 +148,7 @@ export default class VersionNumbers extends PureComponent<
 
         return (
             <Market.Consumer>
-                {market => (
+                {(market) => (
                     <p className={styles.versionsMinimal}>
                         <a
                             title={`${squid.name} v${squid.version}\n${brizo.name} v${brizo.version}\n${aquarius.name} v${aquarius.version}`}

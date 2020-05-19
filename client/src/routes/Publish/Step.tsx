@@ -155,7 +155,7 @@ export default class Step extends PureComponent<StepProps, {}> {
 
                     {lastStep && (
                         <Market.Consumer>
-                            {market => (
+                            {(market) => (
                                 <Button
                                     disabled={
                                         !this.context.isLogged ||

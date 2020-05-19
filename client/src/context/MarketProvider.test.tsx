@@ -10,7 +10,7 @@ describe('MarketProvider', () => {
             <User.Provider value={userMockConnected}>
                 <MarketProvider ocean={userMockConnected.ocean as any}>
                     <Market.Consumer>
-                        {market => (
+                        {(market) => (
                             <div data-testid="hello">{market.network}</div>
                         )}
                     </Market.Consumer>

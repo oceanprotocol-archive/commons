@@ -43,7 +43,7 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
         setComputeType(comType)
 
         const selectedComputeOption = computeOptions.find(
-            x => x.name === comType
+            (x) => x.name === comType
         )
         if (selectedComputeOption !== undefined)
             setComputeValue(selectedComputeOption.value)
@@ -99,14 +99,14 @@ export default function AssetsJobs({ ddo, ocean }: JobsProps) {
                     label="Select image to run the algorithm"
                     placeholder=""
                     value={computeType}
-                    options={computeOptions.map(x => x.name)}
+                    options={computeOptions.map((x) => x.name)}
                     onChange={handleSelectChange}
                 />
             </div>
             <div>
                 <div className={styles.inputWrap}>
                     <ReactDropzone
-                        onDrop={acceptedFiles => onDrop(acceptedFiles)}
+                        onDrop={(acceptedFiles) => onDrop(acceptedFiles)}
                     >
                         {({ getRootProps, getInputProps }) => (
                             <div {...getRootProps()}>

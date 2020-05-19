@@ -1,7 +1,7 @@
 import request from 'supertest'
 import server from '../src/server'
 
-afterAll(done => {
+afterAll((done) => {
     server.close(done)
 })
 
@@ -22,12 +22,10 @@ describe('POST /api/v1/urlcheck', () => {
     })
 
     it('responds with json on ipfs://', async () => {
-        const response = await request(server)
-            .post('/api/v1/urlcheck')
-            .send({
-                url:
-                    'ipfs://QmX5LRpEVocfks9FNDnRoK2imf2fy9mPpP4wfgaDVXWfYD/video.mp4'
-            })
+        const response = await request(server).post('/api/v1/urlcheck').send({
+            url:
+                'ipfs://QmX5LRpEVocfks9FNDnRoK2imf2fy9mPpP4wfgaDVXWfYD/video.mp4'
+        })
         expect(response.status).toBe(200)
         expect(response.body).toBeTruthy()
     })

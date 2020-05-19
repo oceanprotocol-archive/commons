@@ -134,7 +134,7 @@ export default class AssetFile extends PureComponent<
                     <Spinner message={messages[step]} />
                 ) : (
                     <Market.Consumer>
-                        {market => (
+                        {(market) => (
                             <Button
                                 primary
                                 className={styles.buttonMain}
