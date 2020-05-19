@@ -4,7 +4,7 @@
     display: inline-block;
     position: relative;
     cursor: help;
-    padding: .5rem;
+    padding: 0.5rem;
 }
 
 /* default: red square */
@@ -17,9 +17,7 @@
 
 /* yellow triangle */
 .statusIndicatorCloseEnough {
-    // stylelint-disable value-keyword-case
-    composes: statusindicator;
-    // stylelint-enable value-keyword-case
+    composes: statusIndicator;
     background: none;
     width: 0;
     height: 0;
@@ -30,9 +28,7 @@
 
 /* green circle */
 .statusIndicatorActive {
-    // stylelint-disable value-keyword-case
-    composes: statusindicator;
-    // stylelint-enable value-keyword-case
+    composes: statusIndicator;
     border-radius: 50%;
     background: $green;
 }

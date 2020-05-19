@@ -119,8 +119,8 @@ export default function AssetDetails({
                 </h2>
                 <ul>
                     {metaFixed
-                        .filter(item => item.show)
-                        .map(item => (
+                        .filter((item) => item.show)
+                        .map((item) => (
                             <MetaFixedItem
                                 key={shortid.generate()}
                                 name={item.name}

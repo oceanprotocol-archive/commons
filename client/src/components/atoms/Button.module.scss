@@ -13,10 +13,10 @@
     font-weight: $font-weight-bold;
     text-transform: uppercase;
     border-radius: 2px;
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
     color: $brand-white;
     background: $brand-grey-light;
-    box-shadow: 0 9px 18px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 9px 18px 0 rgba(0, 0, 0, 0.1);
     min-height: 45px;
     user-select: none;
 
@@ -25,21 +25,21 @@
         color: $brand-white;
         background: $brand-grey-light;
         text-decoration: none;
-        transform: translate3d(0, -.05rem, 0);
-        box-shadow: 0 12px 30px 0 rgba(0, 0, 0, .1);
+        transform: translate3d(0, -0.05rem, 0);
+        box-shadow: 0 12px 30px 0 rgba(0, 0, 0, 0.1);
     }
 
     &:active {
         background: $brand-grey-light;
         transition: none;
         transform: none;
-        box-shadow: 0 5px 18px 0 rgba(0, 0, 0, .1);
+        box-shadow: 0 5px 18px 0 rgba(0, 0, 0, 0.1);
     }
 
     &:disabled {
         cursor: not-allowed;
         pointer-events: none;
-        opacity: .5;
+        opacity: 0.5;
     }
 }
 

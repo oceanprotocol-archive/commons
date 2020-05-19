@@ -1,5 +1,5 @@
 import React from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import meta from '../../data/meta.json'
 import imageDefault from '../../img/share.png'

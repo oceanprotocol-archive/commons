@@ -1,6 +1,6 @@
 .fade {
     &-enter {
-        opacity: .01;
+        opacity: 0.01;
     }
 
     &-enter-active {
@@ -13,14 +13,14 @@
     }
 
     &-exit-active {
-        opacity: .01;
+        opacity: 0.01;
         transition: opacity 400ms ease-in;
     }
 }
 
 .grow {
     &-enter {
-        opacity: .01;
+        opacity: 0.01;
         max-height: 0;
     }
 
@@ -36,7 +36,7 @@
     }
 
     &-exit-active {
-        opacity: .01;
+        opacity: 0.01;
         max-height: 0;
         transition: 200ms ease-in;
     }

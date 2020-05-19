@@ -25,7 +25,7 @@ export default class ChannelTeaser extends Component<
     // Get channel content
     public channel = channels.items
         .filter(({ tag }) => tag === this.props.channel)
-        .map(channel => channel)[0]
+        .map((channel) => channel)[0]
 
     public state = {
         channelAssets: [],

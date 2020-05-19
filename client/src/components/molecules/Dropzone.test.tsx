@@ -17,7 +17,7 @@ function mockData(files: any) {
 }
 
 function flushPromises(ui: any, container: any) {
-    return new Promise(resolve =>
+    return new Promise((resolve) =>
         setImmediate(() => {
             render(ui, { container })
             resolve(container)

@@ -14,7 +14,6 @@
     }
 
     // grab the channel teaser on front page
-    // stylelint-disable-next-line
     article > div > h2 + div {
         padding-top: $spacer / 2;
     }

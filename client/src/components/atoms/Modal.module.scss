@@ -11,11 +11,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba($brand-black, .7);
+    background: rgba($brand-black, 0.7);
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    animation: fadeIn .2s ease-out backwards;
+    animation: fadeIn 0.2s ease-out backwards;
 }
 
 .modal {
@@ -25,7 +25,7 @@
     margin: $spacer auto;
     max-width: $break-point--small;
     position: relative;
-    animation: moveUp .2s ease-out backwards;
+    animation: moveUp 0.2s ease-out backwards;
 
     @media (min-width: $break-point--small) {
         padding: $spacer * 2 $spacer * 1.5;
@@ -68,7 +68,7 @@
 
     &:hover,
     &:focus {
-        opacity: .7;
+        opacity: 0.7;
     }
 }
 

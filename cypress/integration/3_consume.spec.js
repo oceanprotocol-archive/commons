@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 describe('Consume', () => {
     it('should consume https:// file', () => {
-        cy.fixture('did').then(did => {
+        cy.fixture('did').then((did) => {
             cy.visit(`/asset/${did}`)
         })
 
@@ -31,7 +31,7 @@ describe('Consume', () => {
     })
 
     it('should consume ipfs:// file', () => {
-        cy.fixture('did-ipfs').then(did => {
+        cy.fixture('did-ipfs').then((did) => {
             cy.visit(`/asset/${did}`)
         })
 

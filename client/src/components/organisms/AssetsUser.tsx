@@ -79,7 +79,7 @@ export default class AssetsUser extends PureComponent<
                     <>
                         {results
                             .slice(0, recent || undefined)
-                            .filter(asset => !!asset)
+                            .filter((asset) => !!asset)
                             .map((asset: any) => (
                                 <AssetTeaser
                                     list={list}
