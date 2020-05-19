@@ -13,17 +13,13 @@ describe('Publish', () => {
         // Fill title
         cy.get('input#name').type('Commons Integration Test')
         // Open Add a file form
-        cy.get('button')
-            .contains('+ From URL')
-            .click()
+        cy.get('button').contains('+ From URL').click()
         // Fill url of file
         cy.get('input#url').type(
             'https://oceanprotocol.com/tech-whitepaper.pdf'
         )
         // Add file to main form
-        cy.get('button')
-            .contains('Add File')
-            .click()
+        cy.get('button').contains('Add File').click()
         // Verify and nove to next step
         cy.get('button', { timeout: 60000 })
             .contains('Next →')
@@ -36,10 +32,7 @@ describe('Publish', () => {
         // Pick category
         cy.get('select#categories').select('Biology')
         // Verify and move to next step
-        cy.get('button')
-            .contains('Next →')
-            .should('not.be.disabled')
-            .click()
+        cy.get('button').contains('Next →').should('not.be.disabled').click()
         // Verify we are on next step
         cy.get('article>div').should('contain', 'Authorship')
         // Fill author
@@ -49,10 +42,7 @@ describe('Publish', () => {
         // Pick author
         cy.get('select#license').select('Public Domain')
         // Verify and move to next step
-        cy.get('button')
-            .contains('Next →')
-            .should('not.be.disabled')
-            .click()
+        cy.get('button').contains('Next →').should('not.be.disabled').click()
         // Verify we are on next step
         cy.get('article>div').should('contain', 'Register')
         // Start publish process
@@ -69,7 +59,7 @@ describe('Publish', () => {
         cy.get('a')
             .contains('See published asset')
             .invoke('attr', 'href')
-            .then(href => {
+            .then((href) => {
                 cy.writeFile(
                     'cypress/fixtures/did.txt',
                     href.replace('/asset/', '')
@@ -81,17 +71,13 @@ describe('Publish', () => {
         // Fill title
         cy.get('input#name').type('Commons Integration IPFS Test')
         // Open Add a file form
-        cy.get('button')
-            .contains('+ From URL')
-            .click()
+        cy.get('button').contains('+ From URL').click()
         // Fill url of file
         cy.get('input#url').type(
             'ipfs://QmX5LRpEVocfks9FNDnRoK2imf2fy9mPpP4wfgaDVXWfYD/video.mp4'
         )
         // Add file to main form
-        cy.get('button')
-            .contains('Add File')
-            .click()
+        cy.get('button').contains('Add File').click()
         // Verify and nove to next step
         cy.get('button', { timeout: 60000 })
             .contains('Next →')
@@ -104,10 +90,7 @@ describe('Publish', () => {
         // Pick category
         cy.get('select#categories').select('Biology')
         // Verify and move to next step
-        cy.get('button')
-            .contains('Next →')
-            .should('not.be.disabled')
-            .click()
+        cy.get('button').contains('Next →').should('not.be.disabled').click()
         // Verify we are on next step
         cy.get('article>div').should('contain', 'Authorship')
         // Fill author
@@ -117,10 +100,7 @@ describe('Publish', () => {
         // Pick author
         cy.get('select#license').select('Public Domain')
         // Verify and move to next step
-        cy.get('button')
-            .contains('Next →')
-            .should('not.be.disabled')
-            .click()
+        cy.get('button').contains('Next →').should('not.be.disabled').click()
         // Verify we are on next step
         cy.get('article>div').should('contain', 'Register')
         // Start publish process
@@ -137,7 +117,7 @@ describe('Publish', () => {
         cy.get('a')
             .contains('See published asset')
             .invoke('attr', 'href')
-            .then(href => {
+            .then((href) => {
                 cy.writeFile(
                     'cypress/fixtures/did-ipfs.txt',
                     href.replace('/asset/', '')

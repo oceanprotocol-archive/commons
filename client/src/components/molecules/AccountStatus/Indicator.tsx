@@ -19,9 +19,9 @@ const Indicator = ({
         ref={forwardedRef}
     >
         <User.Consumer>
-            {user => (
+            {(user) => (
                 <Market.Consumer>
-                    {market =>
+                    {(market) =>
                         !user.isLogged || !market.networkMatch ? (
                             <span
                                 className={styles.statusIndicatorCloseEnough}

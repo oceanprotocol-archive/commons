@@ -41,7 +41,7 @@ export default function Footer() {
                 </small>
 
                 <nav className={styles.links}>
-                    {meta.social.map(site => (
+                    {meta.social.map((site) => (
                         <a key={site.title} href={site.url}>
                             {site.title}
                         </a>

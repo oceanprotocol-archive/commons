@@ -143,7 +143,7 @@ class Publish extends Component<{}, PublishState> {
         // Setting state for all fields
         if (hasContent) {
             this.setState(
-                prevState => ({
+                (prevState) => ({
                     validationStatus: {
                         ...prevState.validationStatus,
                         [this.state.currentStep]: {
@@ -158,7 +158,7 @@ class Publish extends Component<{}, PublishState> {
             )
         } else {
             this.setState(
-                prevState => ({
+                (prevState) => ({
                     validationStatus: {
                         ...prevState.validationStatus,
                         [this.state.currentStep]: {
@@ -180,7 +180,7 @@ class Publish extends Component<{}, PublishState> {
         // Step 1
         //
         if (validationStatus[1].name && validationStatus[1].files) {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 validationStatus: {
                     ...prevState.validationStatus,
                     1: {
@@ -190,7 +190,7 @@ class Publish extends Component<{}, PublishState> {
                 }
             }))
         } else {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 validationStatus: {
                     ...prevState.validationStatus,
                     1: {
@@ -205,7 +205,7 @@ class Publish extends Component<{}, PublishState> {
         // Step 2
         //
         if (validationStatus[2].description && validationStatus[2].categories) {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 validationStatus: {
                     ...prevState.validationStatus,
                     2: {
@@ -215,7 +215,7 @@ class Publish extends Component<{}, PublishState> {
                 }
             }))
         } else {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 validationStatus: {
                     ...prevState.validationStatus,
                     2: {
@@ -234,7 +234,7 @@ class Publish extends Component<{}, PublishState> {
             validationStatus[3].copyrightHolder &&
             validationStatus[3].license
         ) {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 validationStatus: {
                     ...prevState.validationStatus,
                     3: {
@@ -244,7 +244,7 @@ class Publish extends Component<{}, PublishState> {
                 }
             }))
         } else {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 validationStatus: {
                     ...prevState.validationStatus,
                     3: {
@@ -337,7 +337,7 @@ class Publish extends Component<{}, PublishState> {
     public render() {
         return (
             <Market.Consumer>
-                {market => (
+                {(market) => (
                     <Route
                         title="Publish"
                         description={`Publish a new data set into the Ocean Protocol ${market.network} Network.`}

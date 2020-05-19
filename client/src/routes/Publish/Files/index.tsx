@@ -113,7 +113,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
 
     private addFile = async (url: string) => {
         // check for duplicate urls
-        const duplicateFiles = this.props.files.filter(props =>
+        const duplicateFiles = this.props.files.filter((props) =>
             url.includes(props.url)
         )
 
@@ -185,7 +185,7 @@ export default class Files extends PureComponent<FilesProps, FilesStates> {
                         </ul>
                     )}
 
-                    {buttons.map(button => {
+                    {buttons.map((button) => {
                         const isActive =
                             (button.id === 'url' && isFormShown) ||
                             (button.id === 'ipfs' && isIpfsFormShown)
