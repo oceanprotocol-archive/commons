@@ -12,7 +12,6 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ed6e8212a8d294b6aa88/test_coverage)](https://codeclimate.com/github/oceanprotocol/commons/test_coverage)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-7b1173.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![js oceanprotocol](https://img.shields.io/badge/js-oceanprotocol-7b1173.svg)](https://github.com/oceanprotocol/eslint-config-oceanprotocol)
-[![css bigchaindb](https://img.shields.io/badge/css-bigchaindb-39BA91.svg)](https://github.com/bigchaindb/stylelint-config-bigchaindb)
 
 <img width="1218" alt="Commons UI" src="https://user-images.githubusercontent.com/90316/55874266-296ef080-5b92-11e9-8ac6-2423cb2a80fb.png">
 
@@ -204,7 +203,7 @@ npm run cypress:open
 For linting and auto-formatting you can use from the root of the project:
 
 ```bash
-# auto format all ts & css with eslint & stylelint
+# auto format all ts & css with eslint
 npm run lint
 
 # auto format all ts & css with prettier, taking all configs into account

@@ -119,14 +119,11 @@
         overflow-wrap: break-word;
     }
 
-    /* stylelint-disable declaration-no-important */
     code {
         display: block;
         padding: 0 !important;
         background: none !important;
     }
-
-    /* stylelint-enable declaration-no-important */
 
     @media (min-width: $break-point--small) {
         width: 70%;

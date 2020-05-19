@@ -19,10 +19,9 @@
 .indicatorActive {
     display: inline-block;
     margin-right: $spacer / 4;
-    margin-bottom: -.1rem;
+    margin-bottom: -0.1rem;
 }
 
-// stylelint-disable value-keyword-case
 .indicator {
     composes: statusIndicator from '../AccountStatus/Indicator.module.scss';
 }
@@ -30,7 +29,6 @@
 .indicatorActive {
     composes: statusIndicatorActive from '../AccountStatus/Indicator.module.scss';
 }
-// stylelint-enable value-keyword-case
 
 .indicatorLabel {
     font-family: $font-family-title;

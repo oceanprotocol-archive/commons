@@ -3,11 +3,11 @@
 .dropzone {
     margin-top: $spacer;
     margin-bottom: $spacer;
-    border: .2rem dashed $brand-grey-lighter;
+    border: 0.2rem dashed $brand-grey-lighter;
     border-radius: $border-radius * 2;
     padding: $spacer;
     background: $brand-white;
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
     cursor: pointer;
 
     p {
@@ -32,7 +32,7 @@
 
 .disabled {
     composes: dropzone;
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
 }
 

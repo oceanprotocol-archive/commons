@@ -26,11 +26,11 @@
     position: absolute;
     top: $spacer / 8;
     right: 0;
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
 
     &:hover,
     &:focus {
-        opacity: .7;
+        opacity: 0.7;
     }
 }
 

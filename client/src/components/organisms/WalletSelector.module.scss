@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 .openLink {
-    font-size: $font-size-small !important; // stylelint-disable-line
+    font-size: $font-size-small !important;
     margin-left: $spacer / 2;
 }
 
@@ -24,7 +24,7 @@
     align-items: flex-start;
     text-align: left;
     cursor: pointer;
-    transition: border .2s ease-out;
+    transition: border 0.2s ease-out;
     margin-bottom: $spacer;
     position: relative;
 
