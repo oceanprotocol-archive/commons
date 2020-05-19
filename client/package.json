@@ -9,7 +9,6 @@
     "test": "react-scripts test --coverage --watchAll=false --silent",
     "test:watch": "react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "coverage": "cat coverage/lcov.info | codacy-coverage --token 8801f827fe1144ffa85cd7da94f2bbf7",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "dependencies": {
