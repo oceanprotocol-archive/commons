@@ -61,7 +61,7 @@
     "@types/react-modal": "^3.10.5",
     "@types/react-paginate": "^6.2.1",
     "@types/react-router-dom": "^5.1.5",
-    "@types/react-transition-group": "^4.2.4",
+    "@types/react-transition-group": "^4.4.0",
     "@types/shortid": "^0.0.29",
     "jest-mock-axios": "^4.0.0",
     "react-scripts": "^3.4.1",
