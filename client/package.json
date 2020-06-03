@@ -63,7 +63,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-transition-group": "^4.4.0",
     "@types/shortid": "^0.0.29",
-    "jest-mock-axios": "^4.0.0",
+    "jest-mock-axios": "^4.1.0",
     "react-scripts": "^3.4.1",
     "source-map-explorer": "^2.4.2",
     "typescript": "^3.9.3"
