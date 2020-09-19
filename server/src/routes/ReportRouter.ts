@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express'
 import config from '../config'
 import SendgridMail from '@sendgrid/mail'
-var mailgun = require('mailgun-js')({ apiKey: config.mailgunApiKey, domain: config.mailgunDomain });
+var mailgun = require('mailgun-js');
 
 export class ReportRouter {
     public router: Router
@@ -14,33 +14,32 @@ export class ReportRouter {
         if (!req.body.msg) {
             return res.send({ status: 'error', message: 'missing message' })
         }
-        if (config.mailService === 'mailgun') {
-            const data = {
-                "from": req.body.msg.from,
-                "to": req.body.msg.to,
-                "subject": req.body.msg.subject + " (via " + config.mailService + ")",
-                "text": req.body.msg.text,
-                "html": req.body.msg.html
-            };
-            try {
-                await mailgun.messages().send(data, (error, body) => {
+        try {
+            if (config.mailService === 'MailGun') {
+                const data = {
+                    "from": req.body.msg.from,
+                    "to": req.body.msg.to,
+                    "subject": req.body.msg.subject,
+                    "text": req.body.msg.text,
+                    "html": req.body.msg.html
+                };
+                var x = config.mailgunApiKey;
+                var y = config.mailgunDomain;
+                const mg = mailgun({ apiKey: config.mailgunApiKey, domain: config.mailgunDomain });
+                await mg.messages().send(data, (error, body) => {
                     if (error) console.log(error)
                     else return res.send({ status: 'success' });
                 });
-            } catch (error) {
-                console.error(`${error.code} - ${error.message}`) // eslint-disable-line
-                res.send(`${error.code} - ${error.message}`)
             }
-        }
-        else { // default back to sendgrid
-            try {
+            else {
                 SendgridMail.setApiKey(config.sendgridApiKey)
                 await SendgridMail.send(req.body.msg)
                 return res.send({ status: 'success' })
-            } catch (error) {
-                console.error(`${error.code} - ${error.message}`) // eslint-disable-line
-                res.send(`${error.code} - ${error.message}`)
             }
+        }
+        catch (error) {
+            console.error(`${error.code} - ${error.message}`) // eslint-disable-line
+            res.send(`${error.code} - ${error.message}`)
         }
     }
 
