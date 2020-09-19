@@ -1,8 +1,7 @@
 import { Router, Request, Response } from 'express'
-import SendgridMail from '@sendgrid/mail'
 import config from '../config'
-
-SendgridMail.setApiKey(config.sendgridApiKey)
+import SendgridMail from '@sendgrid/mail'
+var mailgun = require('mailgun-js')({ apiKey: config.mailgunApiKey, domain: config.mailgunDomain });
 
 export class ReportRouter {
     public router: Router
@@ -15,13 +14,33 @@ export class ReportRouter {
         if (!req.body.msg) {
             return res.send({ status: 'error', message: 'missing message' })
         }
-
-        try {
-            await SendgridMail.send(req.body.msg)
-            return res.send({ status: 'success' })
-        } catch (error) {
-            console.error(`${error.code} - ${error.message}`) // eslint-disable-line
-            res.send(`${error.code} - ${error.message}`)
+        if (config.mailService === 'mailgun') {
+            const data = {
+                "from": req.body.msg.from,
+                "to": req.body.msg.to,
+                "subject": req.body.msg.subject + " (via " + config.mailService + ")",
+                "text": req.body.msg.text,
+                "html": req.body.msg.html
+            };
+            try {
+                await mailgun.messages().send(data, (error, body) => {
+                    if (error) console.log(error)
+                    else return res.send({ status: 'success' });
+                });
+            } catch (error) {
+                console.error(`${error.code} - ${error.message}`) // eslint-disable-line
+                res.send(`${error.code} - ${error.message}`)
+            }
+        }
+        else { // default back to sendgrid
+            try {
+                SendgridMail.setApiKey(config.sendgridApiKey)
+                await SendgridMail.send(req.body.msg)
+                return res.send({ status: 'success' })
+            } catch (error) {
+                console.error(`${error.code} - ${error.message}`) // eslint-disable-line
+                res.send(`${error.code} - ${error.message}`)
+            }
         }
     }
 

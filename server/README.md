@@ -66,8 +66,10 @@ Url Checker returns size and additional information about requested file. This s
 
 ### Report
 
-Report endpoints sends an email via SendGrid. Requires `SENDGRID_API_KEY` set as environment variables.
-
+Report endpoints sends an email via SendGrid or MailGun mail delivery service.
+Set delivery service to use via `MAILSERVICE` environment variable, supported values: 'sendgrid' or 'mailgun' (defaults to sendgrid mailservice if mailgun is not specified for backwards compatibility)
+for SendGrid, requires `SENDGRID_API_KEY` set as environment variable.
+for MailGun, requires `MAILGUN_API_KEY` and `MAILGUN_DOMAIN` set as environment variables.
 **Endpoint:** POST `/api/v1/report`
 
 **Request Parameters**
