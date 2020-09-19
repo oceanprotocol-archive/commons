@@ -23,8 +23,6 @@ export class ReportRouter {
                     "text": req.body.msg.text,
                     "html": req.body.msg.html
                 };
-                var x = config.mailgunApiKey;
-                var y = config.mailgunDomain;
                 const mg = mailgun({ apiKey: config.mailgunApiKey, domain: config.mailgunDomain });
                 await mg.messages().send(data, (error, body) => {
                     if (error) console.log(error)
