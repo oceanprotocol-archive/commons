@@ -23,7 +23,7 @@
     "@release-it/bumper": "^1.2.0",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
-    "auto-changelog": "^2.1.0",
+    "auto-changelog": "^2.2.1",
     "concurrently": "^5.2.0",
     "cypress": "^4.8.0",
     "cypress-log-to-output": "^1.0.8",
